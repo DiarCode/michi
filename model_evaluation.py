@@ -492,6 +492,7 @@ def train_custom_dts(
     tcfg: dts.TrainConfig,
     device: torch.device,
     verbose: bool = True,
+    log_prefix: str = "Custom DTS",
 ) -> nn.Module:
     T, N, _ = bundle.X.shape
     n_series = bundle.y_all.shape[1]
@@ -571,7 +572,8 @@ def train_custom_dts(
 
         if verbose:
             train_loss = tr / max(1, nb)
-            dts.RichLogger.epoch_summary(ep + 1, tcfg.epochs, train_loss, vl, opt.param_groups[0]["lr"], 0.0, best_val)
+            bar = dts.RichLogger.progress_bar(ep + 1, tcfg.epochs, desc=log_prefix)
+            LOG.info("%s | train %.4f | val %.4f", bar, train_loss, vl)
 
         if vl < best_val:
             best_val = vl
@@ -579,6 +581,8 @@ def train_custom_dts(
         if scheduler is not None:
             scheduler.step()
         if early_stopper(vl):
+            if verbose:
+                LOG.info("%s | early stopping at epoch %d", log_prefix, ep + 1)
             break
 
     if best_state is not None:
@@ -997,15 +1001,19 @@ def save_metric_charts(df: pd.DataFrame, out_dir: str, split_name: str) -> None:
     try:
         import plotly.express as px  # type: ignore
     except Exception:
-        LOG.warning("plotly is not available; skipping charts.")
+        LOG.warning("plotly is not available; skipping charts in %s.", out_dir)
         return
     ensure_dir(out_dir)
+    saved = 0
     for metric in ["mae", "rmse", "smape", "mape", "wape", "accuracy_wape"]:
         if metric not in df.columns:
             continue
         fig = px.bar(df, x="model", y=metric, title=f"{split_name} {metric.upper()}")
         fig.update_layout(xaxis_title="Model", yaxis_title=metric.upper())
         fig.write_html(os.path.join(out_dir, f"{split_name}_{metric}.html"))
+        saved += 1
+    if saved:
+        LOG.info("Saved %d %s charts to %s", saved, split_name, out_dir)
 
 
 def save_forecast_chart(
@@ -1033,6 +1041,7 @@ def save_forecast_chart(
         legend_title="Model",
     )
     fig.write_html(out_path)
+    LOG.info("Saved forecast chart to %s", out_path)
 
 
 def main() -> None:
@@ -1084,6 +1093,9 @@ def main() -> None:
     p.add_argument("--checkpoint-dir", dest="checkpoint_dir", default=None)
     p.add_argument("--run-ablations", action="store_true")
     p.add_argument("--ablation-epochs", dest="ablation_epochs", type=int, default=40)
+    p.add_argument("--skip-online-ablations", action="store_true")
+    p.add_argument("--online-max-steps", dest="online_max_steps", type=int, default=None)
+    p.add_argument("--online-log-every", dest="online_log_every", type=int, default=250)
     p.add_argument("--run-prequential", action="store_true")
     p.add_argument("--bootstrap-samples", dest="bootstrap_samples", type=int, default=0)
     p.add_argument("--seeds", dest="seeds", default=None)
@@ -1675,6 +1687,40 @@ def main() -> None:
     }
     persist_state()
 
+    def online_step_range(max_steps: Optional[int]) -> Tuple[int, int, int]:
+        start_idx = test_rng[0] + wcfg.lookback
+        end_idx = test_rng[1] - wcfg.horizon - 1
+        if max_steps is not None:
+            end_idx = min(end_idx, start_idx + max_steps)
+        total = max(0, end_idx - start_idx)
+        return start_idx, end_idx, total
+
+    def make_online_logger(tag: str, start_idx: int, total_steps: int, log_every: int):
+        if log_every <= 0 or total_steps <= 0:
+            return None
+        state = {"last": 0}
+
+        def callback(payload: Dict[str, object]) -> None:
+            step_idx = int(payload.get("t", start_idx)) - start_idx + 1
+            if step_idx <= 0:
+                return
+            if step_idx == 1 or step_idx == total_steps or (step_idx - state["last"]) >= log_every:
+                state["last"] = step_idx
+                pct = 100.0 * step_idx / max(1, total_steps)
+                drift = int(payload.get("drift_trigger", 0))
+                buffer_len = int(payload.get("buffer_len", 0))
+                LOG.info(
+                    "Online %s | step %d/%d (%.1f%%) drift=%d buffer=%d",
+                    tag,
+                    step_idx,
+                    total_steps,
+                    pct,
+                    drift,
+                    buffer_len,
+                )
+
+        return callback
+
     ablation_results = {}
     if args.run_ablations:
         LOG.info("Running ablation study")
@@ -1683,8 +1729,19 @@ def main() -> None:
             ("No Adaptive Adj", {"lora_r": args.lora_r, "use_graph": True, "use_adaptive": False}),
             ("No Graph", {"lora_r": args.lora_r, "use_graph": False, "use_adaptive": False}),
         ]
-        for name, cfg in ablation_cfgs:
-            LOG.info("Ablation: %s", name)
+        total_ablations = len(ablation_cfgs)
+        ablation_start = time.time()
+        LOG.info("Ablation study queued %d configs", total_ablations)
+        for idx, (name, cfg) in enumerate(ablation_cfgs, start=1):
+            LOG.info("Ablation %d/%d: %s", idx, total_ablations, name)
+            LOG.info(
+                "Ablation %s | config lora_r=%s use_graph=%s use_adaptive=%s",
+                name,
+                cfg["lora_r"],
+                cfg["use_graph"],
+                cfg["use_adaptive"],
+            )
+            ablation_t0 = time.time()
             model = DTSGSSF_Ablation(
                 N=bundle.X.shape[1],
                 F_in=bundle.X.shape[2],
@@ -1709,7 +1766,26 @@ def main() -> None:
                 accumulation_steps=args.accum_steps,
                 grad_clip=args.grad_clip,
             )
-            model = train_custom_dts(bundle, wcfg, split, model, tcfg_ab, device, verbose=False)
+            LOG.info(
+                "Ablation %s | training start (epochs=%d, batch=%d)",
+                name,
+                tcfg_ab.epochs,
+                tcfg_ab.batch_size,
+            )
+            train_t0 = time.time()
+            model = train_custom_dts(
+                bundle,
+                wcfg,
+                split,
+                model,
+                tcfg_ab,
+                device,
+                verbose=True,
+                log_prefix=f"Ablation {name}",
+            )
+            LOG.info("Ablation %s | training done in %.1fs", name, time.time() - train_t0)
+            LOG.info("Ablation %s | evaluation start", name)
+            eval_t0 = time.time()
             y_val_pred_all = dts.predict_windows(bundle, model, wcfg, val_rng, device=device)[1]
             y_test_pred_all = dts.predict_windows(bundle, model, wcfg, test_rng, device=device)[1]
             if args.target_scope == "bottom":
@@ -1721,51 +1797,114 @@ def main() -> None:
             else:
                 y_val_pred = y_val_pred_all
                 y_test_pred = y_test_pred_all
+            metrics_val_h1 = compute_metrics(y_val[:, 0], y_val_pred[:, 0], train_series, args.seasonality)
+            metrics_test_h1 = compute_metrics(y_test[:, 0], y_test_pred[:, 0], train_series, args.seasonality)
+            metrics_val_full = compute_metrics(
+                flatten_horizon(y_val),
+                flatten_horizon(y_val_pred),
+                train_series,
+                args.seasonality,
+            )
+            metrics_test_full = compute_metrics(
+                flatten_horizon(y_test),
+                flatten_horizon(y_test_pred),
+                train_series,
+                args.seasonality,
+            )
+            LOG.info("Ablation %s | evaluation done in %.1fs", name, time.time() - eval_t0)
+            LOG.info(
+                "Ablation %s | h1 wape: val=%.2f test=%.2f",
+                name,
+                metrics_val_h1["wape"],
+                metrics_test_h1["wape"],
+            )
+            LOG.info("Ablation %d/%d: %s complete in %.1fs", idx, total_ablations, name, time.time() - ablation_t0)
             ablation_results[name] = {
-                "val_h1": compute_metrics(y_val[:, 0], y_val_pred[:, 0], train_series, args.seasonality),
-                "test_h1": compute_metrics(y_test[:, 0], y_test_pred[:, 0], train_series, args.seasonality),
-                "val_full": compute_metrics(
-                    flatten_horizon(y_val),
-                    flatten_horizon(y_val_pred),
-                    train_series,
-                    args.seasonality,
-                ),
-                "test_full": compute_metrics(
-                    flatten_horizon(y_test),
-                    flatten_horizon(y_test_pred),
-                    train_series,
-                    args.seasonality,
-                ),
+                "val_h1": metrics_val_h1,
+                "test_h1": metrics_test_h1,
+                "val_full": metrics_val_full,
+                "test_full": metrics_test_full,
                 "config": cfg,
             }
-        save_json(os.path.join(out_dir, "ablations_summary.json"), np_to_py(ablation_results))
-        try:
-            LOG.info("Running online ablations (residual/reconciliation/drift)")
-            ocfg = dts.OnlineConfig(adapt_steps=18)
-            res_full = dts.online_run(bundle, base_model, wcfg, split, ocfg, device)
-            ocfg_no_adapt = dts.OnlineConfig(adapt_steps=0)
-            res_no_adapt = dts.online_run(bundle, base_model, wcfg, split, ocfg_no_adapt, device)
-            N = bundle.y_bottom.shape[1]
-            online = {
-                "base": {
-                    "mae": dts.mae_np(res_full.y_true[:, :N], res_full.y_base[:, :N]),
-                },
-                "kalman": {
-                    "mae": dts.mae_np(res_full.y_true[:, :N], res_full.y_corr[:, :N]),
-                },
-                "kalman_recon": {
-                    "mae": dts.mae_np(res_full.y_true[:, :N], res_full.y_recon[:, :N]),
-                },
-                "no_adapt_kalman": {
-                    "mae": dts.mae_np(res_no_adapt.y_true[:, :N], res_no_adapt.y_corr[:, :N]),
-                },
-                "no_adapt_kalman_recon": {
-                    "mae": dts.mae_np(res_no_adapt.y_true[:, :N], res_no_adapt.y_recon[:, :N]),
-                },
-            }
-            save_json(os.path.join(out_dir, "online_ablations.json"), np_to_py(online))
-        except Exception as exc:
-            LOG.warning("Online ablations failed: %s", exc)
+        ablation_summary_path = os.path.join(out_dir, "ablations_summary.json")
+        save_json(ablation_summary_path, np_to_py(ablation_results))
+        LOG.info("Ablation study completed in %.1fs", time.time() - ablation_start)
+        LOG.info("Saved ablation summary to %s", ablation_summary_path)
+        if args.skip_online_ablations:
+            LOG.info("Skipping online ablations (--skip-online-ablations)")
+        else:
+            try:
+                LOG.info("Running online ablations (residual/reconciliation/drift)")
+                online_t0 = time.time()
+                max_steps = args.online_max_steps
+                if max_steps is not None and max_steps <= 0:
+                    LOG.warning("Online ablations skipped: online_max_steps=%s", max_steps)
+                else:
+                    start_idx, end_idx, total_steps = online_step_range(max_steps)
+                    if total_steps <= 0:
+                        LOG.warning("Online ablations skipped: computed 0 steps (check splits or max_steps).")
+                    else:
+                        LOG.info(
+                            "Online ablations | steps=%d (max_steps=%s, log_every=%d)",
+                            total_steps,
+                            max_steps,
+                            args.online_log_every,
+                        )
+                        cb_full = make_online_logger("adapt", start_idx, total_steps, args.online_log_every)
+                        cb_no_adapt = make_online_logger("no_adapt", start_idx, total_steps, args.online_log_every)
+
+                        ocfg = dts.OnlineConfig(adapt_steps=18)
+                        res_full = dts.online_run_stream(
+                            bundle,
+                            base_model,
+                            wcfg,
+                            split,
+                            ocfg,
+                            device,
+                            step_callback=cb_full,
+                            max_steps=max_steps,
+                        )
+                        ocfg_no_adapt = dts.OnlineConfig(adapt_steps=0)
+                        res_no_adapt = dts.online_run_stream(
+                            bundle,
+                            base_model,
+                            wcfg,
+                            split,
+                            ocfg_no_adapt,
+                            device,
+                            step_callback=cb_no_adapt,
+                            max_steps=max_steps,
+                        )
+                        N = bundle.y_bottom.shape[1]
+                        online = {
+                            "base": {
+                                "mae": dts.mae_np(res_full.y_true[:, :N], res_full.y_base[:, :N]),
+                            },
+                            "kalman": {
+                                "mae": dts.mae_np(res_full.y_true[:, :N], res_full.y_corr[:, :N]),
+                            },
+                            "kalman_recon": {
+                                "mae": dts.mae_np(res_full.y_true[:, :N], res_full.y_recon[:, :N]),
+                            },
+                            "no_adapt_kalman": {
+                                "mae": dts.mae_np(res_no_adapt.y_true[:, :N], res_no_adapt.y_corr[:, :N]),
+                            },
+                            "no_adapt_kalman_recon": {
+                                "mae": dts.mae_np(res_no_adapt.y_true[:, :N], res_no_adapt.y_recon[:, :N]),
+                            },
+                        }
+                        online_path = os.path.join(out_dir, "online_ablations.json")
+                        save_json(online_path, np_to_py(online))
+                        LOG.info(
+                            "Online ablations | base=%.4f kalman=%.4f recon=%.4f",
+                            online["base"]["mae"],
+                            online["kalman"]["mae"],
+                            online["kalman_recon"]["mae"],
+                        )
+                        LOG.info("Online ablations completed in %.1fs", time.time() - online_t0)
+                        LOG.info("Saved online ablations to %s", online_path)
+            except Exception as exc:
+                LOG.warning("Online ablations failed: %s", exc)
 
     if not args.skip_sarimax:
         if has_result("SARIMAX"):
@@ -1833,7 +1972,24 @@ def main() -> None:
     latency_metrics = {}
     if args.run_prequential:
         LOG.info("Running prequential evaluation")
-        y_true_p, y_pred_p, lat = prequential_eval_model(
+        preq_start = time.time()
+
+        def run_preq(label, *args, **kwargs):
+            LOG.info("Prequential | %s start", label)
+            t0 = time.time()
+            y_true_p, y_pred_p, lat = prequential_eval_model(*args, **kwargs)
+            LOG.info("Prequential | %s done in %.1fs", label, time.time() - t0)
+            if lat:
+                LOG.info(
+                    "Prequential | %s latency ms p50=%.2f p95=%.2f",
+                    label,
+                    lat.get("latency_ms_p50", float("nan")),
+                    lat.get("latency_ms_p95", float("nan")),
+                )
+            return y_true_p, y_pred_p, lat
+
+        y_true_p, y_pred_p, lat = run_preq(
+            "DTS-GSSF",
             base_model,
             bundle.X,
             y_target,
@@ -1844,7 +2000,8 @@ def main() -> None:
         preq_metrics["DTS-GSSF"] = compute_metrics(y_true_p, y_pred_p, train_series, args.seasonality)
         latency_metrics["DTS-GSSF"] = lat
 
-        y_true_p, y_pred_p, lat = prequential_eval_model(
+        y_true_p, y_pred_p, lat = run_preq(
+            "Seasonal Naive",
             None,
             y_target,
             y_target,
@@ -1857,7 +2014,8 @@ def main() -> None:
         preq_metrics["Seasonal Naive"] = compute_metrics(y_true_p, y_pred_p, train_series, args.seasonality)
         latency_metrics["Seasonal Naive"] = lat
 
-        y_true_p, y_pred_p, lat = prequential_eval_model(
+        y_true_p, y_pred_p, lat = run_preq(
+            "Historical Avg",
             None,
             y_target,
             y_target,
@@ -1872,7 +2030,8 @@ def main() -> None:
         preq_metrics["Historical Avg"] = compute_metrics(y_true_p, y_pred_p, train_series, args.seasonality)
         latency_metrics["Historical Avg"] = lat
 
-        y_true_p, y_pred_p, lat = prequential_eval_model(
+        y_true_p, y_pred_p, lat = run_preq(
+            "LSTM Seq2Seq",
             lstm,
             X_rnn,
             y_rnn,
@@ -1884,7 +2043,8 @@ def main() -> None:
         preq_metrics["LSTM Seq2Seq"] = compute_metrics(y_true_p, y_pred_p, train_series, args.seasonality)
         latency_metrics["LSTM Seq2Seq"] = lat
 
-        y_true_p, y_pred_p, lat = prequential_eval_model(
+        y_true_p, y_pred_p, lat = run_preq(
+            "GRU Seq2Seq",
             gru,
             X_rnn,
             y_rnn,
@@ -1896,7 +2056,8 @@ def main() -> None:
         preq_metrics["GRU Seq2Seq"] = compute_metrics(y_true_p, y_pred_p, train_series, args.seasonality)
         latency_metrics["GRU Seq2Seq"] = lat
 
-        y_true_p, y_pred_p, lat = prequential_eval_model(
+        y_true_p, y_pred_p, lat = run_preq(
+            "Transformer",
             transformer,
             X_rnn,
             y_rnn,
@@ -1908,7 +2069,8 @@ def main() -> None:
         preq_metrics["Transformer"] = compute_metrics(y_true_p, y_pred_p, train_series, args.seasonality)
         latency_metrics["Transformer"] = lat
 
-        y_true_p, y_pred_p, lat = prequential_eval_model(
+        y_true_p, y_pred_p, lat = run_preq(
+            "DCRNN",
             dcrnn,
             X_rnn,
             y_rnn,
@@ -1920,8 +2082,13 @@ def main() -> None:
         preq_metrics["DCRNN"] = compute_metrics(y_true_p, y_pred_p, train_series, args.seasonality)
         latency_metrics["DCRNN"] = lat
 
-        save_json(os.path.join(out_dir, "prequential_metrics.json"), np_to_py(preq_metrics))
-        save_json(os.path.join(out_dir, "latency_metrics.json"), np_to_py(latency_metrics))
+        preq_metrics_path = os.path.join(out_dir, "prequential_metrics.json")
+        latency_path = os.path.join(out_dir, "latency_metrics.json")
+        save_json(preq_metrics_path, np_to_py(preq_metrics))
+        save_json(latency_path, np_to_py(latency_metrics))
+        LOG.info("Prequential evaluation completed in %.1fs", time.time() - preq_start)
+        LOG.info("Saved prequential metrics to %s", preq_metrics_path)
+        LOG.info("Saved latency metrics to %s", latency_path)
 
     preds_test_full = {
         "DTS-GSSF": y_test_pred,

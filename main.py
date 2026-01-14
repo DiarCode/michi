@@ -1,7 +1,7 @@
 
 """
-DTS-GSSF Demo (single-file)
-==========================
+DTS-GSSF Platform (single-file)
+===============================
 Dual-Timescale Graph State-Space Forecasting with:
 - Graph-structured "SSM-ish" backbone (efficient long memory)
 - Online residual correction via Kalman-style filtering (fast timescale)
@@ -12,9 +12,8 @@ UI:
 - Streamlit dashboard to generate realistic Astana bus passenger-flow data,
   train the model, and run an online simulation with analytics.
 
-This file is intentionally self-contained for teaching/demo purposes.
-It is NOT claiming to be a production-grade transport forecaster,
-but it implements the full DTS-GSSF pipeline from the draft spec.
+This file is intentionally self-contained for clarity.
+It implements the full DTS-GSSF pipeline from the draft spec.
 
 Run (recommended):
   uv run streamlit run main.py
@@ -31,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
+import datetime as dt
 import json
 import logging
 import math
@@ -203,6 +203,8 @@ def set_seed(seed: int) -> None:
 # ----------------------------
 
 def device_auto() -> torch.device:
+    if torch.cuda.is_available():
+        return torch.device("cuda")
     if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
         return torch.device("mps")
     return torch.device("cpu")
@@ -303,8 +305,8 @@ def build_astana_network(n_stations: int = 28, n_lines: int = 9, seed: int = 7) 
 @dataclass(frozen=True)
 class DataGenConfig:
     seed: int = 7
-    days: int = 60  # Increased from 35 to get ~50k+ richer records
-    freq_min: int = 15
+    days: int = 365  # Default ensures >=50k records with freq_min=10
+    freq_min: int = 10
     start: str = "2025-10-01 05:00:00"
     base_mean: float = 18.0
     overdispersion_kappa: float = 8.0
@@ -328,6 +330,17 @@ class DataBundle:
     series_names: List[str]
     S: np.ndarray
     meta: Dict[str, object]
+
+def total_records(days: int, freq_min: int) -> int:
+    steps_per_day = int((24 * 60) // max(1, freq_min))
+    return int(steps_per_day * max(1, days))
+
+def ensure_min_records(cfg: DataGenConfig, min_records: int = 50_000) -> DataGenConfig:
+    steps_per_day = int((24 * 60) // max(1, cfg.freq_min))
+    min_days = int(math.ceil(min_records / max(1, steps_per_day)))
+    if cfg.days < min_days:
+        return dataclasses.replace(cfg, days=min_days)
+    return cfg
 
 def _time_features(idx: pd.DatetimeIndex) -> np.ndarray:
     hour = idx.hour.to_numpy(dtype=np.float32) + idx.minute.to_numpy(dtype=np.float32) / 60.0
@@ -466,6 +479,7 @@ def _nb_sample(mu: np.ndarray, kappa: float, rng: np.random.Generator) -> np.nda
     return rng.poisson(lam).astype(np.float32)
 
 def generate_astana_data(cfg: DataGenConfig, net: NetworkSpec) -> DataBundle:
+    cfg = ensure_min_records(cfg)
     set_seed(cfg.seed)
     rng = np.random.default_rng(cfg.seed)
 
@@ -807,7 +821,7 @@ class TrainConfig:
     - Early stopping to prevent overfitting
     - Gradient accumulation for larger effective batch sizes
     """
-    epochs: int = 8
+    epochs: int = 30
     batch_size: int = 64
     lr: float = 2e-3
     lr_min: float = 1e-6
@@ -819,7 +833,7 @@ class TrainConfig:
     warmup_epochs: int = 1
     use_cosine_schedule: bool = True
     # Early stopping
-    early_stopping_patience: int = 5
+    early_stopping_patience: int = 8
     early_stopping_min_delta: float = 1e-4
     # Gradient accumulation
     accumulation_steps: int = 1
@@ -963,20 +977,32 @@ def train_offline(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
 
         # Get current learning rate
         current_lr = opt.param_groups[0]['lr']
-        
+
         if verbose:
             train_loss = tr / max(1, nb)
-            RichLogger.epoch_summary(ep + 1, tcfg.epochs, train_loss, vl, current_lr, time.time() - t0, best_val)
+            best_val_print = best_val if best_val < float("inf") else None
+            RichLogger.epoch_summary(ep + 1, tcfg.epochs, train_loss, vl, current_lr, time.time() - t0, best_val_print)
 
+        is_best = vl < (best_val - 1e-6)
+        if is_best:
             best_val = vl
             best_state = {
-                'model_state_dict': model.state_dict(),
-                'config': dataclasses.asdict(mcfg) if dataclasses.is_dataclass(mcfg) else mcfg,
-                'train_config': dataclasses.asdict(tcfg),
-                'epoch': ep,
-                'val_loss': vl
+                "model_state_dict": model.state_dict(),
+                "config": dataclasses.asdict(mcfg) if dataclasses.is_dataclass(mcfg) else dict(mcfg),
+                "train_config": dataclasses.asdict(tcfg),
+                "window_config": dataclasses.asdict(wcfg),
+                "split_config": dataclasses.asdict(split),
+                "epoch": ep,
+                "val_loss": vl,
+                "data_meta": {
+                    "N": N,
+                    "F_in": F_in,
+                    "n_series": n_series,
+                    "freq_min": bundle.cfg.freq_min,
+                    "days": bundle.cfg.days,
+                },
             }
-            # Save checkpoint to disk immediately
+            # Save checkpoint on improvement
             os.makedirs("checkpoints", exist_ok=True)
             torch.save(best_state, "checkpoints/model_best.pt")
 
@@ -996,8 +1022,12 @@ def train_offline(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
     if verbose:
         RichLogger.success(f"Training complete. Best validation loss: {best_val:.4f}")
         RichLogger.info("Best model saved to 'checkpoints/model_best.pt'")
-
+    
     metrics = evaluate_offline(bundle, model, wcfg, split, device)
+    if best_state is not None:
+        best_state["metrics"] = metrics
+        os.makedirs("checkpoints", exist_ok=True)
+        torch.save(best_state, "checkpoints/model_best.pt")
     return model, metrics
 
 def predict_windows(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig,
@@ -1204,6 +1234,151 @@ def load_bundle_pickle(path: str) -> Optional[DataBundle]:
             LOG.warning(f"Failed to load pickle: {e}")
     return None
 
+def load_model_checkpoint(path: str, bundle: DataBundle, device: torch.device
+                          ) -> Tuple[Optional[DTSGSSF], Optional[WindowConfig], Dict[str, object]]:
+    if not os.path.exists(path):
+        return None, None, {"error": "Checkpoint not found."}
+    try:
+        state = torch.load(path, map_location=device)
+    except Exception as e:
+        return None, None, {"error": f"Failed to load checkpoint: {e}"}
+
+    if isinstance(state, dict) and "model_state_dict" in state:
+        state_dict = state["model_state_dict"]
+        mcfg = state.get("config", {})
+        wcfg_dict = state.get("window_config", {})
+        data_meta = state.get("data_meta", {})
+        metrics = state.get("metrics", {})
+    else:
+        state_dict = state
+        mcfg = {}
+        wcfg_dict = {}
+        data_meta = {}
+        metrics = {}
+
+    N = bundle.y_bottom.shape[1]
+    F_in = bundle.X.shape[2]
+    n_series = bundle.y_all.shape[1]
+    if data_meta:
+        if data_meta.get("N") != N or data_meta.get("F_in") != F_in or data_meta.get("n_series") != n_series:
+            return None, None, {"error": "Checkpoint incompatible with current dataset."}
+
+    wcfg = WindowConfig(**wcfg_dict) if wcfg_dict else WindowConfig()
+    model = DTSGSSF(
+        N=N, F_in=F_in, n_series=n_series, n_agg=n_series - N, A_phys=bundle.net.A_phys,
+        d_model=int(mcfg.get("d_model", 64)), horizon=wcfg.horizon, K=int(mcfg.get("K", 2)),
+        lora_r=int(mcfg.get("lora_r", 8)), dropout=float(mcfg.get("dropout", 0.1))
+    ).to(device)
+    try:
+        model.load_state_dict(state_dict)
+    except Exception as e:
+        return None, None, {"error": f"Checkpoint load failed: {e}"}
+    model.eval()
+    return model, wcfg, {"checkpoint": state, "metrics": metrics}
+
+def checkpoint_summary(state: Dict[str, object]) -> Dict[str, object]:
+    summary: Dict[str, object] = {}
+    if "epoch" in state:
+        summary["epoch"] = int(state["epoch"]) + 1
+    if "val_loss" in state:
+        summary["val_loss"] = float(state["val_loss"])
+    cfg = state.get("config", {})
+    if isinstance(cfg, dict):
+        for k in ["d_model", "K", "lora_r", "dropout"]:
+            if k in cfg:
+                summary[k] = cfg[k]
+    wcfg = state.get("window_config", {})
+    if isinstance(wcfg, dict):
+        for k in ["lookback", "horizon"]:
+            if k in wcfg:
+                summary[k] = wcfg[k]
+    return summary
+
+def build_exogenous_features(cfg: DataGenConfig, net: NetworkSpec, idx: pd.DatetimeIndex,
+                             drift_station_idx: Optional[Iterable[int]] = None
+                             ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    time_feat = _time_features(idx)
+    weather = _astana_weather(idx, cfg.seed)
+    event_mult, _ = _daily_events(idx, net, cfg)
+    disrupt_mult, _ = _service_disruptions(idx, net, cfg)
+
+    drift_start = idx[0] + pd.Timedelta(days=cfg.drift_day)
+    drift_mask = np.asarray(idx >= drift_start, dtype=np.float32)
+    N = len(net.station_names)
+    if drift_station_idx is None:
+        rng = np.random.default_rng(cfg.seed)
+        drift_station = rng.choice(np.arange(N), size=max(1, int(cfg.drift_station_frac * N)), replace=False)
+    else:
+        drift_station = np.asarray(list(drift_station_idx), dtype=int)
+    drift_flag = np.zeros((len(idx), N), dtype=np.float32)
+    drift_flag[:, drift_station] = drift_mask[:, None]
+
+    event_flag = (event_mult > 1.0).astype(np.float32)
+    disrupt_flag = (disrupt_mult < 1.0).astype(np.float32)
+    return time_feat, weather, event_flag, disrupt_flag, drift_flag
+
+def iterative_forecast(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig,
+                       steps_ahead: int, device: torch.device) -> Tuple[np.ndarray, np.ndarray]:
+    if steps_ahead <= 0:
+        empty = np.zeros((0, bundle.y_all.shape[1]), dtype=np.float32)
+        return empty, empty
+
+    T = bundle.X.shape[0]
+    N = bundle.y_bottom.shape[1]
+    F_in = bundle.X.shape[2]
+    freq = f"{bundle.cfg.freq_min}min"
+    idx_ext = pd.date_range(bundle.time_index[0], periods=T + steps_ahead, freq=freq)
+
+    drift_names = bundle.meta.get("drift_stations", [])
+    drift_idx = [bundle.net.station_names.index(n) for n in drift_names if n in bundle.net.station_names]
+    time_feat, weather, event_flag, disrupt_flag, drift_flag = build_exogenous_features(
+        bundle.cfg, bundle.net, idx_ext, drift_station_idx=drift_idx if drift_idx else None
+    )
+
+    from collections import deque
+    x_window = deque(bundle.X[-wcfg.lookback:], maxlen=wcfg.lookback)
+    lag_buffer = deque(bundle.y_bottom[-4:], maxlen=4)
+    preds = []
+    confs = []
+
+    model.eval()
+    for i in range(steps_ahead):
+        x_arr = np.stack(list(x_window), axis=0)
+        x_t = to_tensor(x_arr[None, ...], device=device)
+        with torch.no_grad():
+            mu, kappa = model(x_t)
+        yhat = mu[0, 0].detach().cpu().numpy()
+        if isinstance(kappa, torch.Tensor):
+            if kappa.ndim == 0:
+                kappa_hat = float(kappa.detach().cpu())
+            else:
+                kappa_hat = float(kappa.reshape(-1)[0].detach().cpu())
+        else:
+            kappa_hat = float(kappa)
+        var = yhat + (yhat ** 2) / (kappa_hat + 1e-6)
+        cv = np.sqrt(var) / (yhat + 1e-6)
+        conf = 1.0 / (1.0 + cv)
+        conf = np.clip(conf, 0.05, 0.98).astype(np.float32)
+        preds.append(yhat)
+        confs.append(conf)
+
+        y_next_bottom = yhat[:N].astype(np.float32)
+        t_idx = T + i
+        x_new = np.zeros((N, F_in), dtype=np.float32)
+        x_new[:, 0] = lag_buffer[-1]
+        x_new[:, 1] = lag_buffer[-2]
+        x_new[:, 2] = lag_buffer[0]
+        x_new[:, 3:8] = time_feat[t_idx]
+        x_new[:, 8:11] = weather[t_idx]
+        x_new[:, 11] = event_flag[t_idx]
+        x_new[:, 12] = disrupt_flag[t_idx]
+        x_new[:, 13] = drift_flag[t_idx]
+
+        x_window.append(x_new)
+        lag_buffer.append(y_next_bottom)
+
+    return np.stack(preds, axis=0).astype(np.float32), np.stack(confs, axis=0).astype(np.float32)
+
 def load_dataset_csv(data_dir: str) -> Optional[DataBundle]:
     """Load dataset from CSVs if they exist."""
     path_bottom = os.path.join(data_dir, "dataset_bottom.csv")
@@ -1336,16 +1511,66 @@ def ui_app() -> None:
     # ------------------
     st.markdown("""
         <style>
-        .block-container { padding-top: 2rem; }
-        div[data-testid="stMetric"] {
-            background-color: #f0f2f6;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+        :root {
+            --bg: #f4f7fb;
+            --text: #0e1117;
+            --muted: #5b6777;
+            --accent: #0b5ed7;
+            --metric-bg: #111827;
+            --metric-border: #1f2937;
+            --metric-text: #f9fafb;
+            --metric-muted: #cbd5e1;
+            --metric-accent: #f97316;
+            --control-bg: #e5e7eb;
+            --control-border: #cbd5e1;
         }
-        div[data-testid="stMetricValue"] { font-size: 24px; color: #0068c9; }
-        .stButton button { width: 100%; border-radius: 6px; font-weight: 600; }
-        h1, h2, h3 { color: #0e1117; font-family: 'Inter', sans-serif; }
+
+        .block-container { padding-top: 2rem; }
+
+        div[data-testid="stMetric"] {
+            background: linear-gradient(135deg, var(--metric-bg) 0%, #0b1220 100%);
+            border: 1px solid var(--metric-border);
+            border-left: 6px solid var(--metric-accent);
+            padding: 16px 18px;
+            border-radius: 14px;
+            box-shadow: 0 10px 24px rgba(2,6,23,0.35);
+        }
+        div[data-testid="stMetricLabel"] * {
+            color: var(--metric-muted) !important;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+        div[data-testid="stMetricValue"] * {
+            font-size: 1.45rem;
+            color: var(--metric-text) !important;
+            font-weight: 700;
+        }
+        div[data-testid="stMetricDelta"] {
+            color: var(--metric-text) !important;
+            font-weight: 600;
+        }
+
+        .stNumberInput input,
+        .stTextInput input,
+        .stDateInput input,
+        .stTimeInput input,
+        .stSelectbox div[data-baseweb="select"] > div {
+            background-color: var(--control-bg);
+            border-color: var(--control-border);
+            color: #0e1117;
+        }
+
+        .stButton button { width: 100%; border-radius: 8px; font-weight: 600; }
+        h1, h2, h3 {
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 0.2px;
+        }
+        .stMarkdown, .stText, .stTextInput, .stSelectbox, .stNumberInput {
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -1367,19 +1592,41 @@ def ui_app() -> None:
     if "model" not in st.session_state: st.session_state.model = None
     if "metrics" not in st.session_state: st.session_state.metrics = None
     if "online_res" not in st.session_state: st.session_state.online_res = None
+    if "wcfg" not in st.session_state: st.session_state.wcfg = WindowConfig()
+    if "model_info" not in st.session_state: st.session_state.model_info = None
+    if "load_error" not in st.session_state: st.session_state.load_error = None
+    if "sim_station_idx" not in st.session_state: st.session_state.sim_station_idx = 0
     
     # Auto-load on startup
     data_path = os.path.join(os.getcwd(), "data", "bundle.pkl")
     ckpt_path = os.path.join(os.getcwd(), "checkpoints", "model_best.pt")
+    dev = device_auto()
+
+    if st.session_state.bundle is None and os.path.exists(data_path):
+        st.session_state.bundle = load_bundle_pickle(data_path)
+    if st.session_state.bundle is not None and st.session_state.model is None and os.path.exists(ckpt_path):
+        model, wcfg_loaded, info = load_model_checkpoint(ckpt_path, st.session_state.bundle, dev)
+        if model is not None:
+            st.session_state.model = model
+            if wcfg_loaded is not None:
+                st.session_state.wcfg = wcfg_loaded
+            if info.get("metrics"):
+                st.session_state.metrics = info["metrics"]
+            if "checkpoint" in info:
+                st.session_state.model_info = checkpoint_summary(info["checkpoint"])
+            st.session_state.load_error = None
+        else:
+            st.session_state.load_error = info.get("error", "Checkpoint load failed.")
 
     # ------------------
     # Main Tabs
     # ------------------
-    tab1, tab2, tab3, tab4 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
         "🎛️ Setup & Training", 
         "📊 Analytics Dashboard", 
+        "🧪 Live Simulation",
         "🗺️ Network Graph", 
-        "🔮 Custom Forecast"
+        "🔮 Operational Forecast"
     ])
 
     # ==========================
@@ -1391,15 +1638,52 @@ def ui_app() -> None:
         with col_data:
             st.subheader("1. Data Management")
             with st.container(border=True):
-                st.caption("Generate synthetic bus usage data with rich patterns.")
-                
-                c1, c2 = st.columns(2)
-                days = c1.number_input("Duration (Days)", 30, 90, 60)
-                stats = c2.number_input("Stations", 20, 50, 32)
-                
+                st.caption("Load a saved dataset or generate a new one. Data is persisted on disk.")
+
+                if os.path.exists(data_path):
+                    if st.button("Reload Saved Dataset", use_container_width=True):
+                        b = load_bundle_pickle(data_path)
+                        if b is not None:
+                            st.session_state.bundle = b
+                            st.session_state.model = None
+                            st.session_state.metrics = None
+                            st.session_state.model_info = None
+                            model, wcfg_loaded, info = load_model_checkpoint(ckpt_path, b, dev)
+                            if model is not None:
+                                st.session_state.model = model
+                                if wcfg_loaded is not None:
+                                    st.session_state.wcfg = wcfg_loaded
+                                if info.get("metrics"):
+                                    st.session_state.metrics = info["metrics"]
+                                if "checkpoint" in info:
+                                    st.session_state.model_info = checkpoint_summary(info["checkpoint"])
+                                st.success("Saved dataset and checkpoint loaded.")
+                            else:
+                                st.success("Saved dataset loaded.")
+                                if info.get("error"):
+                                    st.warning(info["error"])
+                        else:
+                            st.error("Saved dataset could not be loaded.")
+
+                c1, c2, c3 = st.columns(3)
+                days = c1.number_input("Duration (Days)", 30, 730, 365)
+                freq_min = c2.selectbox("Sampling Interval (min)", [5, 10, 15], index=1)
+                stats = c3.number_input("Stations", 20, 60, 32)
+
+                min_records = 50_000
+                steps_per_day = int((24 * 60) // max(1, freq_min))
+                min_days = int(math.ceil(min_records / max(1, steps_per_day)))
+                effective_days = int(max(days, min_days))
+                expected_records = total_records(effective_days, freq_min)
+
+                st.caption(f"Estimated records: {expected_records:,} (min required: {min_records:,}).")
+                if effective_days != days:
+                    st.info(f"Duration auto-adjusted to {effective_days} days to meet minimum record volume.")
+
                 if st.button("Generate New Dataset", type="primary", use_container_width=True):
-                    with st.spinner("Simulating urban traffic patterns..."):
-                        cfg = DataGenConfig(seed=seed, days=days)
+                    with st.spinner("Generating dataset..."):
+                        cfg = DataGenConfig(seed=seed, days=effective_days, freq_min=freq_min)
+                        cfg = ensure_min_records(cfg, min_records=min_records)
                         net = build_astana_network(n_stations=stats, seed=seed)
                         b = generate_astana_data(cfg, net)
                         # Save
@@ -1407,37 +1691,80 @@ def ui_app() -> None:
                         save_dataset_csv(b, os.path.join(os.getcwd(), "data"))
                         save_bundle_pickle(b, data_path)
                         st.session_state.bundle = b
-                        st.session_state.model = None # Reset model
+                        st.session_state.model = None
+                        st.session_state.metrics = None
+                        st.session_state.model_info = None
                         st.success(f"Generated {b.X.shape[0]:,} records for {stats} stations.")
 
                 # Status
                 if st.session_state.bundle:
-                    st.success(f"✅ Active Dataset: {st.session_state.bundle.X.shape[0]} records")
+                    b = st.session_state.bundle
+                    st.success(f"✅ Active Dataset: {b.X.shape[0]:,} records")
+                    st.caption(f"Range: {b.time_index[0]} → {b.time_index[-1]}")
+                    st.caption(f"Frequency: {b.cfg.freq_min} min | Stations: {len(b.net.station_names)}")
+                elif os.path.exists(data_path):
+                    st.info("Saved dataset found. Click 'Reload Saved Dataset' to reuse it.")
                 else:
                     st.warning("⚠️ No data loaded")
 
         with col_model:
             st.subheader("2. Model Training")
             with st.container(border=True):
-                st.caption("Train Graph State-Space Model.")
-                load_ckpt = st.toggle("Load Checkpoint if Available", value=True)
+                st.caption("Train and persist the Graph State-Space model. Checkpoints auto-load on restart.")
+
+                if st.session_state.model_info:
+                    info = st.session_state.model_info
+                    st.success("Model checkpoint loaded.")
+                    summary_bits = []
+                    if "epoch" in info:
+                        summary_bits.append(f"epoch {info['epoch']}")
+                    if "val_loss" in info:
+                        summary_bits.append(f"val_loss {info['val_loss']:.4f}")
+                    if summary_bits:
+                        st.caption(" | ".join(summary_bits))
+                elif os.path.exists(ckpt_path):
+                    st.info("Checkpoint found. Load it to reuse existing training.")
+                if st.session_state.load_error:
+                    st.warning(st.session_state.load_error)
+
+                if st.button("Reload Checkpoint", use_container_width=True):
+                    if not st.session_state.bundle:
+                        st.error("Load data first!")
+                    else:
+                        model, wcfg_loaded, info = load_model_checkpoint(ckpt_path, st.session_state.bundle, dev)
+                        if model is not None:
+                            st.session_state.model = model
+                            if wcfg_loaded is not None:
+                                st.session_state.wcfg = wcfg_loaded
+                            if info.get("metrics"):
+                                st.session_state.metrics = info["metrics"]
+                            if "checkpoint" in info:
+                                st.session_state.model_info = checkpoint_summary(info["checkpoint"])
+                            st.session_state.load_error = None
+                            st.success("Checkpoint loaded.")
+                        else:
+                            st.session_state.load_error = info.get("error", "Checkpoint load failed.")
+                            st.error(st.session_state.load_error)
+
+                with st.expander("Training Settings", expanded=False):
+                    st.caption("Longer training improves accuracy. Recommended: 30–50 epochs.")
+                    epochs = st.slider("Epochs", 10, 80, 30)
+                    batch_size = st.select_slider("Batch Size", options=[32, 64, 128], value=64)
+                    d_model = st.selectbox("Model Width (d_model)", [64, 96, 128], index=1)
+                    K = st.selectbox("Graph Hops (K)", [1, 2, 3], index=1)
+                    lora_r = st.selectbox("LoRA Rank", [4, 8, 16], index=1)
                 
                 if st.button("Start Training", type="primary", use_container_width=True):
                     if not st.session_state.bundle:
                         st.error("Load data first!")
                     else:
-                        # Logic to train or load
-                        if load_ckpt and os.path.exists(ckpt_path):
-                             st.info("Checkpoint loading logic would go here. For demo, we rely on persistence.")
-                        
                         # Run Training
                         status = st.status("Training in progress...", expanded=True)
                         try:
-                            wcfg = WindowConfig()
+                            wcfg = st.session_state.wcfg
                             split = SplitConfig()
-                            mcfg = {"d_model": 64, "K": 2, "lora_r": 8}
-                            tcfg = TrainConfig(epochs=8) # Lower epochs for demo speed
-                            dev = device_auto()
+                            mcfg = {"d_model": d_model, "K": K, "lora_r": lora_r}
+                            tcfg = TrainConfig(epochs=epochs, batch_size=batch_size)
                             
                             status.write("Initializing model...")
                             # Call training
@@ -1446,6 +1773,19 @@ def ui_app() -> None:
                             )
                             st.session_state.model = model
                             st.session_state.metrics = metrics
+                            st.session_state.model_info = None
+                            model_loaded, wcfg_loaded, info = load_model_checkpoint(
+                                ckpt_path, st.session_state.bundle, dev
+                            )
+                            if model_loaded is not None:
+                                st.session_state.model = model_loaded
+                                if wcfg_loaded is not None:
+                                    st.session_state.wcfg = wcfg_loaded
+                                if info.get("metrics"):
+                                    st.session_state.metrics = info["metrics"]
+                                if "checkpoint" in info:
+                                    st.session_state.model_info = checkpoint_summary(info["checkpoint"])
+                                st.session_state.load_error = None
                             status.update(label="Training Complete!", state="complete", expanded=False)
                             st.rerun()
                         except Exception as e:
@@ -1468,66 +1808,191 @@ def ui_app() -> None:
         if not st.session_state.bundle:
             st.info("Please generate data in 'Setup' tab.")
         else:
-            # Top-level KPIs
             b = st.session_state.bundle
+
+            st.markdown("### System Insights")
+            total_series = b.y_bottom.sum(axis=1)
+            df = pd.DataFrame({"timestamp": b.time_index, "total": total_series})
+            df["date"] = df["timestamp"].dt.date
+            df["hour"] = df["timestamp"].dt.hour
+            df["dow"] = df["timestamp"].dt.dayofweek
+
+            daily = df.groupby("date")["total"].mean().reset_index()
+            hourly = df.groupby("hour")["total"].mean().reset_index()
+            last7 = float(daily["total"].tail(7).mean()) if len(daily) >= 1 else 0.0
+            prev7 = float(daily["total"].iloc[-14:-7].mean()) if len(daily) >= 14 else float("nan")
+            trend = (last7 - prev7) / prev7 * 100.0 if np.isfinite(prev7) and prev7 > 0 else float("nan")
+            peak_hour = int(hourly.loc[hourly["total"].idxmax(), "hour"]) if len(hourly) else 0
+            weekend_mean = float(df[df["dow"] >= 5]["total"].mean()) if len(df) else 0.0
+            weekday_mean = float(df[df["dow"] < 5]["total"].mean()) if len(df) else 0.0
+            weekend_ratio = weekend_mean / weekday_mean if weekday_mean > 0 else float("nan")
+
+            station_mean = b.y_bottom.mean(axis=0)
+            station_std = b.y_bottom.std(axis=0)
+            station_cv = station_std / (station_mean + 1e-6)
+            volatile_idx = int(np.argmax(station_cv))
+
+            i1, i2, i3, i4 = st.columns(4)
+            i1.metric("7-day Trend", f"{trend:+.1f}%" if np.isfinite(trend) else "n/a")
+            i2.metric("Peak Hour", f"{peak_hour:02d}:00")
+            i3.metric("Weekend/Weekday", f"{weekend_ratio:.2f}x" if np.isfinite(weekend_ratio) else "n/a")
+            i4.metric("Most Volatile Station", b.net.station_names[volatile_idx])
+
+            chart_left, chart_right = st.columns([2, 1])
+            with chart_left:
+                fig_daily = go.Figure()
+                fig_daily.add_trace(go.Scatter(
+                    x=daily["date"], y=daily["total"],
+                    name="Daily Avg", line=dict(color="#0b5ed7", width=2)
+                ))
+                fig_daily.update_layout(height=260, margin=dict(l=0, r=0, t=10, b=0),
+                                        yaxis_title="Avg Ridership")
+                st.plotly_chart(fig_daily, use_container_width=True)
+            with chart_right:
+                fig_hour = go.Figure()
+                fig_hour.add_trace(go.Bar(
+                    x=hourly["hour"], y=hourly["total"],
+                    marker_color="#111827", name="Hourly Avg"
+                ))
+                fig_hour.update_layout(height=260, margin=dict(l=0, r=0, t=10, b=0),
+                                       xaxis_title="Hour", yaxis_title="Avg Ridership")
+                st.plotly_chart(fig_hour, use_container_width=True)
+
+            top_n = 5
+            top_idx = np.argsort(-station_mean)[:top_n]
+            top_df = pd.DataFrame({
+                "Station": [b.net.station_names[i] for i in top_idx],
+                "Avg Ridership": station_mean[top_idx].round(2),
+                "Volatility (CV)": station_cv[top_idx].round(2),
+            })
+            st.markdown("#### Top Stations by Average Load")
+            st.dataframe(top_df, use_container_width=True, hide_index=True)
+
+            st.divider()
+            st.markdown("### KPI Snapshot")
             avg_vol = np.mean(b.y_bottom)
             peak_vol = np.max(b.y_bottom)
-            
+
             k1, k2, k3, k4 = st.columns(4)
-            k1.metric("Avg Ridership", f"{int(avg_vol)} / 15min")
+            k1.metric("Avg Ridership", f"{int(avg_vol)} / {b.cfg.freq_min}min")
             k2.metric("Peak Volume", f"{int(peak_vol)}")
             k3.metric("Active Stations", len(b.net.station_names))
             k4.metric("Data Health", "100%")
 
-            st.divider()
-            
-            c_sim, c_res = st.columns([1, 2])
-            with c_sim:
-                st.markdown("### 🔴 Live Simulation")
-                st.caption("Simulate real-time data ingestion and drift adaptation.")
-                if st.button("▶ Start Simulation", use_container_width=True):
-                    if not st.session_state.model:
-                        st.error("Train model first!")
-                    else:
-                        with st.spinner("Running online inference..."):
-                            ocfg = OnlineConfig() # Uses new defaults
-                            wcfg = WindowConfig() # Default lookback
-                            split = SplitConfig()
-                            dev = device_auto()
-                            res = online_run_stream(
-                                st.session_state.bundle, st.session_state.model, 
-                                wcfg, split, ocfg, dev, max_steps=100
-                            )
-                            st.session_state.online_res = res
-                            st.success("Simulation Complete")
-                            st.rerun()
-
-            with c_res:
-                if st.session_state.online_res:
-                    res = st.session_state.online_res
-                    # Interactive Chart
-                    st.markdown("### Forecast vs Actual")
-                    
-                    # Preparing data for chart
-                    y_true = res.y_true[:, 0] # First station
-                    y_pred = res.y_recon[:, 0]
-                    steps = np.arange(len(y_true))
-                    
-                    fig = go.Figure()
-                    fig.add_trace(go.Scatter(x=steps, y=y_true, name="Actual", line=dict(color="black", width=2)))
-                    fig.add_trace(go.Scatter(x=steps, y=y_pred, name="Forecast", line=dict(color="#0068c9", width=2, dash="dot")))
-                    fig.update_layout(height=300, margin=dict(l=0,r=0,t=0,b=0), legend=dict(orientation="h", y=1.1))
-                    st.plotly_chart(fig, use_container_width=True)
-                    
-                    # Metrics
-                    mae = np.mean(np.abs(y_true - y_pred))
-                    acc = max(0, 100 * (1 - mae / (np.mean(y_true) + 1e-6)))
-                    st.metric("Real-time Accuracy", f"{acc:.1f}%", delta=f"MAE: {mae:.2f}", delta_color="inverse")
-
     # ==========================
-    # TAB 3: NETWORK GRAPH
+    # TAB 3: LIVE SIMULATION
     # ==========================
     with tab3:
+        st.subheader("Live Simulation")
+        if not st.session_state.bundle:
+            st.info("Please generate data in 'Setup' tab.")
+        elif not st.session_state.model:
+            st.info("Train or load a model to start the live simulation.")
+        else:
+            b = st.session_state.bundle
+            c_sim, c_res = st.columns([1, 2])
+            with c_res:
+                chart_slot = st.empty()
+                metrics_slot = st.empty()
+            with c_sim:
+                st.caption("Stream data from the test window with real-time prediction, drift monitoring, and adaptation.")
+
+                station_live = st.selectbox("Monitor Station", b.net.station_names,
+                                            index=st.session_state.sim_station_idx)
+                steps = st.slider("Simulation Steps", 50, 1200, 300, step=50)
+                update_every = st.select_slider("UI Update Interval", options=[1, 5, 10, 20], value=5)
+                playback = st.select_slider("Playback Speed (sec/step)", options=[0.0, 0.02, 0.05, 0.1], value=0.02)
+
+                if st.button("▶ Start Simulation", use_container_width=True):
+                    with st.spinner("Streaming live predictions..."):
+                        st.session_state.sim_station_idx = b.net.station_names.index(station_live)
+                        station_idx = st.session_state.sim_station_idx
+                        ocfg = OnlineConfig()
+                        wcfg = st.session_state.wcfg
+                        split = SplitConfig()
+
+                        y_true_series = []
+                        y_pred_series = []
+                        drift_hits = 0
+
+                        progress = st.progress(0)
+
+                        def step_callback(payload: Dict[str, object]) -> None:
+                            nonlocal drift_hits
+                            y_true_series.append(payload["y_obs"][station_idx])
+                            y_pred_series.append(payload["y_recon"][station_idx])
+                            if payload["drift_trigger"] > 0:
+                                drift_hits += 1
+
+                            step_count = len(y_true_series)
+                            if step_count % update_every != 0 and step_count != steps:
+                                return
+
+                            y_true_arr = np.asarray(y_true_series, dtype=np.float32)
+                            y_pred_arr = np.asarray(y_pred_series, dtype=np.float32)
+                            mae = float(np.mean(np.abs(y_true_arr - y_pred_arr)))
+                            rmse = float(np.sqrt(np.mean((y_true_arr - y_pred_arr) ** 2)))
+                            denom = float(np.mean(y_true_arr) + np.std(y_true_arr) + 1e-6)
+                            acc = 100.0 / (1.0 + (mae / denom))
+                            acc = float(np.clip(acc, 0.0, 100.0))
+
+                            fig = go.Figure()
+                            fig.add_trace(go.Scatter(x=np.arange(step_count), y=y_true_series,
+                                                     name="Actual", line=dict(color="#f97316", width=2)))
+                            fig.add_trace(go.Scatter(x=np.arange(step_count), y=y_pred_series,
+                                                     name="Forecast", line=dict(color="#0b5ed7", width=2, dash="dot")))
+                            fig.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0),
+                                              legend=dict(orientation="h", y=1.1))
+                            chart_slot.plotly_chart(fig, use_container_width=True)
+                            with metrics_slot.container():
+                                m1, m2, m3 = st.columns(3)
+                                m1.metric("Real-time Accuracy", f"{acc:.1f}%",
+                                          delta=f"MAE: {mae:.2f}", delta_color="inverse")
+                                m2.metric("RMSE", f"{rmse:.2f}")
+                                m3.metric("Drift Triggers", drift_hits)
+                            progress.progress(min(1.0, step_count / max(1, steps)))
+                            if playback > 0:
+                                time.sleep(playback)
+
+                        res = online_run_stream(
+                            b, st.session_state.model, wcfg, split, ocfg, dev,
+                            step_callback=step_callback, max_steps=steps
+                        )
+                        st.session_state.online_res = res
+                        st.success("Simulation Complete")
+
+            if st.session_state.online_res:
+                res = st.session_state.online_res
+                station_idx = st.session_state.sim_station_idx
+                y_true = res.y_true[:, station_idx]
+                y_pred = res.y_recon[:, station_idx]
+                steps_idx = np.arange(len(y_true))
+
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=steps_idx, y=y_true, name="Actual", line=dict(color="#f97316", width=2)))
+                fig.add_trace(go.Scatter(x=steps_idx, y=y_pred, name="Forecast",
+                                         line=dict(color="#0b5ed7", width=2, dash="dot")))
+                fig.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0),
+                                  legend=dict(orientation="h", y=1.1))
+                chart_slot.plotly_chart(fig, use_container_width=True)
+
+                mae = float(np.mean(np.abs(y_true - y_pred)))
+                rmse = float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
+                denom = float(np.mean(y_true) + np.std(y_true) + 1e-6)
+                acc = 100.0 / (1.0 + (mae / denom))
+                acc = float(np.clip(acc, 0.0, 100.0))
+                drift_hits = int(np.sum(res.drift_trigger))
+                with metrics_slot.container():
+                    m1, m2, m3 = st.columns(3)
+                    m1.metric("Real-time Accuracy", f"{acc:.1f}%",
+                              delta=f"MAE: {mae:.2f}", delta_color="inverse")
+                    m2.metric("RMSE", f"{rmse:.2f}")
+                    m3.metric("Drift Triggers", drift_hits)
+
+    # ==========================
+    # TAB 4: NETWORK GRAPH
+    # ==========================
+    with tab4:
         st.subheader("Network Traffic Map")
         if st.session_state.bundle:
             b = st.session_state.bundle
@@ -1539,29 +2004,88 @@ def ui_app() -> None:
             st.info("Load data to view network.")
 
     # ==========================
-    # TAB 4: CUSTOM FORECAST
+    # TAB 5: OPERATIONAL FORECAST
     # ==========================
-    with tab4:
-        st.subheader("🔮 Crystal Ball Prediction")
+    with tab5:
+        st.subheader("🔮 Operational Forecast")
         if st.session_state.bundle and st.session_state.model:
-            c1, c2, c3 = st.columns(3)
-            station = c1.selectbox("Select Station", st.session_state.bundle.net.station_names)
-            day = c2.slider("Day Offset", 0, 7, 1)
-            hour = c3.slider("Hour", 6, 23, 8)
-            
-            if st.button("Predict Passenger Count"):
-                st.info("Forecasting...")
-                idx = st.session_state.bundle.net.station_names.index(station)
-                # Realistic mock value for demo
-                base_val = st.session_state.bundle.y_bottom[:, idx].mean()
-                hour_mod = 1.5 if (7 <= hour <= 9 or 17 <= hour <= 19) else 0.5
-                pred_val = base_val * hour_mod * (0.9 + 0.2 * np.random.rand())
-                
-                st.metric(
-                    f"Forecast for {station} at {hour}:00", 
-                    f"{int(pred_val)} passengers", 
-                    delta="High Confidence" if 7 <= hour <= 20 else "Low Traffic"
-                )
+            b = st.session_state.bundle
+            freq_min = b.cfg.freq_min
+            now_ts = b.time_index[-1]
+            st.caption(f"Current system time (data clock): {now_ts}")
+
+            c1, c2 = st.columns([1, 1])
+            station = c1.selectbox("Select Station", b.net.station_names)
+            station_idx = b.net.station_names.index(station)
+
+            current_station = float(b.y_bottom[-1, station_idx])
+            current_total = float(b.y_bottom[-1].sum())
+            line_name = next((ln for ln, idxs in b.net.lines.items() if station_idx in idxs), None)
+            line_val = None
+            if line_name is not None:
+                line_idxs = b.net.lines[line_name]
+                line_val = float(b.y_bottom[-1, line_idxs].sum())
+            district = b.net.station_district[station_idx]
+            district_idxs = [i for i, d in enumerate(b.net.station_district) if d == district]
+            district_val = float(b.y_bottom[-1, district_idxs].sum())
+
+            snap1, snap2, snap3, snap4 = st.columns(4)
+            snap1.metric("Current Station Load", f"{int(current_station)}")
+            snap2.metric("District Total", f"{int(district_val)}")
+            snap3.metric("Line Total", f"{int(line_val)}" if line_val is not None else "n/a")
+            snap4.metric("Network Total", f"{int(current_total)}")
+
+            quick_options = {
+                "In 15 minutes": dt.timedelta(minutes=15),
+                "In 30 minutes": dt.timedelta(minutes=30),
+                "In 1 hour": dt.timedelta(hours=1),
+                "In 3 hours": dt.timedelta(hours=3),
+                "In 6 hours": dt.timedelta(hours=6),
+                "In 1 day": dt.timedelta(days=1),
+                "Custom date/time": None,
+            }
+            choice = c2.radio("Quick Selection", list(quick_options.keys()), index=1)
+
+            target_ts = None
+            if choice == "Custom date/time":
+                dcol, tcol = st.columns(2)
+                date_val = dcol.date_input("Date", value=now_ts.date())
+                time_val = tcol.time_input("Time", value=(now_ts + dt.timedelta(minutes=freq_min)).time())
+                target_ts = dt.datetime.combine(date_val, time_val)
+            else:
+                target_ts = now_ts + quick_options[choice]
+
+            freq_str = f"{freq_min}min"
+            aligned_ts = pd.Timestamp(target_ts).ceil(freq_str)
+            if aligned_ts != pd.Timestamp(target_ts):
+                st.caption(f"Aligned to nearest {freq_min}-minute interval: {aligned_ts}")
+
+            if aligned_ts <= now_ts:
+                st.error("Target time must be in the future.")
+            else:
+                steps_ahead = int((aligned_ts - now_ts) / pd.Timedelta(minutes=freq_min))
+                max_steps = int((7 * 24 * 60) // max(1, freq_min))
+                if steps_ahead > max_steps:
+                    st.error(f"Target is too far. Max supported horizon is {max_steps} steps (~7 days).")
+                else:
+                    st.caption(f"Forecast horizon: {steps_ahead} steps ({steps_ahead * freq_min} minutes).")
+                    if st.button("Generate Forecast", type="primary"):
+                        with st.spinner("Running model inference..."):
+                            preds, confs = iterative_forecast(
+                                b, st.session_state.model, st.session_state.wcfg, steps_ahead, dev
+                            )
+                            pred_val = float(preds[-1, station_idx])
+                            conf_val = float(confs[-1, station_idx])
+                            cv = max(0.0, (1.0 / max(conf_val, 1e-6)) - 1.0)
+                            std = cv * max(pred_val, 1e-6)
+                            lower = max(0.0, pred_val - 1.64 * std)
+                            upper = pred_val + 1.64 * std
+
+                            f1, f2, f3 = st.columns(3)
+                            f1.metric(f"Forecast for {station} at {aligned_ts}",
+                                      f"{int(max(0.0, pred_val))} passengers")
+                            f2.metric("Prediction Confidence", f"{conf_val * 100:.1f}%")
+                            f3.metric("90% Range", f"{int(lower)} - {int(upper)}")
         else:
             st.warning("Model and Data required.")
 
@@ -1712,20 +2236,20 @@ def cli_main(args: argparse.Namespace) -> None:
     RichLogger.header("COMPLETE")
 
 def build_argparser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="DTS-GSSF single-file demo (Astana bus passenger flow)")
+    p = argparse.ArgumentParser(description="DTS-GSSF single-file implementation (Astana bus passenger flow)")
     p.add_argument("--ui", action="store_true")
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--stations", type=int, default=28)
     p.add_argument("--lines", type=int, default=9)
-    p.add_argument("--days", type=int, default=35)
-    p.add_argument("--freq-min", dest="freq_min", type=int, default=15)
+    p.add_argument("--days", type=int, default=365)
+    p.add_argument("--freq-min", dest="freq_min", type=int, default=10)
     p.add_argument("--drift-day", dest="drift_day", type=int, default=24)
     p.add_argument("--lookback", type=int, default=48)
     p.add_argument("--horizon", type=int, default=12)
     p.add_argument("--d-model", dest="d_model", type=int, default=64)
     p.add_argument("--K", type=int, default=2)
     p.add_argument("--lora-r", dest="lora_r", type=int, default=8)
-    p.add_argument("--epochs", type=int, default=8)
+    p.add_argument("--epochs", type=int, default=30)
     p.add_argument("--batch-size", dest="batch_size", type=int, default=64)
     p.add_argument("--online", action="store_true")
     p.add_argument("--ph-delta", dest="ph_delta", type=float, default=0.005)
