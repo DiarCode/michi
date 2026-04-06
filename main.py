@@ -1602,21 +1602,70 @@ def ui_app() -> None:
     ckpt_path = os.path.join(os.getcwd(), "checkpoints", "model_best.pt")
     dev = device_auto()
 
+    # Load bundle if exists
     if st.session_state.bundle is None and os.path.exists(data_path):
         st.session_state.bundle = load_bundle_pickle(data_path)
-    if st.session_state.bundle is not None and st.session_state.model is None and os.path.exists(ckpt_path):
-        model, wcfg_loaded, info = load_model_checkpoint(ckpt_path, st.session_state.bundle, dev)
-        if model is not None:
-            st.session_state.model = model
-            if wcfg_loaded is not None:
-                st.session_state.wcfg = wcfg_loaded
-            if info.get("metrics"):
-                st.session_state.metrics = info["metrics"]
-            if "checkpoint" in info:
-                st.session_state.model_info = checkpoint_summary(info["checkpoint"])
-            st.session_state.load_error = None
-        else:
-            st.session_state.load_error = info.get("error", "Checkpoint load failed.")
+
+    # Auto-load model checkpoint
+    if os.path.exists(ckpt_path):
+        # Check if bundle matches checkpoint dimensions
+        state = torch.load(ckpt_path, map_location=dev)
+        ckpt_data_meta = state.get("data_meta", {})
+        ckpt_config = state.get("config", {})
+        ckpt_N = ckpt_data_meta.get("N")
+        ckpt_n_series = ckpt_data_meta.get("n_series")
+
+        bundle = st.session_state.bundle
+        if bundle is not None:
+            bundle_N = bundle.y_bottom.shape[1]
+            bundle_n_series = bundle.y_all.shape[1]
+
+            # Check dimension match
+            if ckpt_N != bundle_N or ckpt_n_series != bundle_n_series:
+                # Generate matching data
+                n_agg_ckpt = ckpt_n_series - ckpt_N if ckpt_n_series else 14
+                n_lines_ckpt = max(1, n_agg_ckpt - 5)  # 4 districts + 1 total
+                days = ckpt_data_meta.get("days", 365)
+                freq_min = ckpt_data_meta.get("freq_min", 10)
+
+                cfg = DataGenConfig(seed=7, days=days, freq_min=freq_min)
+                net = build_astana_network(n_stations=ckpt_N, n_lines=n_lines_ckpt, seed=7)
+                bundle = generate_astana_data(cfg, net)
+                st.session_state.bundle = bundle
+                st.session_state.metrics = None
+                st.session_state.model_info = None
+
+        # Now try to load model
+        if st.session_state.model is None and st.session_state.bundle is not None:
+            bundle = st.session_state.bundle
+            N = bundle.y_bottom.shape[1]
+            F_in = bundle.X.shape[2]
+            n_series = bundle.y_all.shape[1]
+            n_agg = n_series - N
+            wcfg_dict = state.get("window_config", {})
+            wcfg = WindowConfig(**wcfg_dict) if wcfg_dict else WindowConfig()
+
+            model = DTSGSSF(
+                N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
+                d_model=int(ckpt_config.get("d_model", 64)),
+                horizon=wcfg.horizon,
+                K=int(ckpt_config.get("K", 2)),
+                lora_r=int(ckpt_config.get("lora_r", 8)),
+                dropout=float(ckpt_config.get("dropout", 0.1))
+            ).to(dev)
+
+            try:
+                model.load_state_dict(state["model_state_dict"])
+                model.eval()
+                st.session_state.model = model
+                st.session_state.wcfg = wcfg
+                if "metrics" in state and state["metrics"]:
+                    st.session_state.metrics = state["metrics"]
+                if "checkpoint" in state:
+                    st.session_state.model_info = checkpoint_summary(state)
+                st.session_state.load_error = None
+            except Exception as e:
+                st.session_state.load_error = f"Failed to load model: {e}"
 
     # ------------------
     # Main Tabs
@@ -1648,20 +1697,62 @@ def ui_app() -> None:
                             st.session_state.model = None
                             st.session_state.metrics = None
                             st.session_state.model_info = None
-                            model, wcfg_loaded, info = load_model_checkpoint(ckpt_path, b, dev)
-                            if model is not None:
-                                st.session_state.model = model
-                                if wcfg_loaded is not None:
-                                    st.session_state.wcfg = wcfg_loaded
-                                if info.get("metrics"):
-                                    st.session_state.metrics = info["metrics"]
-                                if "checkpoint" in info:
-                                    st.session_state.model_info = checkpoint_summary(info["checkpoint"])
-                                st.success("Saved dataset and checkpoint loaded.")
+
+                            # Try to load checkpoint with matching dimensions
+                            if os.path.exists(ckpt_path):
+                                state = torch.load(ckpt_path, map_location=dev)
+                                ckpt_data_meta = state.get("data_meta", {})
+                                ckpt_config = state.get("config", {})
+                                ckpt_N = ckpt_data_meta.get("N")
+                                ckpt_n_series = ckpt_data_meta.get("n_series")
+
+                                bundle_N = b.y_bottom.shape[1]
+                                bundle_n_series = b.y_all.shape[1]
+
+                                if ckpt_N != bundle_N or ckpt_n_series != bundle_n_series:
+                                    # Generate matching data
+                                    n_agg_ckpt = ckpt_n_series - ckpt_N if ckpt_n_series else 14
+                                    n_lines_ckpt = max(1, n_agg_ckpt - 5)
+                                    days = ckpt_data_meta.get("days", 365)
+                                    freq_min = ckpt_data_meta.get("freq_min", 10)
+                                    cfg = DataGenConfig(seed=7, days=days, freq_min=freq_min)
+                                    net = build_astana_network(n_stations=ckpt_N, n_lines=n_lines_ckpt, seed=7)
+                                    b = generate_astana_data(cfg, net)
+                                    st.session_state.bundle = b
+                                    st.warning(f"Generated matching data: {ckpt_N} stations (checkpoint requires this)")
+
+                                # Load model
+                                N = b.y_bottom.shape[1]
+                                F_in = b.X.shape[2]
+                                n_series = b.y_all.shape[1]
+                                n_agg = n_series - N
+                                wcfg_dict = state.get("window_config", {})
+                                wcfg = WindowConfig(**wcfg_dict) if wcfg_dict else WindowConfig()
+
+                                model = DTSGSSF(
+                                    N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=b.net.A_phys,
+                                    d_model=int(ckpt_config.get("d_model", 64)),
+                                    horizon=wcfg.horizon,
+                                    K=int(ckpt_config.get("K", 2)),
+                                    lora_r=int(ckpt_config.get("lora_r", 8)),
+                                    dropout=float(ckpt_config.get("dropout", 0.1))
+                                ).to(dev)
+
+                                try:
+                                    model.load_state_dict(state["model_state_dict"])
+                                    model.eval()
+                                    st.session_state.model = model
+                                    st.session_state.wcfg = wcfg
+                                    if "metrics" in state and state["metrics"]:
+                                        st.session_state.metrics = state["metrics"]
+                                    if "checkpoint" in state:
+                                        st.session_state.model_info = checkpoint_summary(state)
+                                    st.success("✅ Dataset and model loaded!")
+                                except Exception as e:
+                                    st.success("Dataset loaded.")
+                                    st.warning(f"Model load failed: {e}")
                             else:
                                 st.success("Saved dataset loaded.")
-                                if info.get("error"):
-                                    st.warning(info["error"])
                         else:
                             st.error("Saved dataset could not be loaded.")
 
@@ -2158,42 +2249,170 @@ def train_offline_streamlit(bundle: DataBundle, wcfg: WindowConfig, split: Split
 def cli_main(args: argparse.Namespace) -> None:
     set_seed(args.seed)
     dev = device_auto()
-    
+
     # Rich initialization header
     RichLogger.header("DTS-GSSF INITIALIZATION")
     RichLogger.metric("Device", dev)
     RichLogger.metric("Seed", args.seed)
-    RichLogger.metric("Stations", args.stations)
-    RichLogger.metric("Lines", args.lines)
-    RichLogger.metric("Days", args.days)
-    RichLogger.metric("Frequency", f"{args.freq_min} min")
-    RichLogger.metric("Drift day", args.drift_day)
 
-    RichLogger.section("DATA GENERATION")
-    cfg = DataGenConfig(seed=args.seed, days=args.days, freq_min=args.freq_min, drift_day=args.drift_day)
-    net = build_astana_network(n_stations=args.stations, n_lines=args.lines, seed=args.seed)
-    bundle = generate_astana_data(cfg, net)
-    RichLogger.success(f"Generated {bundle.X.shape[0]:,} time steps × {bundle.X.shape[1]} stations")
+    # Check for existing checkpoint and data bundle
+    ckpt_path = os.path.join(os.getcwd(), "checkpoints", "model_best.pt")
+    bundle_path = os.path.join(os.getcwd(), "data", "bundle.pkl")
+
+    if args.load_only:
+        RichLogger.section("LOADING SAVED DATA & MODEL")
+
+        # Load saved data bundle
+        if not os.path.exists(bundle_path):
+            RichLogger.error(f"Data bundle not found at {bundle_path}")
+            RichLogger.info("Cannot use --load-only without saved data bundle.")
+            return
+
+        import pickle
+        RichLogger.info(f"Loading data bundle from: {bundle_path}")
+        with open(bundle_path, "rb") as f:
+            bundle = pickle.load(f)
+        RichLogger.success(f"Loaded {bundle.X.shape[0]:,} time steps × {bundle.X.shape[1]} stations")
+
+        # Load checkpoint and extract config
+        if not os.path.exists(ckpt_path):
+            RichLogger.error(f"Checkpoint not found at {ckpt_path}")
+            return
+
+        state = torch.load(ckpt_path, map_location=dev)
+        ckpt_data_meta = state.get("data_meta", {})
+        ckpt_config = state.get("config", {})
+
+        RichLogger.info(f"Checkpoint trained with: N={ckpt_data_meta.get('N')}, d_model={ckpt_config.get('d_model')}")
+
+        # Check compatibility
+        N_bundle = bundle.y_bottom.shape[1]
+        N_ckpt = ckpt_data_meta.get("N")
+        if N_ckpt is not None and N_bundle != N_ckpt:
+            RichLogger.warning(f"Bundle has {N_bundle} stations but checkpoint expects {N_ckpt}")
+            RichLogger.info("Generating new data with matching parameters...")
+
+            # Generate data with matching parameters
+            # Calculate n_lines from n_series: n_agg = n_series - N, n_lines = n_agg - n_districts - 1
+            n_series_ckpt = ckpt_data_meta.get("n_series", N_ckpt + 14)  # Default: 4 districts + 9 lines + 1 total
+            n_agg_ckpt = n_series_ckpt - N_ckpt
+            # Assume 4 districts + 1 total, so n_lines = n_agg - 5
+            n_lines_ckpt = max(1, n_agg_ckpt - 5)  # At least 1 line
+
+            days = ckpt_data_meta.get("days", args.days)
+            freq_min = ckpt_data_meta.get("freq_min", args.freq_min)
+            cfg = DataGenConfig(seed=args.seed, days=days, freq_min=freq_min, drift_day=args.drift_day)
+            net = build_astana_network(n_stations=N_ckpt, n_lines=n_lines_ckpt, seed=args.seed)
+            bundle = generate_astana_data(cfg, net)
+            RichLogger.success(f"Generated {bundle.X.shape[0]:,} time steps × {bundle.X.shape[1]} stations")
+            RichLogger.info(f"Network: {N_ckpt} stations, {n_lines_ckpt} lines, {bundle.y_all.shape[1] - N_ckpt} aggregates")
+
+        RichLogger.info(f"Loading model from: {ckpt_path}")
+
+        wcfg_dict = state.get("window_config", {})
+        wcfg = WindowConfig(**wcfg_dict) if wcfg_dict else WindowConfig(lookback=args.lookback, horizon=args.horizon)
+        split = SplitConfig()
+
+        N = bundle.y_bottom.shape[1]
+        F_in = bundle.X.shape[2]
+        n_series = bundle.y_all.shape[1]
+        n_agg = n_series - N
+
+        model = DTSGSSF(
+            N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
+            d_model=int(ckpt_config.get("d_model", args.d_model)),
+            horizon=wcfg.horizon,
+            K=int(ckpt_config.get("K", args.K)),
+            lora_r=int(ckpt_config.get("lora_r", args.lora_r)),
+            dropout=float(ckpt_config.get("dropout", 0.1))
+        ).to(dev)
+
+        try:
+            model.load_state_dict(state["model_state_dict"])
+        except Exception as e:
+            RichLogger.error(f"Failed to load model weights: {e}")
+            return
+
+        model.eval()
+        RichLogger.success("Model loaded successfully")
+
+        RichLogger.subsection("Loaded Model Config")
+        RichLogger.metric("d_model", ckpt_config.get("d_model", args.d_model))
+        RichLogger.metric("K", ckpt_config.get("K", args.K))
+        RichLogger.metric("lora_r", ckpt_config.get("lora_r", args.lora_r))
+        RichLogger.metric("Lookback", wcfg.lookback)
+        RichLogger.metric("Horizon", wcfg.horizon)
+
+        if "metrics" in state and state["metrics"]:
+            RichLogger.subsection("Saved Metrics")
+            for k, v in state["metrics"].items():
+                RichLogger.metric(k, f"{v:.4f}" if isinstance(v, float) else str(v))
+
+        # Evaluate on loaded data
+        RichLogger.section("OFFLINE EVALUATION")
+        metrics = evaluate_offline(bundle, model, wcfg, split, dev)
+    else:
+        RichLogger.metric("Stations", args.stations)
+        RichLogger.metric("Lines", args.lines)
+        RichLogger.metric("Days", args.days)
+        RichLogger.metric("Frequency", f"{args.freq_min} min")
+        RichLogger.metric("Drift day", args.drift_day)
+
+        RichLogger.section("DATA GENERATION")
+        cfg = DataGenConfig(seed=args.seed, days=args.days, freq_min=args.freq_min, drift_day=args.drift_day)
+        net = build_astana_network(n_stations=args.stations, n_lines=args.lines, seed=args.seed)
+        bundle = generate_astana_data(cfg, net)
+        RichLogger.success(f"Generated {bundle.X.shape[0]:,} time steps × {bundle.X.shape[1]} stations")
 
     wcfg = WindowConfig(lookback=args.lookback, horizon=args.horizon)
     split = SplitConfig()
     mcfg = {"d_model": args.d_model, "K": args.K, "lora_r": args.lora_r, "dropout": 0.1}
     tcfg = TrainConfig(epochs=args.epochs, batch_size=args.batch_size)
 
-    RichLogger.section("MODEL TRAINING")
-    RichLogger.subsection("Architecture")
-    RichLogger.metric("Model width (d)", args.d_model)
-    RichLogger.metric("Graph hops (K)", args.K)
-    RichLogger.metric("LoRA rank (r)", args.lora_r)
-    RichLogger.metric("Lookback (L)", args.lookback)
-    RichLogger.metric("Horizon (H)", args.horizon)
-    RichLogger.subsection("Training")
-    RichLogger.metric("Epochs", args.epochs)
-    RichLogger.metric("Batch size", args.batch_size)
-    RichLogger.metric("Learning rate", f"{tcfg.lr:.2e}")
-    print()  # spacing
-    
-    model, metrics = train_offline(bundle, wcfg, split, mcfg, tcfg, dev, verbose=True)
+    # Check for existing checkpoint
+    ckpt_path = os.path.join(os.getcwd(), "checkpoints", "model_best.pt")
+
+    if args.load_only:
+        RichLogger.section("LOADING CHECKPOINT")
+        RichLogger.info(f"Loading from: {ckpt_path}")
+
+        model, wcfg_loaded, info = load_model_checkpoint(ckpt_path, bundle, dev)
+        if model is None:
+            RichLogger.error(f"Failed to load checkpoint: {info.get('error', 'Unknown error')}")
+            RichLogger.info("Run without --load-only to train a new model.")
+            return
+
+        wcfg = wcfg_loaded if wcfg_loaded else wcfg
+        model.eval()
+
+        RichLogger.subsection("Loaded Model Info")
+        if "checkpoint" in info:
+            ckpt_summary = checkpoint_summary(info["checkpoint"])
+            for k, v in ckpt_summary.items():
+                RichLogger.metric(k, v)
+        if "metrics" in info and info["metrics"]:
+            RichLogger.subsection("Saved Metrics")
+            for k, v in info["metrics"].items():
+                RichLogger.metric(k, f"{v:.4f}" if isinstance(v, float) else str(v))
+
+        # Re-evaluate on current data
+        RichLogger.section("OFFLINE EVALUATION")
+        metrics = evaluate_offline(bundle, model, wcfg, split, dev)
+    else:
+        RichLogger.section("MODEL TRAINING")
+        RichLogger.subsection("Architecture")
+        RichLogger.metric("Model width (d)", args.d_model)
+        RichLogger.metric("Graph hops (K)", args.K)
+        RichLogger.metric("LoRA rank (r)", args.lora_r)
+        RichLogger.metric("Lookback (L)", args.lookback)
+        RichLogger.metric("Horizon (H)", args.horizon)
+        RichLogger.subsection("Training")
+        RichLogger.metric("Epochs", args.epochs)
+        RichLogger.metric("Batch size", args.batch_size)
+        RichLogger.metric("Learning rate", f"{tcfg.lr:.2e}")
+        print()  # spacing
+
+        model, metrics = train_offline(bundle, wcfg, split, mcfg, tcfg, dev, verbose=True)
     
     RichLogger.section("OFFLINE EVALUATION")
     RichLogger.table(
@@ -2256,6 +2475,8 @@ def build_argparser() -> argparse.ArgumentParser:
     p.add_argument("--ph-lambda", dest="ph_lambda", type=float, default=0.85)
     p.add_argument("--adapt-steps", dest="adapt_steps", type=int, default=18)
     p.add_argument("--max-steps", dest="max_steps", type=int, default=None)
+    p.add_argument("--load-only", dest="load_only", action="store_true",
+                   help="Load existing checkpoint without retraining")
     return p
 
 def running_in_streamlit() -> bool:
