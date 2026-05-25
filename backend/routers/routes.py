@@ -98,3 +98,42 @@ def get_route_forecast(route_id: str, db: Session = Depends(get_db)):
         "forecast": hourly,
         "avg_ridership": int(sum(h["predicted"] for h in hourly) / max(len(hourly), 1)),
     }
+
+
+@router.get("/{route_id}/schedule")
+def get_route_schedule(route_id: str):
+    """Generate a timetable for a route with departure times."""
+    stops_data = get_route_stops(route_id)
+    stops = stops_data.get("stops", [])
+    if not stops:
+        stops = ROUTE_STOPS.get(route_id, [])
+    route_info = next((r for r in MOCK_ROUTES if r["id"] == route_id), None)
+    route_name = route_info["name"] if route_info else route_id
+
+    HEADWAY = 8
+    FIRST_BUS = 6
+    LAST_BUS = 23
+    schedule = []
+    for hour in range(FIRST_BUS, LAST_BUS + 1):
+        for stop_idx, stop in enumerate(stops):
+            offset_min = stop_idx * 3
+            t_min = (hour * 60 + offset_min) % 60
+            t_hour = hour + (hour * 60 + offset_min) // 60
+            direction = "outbound" if t_hour < 14 else "inbound"
+            schedule.append({
+                "stop_id": stop["id"],
+                "stop_name": stop["name"],
+                "time": f"{t_hour:02d}:{t_min:02d}",
+                "headway_min": HEADWAY,
+                "direction": direction,
+            })
+
+    return {
+        "route_id": route_id,
+        "route_name": route_name,
+        "stops": stops,
+        "schedule": schedule,
+        "first_bus": f"{FIRST_BUS:02d}:00",
+        "last_bus": f"{LAST_BUS:02d}:30",
+        "headway_min": HEADWAY,
+    }

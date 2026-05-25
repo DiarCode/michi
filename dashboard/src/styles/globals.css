@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --border: #e5e7eb;
+  }
+  .dark {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+  }
+  body {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+  .dark aside { background-color: #0f172a !important; }
+  .dark header { background-color: #1e293b !important; border-color: #334155 !important; }
+  .dark .bg-white { background-color: #1e293b !important; }
+  .dark .bg-gray-50 { background-color: #0f172a !important; }
+  .dark .bg-gray-100 { background-color: #1e293b !important; }
+  .dark .text-gray-500 { color: #94a3b8 !important; }
+  .dark .text-gray-600 { color: #94a3b8 !important; }
+  .dark .text-gray-900 { color: #f1f5f9 !important; }
+  .dark .border-b { border-color: #334155 !important; }
+  .dark .border { border-color: #334155 !important; }
+  .dark table { color: #f1f5f9; }
+  .dark select, .dark input[type="range"] { background-color: #334155; color: #f1f5f9; border-color: #475569; }
+}

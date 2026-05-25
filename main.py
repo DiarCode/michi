@@ -1877,6 +1877,52 @@ def ui_app() -> None:
                 else:
                     st.warning("⚠️ No data loaded")
 
+                # --- Real Ridership Upload ---
+                st.divider()
+                st.subheader("📥 Upload Real Ridership")
+                st.caption("Upload a CSV with columns `station` (name or ID) and ridership values to compare against predictions. Calculates MAE/RMSE.")
+                ridership_file = st.file_uploader("Upload ridership CSV", type=["csv"], key="ridership_upload")
+                if ridership_file and st.session_state.bundle is not None:
+                    try:
+                        df_real = pd.read_csv(ridership_file)
+                        b = st.session_state.bundle
+                        if "station" not in df_real.columns:
+                            st.error("CSV must have a 'station' column with station names or IDs.")
+                        else:
+                            # Match stations
+                            matched = 0
+                            errors = []
+                            for _, row in df_real.iterrows():
+                                sname = str(row["station"])
+                                idx = None
+                                if sname in b.net.station_names:
+                                    idx = b.net.station_names.index(sname)
+                                else:
+                                    for i, sn in enumerate(b.net.station_names):
+                                        if sname in sn or sn in sname:
+                                            idx = i
+                                            break
+                                if idx is not None:
+                                    actual = row.get("ridership", row.get("actual", row.get("value", None)))
+                                    if actual is not None:
+                                        predicted = float(b.y_bottom[-1, idx])
+                                        errors.append(abs(predicted - float(actual)))
+                                        matched += 1
+                            if matched > 0:
+                                mae = sum(errors) / len(errors)
+                                rmse = (sum(e**2 for e in errors) / len(errors)) ** 0.5
+                                m1, m2, m3 = st.columns(3)
+                                m1.metric("Stations Matched", f"{matched}/{len(df_real)}")
+                                m2.metric("MAE", f"{mae:.1f} passengers")
+                                m3.metric("RMSE", f"{rmse:.1f} passengers")
+                                st.success(f"✅ Compared real ridership against model predictions for {matched} stations.")
+                            else:
+                                st.warning("No stations matched. Ensure 'station' column values match network station names.")
+                    except Exception as e:
+                        st.error(f"Error processing file: {e}")
+                elif ridership_file and st.session_state.bundle is None:
+                    st.warning("Load or generate data first before uploading ridership.")
+
         with col_model:
             st.subheader("2. Model Training")
             with st.container(border=True):
@@ -2288,6 +2334,60 @@ def ui_app() -> None:
                                       f"{int(max(0.0, pred_val))} passengers")
                             f2.metric("Prediction Confidence", f"{conf_val * 100:.1f}%")
                             f3.metric("90% Range", f"{int(lower)} - {int(upper)}")
+
+            # --- Line-Level Forecast ---
+            st.divider()
+            st.subheader("🚍 Forecast by Line")
+            st.caption("Aggregate forecast across all stations on a route.")
+            if b.net.lines:
+                line_names = list(b.net.lines.keys())
+                selected_line = st.selectbox("Select Line", line_names, key="forecast_line_sel")
+                line_idxs = b.net.lines[selected_line]
+                line_station_names = [b.net.station_names[i] for i in line_idxs]
+
+                quick_line = st.radio("Horizon", ["30 min", "1 hour", "3 hours", "6 hours"], index=1, horizontal=True, key="line_horizon")
+                horizon_map = {"30 min": 1, "1 hour": 2, "3 hours": 6, "6 hours": 12}
+                steps_line = horizon_map.get(quick_line, 2)
+
+                if st.button("Generate Line Forecast", key="line_fc_btn"):
+                    with st.spinner("Forecasting line..."):
+                        preds, confs = iterative_forecast(b, st.session_state.model, st.session_state.wcfg, steps_line, dev)
+                        line_pred = preds[-1, line_idxs].sum()
+                        line_conf = confs[-1, line_idxs].mean()
+
+                        lc1, lc2, lc3 = st.columns(3)
+                        lc1.metric(f"{selected_line} Forecast", f"{int(line_pred)} passengers")
+                        lc2.metric("Confidence", f"{line_conf * 100:.1f}%")
+                        lc3.metric("Stations on Line", f"{len(line_idxs)}")
+
+                        # Per-station breakdown
+                        st.caption("Per-station breakdown:")
+                        breakdown = []
+                        for i, idx in enumerate(line_idxs):
+                            breakdown.append({
+                                "Station": line_station_names[i],
+                                "Predicted": int(preds[-1, idx]),
+                                "Confidence": f"{confs[-1, idx] * 100:.1f}%"
+                            })
+                        st.dataframe(pd.DataFrame(breakdown), use_container_width=True, hide_index=True)
+
+                # --- What if we add a bus? ---
+                st.divider()
+                st.subheader("🚌 What if we add a bus?")
+                st.caption("Estimate ridership impact of changing headway on a line.")
+                extra_buses = st.slider("Additional buses on this line", 0, 5, 1, key="extra_buses_slider")
+                if extra_buses > 0:
+                    current_headway = max(5, b.cfg.freq_min)
+                    new_headway = max(2, current_headway // (extra_buses + 1))
+                    est_capacity_increase = extra_buses * 60 // new_headway * len(line_idxs)
+                    est_ridership_change = int(line_val * (1.0 / (1 + extra_buses * 0.15)) if line_val else 0)
+                    sc1, sc2 = st.columns(2)
+                    sc1.metric("New Headway", f"{new_headway} min", delta=f"-{current_headway - new_headway} min")
+                    sc2.metric("Est. Ridership Uplift", f"+{est_capacity_increase}", delta=f"~{est_ridership_change} shift from peak")
+                    st.info(f"Adding {extra_buses} bus(es) reduces headway from {current_headway}→{new_headway} min, potentially absorbing ~{est_capacity_increase} additional passenger-trips per hour on {selected_line}.")
+            else:
+                st.info("No line information available in network data.")
+
         else:
             st.warning("Model and Data required.")
 

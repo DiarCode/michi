@@ -6,7 +6,8 @@ import AlertsPage from "./routes/AlertsPage";
 import ScenarioPlanner from "./routes/ScenarioPlanner";
 import Settings from "./routes/Settings";
 import Reports from "./routes/Reports";
-import { BarChart, Map, AlertTriangle, FlaskConical, Settings as SettingsIcon, FileText } from "lucide-react";
+import Timetable from "./routes/Timetable";
+import { BarChart, Map, AlertTriangle, FlaskConical, Settings as SettingsIcon, FileText, Clock } from "lucide-react";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const NAV = [
   { to: "/alerts", label: "Alerts", Icon: AlertTriangle },
   { to: "/scenarios", label: "Scenarios", Icon: FlaskConical },
   { to: "/reports", label: "Reports", Icon: FileText },
+  { to: "/timetable", label: "Timetable", Icon: Clock },
   { to: "/settings", label: "Settings", Icon: SettingsIcon },
 ];
 
@@ -46,6 +48,7 @@ export default function App() {
                 <Route path="/alerts" element={<AlertsPage />} />
                 <Route path="/scenarios" element={<ScenarioPlanner />} />
                 <Route path="/reports" element={<Reports />} />
+                <Route path="/timetable" element={<Timetable />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </main>
