@@ -1,4 +1,5 @@
 """Scenario service - runs what-if simulations."""
+import hashlib
 from typing import Dict, List, Any
 
 
@@ -14,8 +15,9 @@ def run_scenario(config: Dict[str, Any]) -> Dict[str, Any]:
         mod_type = mod.get("type")
         params = mod.get("params", {})
         if mod_type == "frequency":
-            headway = params.get("headway", 10)
-            scenario_ridership *= 1 + (10 - headway) * 0.02
+            headway = max(1, min(60, params.get("headway", 10)))
+            multiplier = max(0.1, 1 + (10 - headway) * 0.02)
+            scenario_ridership *= multiplier
             scenario_wait *= max(0.5, headway / 10)
         elif mod_type == "route_add":
             scenario_ridership *= 1.05
@@ -24,7 +26,7 @@ def run_scenario(config: Dict[str, Any]) -> Dict[str, Any]:
             scenario_wait *= 1.15
     scenario_ridership = round(scenario_ridership)
     scenario_wait = round(scenario_wait, 1)
-    sid = abs(hash(name)) % 10000
+    sid = int(hashlib.md5(name.encode()).hexdigest()[:4], 16)
     return {
         "scenario_id": f"scen-{sid:04d}",
         "base_metrics": {"ridership": int(base_ridership), "avg_wait": base_wait},

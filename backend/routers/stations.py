@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from backend.database import get_db
 from backend.models_orm import StationORM
@@ -22,20 +22,46 @@ MOCK_STATIONS = [
     {"id": "S012", "name": "Duman", "lat": 51.1450, "lon": 71.4200, "district": "Esil", "ridership_24h": 1100},
 ]
 
+STATION_CAPACITY = 3000  # Estimated max capacity per station
 
-@router.get("")
-def list_stations(db: Session = Depends(get_db)):
+
+def _get_stations(db: Session):
+    """Shared helper: return stations list with DB fallback to mock data."""
     try:
         db_stations = db.query(StationORM).all()
         if db_stations:
-            return {"stations": [
+            return [
                 {"id": s.stop_id, "name": s.name, "lat": s.lat, "lon": s.lon,
                  "district": s.district, "ridership_24h": s.ridership_24h}
                 for s in db_stations
-            ]}
+            ]
     except Exception:
         pass
-    return {"stations": MOCK_STATIONS}
+    # Return copies to avoid mutating mock data
+    return [dict(s) for s in MOCK_STATIONS]
+
+
+def _calc_load_pct(ridership_24h: int, hour: int) -> int:
+    """Estimate load percentage for a given hour based on 24h ridership."""
+    if 7 <= hour <= 9 or 17 <= hour <= 19:
+        return min(95, int(ridership_24h / STATION_CAPACITY * 100 * 1.4))
+    elif 6 <= hour <= 22:
+        return min(70, int(ridership_24h / STATION_CAPACITY * 100 * 0.8))
+    else:
+        return min(30, int(ridership_24h / STATION_CAPACITY * 100 * 0.25))
+
+
+@router.get("")
+def list_stations(hour: Optional[int] = Query(None, ge=0, le=23), db: Session = Depends(get_db)):
+    """List stations, optionally with heatmap load data for a specific hour."""
+    stations = _get_stations(db)
+
+    if hour is not None:
+        for s in stations:
+            ridership = s.get("ridership_24h", 0) or 0
+            s["load_percent"] = _calc_load_pct(ridership, hour)
+
+    return {"stations": stations}
 
 
 @router.get("/{station_id}/forecast")
@@ -49,10 +75,9 @@ def get_station_detail(station_id: str, db: Session = Depends(get_db)):
     """Station detail with forecasts, connected routes, and active alerts."""
     from backend.models_orm import RouteORM, RouteStopORM, AlertORM
     from backend.services.alert_service import list_alerts
+
     try:
         station = db.query(StationORM).filter(StationORM.stop_id == station_id).first()
-        if not station:
-            return {"error": "Station not found", "station_id": station_id}
     except Exception:
         station = None
 
@@ -63,10 +88,10 @@ def get_station_detail(station_id: str, db: Session = Depends(get_db)):
     else:
         for s in MOCK_STATIONS:
             if s["id"] == station_id:
-                station_info = s
+                station_info = dict(s)
                 break
     if not station_info:
-        return {"error": "Station not found", "station_id": station_id}
+        raise HTTPException(status_code=404, detail=f"Station {station_id} not found")
 
     # Connected routes
     connected_routes = []
@@ -77,13 +102,12 @@ def get_station_detail(station_id: str, db: Session = Depends(get_db)):
             if route:
                 connected_routes.append({"id": route.route_id, "name": route.name, "color": route.color})
     except Exception:
-        for rid, stops in [
-            ("R1", []), ("R2", []), ("R3", []), ("R4", []), ("R5", [])
-        ]:
-            from backend.routers.routes import ROUTE_STOPS
-            for stop in ROUTE_STOPS.get(rid, []):
-                if stop["id"] == station_id:
-                    connected_routes.append({"id": rid, "name": f"Route {rid[1:]}", "color": "#2E86AB"})
+        from backend.routers.routes import ROUTE_STOPS, MOCK_ROUTES
+        for rid, stops in ROUTE_STOPS.items():
+            if any(stop["id"] == station_id for stop in stops):
+                route_info = next((r for r in MOCK_ROUTES if r["id"] == rid), None)
+                if route_info:
+                    connected_routes.append({"id": route_info["id"], "name": route_info["name"], "color": route_info.get("color", "#2E86AB")})
 
     # Forecast
     forecast = get_forecast(station_id)
@@ -96,7 +120,7 @@ def get_station_detail(station_id: str, db: Session = Depends(get_db)):
     except Exception:
         pass
 
-    # Hourly ridership pattern (synthetic from forecast)
+    # Hourly ridership pattern
     hourly = [{"hour": i, "ridership": f["predicted"]} for i, f in enumerate(forecast)]
 
     return {
@@ -106,30 +130,3 @@ def get_station_detail(station_id: str, db: Session = Depends(get_db)):
         "alerts": station_alerts,
         "hourly_ridership": hourly,
     }
-
-
-@router.get("")
-def list_stations_with_heatmap(hour: Optional[int] = None, db: Session = Depends(get_db)):
-    """List stations with heatmap data for a specific hour."""
-    stations_data = list_stations(db)
-    if isinstance(stations_data, dict) and "stations" in stations_data:
-        stations = stations_data["stations"]
-    else:
-        return stations_data
-
-    if hour is None:
-        return stations_data
-
-    # Add load percentage for heatmap
-    for s in stations:
-        ridership = s.get("ridership_24h", 0) or 0
-        # Estimate hourly load: distribute 24h ridership using rush-hour curve
-        if 7 <= hour <= 9 or 17 <= hour <= 19:
-            load_pct = min(95, int(ridership * 0.08 / 30))  # Rush hour
-        elif 6 <= hour <= 22:
-            load_pct = min(70, int(ridership * 0.04 / 30))  # Regular
-        else:
-            load_pct = min(30, int(ridership * 0.01 / 30))  # Night
-        s["load_percent"] = load_pct
-
-    return {"stations": stations, "hour": hour}

@@ -14,7 +14,7 @@ export default function AlertsPage() {
   const filtered = severity === "all" ? alerts : alerts.filter((a) => a.severity === severity);
 
   const generateAlerts = async () => {
-    try { await api.post("/alerts/generate"); } catch {}
+    try { await api.post("/alerts/generate"); } catch { /* alert generation is optional */ }
   };
 
   return (

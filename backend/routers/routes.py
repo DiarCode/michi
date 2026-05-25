@@ -34,7 +34,7 @@ def list_routes(db: Session = Depends(get_db)):
             ]}
     except Exception:
         pass
-    return {"routes": MOCK_ROUTES}
+    return {"routes": [dict(r) for r in MOCK_ROUTES]}
 
 
 @router.get("/{route_id}/stops")
@@ -50,7 +50,7 @@ def get_route_stops(route_id: str, db: Session = Depends(get_db)):
             return {"route_id": route_id, "stops": result}
     except Exception:
         pass
-    return {"route_id": route_id, "stops": ROUTE_STOPS.get(route_id, [])}
+    return {"route_id": route_id, "stops": [dict(s) for s in ROUTE_STOPS.get(route_id, [])]}
 
 
 @router.get("/{route_id}/forecast")
@@ -63,13 +63,11 @@ def get_route_forecast(route_id: str, db: Session = Depends(get_db)):
     if not stops:
         return {"route_id": route_id, "forecast": [], "avg_ridership": 0}
 
-    # Aggregate forecasts across all stops on this route
     all_forecasts = []
     for stop in stops:
         f = get_forecast(stop["id"])
         all_forecasts.append(f)
 
-    # Average across stops per hour
     hourly = []
     for h in range(24):
         preds = [f[h]["predicted"] for f in all_forecasts if len(f) > h]
@@ -101,9 +99,9 @@ def get_route_forecast(route_id: str, db: Session = Depends(get_db)):
 
 
 @router.get("/{route_id}/schedule")
-def get_route_schedule(route_id: str):
+def get_route_schedule(route_id: str, db: Session = Depends(get_db)):
     """Generate a timetable for a route with departure times."""
-    stops_data = get_route_stops(route_id)
+    stops_data = get_route_stops(route_id, db)
     stops = stops_data.get("stops", [])
     if not stops:
         stops = ROUTE_STOPS.get(route_id, [])
@@ -117,8 +115,12 @@ def get_route_schedule(route_id: str):
     for hour in range(FIRST_BUS, LAST_BUS + 1):
         for stop_idx, stop in enumerate(stops):
             offset_min = stop_idx * 3
-            t_min = (hour * 60 + offset_min) % 60
-            t_hour = hour + (hour * 60 + offset_min) // 60
+            total_minutes = hour * 60 + offset_min
+            t_hour = total_minutes // 60
+            t_min = total_minutes % 60
+            # Skip times past midnight
+            if t_hour > 23:
+                continue
             direction = "outbound" if t_hour < 14 else "inbound"
             schedule.append({
                 "stop_id": stop["id"],

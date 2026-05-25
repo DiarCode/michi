@@ -39,9 +39,7 @@ def list_alerts(severity: Optional[str] = None, active_only: bool = True) -> Lis
         result = [a for a in result if a["severity"] == severity]
     if active_only:
         result = [a for a in result if a["id"] not in _acked]
-    for a in result:
-        a["acknowledged"] = a["id"] in _acked
-    return result
+    return [{**a, "acknowledged": a["id"] in _acked} for a in result]
 
 
 def ack_alert(alert_id: int) -> bool:

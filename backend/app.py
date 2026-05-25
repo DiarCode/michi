@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Michi Transit Intelligence API", version="1.0.0", lifespan=lifespan)
 
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
 
 app.include_router(stations.router, prefix="/api/v1/stations", tags=["stations"])
 app.include_router(routes_router.router, prefix="/api/v1/routes", tags=["routes"])

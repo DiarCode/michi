@@ -1,6 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import StreamingResponse
 from backend.services.forecast_service import get_kpi_metrics
+from backend.routers.stations import _get_stations
+from backend.database import get_db
+from sqlalchemy.orm import Session
 import io, csv
 from datetime import datetime, timezone
 
@@ -11,12 +14,10 @@ def get_kpis():
     return get_kpi_metrics()
 
 @router.get("/operations")
-def get_operations_report(format: str = "json"):
+def get_operations_report(fmt: str = Query("json", alias="format"), db: Session = Depends(get_db)):
     """Daily operations summary report."""
     kpis = get_kpi_metrics()
-    from backend.routers.stations import list_stations
-    stations_data = list_stations()
-    stations = stations_data.get("stations", []) if isinstance(stations_data, dict) else []
+    stations = _get_stations(db)
 
     peak_hours = ["07:00", "08:00", "09:00", "17:00", "18:00", "19:00"]
     district_summary = {}
@@ -37,7 +38,7 @@ def get_operations_report(format: str = "json"):
         "total_stations": len(stations),
     }
 
-    if format == "csv":
+    if fmt == "csv":
         output = io.StringIO()
         writer = csv.writer(output)
         writer.writerow(["Metric", "Value"])

@@ -17,7 +17,7 @@ export default function LiveMap() {
   const [routeForecast, setRouteForecast] = useState<RouteForecast | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => { fetchRoutes().then((r) => setRoutes(r.routes ?? [])); }, []);
+  useEffect(() => { fetchRoutes().then((r) => setRoutes(r.routes ?? [])).catch(() => {}); }, []);
 
   useEffect(() => {
     wsClient.connect();

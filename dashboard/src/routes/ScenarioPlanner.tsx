@@ -30,7 +30,7 @@ export default function ScenarioPlanner() {
         modifications: [{ type: scenarioType, target: "R1", params: { headway } }],
       });
       setResult(data);
-    } finally { setLoading(false); }
+    } catch { /* scenario error handled by UI state */ } finally { setLoading(false); }
   };
 
   const pctColor = (val: number, positiveIsGood = true) =>
