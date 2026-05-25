@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from backend.database import get_db
 from backend.models_orm import StationORM
 from backend.services.forecast_service import get_forecast
+from backend.models import StationListResponse, StationDetailResponse, ForecastResponse
 
 router = APIRouter()
 
@@ -51,7 +52,7 @@ def _calc_load_pct(ridership_24h: int, hour: int) -> int:
         return min(30, int(ridership_24h / STATION_CAPACITY * 100 * 0.25))
 
 
-@router.get("")
+@router.get("", response_model=StationListResponse)
 def list_stations(hour: Optional[int] = Query(None, ge=0, le=23), db: Session = Depends(get_db)):
     """List stations, optionally with heatmap load data for a specific hour."""
     stations = _get_stations(db)
@@ -64,13 +65,13 @@ def list_stations(hour: Optional[int] = Query(None, ge=0, le=23), db: Session = 
     return {"stations": stations}
 
 
-@router.get("/{station_id}/forecast")
+@router.get("/{station_id}/forecast", response_model=ForecastResponse)
 def get_station_forecast(station_id: str):
     forecast = get_forecast(station_id)
     return {"station_id": station_id, "forecast": forecast}
 
 
-@router.get("/{station_id}/detail")
+@router.get("/{station_id}/detail", response_model=StationDetailResponse)
 def get_station_detail(station_id: str, db: Session = Depends(get_db)):
     """Station detail with forecasts, connected routes, and active alerts."""
     from backend.models_orm import RouteORM, RouteStopORM, AlertORM

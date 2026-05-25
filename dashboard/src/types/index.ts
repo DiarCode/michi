@@ -73,3 +73,30 @@ export interface RouteForecast {
   forecast: { hour: number; predicted: number; confidence: number }[];
   avg_ridership: number;
 }
+
+export interface ScheduleEntry {
+  stop_id: string;
+  stop_name: string;
+  time: string;
+  headway_min: number;
+  direction: string;
+}
+
+export interface RouteSchedule {
+  route_id: string;
+  route_name: string;
+  stops: RouteStop[];
+  schedule: ScheduleEntry[];
+  first_bus: string;
+  last_bus: string;
+  headway_min: number;
+}
+
+export interface OperationsReport {
+  date: string;
+  kpis: KPIData;
+  district_summary: Record<string, { stations: number; total_ridership: number }>;
+  peak_hours: string[];
+  over_capacity_stations: { id: string; name: string; ridership_24h: number }[];
+  total_stations: number;
+}

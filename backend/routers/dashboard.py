@@ -3,20 +3,21 @@ from fastapi.responses import StreamingResponse
 from backend.services.forecast_service import get_kpi_metrics
 from backend.routers.stations import _get_stations
 from backend.database import get_db
+from backend.models import KPIResponse, OperationsReportResponse
 from sqlalchemy.orm import Session
 import io, csv
 from datetime import datetime, timezone
 
 router = APIRouter()
 
-@router.get("/kpis")
-def get_kpis():
-    return get_kpi_metrics()
+@router.get("/kpis", response_model=KPIResponse)
+def get_kpis(db: Session = Depends(get_db)):
+    return get_kpi_metrics(db)
 
-@router.get("/operations")
-def get_operations_report(fmt: str = Query("json", alias="format"), db: Session = Depends(get_db)):
+@router.get("/operations", response_model=OperationsReportResponse)
+def get_operations_report(report_format: str = Query("json", alias="format"), db: Session = Depends(get_db)):
     """Daily operations summary report."""
-    kpis = get_kpi_metrics()
+    kpis = get_kpi_metrics(db)
     stations = _get_stations(db)
 
     peak_hours = ["07:00", "08:00", "09:00", "17:00", "18:00", "19:00"]
@@ -38,7 +39,7 @@ def get_operations_report(fmt: str = Query("json", alias="format"), db: Session 
         "total_stations": len(stations),
     }
 
-    if fmt == "csv":
+    if report_format == "csv":
         output = io.StringIO()
         writer = csv.writer(output)
         writer.writerow(["Metric", "Value"])

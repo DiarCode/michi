@@ -21,12 +21,63 @@ celery_app.conf.update(
     },
 )
 
+
+def _get_db_session():
+    """Create a short-lived DB session for Celery workers."""
+    from backend.database import SessionLocal
+    return SessionLocal()
+
+
 @celery_app.task
 def generate_forecasts():
-    print("Generating forecasts...")
-    return {"status": "ok"}
+    """Generate 24h forecasts for all stations and persist to DB."""
+    from backend.models_orm import StationORM, ForecastORM
+    from backend.services.forecast_service import generate_24h_forecast
+    from datetime import datetime, timezone
+
+    db = _get_db_session()
+    try:
+        stations = db.query(StationORM).all()
+        if not stations:
+            return {"status": "skipped", "reason": "no stations in DB"}
+
+        count = 0
+        now = datetime.now(timezone.utc)
+        for station in stations:
+            base = station.ridership_24h or 1000
+            hourly = generate_24h_forecast(station.stop_id, base_ridership=base)
+            for entry in hourly:
+                from datetime import datetime as _dt
+                ts = _dt.fromisoformat(entry["timestamp"])
+                existing = (db.query(ForecastORM)
+                            .filter(ForecastORM.station_id == station.stop_id,
+                                    ForecastORM.timestamp == ts)
+                            .first())
+                if existing:
+                    existing.predicted = entry["predicted"]
+                    existing.confidence = entry["confidence"]
+                    existing.model_version = "dts-gssf-celery"
+                    existing.created_at = now
+                else:
+                    db.add(ForecastORM(
+                        station_id=station.stop_id,
+                        timestamp=ts,
+                        predicted=entry["predicted"],
+                        confidence=entry["confidence"],
+                        model_version="dts-gssf-celery",
+                        created_at=now,
+                    ))
+                count += 1
+        db.commit()
+        return {"status": "ok", "forecasts_generated": count}
+    except Exception as e:
+        db.rollback()
+        return {"status": "error", "detail": str(e)}
+    finally:
+        db.close()
+
 
 @celery_app.task
 def retrain_model():
-    print("Retraining model...")
-    return {"status": "ok"}
+    """Trigger model retraining (placeholder for DTS-GSSF pipeline)."""
+    return {"status": "queued", "message": "Model retraining requested — connect DTS-GSSF pipeline to execute"}

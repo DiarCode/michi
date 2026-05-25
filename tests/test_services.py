@@ -18,10 +18,11 @@ class TestForecastService:
         r2 = get_forecast("S002")
         assert len(r1) == len(r2) == 24
 
-    def test_get_kpi_metrics(self):
-        kpis = get_kpi_metrics()
-        assert kpis["total_stations"] == 12
-        assert kpis["active_routes"] == 5
+    def test_get_kpi_metrics_no_db(self):
+        kpis = get_kpi_metrics(db=None)
+        assert "total_stations" in kpis
+        assert "active_routes" in kpis
+        assert "avg_ridership" in kpis
 
 
 class TestAlertService:

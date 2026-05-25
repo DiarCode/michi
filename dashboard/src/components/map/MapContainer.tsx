@@ -2,6 +2,12 @@ import type { ReactNode } from "react";
 import type { Station, BusPosition } from "@/types";
 import StationMarker from "./StationMarker";
 import BusMarker from "./BusMarker";
+import {
+  MAP_LON_MIN, MAP_LON_SPAN, MAP_LAT_MAX, MAP_LAT_SPAN,
+  LOAD_HIGH, LOAD_MID, STATION_CAPACITY,
+  HEATMAP_MIN_PX, HEATMAP_RANGE_PX,
+  MORNING_PEAK, EVENING_PEAK,
+} from "@/lib/constants";
 
 interface Props {
   stations: Station[];
@@ -21,12 +27,12 @@ const STATION_ROUTES: Record<string, string[]> = {
 };
 
 export default function MapContainer({ stations, buses, showHeatmap = true, hour = new Date().getHours(), onStationClick, selectedRoutes }: Props) {
-  const getHeatColor = (load: number) => load > 80 ? "#ef4444" : load > 50 ? "#f59e0b" : "#22c55e";
+  const getHeatColor = (load: number) => load > LOAD_HIGH ? "#ef4444" : load > LOAD_MID ? "#f59e0b" : "#22c55e";
   const getLoadPercent = (s: Station) => {
     const base = s.ridership_24h ?? 1000;
-    if (hour >= 7 && hour <= 9 || hour >= 17 && hour <= 19) return Math.min(95, Math.round(base * 0.08 / 30));
-    if (hour >= 6 && hour <= 22) return Math.min(70, Math.round(base * 0.04 / 30));
-    return Math.min(30, Math.round(base * 0.01 / 30));
+    if (hour >= MORNING_PEAK[0] && hour <= MORNING_PEAK[1] || hour >= EVENING_PEAK[0] && hour <= EVENING_PEAK[1]) return Math.min(95, Math.round(base / STATION_CAPACITY * 100));
+    if (hour >= 6 && hour <= 22) return Math.min(70, Math.round(base * 0.6 / STATION_CAPACITY * 100));
+    return Math.min(30, Math.round(base * 0.15 / STATION_CAPACITY * 100));
   };
   const isHighlighted = (s: Station) => {
     if (!selectedRoutes || selectedRoutes.size === 0) return true;
@@ -41,9 +47,9 @@ export default function MapContainer({ stations, buses, showHeatmap = true, hour
       {/* Heatmap circles */}
       {showHeatmap && stations.map((s) => {
         const load = getLoadPercent(s);
-        const size = 8 + (load / 100) * 20;
-        const left = ((s.lon - 71.25) / 0.4) * 100;
-        const top = ((51.25 - s.lat) / 0.3) * 100;
+        const size = HEATMAP_MIN_PX + (load / 100) * HEATMAP_RANGE_PX;
+        const left = ((s.lon - MAP_LON_MIN) / MAP_LON_SPAN) * 100;
+        const top = ((MAP_LAT_MAX - s.lat) / MAP_LAT_SPAN) * 100;
         const hl = isHighlighted(s);
         return (<div key={"heat-" + s.id} className="absolute rounded-full transition-all duration-300" style={{ left: left + "%", top: top + "%", width: size, height: size, backgroundColor: getHeatColor(load), transform: "translate(-50%, -50%)", opacity: hl ? 0.6 : 0.15 }} />);
       })}

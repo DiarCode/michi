@@ -5,6 +5,7 @@ from backend.services.alert_service import list_alerts, ack_alert as ack, genera
 from backend.services.forecast_service import get_forecast
 from backend.routers.stations import _get_stations
 from backend.database import get_db
+from backend.models import AlertListResponse
 from sqlalchemy.orm import Session
 
 router = APIRouter()
@@ -16,11 +17,11 @@ class AlertRuleInput(BaseModel):
     title_template: str
     message_template: str
 
-@router.get("")
+@router.get("", response_model=AlertListResponse)
 def get_alerts(severity: Optional[str] = None, active_only: bool = True):
     return {"alerts": list_alerts(severity, active_only)}
 
-@router.get("/active")
+@router.get("/active", response_model=AlertListResponse)
 def get_active_alerts():
     return {"alerts": list_alerts(active_only=True)}
 

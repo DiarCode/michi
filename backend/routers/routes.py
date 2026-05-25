@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from backend.database import get_db
 from backend.models_orm import RouteORM, RouteStopORM, StationORM
+from backend.models import RouteListResponse, RouteStopsResponse, RouteForecastResponse, RouteScheduleResponse
 
 router = APIRouter()
 
@@ -22,7 +23,7 @@ ROUTE_STOPS = {
 }
 
 
-@router.get("")
+@router.get("", response_model=RouteListResponse)
 def list_routes(db: Session = Depends(get_db)):
     try:
         db_routes = db.query(RouteORM).all()
@@ -37,7 +38,7 @@ def list_routes(db: Session = Depends(get_db)):
     return {"routes": [dict(r) for r in MOCK_ROUTES]}
 
 
-@router.get("/{route_id}/stops")
+@router.get("/{route_id}/stops", response_model=RouteStopsResponse)
 def get_route_stops(route_id: str, db: Session = Depends(get_db)):
     try:
         db_stops = (db.query(RouteStopORM).filter(RouteStopORM.route_id == route_id)
@@ -53,7 +54,7 @@ def get_route_stops(route_id: str, db: Session = Depends(get_db)):
     return {"route_id": route_id, "stops": [dict(s) for s in ROUTE_STOPS.get(route_id, [])]}
 
 
-@router.get("/{route_id}/forecast")
+@router.get("/{route_id}/forecast", response_model=RouteForecastResponse)
 def get_route_forecast(route_id: str, db: Session = Depends(get_db)):
     """Aggregated route-level forecast averaging across all stops on the route."""
     from backend.services.forecast_service import get_forecast
@@ -98,7 +99,7 @@ def get_route_forecast(route_id: str, db: Session = Depends(get_db)):
     }
 
 
-@router.get("/{route_id}/schedule")
+@router.get("/{route_id}/schedule", response_model=RouteScheduleResponse)
 def get_route_schedule(route_id: str, db: Session = Depends(get_db)):
     """Generate a timetable for a route with departure times."""
     stops_data = get_route_stops(route_id, db)
