@@ -51,3 +51,50 @@ def get_route_stops(route_id: str, db: Session = Depends(get_db)):
     except Exception:
         pass
     return {"route_id": route_id, "stops": ROUTE_STOPS.get(route_id, [])}
+
+
+@router.get("/{route_id}/forecast")
+def get_route_forecast(route_id: str, db: Session = Depends(get_db)):
+    """Aggregated route-level forecast averaging across all stops on the route."""
+    from backend.services.forecast_service import get_forecast
+    stops_data = get_route_stops(route_id, db)
+    stops = stops_data.get("stops", [])
+
+    if not stops:
+        return {"route_id": route_id, "forecast": [], "avg_ridership": 0}
+
+    # Aggregate forecasts across all stops on this route
+    all_forecasts = []
+    for stop in stops:
+        f = get_forecast(stop["id"])
+        all_forecasts.append(f)
+
+    # Average across stops per hour
+    hourly = []
+    for h in range(24):
+        preds = [f[h]["predicted"] for f in all_forecasts if len(f) > h]
+        confs = [f[h]["confidence"] for f in all_forecasts if len(f) > h]
+        if preds:
+            hourly.append({
+                "hour": h,
+                "predicted": int(sum(preds) / len(preds)),
+                "confidence": round(sum(confs) / len(confs), 3),
+            })
+
+    route_info = None
+    try:
+        r = db.query(RouteORM).filter(RouteORM.route_id == route_id).first()
+        if r:
+            route_info = {"id": r.route_id, "name": r.name, "color": r.color}
+    except Exception:
+        for r in MOCK_ROUTES:
+            if r["id"] == route_id:
+                route_info = r
+
+    return {
+        "route_id": route_id,
+        "route": route_info,
+        "stop_count": len(stops),
+        "forecast": hourly,
+        "avg_ridership": int(sum(h["predicted"] for h in hourly) / max(len(hourly), 1)),
+    }
