@@ -1543,6 +1543,25 @@ def plot_network_interactive(net: NetworkSpec, volume: Optional[np.ndarray] = No
                 )
     return fig
 
+def export_network_geojson(net: NetworkSpec) -> str:
+    """Export network stops and routes as a GeoJSON FeatureCollection."""
+    features = []
+    for i, name in enumerate(net.station_names):
+        lat, lon = net.latlon[i]
+        features.append({
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [float(lon), float(lat)]},
+            "properties": {"name": name, "district": net.station_district[i], "index": i},
+        })
+    for route_name, idxs in net.lines.items():
+        coords = [[float(net.latlon[i][1]), float(net.latlon[i][0])] for i in idxs]
+        features.append({
+            "type": "Feature",
+            "geometry": {"type": "LineString", "coordinates": coords},
+            "properties": {"route": route_name, "type": "bus_route"},
+        })
+    return json.dumps({"type": "FeatureCollection", "features": features}, indent=2, ensure_ascii=False)
+
 # ----------------------------
 # Streamlit UI (imports inside)
 # ----------------------------
@@ -1630,6 +1649,7 @@ def ui_app() -> None:
     with st.sidebar:
         st.header("⚙️ Global Settings")
         seed = st.number_input("System Seed", 0, 10000, 7)
+        use_real_data = st.toggle("Use Real OSM Data", value=False, help="Fetch actual Astana bus stops from OpenStreetMap instead of synthetic network")
         st.caption("Changing settings requires regenerating data.")
 
     # ------------------
@@ -1676,7 +1696,7 @@ def ui_app() -> None:
                 freq_min = ckpt_data_meta.get("freq_min", 10)
 
                 cfg = DataGenConfig(seed=7, days=days, freq_min=freq_min)
-                net = build_astana_network(n_stations=ckpt_N, n_lines=n_lines_ckpt, seed=7)
+                net = build_astana_network(use_real_data=use_real_data, n_stations=ckpt_N, n_lines=n_lines_ckpt, seed=7)
                 bundle = generate_astana_data(cfg, net)
                 st.session_state.bundle = bundle
                 st.session_state.metrics = None
@@ -1717,12 +1737,13 @@ def ui_app() -> None:
     # ------------------
     # Main Tabs
     # ------------------
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "🎛️ Setup & Training", 
-        "📊 Analytics Dashboard", 
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "🎛️ Setup & Training",
+        "📊 Analytics Dashboard",
         "🧪 Live Simulation",
-        "🗺️ Network Graph", 
-        "🔮 Operational Forecast"
+        "🗺️ Network Graph",
+        "🔮 Operational Forecast",
+        "⚖️ Model Comparison"
     ])
 
     # ==========================
@@ -1763,7 +1784,7 @@ def ui_app() -> None:
                                     days = ckpt_data_meta.get("days", 365)
                                     freq_min = ckpt_data_meta.get("freq_min", 10)
                                     cfg = DataGenConfig(seed=7, days=days, freq_min=freq_min)
-                                    net = build_astana_network(n_stations=ckpt_N, n_lines=n_lines_ckpt, seed=7)
+                                    net = build_astana_network(use_real_data=use_real_data, n_stations=ckpt_N, n_lines=n_lines_ckpt, seed=7)
                                     b = generate_astana_data(cfg, net)
                                     st.session_state.bundle = b
                                     st.warning(f"Generated matching data: {ckpt_N} stations (checkpoint requires this)")
@@ -1822,7 +1843,7 @@ def ui_app() -> None:
                     with st.spinner("Generating dataset..."):
                         cfg = DataGenConfig(seed=seed, days=effective_days, freq_min=freq_min)
                         cfg = ensure_min_records(cfg, min_records=min_records)
-                        net = build_astana_network(n_stations=stats, seed=seed)
+                        net = build_astana_network(use_real_data=use_real_data, n_stations=stats, seed=seed)
                         b = generate_astana_data(cfg, net)
                         # Save
                         os.makedirs("data", exist_ok=True)
@@ -2134,10 +2155,11 @@ def ui_app() -> None:
         st.subheader("Network Traffic Map")
         if st.session_state.bundle:
             b = st.session_state.bundle
-            # Calculate average volume per station for sizing
-            vol = b.y_bottom.mean(axis=0) # (N,)
+            vol = b.y_bottom.mean(axis=0)
             fig = plot_network_interactive(b.net, volume=vol)
             st.plotly_chart(fig, use_container_width=True)
+            geojson_str = export_network_geojson(b.net)
+            st.download_button("⬇ Download GeoJSON", geojson_str, "astana_network.geojson", "application/geo+json")
         else:
             st.info("Load data to view network.")
 
@@ -2226,6 +2248,42 @@ def ui_app() -> None:
                             f3.metric("90% Range", f"{int(lower)} - {int(upper)}")
         else:
             st.warning("Model and Data required.")
+
+    # ==========================
+    # TAB 6: MODEL COMPARISON
+    # ==========================
+    with tab6:
+        st.subheader("⚖️ Model Comparison")
+        st.caption("Compare persisted checkpoints side-by-side.")
+        ckpt_dir = os.path.join(os.getcwd(), "checkpoints")
+        if not os.path.isdir(ckpt_dir):
+            st.info("No checkpoint directory found.")
+        else:
+            files = [f for f in os.listdir(ckpt_dir) if f.endswith(".pt")]
+            if not files:
+                st.info("No checkpoints found.")
+            else:
+                selected = st.multiselect("Select Checkpoints", files, default=files[:2])
+                rows = []
+                for f in selected:
+                    try:
+                        state = torch.load(os.path.join(ckpt_dir, f), map_location="cpu")
+                        meta = state.get("config", {})
+                        metrics = state.get("metrics", {})
+                        rows.append({
+                            "Checkpoint": f,
+                            "d_model": meta.get("d_model", "—"),
+                            "K": meta.get("K", "—"),
+                            "LoRA r": meta.get("lora_r", "—"),
+                            "Dropout": meta.get("dropout", "—"),
+                            "MAE": f"{metrics.get('test_mae_bottom_h1', float('nan')):.3f}" if metrics else "—",
+                            "RMSE": f"{metrics.get('test_rmse_bottom_h1', float('nan')):.3f}" if metrics else "—",
+                            "Coherence": f"{metrics.get('test_coherence_error_base', float('nan')):.4f}" if metrics else "—",
+                        })
+                    except Exception as e:
+                        rows.append({"Checkpoint": f, "Error": str(e)})
+                if rows:
+                    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
 def train_offline_streamlit(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
                             mcfg: Dict[str, object], tcfg: TrainConfig, device: torch.device, prog):
