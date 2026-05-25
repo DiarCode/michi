@@ -47,3 +47,4 @@ Thumbs.db
 # Data cache
 data/cache/*.osm.pbf
 data/cache/*.json
+michi.db

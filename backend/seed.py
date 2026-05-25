@@ -1,6 +1,6 @@
 """Seed database with sample Astana stations and routes."""
 from sqlalchemy.orm import Session
-from backend.database import Base, engine
+from backend.database import engine, SessionLocal
 from backend.models_orm import StationORM, RouteORM, RouteStopORM
 
 ASTANA_STATIONS = [
@@ -19,11 +19,11 @@ ASTANA_STATIONS = [
 ]
 
 ASTANA_ROUTES = [
-    {"route_id": "R1", "name": "Route 12", "color": "#2E86AB", "stop_count": 4, "avg_ridership": 2100},
-    {"route_id": "R2", "name": "Route 18", "color": "#A23B72", "stop_count": 4, "avg_ridership": 1850},
-    {"route_id": "R3", "name": "Route 25", "color": "#F18F01", "stop_count": 4, "avg_ridership": 1600},
-    {"route_id": "R4", "name": "Route 31", "color": "#C73E1D", "stop_count": 4, "avg_ridership": 1400},
-    {"route_id": "R5", "name": "Route 40", "color": "#3B1F2B", "stop_count": 4, "avg_ridership": 1300},
+    {"route_id": "R1", "name": "Route 12", "color": "#2E86AB", "stop_count": 4, "avg_ridership": 2100.0},
+    {"route_id": "R2", "name": "Route 18", "color": "#A23B72", "stop_count": 4, "avg_ridership": 1850.0},
+    {"route_id": "R3", "name": "Route 25", "color": "#F18F01", "stop_count": 4, "avg_ridership": 1600.0},
+    {"route_id": "R4", "name": "Route 31", "color": "#C73E1D", "stop_count": 4, "avg_ridership": 1400.0},
+    {"route_id": "R5", "name": "Route 40", "color": "#3B1F2B", "stop_count": 4, "avg_ridership": 1300.0},
 ]
 
 ROUTE_STOPS_DATA = [
@@ -36,8 +36,8 @@ ROUTE_STOPS_DATA = [
 
 
 def seed():
-    Base.metadata.create_all(bind=engine)
-    with Session(engine) as session:
+    session = SessionLocal()
+    try:
         existing = session.query(StationORM).count()
         if existing > 0:
             print(f"Database already seeded with {existing} stations. Skipping.")
@@ -50,7 +50,14 @@ def seed():
             session.add(RouteStopORM(route_id=route_id, station_id=station_id, stop_order=order))
         session.commit()
         print(f"Seeded {len(ASTANA_STATIONS)} stations, {len(ASTANA_ROUTES)} routes, {len(ROUTE_STOPS_DATA)} route stops.")
+    except Exception as e:
+        session.rollback()
+        print(f"Seed failed: {e}")
+    finally:
+        session.close()
 
 
 if __name__ == "__main__":
+    from backend.database import Base, engine
+    Base.metadata.create_all(bind=engine)
     seed()

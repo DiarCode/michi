@@ -1,15 +1,22 @@
 """FastAPI application entry point."""
+import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from backend.database import init_db
 from backend.routers import stations, routes as routes_router, dashboard, alerts, scenarios
-from backend.websocket import websocket_router
+from backend.websocket import websocket_router, mock_bus_stream
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Starting backend...")
+    init_db()
+    task = asyncio.create_task(mock_bus_stream())
+    print("Backend started — DB initialized, bus stream running.")
     yield
+    task.cancel()
     print("Shutting down backend...")
+
 
 app = FastAPI(title="Michi Transit Intelligence API", version="1.0.0", lifespan=lifespan)
 
@@ -21,6 +28,7 @@ app.include_router(dashboard.router, prefix="/api/v1/dashboard", tags=["dashboar
 app.include_router(alerts.router, prefix="/api/v1/alerts", tags=["alerts"])
 app.include_router(scenarios.router, prefix="/api/v1/scenarios", tags=["scenarios"])
 app.include_router(websocket_router, prefix="/ws")
+
 
 @app.get("/health")
 def health_check():

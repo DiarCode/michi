@@ -1,4 +1,8 @@
-from fastapi import APIRouter
+from typing import Optional
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.orm import Session
+from backend.database import get_db
+from backend.models_orm import StationORM
 from backend.services.forecast_service import get_forecast
 
 router = APIRouter()
@@ -18,12 +22,23 @@ MOCK_STATIONS = [
     {"id": "S012", "name": "Duman", "lat": 51.1450, "lon": 71.4200, "district": "Esil", "ridership_24h": 1100},
 ]
 
+
 @router.get("")
-def list_stations():
+def list_stations(db: Session = Depends(get_db)):
+    try:
+        db_stations = db.query(StationORM).all()
+        if db_stations:
+            return {"stations": [
+                {"id": s.stop_id, "name": s.name, "lat": s.lat, "lon": s.lon,
+                 "district": s.district, "ridership_24h": s.ridership_24h}
+                for s in db_stations
+            ]}
+    except Exception:
+        pass
     return {"stations": MOCK_STATIONS}
+
 
 @router.get("/{station_id}/forecast")
 def get_station_forecast(station_id: str):
-    base = next((s["ridership_24h"] for s in MOCK_STATIONS if s["id"] == station_id), 1000)
     forecast = get_forecast(station_id)
     return {"station_id": station_id, "forecast": forecast}

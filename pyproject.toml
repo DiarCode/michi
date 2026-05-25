@@ -28,3 +28,8 @@ dependencies = [
     "python-multipart>=0.0.12",
     "alembic>=1.14.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]

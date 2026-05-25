@@ -11,4 +11,4 @@ class ScenarioConfig(BaseModel):
 
 @router.post("/run")
 def run_scenario_endpoint(config: ScenarioConfig):
-    return run_scenario(config.dict())
+    return run_scenario(config.model_dump())

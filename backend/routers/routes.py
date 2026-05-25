@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from backend.database import get_db
+from backend.models_orm import RouteORM, RouteStopORM, StationORM
 
 router = APIRouter()
 
@@ -18,10 +21,33 @@ ROUTE_STOPS = {
     "R5": [{"id": "S012", "name": "Duman"}, {"id": "S010", "name": "Talan Towers"}, {"id": "S003", "name": "Bayterek"}],
 }
 
+
 @router.get("")
-def list_routes():
+def list_routes(db: Session = Depends(get_db)):
+    try:
+        db_routes = db.query(RouteORM).all()
+        if db_routes:
+            return {"routes": [
+                {"id": r.route_id, "name": r.name, "color": r.color,
+                 "stop_count": r.stop_count, "avg_ridership": r.avg_ridership}
+                for r in db_routes
+            ]}
+    except Exception:
+        pass
     return {"routes": MOCK_ROUTES}
 
+
 @router.get("/{route_id}/stops")
-def get_route_stops(route_id: str):
+def get_route_stops(route_id: str, db: Session = Depends(get_db)):
+    try:
+        db_stops = (db.query(RouteStopORM).filter(RouteStopORM.route_id == route_id)
+                    .order_by(RouteStopORM.stop_order).all())
+        if db_stops:
+            result = []
+            for rs in db_stops:
+                station = db.query(StationORM).filter(StationORM.stop_id == rs.station_id).first()
+                result.append({"id": rs.station_id, "name": station.name if station else rs.station_id})
+            return {"route_id": route_id, "stops": result}
+    except Exception:
+        pass
     return {"route_id": route_id, "stops": ROUTE_STOPS.get(route_id, [])}
