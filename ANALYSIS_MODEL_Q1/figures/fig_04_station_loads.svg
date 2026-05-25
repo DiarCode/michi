@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="820" viewBox="0 0 1560 820">
+<rect x="0" y="0" width="1560" height="820" fill="#fffdf8" />
+<text x="70.00" y="70.00" fill="#1f2933" font-size="28" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">Station-Level Mean Demand Ranking</text>
+<text x="70.00" y="102.00" fill="#52606d" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">Average passenger counts per station, sorted descending, with the highest-load stations highlighted</text>
+<line x1="90.00" y1="650.00" x2="1470.00" y2="650.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="78.00" y="655.00" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0</text>
+<line x1="90.00" y1="525.00" x2="1470.00" y2="525.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="78.00" y="530.00" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">10</text>
+<line x1="90.00" y1="400.00" x2="1470.00" y2="400.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="78.00" y="405.00" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">20</text>
+<line x1="90.00" y1="275.00" x2="1470.00" y2="275.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="78.00" y="280.00" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">30</text>
+<line x1="90.00" y1="150.00" x2="1470.00" y2="150.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="78.00" y="155.00" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">40</text>
+<rect x="94.00" y="252.53" width="41.29" height="397.47" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="116.64" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 116.64 668.00)">Bogenbai Batyr Ave</text>
+<rect x="143.29" y="278.80" width="41.29" height="371.20" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="165.93" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 165.93 668.00)">Central Park</text>
+<rect x="192.57" y="291.60" width="41.29" height="358.40" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="215.21" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 215.21 668.00)">Baiterek</text>
+<rect x="241.86" y="304.51" width="41.29" height="345.49" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="264.50" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 264.50 668.00)">Khan Shatyr</text>
+<rect x="291.14" y="329.61" width="41.29" height="320.39" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="313.79" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 313.79 668.00)">Seifullin St</text>
+<rect x="340.43" y="340.22" width="41.29" height="309.78" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="363.07" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 363.07 668.00)">Expo 2017</text>
+<rect x="389.71" y="347.64" width="41.29" height="302.36" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="412.36" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 412.36 668.00)">Kabanbay Batyr Ave</text>
+<rect x="439.00" y="366.09" width="41.29" height="283.91" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="461.64" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 461.64 668.00)">Syganak St</text>
+<rect x="488.29" y="368.59" width="41.29" height="281.41" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="510.93" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 510.93 668.00)">Mega Silk Way</text>
+<rect x="537.57" y="393.02" width="41.29" height="256.98" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="560.21" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 560.21 668.00)">Respublika Ave</text>
+<rect x="586.86" y="410.61" width="41.29" height="239.39" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="609.50" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 609.50 668.00)">Nurly Zhol</text>
+<rect x="636.14" y="411.19" width="41.29" height="238.81" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="658.79" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 658.79 668.00)">Zhastar Ave</text>
+<rect x="685.43" y="423.48" width="41.29" height="226.52" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="708.07" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 708.07 668.00)">Mangilik El Ave</text>
+<rect x="734.71" y="427.78" width="41.29" height="222.22" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="757.36" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 757.36 668.00)">Triumphal Arch</text>
+<rect x="784.00" y="432.49" width="41.29" height="217.51" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="806.64" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 806.64 668.00)">Saryarka Ave</text>
+<rect x="833.29" y="433.27" width="41.29" height="216.73" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="855.93" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 855.93 668.00)">Keruen City</text>
+<rect x="882.57" y="436.50" width="41.29" height="213.50" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="905.21" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 905.21 668.00)">Palace of Peace</text>
+<rect x="931.86" y="444.10" width="41.29" height="205.90" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="954.50" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 954.50 668.00)">Abylai Khan Ave</text>
+<rect x="981.14" y="448.18" width="41.29" height="201.82" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1003.79" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1003.79 668.00)">Sarayshyk St</text>
+<rect x="1030.43" y="459.16" width="41.29" height="190.84" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1053.07" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1053.07 668.00)">Turan Ave</text>
+<rect x="1079.71" y="463.39" width="41.29" height="186.61" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1102.36" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1102.36 668.00)">River Embankment</text>
+<rect x="1129.00" y="474.45" width="41.29" height="175.55" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1151.64" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1151.64 668.00)">Botanical Garden</text>
+<rect x="1178.29" y="476.08" width="41.29" height="173.92" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1200.93" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1200.93 668.00)">Astana Mall</text>
+<rect x="1227.57" y="479.44" width="41.29" height="170.56" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1250.21" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1250.21 668.00)">Dostyk St</text>
+<rect x="1276.86" y="483.43" width="41.29" height="166.57" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1299.50" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1299.50 668.00)">University Quarter</text>
+<rect x="1326.14" y="487.83" width="41.29" height="162.17" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1348.79" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1348.79 668.00)">Kenesary St</text>
+<rect x="1375.43" y="514.78" width="41.29" height="135.22" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1398.07" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1398.07 668.00)">Kosmonavtov St</text>
+<rect x="1424.71" y="545.79" width="41.29" height="104.21" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.920" />
+<text x="1447.36" y="668.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-55.00 1447.36 668.00)">Shakarim St</text>
+<line x1="90.00" y1="650.00" x2="1470.00" y2="650.00" stroke="#243447" stroke-width="1.50" opacity="1.000" />
+<line x1="90.00" y1="150.00" x2="90.00" y2="650.00" stroke="#243447" stroke-width="1.50" opacity="1.000" />
+<text x="90.00" y="715.00" fill="#243447" font-size="13" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">Top 5 mean-load stations: Bogenbai Batyr Ave (31.8), Central Park (29.7), Baiterek (28.7), Khan Shatyr (27.6), Seifullin St (25.6)</text>
+<text x="90.00" y="745.00" fill="#52606d" font-size="13" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">Bottom 5 mean-load stations: Dostyk St (13.6), University Quarter (13.3), Kenesary St (13.0), Kosmonavtov St (10.8), Shakarim St (8.3)</text>
+</svg>

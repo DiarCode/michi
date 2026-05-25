@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="820" viewBox="0 0 1360 820">
+<rect x="0" y="0" width="1360" height="820" fill="#fffdf8" />
+<text x="70.00" y="70.00" fill="#1f2933" font-size="28" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">Component Ablation on Test-Full Metrics</text>
+<text x="70.00" y="102.00" fill="#52606d" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">The graph module is indispensable; adaptive adjacency is beneficial; LoRA has only a marginal effect in the current run.</text>
+<line x1="110.00" y1="640.00" x2="620.00" y2="640.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="645.00" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.0</text>
+<line x1="110.00" y1="572.86" x2="620.00" y2="572.86" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="577.86" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">2.0</text>
+<line x1="110.00" y1="505.71" x2="620.00" y2="505.71" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="510.71" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">4.0</text>
+<line x1="110.00" y1="438.57" x2="620.00" y2="438.57" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="443.57" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">6.0</text>
+<line x1="110.00" y1="371.43" x2="620.00" y2="371.43" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="376.43" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">8.0</text>
+<line x1="110.00" y1="304.29" x2="620.00" y2="304.29" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="309.29" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">10.0</text>
+<line x1="110.00" y1="237.14" x2="620.00" y2="237.14" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="242.14" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">12.0</text>
+<line x1="110.00" y1="170.00" x2="620.00" y2="170.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="98.00" y="175.00" fill="#52606d" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">14.0</text>
+<rect x="120.00" y="426.82" width="107.50" height="213.18" fill="#c2410c" stroke="none" stroke-width="1.00" rx="5.00" opacity="0.940" />
+<text x="173.75" y="416.82" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="middle">6.350</text>
+<text x="173.75" y="666.00" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="middle">DTS-GSSF</text>
+<rect x="247.50" y="426.74" width="107.50" height="213.26" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="5.00" opacity="0.940" />
+<text x="301.25" y="416.74" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="middle">6.352</text>
+<text x="301.25" y="666.00" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="middle">No LoRA</text>
+<rect x="375.00" y="421.65" width="107.50" height="218.35" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="5.00" opacity="0.940" />
+<text x="428.75" y="411.65" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="middle">6.504</text>
+<text x="428.75" y="666.00" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="middle">No Adaptive Adj</text>
+<rect x="502.50" y="225.63" width="107.50" height="414.37" fill="#5b7c99" stroke="none" stroke-width="1.00" rx="5.00" opacity="0.940" />
+<text x="556.25" y="215.63" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="middle">12.343</text>
+<text x="556.25" y="666.00" fill="#243447" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="middle">No Graph</text>
+<line x1="110.00" y1="640.00" x2="620.00" y2="640.00" stroke="#243447" stroke-width="1.50" opacity="1.000" />
+<line x1="110.00" y1="170.00" x2="110.00" y2="640.00" stroke="#243447" stroke-width="1.50" opacity="1.000" />
+<text x="110.00" y="152.00" fill="#243447" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">MAE</text>
+<text x="760.00" y="160.00" fill="#243447" font-size="20" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">Relative Change vs Full Model</text>
+<rect x="760.00" y="180.00" width="510.00" height="370.00" fill="#ffffff" stroke="#d9e2ec" stroke-width="1.50" rx="12.00" opacity="1.000" />
+<text x="778.00" y="214.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">Variant</text>
+<text x="980.00" y="214.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">Delta MAE</text>
+<text x="1110.00" y="214.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">WAPE</text>
+<text x="1200.00" y="214.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">R^2</text>
+<text x="778.00" y="260.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">No LoRA</text>
+<text x="980.00" y="260.00" fill="#52606d" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">+0.04%</text>
+<text x="1110.00" y="260.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">33.302</text>
+<text x="1200.00" y="260.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">0.692</text>
+<text x="778.00" y="308.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">No Adaptive Adj</text>
+<text x="980.00" y="308.00" fill="#c2410c" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">+2.43%</text>
+<text x="1110.00" y="308.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">34.097</text>
+<text x="1200.00" y="308.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">0.684</text>
+<text x="778.00" y="356.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">No Graph</text>
+<text x="980.00" y="356.00" fill="#c2410c" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">+94.38%</text>
+<text x="1110.00" y="356.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">64.707</text>
+<text x="1200.00" y="356.00" fill="#243447" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">0.102</text>
+<text x="760.00" y="610.00" fill="#243447" font-size="13" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">Interpretation: removing graph propagation nearly doubles MAE, while removing adaptive adjacency causes a modest but consistent degradation.</text>
+</svg>

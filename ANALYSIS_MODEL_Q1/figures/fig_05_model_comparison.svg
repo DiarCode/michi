@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="930" viewBox="0 0 1560 930">
+<rect x="0" y="0" width="1560" height="930" fill="#fffdf8" />
+<text x="70.00" y="70.00" fill="#1f2933" font-size="28" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">Main Benchmark Comparison on the Test Set</text>
+<text x="70.00" y="102.00" fill="#52606d" font-size="14" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="start">Small multiples for the flattened 12-step test evaluation; DTS-GSSF is highlighted</text>
+<text x="80.00" y="130.00" fill="#243447" font-size="20" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">MAE</text>
+<line x1="80.00" y1="410.00" x2="700.00" y2="410.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="415.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.00</text>
+<line x1="80.00" y1="358.00" x2="700.00" y2="358.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="363.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">2.00</text>
+<line x1="80.00" y1="306.00" x2="700.00" y2="306.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="311.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">4.00</text>
+<line x1="80.00" y1="254.00" x2="700.00" y2="254.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="259.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">6.00</text>
+<line x1="80.00" y1="202.00" x2="700.00" y2="202.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="207.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">8.00</text>
+<line x1="80.00" y1="150.00" x2="700.00" y2="150.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="155.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">10.00</text>
+<rect x="86.00" y="244.90" width="76.57" height="165.10" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="128.29" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 128.29 426.00)">DTS-GSSF</text>
+<rect x="174.57" y="244.46" width="76.57" height="165.54" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="216.86" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 216.86 426.00)">DCRNN</text>
+<rect x="263.14" y="243.83" width="76.57" height="166.17" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="305.43" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 305.43 426.00)">Transformer</text>
+<rect x="351.71" y="243.77" width="76.57" height="166.23" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="394.00" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 394.00 426.00)">LSTM Seq2Seq</text>
+<rect x="440.29" y="243.21" width="76.57" height="166.79" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="482.57" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 482.57 426.00)">Historical Avg</text>
+<rect x="528.86" y="242.84" width="76.57" height="167.16" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="571.14" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 571.14 426.00)">GRU Seq2Seq</text>
+<rect x="617.43" y="172.80" width="76.57" height="237.20" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="659.71" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 659.71 426.00)">Seasonal Naive</text>
+<line x1="80.00" y1="410.00" x2="700.00" y2="410.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<line x1="80.00" y1="150.00" x2="80.00" y2="410.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<text x="696.00" y="130.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">lower is better</text>
+<text x="800.00" y="130.00" fill="#243447" font-size="20" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">RMSE</text>
+<line x1="800.00" y1="410.00" x2="1420.00" y2="410.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="415.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.00</text>
+<line x1="800.00" y1="323.33" x2="1420.00" y2="323.33" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="328.33" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">5.00</text>
+<line x1="800.00" y1="236.67" x2="1420.00" y2="236.67" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="241.67" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">10.00</text>
+<line x1="800.00" y1="150.00" x2="1420.00" y2="150.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="155.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">15.00</text>
+<rect x="806.00" y="240.95" width="76.57" height="169.05" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="848.29" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 848.29 426.00)">DTS-GSSF</text>
+<rect x="894.57" y="241.36" width="76.57" height="168.64" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="936.86" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 936.86 426.00)">DCRNN</text>
+<rect x="983.14" y="240.65" width="76.57" height="169.35" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1025.43" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1025.43 426.00)">Transformer</text>
+<rect x="1071.71" y="240.07" width="76.57" height="169.93" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1114.00" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1114.00 426.00)">LSTM Seq2Seq</text>
+<rect x="1160.29" y="239.71" width="76.57" height="170.29" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1202.57" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1202.57 426.00)">Historical Avg</text>
+<rect x="1248.86" y="239.81" width="76.57" height="170.19" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1291.14" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1291.14 426.00)">GRU Seq2Seq</text>
+<rect x="1337.43" y="165.77" width="76.57" height="244.23" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1379.71" y="426.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1379.71 426.00)">Seasonal Naive</text>
+<line x1="800.00" y1="410.00" x2="1420.00" y2="410.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<line x1="800.00" y1="150.00" x2="800.00" y2="410.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<text x="1416.00" y="130.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">lower is better</text>
+<text x="80.00" y="500.00" fill="#243447" font-size="20" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">WAPE</text>
+<line x1="80.00" y1="780.00" x2="700.00" y2="780.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="785.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.00</text>
+<line x1="80.00" y1="728.00" x2="700.00" y2="728.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="733.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">10.00</text>
+<line x1="80.00" y1="676.00" x2="700.00" y2="676.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="681.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">20.00</text>
+<line x1="80.00" y1="624.00" x2="700.00" y2="624.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="629.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">30.00</text>
+<line x1="80.00" y1="572.00" x2="700.00" y2="572.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="577.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">40.00</text>
+<line x1="80.00" y1="520.00" x2="700.00" y2="520.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="70.00" y="525.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">50.00</text>
+<rect x="86.00" y="606.90" width="76.57" height="173.10" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="128.29" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 128.29 796.00)">DTS-GSSF</text>
+<rect x="174.57" y="606.44" width="76.57" height="173.56" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="216.86" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 216.86 796.00)">DCRNN</text>
+<rect x="263.14" y="605.78" width="76.57" height="174.22" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="305.43" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 305.43 796.00)">Transformer</text>
+<rect x="351.71" y="605.71" width="76.57" height="174.29" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="394.00" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 394.00 796.00)">LSTM Seq2Seq</text>
+<rect x="440.29" y="605.12" width="76.57" height="174.88" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="482.57" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 482.57 796.00)">Historical Avg</text>
+<rect x="528.86" y="604.73" width="76.57" height="175.27" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="571.14" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 571.14 796.00)">GRU Seq2Seq</text>
+<rect x="617.43" y="531.30" width="76.57" height="248.70" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="659.71" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 659.71 796.00)">Seasonal Naive</text>
+<line x1="80.00" y1="780.00" x2="700.00" y2="780.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<line x1="80.00" y1="520.00" x2="80.00" y2="780.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<text x="696.00" y="500.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">lower is better</text>
+<text x="800.00" y="500.00" fill="#243447" font-size="20" font-family="Arial, Helvetica, sans-serif" font-weight="700" text-anchor="start">R^2</text>
+<line x1="800.00" y1="780.00" x2="1420.00" y2="780.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="785.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.30</text>
+<line x1="800.00" y1="728.00" x2="1420.00" y2="728.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="733.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.40</text>
+<line x1="800.00" y1="676.00" x2="1420.00" y2="676.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="681.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.50</text>
+<line x1="800.00" y1="624.00" x2="1420.00" y2="624.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="629.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.60</text>
+<line x1="800.00" y1="572.00" x2="1420.00" y2="572.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="577.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.70</text>
+<line x1="800.00" y1="520.00" x2="1420.00" y2="520.00" stroke="#d9e2ec" stroke-width="1.00" opacity="1.000" />
+<text x="790.00" y="525.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">0.80</text>
+<rect x="806.00" y="574.25" width="76.57" height="205.75" fill="#c2410c" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="848.29" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 848.29 796.00)">DTS-GSSF</text>
+<rect x="894.57" y="573.49" width="76.57" height="206.51" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="936.86" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 936.86 796.00)">DCRNN</text>
+<rect x="983.14" y="574.82" width="76.57" height="205.18" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1025.43" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1025.43 796.00)">Transformer</text>
+<rect x="1071.71" y="575.90" width="76.57" height="204.10" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1114.00" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1114.00 796.00)">LSTM Seq2Seq</text>
+<rect x="1160.29" y="576.59" width="76.57" height="203.41" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1202.57" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1202.57 796.00)">Historical Avg</text>
+<rect x="1248.86" y="576.40" width="76.57" height="203.60" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1291.14" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1291.14 796.00)">GRU Seq2Seq</text>
+<rect x="1337.43" y="746.31" width="76.57" height="33.69" fill="#66788a" stroke="none" stroke-width="1.00" rx="4.00" opacity="0.930" />
+<text x="1379.71" y="796.00" fill="#243447" font-size="10" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end" transform="rotate(-50.00 1379.71 796.00)">Seasonal Naive</text>
+<line x1="800.00" y1="780.00" x2="1420.00" y2="780.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<line x1="800.00" y1="520.00" x2="800.00" y2="780.00" stroke="#243447" stroke-width="1.40" opacity="1.000" />
+<text x="1416.00" y="500.00" fill="#52606d" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="400" text-anchor="end">higher is better</text>
+</svg>
