@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from backend.services.forecast_service import get_forecast
 
 router = APIRouter()
 
@@ -13,6 +14,8 @@ MOCK_STATIONS = [
     {"id": "S008", "name": "Presidential Park", "lat": 51.1250, "lon": 71.4650, "district": "Almaty", "ridership_24h": 1200},
     {"id": "S009", "name": "Central Park", "lat": 51.1400, "lon": 71.4550, "district": "Almaty", "ridership_24h": 1750},
     {"id": "S010", "name": "Talan Towers", "lat": 51.1280, "lon": 71.4350, "district": "Esil", "ridership_24h": 2400},
+    {"id": "S011", "name": "Expo 2017", "lat": 51.0895, "lon": 71.4170, "district": "Saryarka", "ridership_24h": 1650},
+    {"id": "S012", "name": "Duman", "lat": 51.1450, "lon": 71.4200, "district": "Esil", "ridership_24h": 1100},
 ]
 
 @router.get("")
@@ -21,7 +24,6 @@ def list_stations():
 
 @router.get("/{station_id}/forecast")
 def get_station_forecast(station_id: str):
-    import random
     base = next((s["ridership_24h"] for s in MOCK_STATIONS if s["id"] == station_id), 1000)
-    forecast = [{"hour": h, "predicted": int(base * (0.5 + 0.5 * ((h % 24) / 24)) + random.randint(-50, 50))} for h in range(24)]
+    forecast = get_forecast(station_id)
     return {"station_id": station_id, "forecast": forecast}

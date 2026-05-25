@@ -1,12 +1,23 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CommandCenter from "./routes/CommandCenter";
 import LiveMap from "./routes/LiveMap";
 import AlertsPage from "./routes/AlertsPage";
 import ScenarioPlanner from "./routes/ScenarioPlanner";
 import Settings from "./routes/Settings";
+import Reports from "./routes/Reports";
+import { BarChart, Map, AlertTriangle, FlaskConical, Settings as SettingsIcon, FileText } from "lucide-react";
 
 const queryClient = new QueryClient();
+
+const NAV = [
+  { to: "/", label: "Command Center", Icon: BarChart },
+  { to: "/map", label: "Live Map", Icon: Map },
+  { to: "/alerts", label: "Alerts", Icon: AlertTriangle },
+  { to: "/scenarios", label: "Scenarios", Icon: FlaskConical },
+  { to: "/reports", label: "Reports", Icon: FileText },
+  { to: "/settings", label: "Settings", Icon: SettingsIcon },
+];
 
 export default function App() {
   return (
@@ -16,8 +27,11 @@ export default function App() {
           <aside className="w-64 bg-slate-900 text-white flex flex-col">
             <div className="p-4 text-xl font-bold">Michi</div>
             <nav className="flex-1">
-              {[{to:"/",label:"Command Center"},{to:"/map",label:"Live Map"},{to:"/alerts",label:"Alerts"},{to:"/scenarios",label:"Scenarios"},{to:"/settings",label:"Settings"}].map((item)=>(
-                <a key={item.to} href={item.to} className="block px-4 py-3 hover:bg-slate-800">{item.label}</a>
+              {NAV.map(({ to, label, Icon }) => (
+                <NavLink key={to} to={to} className={({ isActive }) => `flex items-center gap-3 px-4 py-3 hover:bg-slate-800 transition ${isActive ? "bg-slate-800 border-l-4 border-blue-500" : ""}`}>
+                  <Icon size={18} />
+                  {label}
+                </NavLink>
               ))}
             </nav>
           </aside>
@@ -31,6 +45,7 @@ export default function App() {
                 <Route path="/map" element={<LiveMap />} />
                 <Route path="/alerts" element={<AlertsPage />} />
                 <Route path="/scenarios" element={<ScenarioPlanner />} />
+                <Route path="/reports" element={<Reports />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </main>

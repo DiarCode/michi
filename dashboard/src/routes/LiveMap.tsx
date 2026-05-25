@@ -1,29 +1,31 @@
 import { useEffect, useState } from "react";
-import type { BusPosition } from "../types";
+import MapContainer from "@/components/map/MapContainer";
+import { useStations } from "@/hooks/useStations";
+import { wsClient } from "@/lib/websocket";
+import type { BusPosition } from "@/types";
 
 export default function LiveMap() {
+  const { data } = useStations();
+  const stations = data?.stations ?? [];
   const [buses, setBuses] = useState<BusPosition[]>([]);
+
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8000/ws/realtime");
-    ws.onmessage = (event) => {
-      const msg = JSON.parse(event.data);
-      if (msg.type === "bus_position") {
-        setBuses((prev) => [...prev.filter((b) => b.bus_id !== msg.data.bus_id), msg.data]);
+    wsClient.connect();
+    const unsub = wsClient.subscribe((event) => {
+      if (event.type === "bus_position") {
+        const bus = event.data as unknown as BusPosition;
+        setBuses((prev) => {
+          const filtered = prev.filter((b) => b.bus_id !== bus.bus_id);
+          return [...filtered, bus];
+        });
       }
-    };
-    return () => ws.close();
+    });
+    return () => { unsub(); wsClient.disconnect(); };
   }, []);
+
   return (
-    <div className="h-[calc(100vh-4rem)] relative">
-      <iframe
-        src="https://mapcn.dev/embed?center=51.1605,71.4702&zoom=13"
-        className="w-full h-full border-0"
-        title="Astana Map"
-      />
-      <div className="absolute top-4 left-4 bg-white/90 p-3 rounded shadow">
-        <h3 className="font-bold text-sm">Active Buses</h3>
-        <p className="text-xs text-gray-600">{buses.length} buses tracked</p>
-      </div>
+    <div className="h-[calc(100vh-4rem)]">
+      <MapContainer stations={stations} buses={buses} />
     </div>
   );
 }

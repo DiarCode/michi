@@ -1,25 +1,27 @@
 export interface Station {
-  id: number;
-  stop_id: string;
+  id: string;
   name: string;
   lat: number;
   lon: number;
   district?: string;
+  ridership_24h?: number;
 }
 
 export interface Route {
-  id: number;
-  route_id: string;
+  id: string;
   name: string;
   color?: string;
-  stop_sequence: number[];
+  stop_count?: number;
+  avg_ridership?: number;
 }
 
 export interface Alert {
   id: number;
-  alert_type: string;
   severity: string;
+  title: string;
   message: string;
+  station_id?: string;
+  route_id?: string;
   created_at: string;
 }
 
@@ -28,8 +30,24 @@ export interface BusPosition {
   route_id: string;
   lat: number;
   lon: number;
-  speed_kmh: number;
-  next_stop: string;
-  eta_seconds: number;
-  occupancy_percent: number;
+  speed_kmh?: number;
+  next_stop?: string;
+  eta_seconds?: number;
+  occupancy_percent?: number;
+}
+
+export interface ForecastPoint {
+  station_id: string;
+  timestamp: string;
+  predicted: number;
+  confidence: number;
+}
+
+export interface KPIData {
+  total_stations: number;
+  active_routes: number;
+  avg_ridership: number;
+  alerts_today: number;
+  on_time_performance?: number;
+  peak_hour?: string;
 }
