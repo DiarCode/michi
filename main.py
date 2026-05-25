@@ -247,7 +247,54 @@ class NetworkSpec:
     A_phys: np.ndarray
     edges: List[Tuple[int, int]]
 
-def build_astana_network(n_stations: int = 28, n_lines: int = 9, seed: int = 7) -> NetworkSpec:
+def build_astana_network(use_real_data: bool = False, n_stations: int = 28, n_lines: int = 9, seed: int = 7) -> NetworkSpec:
+    """Build Astana bus network — real OSM data or synthetic fallback."""
+    if use_real_data:
+        try:
+            from data.osm_parser import get_astana_network
+            network = get_astana_network()
+            if network and len(network.get("stops", [])) >= 5:
+                stops = network["stops"]
+                routes = network["routes"]
+                adjacency = network["adjacency"]
+                n_stations = len(stops)
+                n_lines = len(routes)
+
+                station_names = [s["name"] for s in stops]
+                station_district = [s.get("district", "Unknown") for s in stops]
+                lines = {r["name"]: [int(sid) for sid in r["stop_ids"]] for r in routes}
+
+                # Build adjacency matrix
+                A_phys = np.zeros((n_stations, n_stations), dtype=np.float32)
+                for i, stop in enumerate(stops):
+                    neighbors = adjacency.get(stop["stop_id"], [])
+                    for neighbor_id in neighbors:
+                        for j, other in enumerate(stops):
+                            if other["stop_id"] == neighbor_id:
+                                A_phys[i, j] = 1.0
+                                break
+
+                np.fill_diagonal(A_phys, 1.0)
+                A_phys = A_phys / (A_phys.sum(axis=1, keepdims=True) + 1e-8)
+
+                edges = []
+                for i in range(n_stations):
+                    for j in range(i + 1, n_stations):
+                        if A_phys[i, j] > 0:
+                            edges.append((i, j))
+
+                print(f"Using real OSM network: {n_stations} stations, {n_lines} lines")
+                return NetworkSpec(
+                    station_names=station_names,
+                    station_district=station_district,
+                    lines=lines,
+                    A_phys=A_phys.astype(np.float32),
+                    edges=edges,
+                )
+        except Exception as e:
+            print(f"Real data loading failed: {e}. Falling back to synthetic.")
+
+    # --- existing synthetic code ---
     rng = np.random.default_rng(seed)
     names = _pick_unique(ASTANA_PLACES, n_stations, seed=seed)
     district_probs = np.array([0.30, 0.30, 0.25, 0.15])
