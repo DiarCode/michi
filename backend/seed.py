@@ -1,9 +1,16 @@
-"""Seed database with sample Astana stations and routes."""
-from sqlalchemy.orm import Session
-from backend.database import engine, SessionLocal
+"""Seed database with real Astana transit data from OSM.
+
+Uses pre-generated seed data from data/cache/astana_network_seed.json.
+Falls back to a small hardcoded dataset if the file is missing.
+"""
+import json
+from pathlib import Path
+from backend.database import SessionLocal
 from backend.models_orm import StationORM, RouteORM, RouteStopORM
 
-ASTANA_STATIONS = [
+SEED_PATH = Path(__file__).parent.parent / "data" / "cache" / "astana_network_seed.json"
+
+FALLBACK_STATIONS = [
     {"stop_id": "S001", "name": "Nurly Zhol Station", "lat": 51.1605, "lon": 71.4704, "district": "Esil", "ridership_24h": 1840},
     {"stop_id": "S002", "name": "Khan Shatyr", "lat": 51.1334, "lon": 71.4244, "district": "Esil", "ridership_24h": 3200},
     {"stop_id": "S003", "name": "Bayterek", "lat": 51.1283, "lon": 71.4305, "district": "Esil", "ridership_24h": 4100},
@@ -18,21 +25,33 @@ ASTANA_STATIONS = [
     {"stop_id": "S012", "name": "Duman", "lat": 51.1450, "lon": 71.4200, "district": "Esil", "ridership_24h": 1100},
 ]
 
-ASTANA_ROUTES = [
-    {"route_id": "R1", "name": "Route 12", "color": "#2E86AB", "stop_count": 4, "avg_ridership": 2100.0},
-    {"route_id": "R2", "name": "Route 18", "color": "#A23B72", "stop_count": 4, "avg_ridership": 1850.0},
-    {"route_id": "R3", "name": "Route 25", "color": "#F18F01", "stop_count": 4, "avg_ridership": 1600.0},
-    {"route_id": "R4", "name": "Route 31", "color": "#C73E1D", "stop_count": 4, "avg_ridership": 1400.0},
-    {"route_id": "R5", "name": "Route 40", "color": "#3B1F2B", "stop_count": 4, "avg_ridership": 1300.0},
+FALLBACK_ROUTES = [
+    {"route_id": "R12", "name": "Route 12", "color": "#2E86AB", "stop_count": 4, "avg_ridership": 2100.0},
+    {"route_id": "R18", "name": "Route 18", "color": "#A23B72", "stop_count": 4, "avg_ridership": 1850.0},
+    {"route_id": "R25", "name": "Route 25", "color": "#F18F01", "stop_count": 4, "avg_ridership": 1600.0},
+    {"route_id": "R31", "name": "Route 31", "color": "#C73E1D", "stop_count": 4, "avg_ridership": 1400.0},
+    {"route_id": "R40", "name": "Route 40", "color": "#3B7A57", "stop_count": 4, "avg_ridership": 1300.0},
 ]
 
-ROUTE_STOPS_DATA = [
-    ("R1", "S001", 1), ("R1", "S003", 2), ("R1", "S010", 3), ("R1", "S012", 4),
-    ("R2", "S002", 1), ("R2", "S003", 2), ("R2", "S007", 3), ("R2", "S008", 4),
-    ("R3", "S004", 1), ("R3", "S005", 2), ("R3", "S006", 3), ("R3", "S011", 4),
-    ("R4", "S001", 1), ("R4", "S009", 2), ("R4", "S008", 3), ("R4", "S007", 4),
-    ("R5", "S012", 1), ("R5", "S010", 2), ("R5", "S003", 3), ("R5", "S002", 4),
+FALLBACK_ROUTE_STOPS = [
+    ("R12", "S001", 1), ("R12", "S003", 2), ("R12", "S010", 3), ("R12", "S012", 4),
+    ("R18", "S002", 1), ("R18", "S003", 2), ("R18", "S007", 3), ("R18", "S008", 4),
+    ("R25", "S004", 1), ("R25", "S005", 2), ("R25", "S006", 3), ("R25", "S011", 4),
+    ("R31", "S001", 1), ("R31", "S009", 2), ("R31", "S008", 3), ("R31", "S007", 4),
+    ("R40", "S012", 1), ("R40", "S010", 2), ("R40", "S003", 3), ("R40", "S002", 4),
 ]
+
+
+def load_seed_data():
+    """Load seed data from OSM-generated file, falling back to hardcoded data."""
+    if SEED_PATH.exists():
+        with open(SEED_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        print(f"Loaded OSM data: {data['metadata']['total_stations']} stations, "
+              f"{data['metadata']['total_routes']} routes")
+        return data["stations"], data["routes"], data["route_stops"]
+    print(f"OSM seed not found, using fallback data")
+    return FALLBACK_STATIONS, FALLBACK_ROUTES, FALLBACK_ROUTE_STOPS
 
 
 def seed():
@@ -42,17 +61,21 @@ def seed():
         if existing > 0:
             print(f"Database already seeded with {existing} stations. Skipping.")
             return
-        for s in ASTANA_STATIONS:
+        stations, routes, route_stops = load_seed_data()
+
+        for s in stations:
             session.add(StationORM(**s))
-        for r in ASTANA_ROUTES:
+        for r in routes:
             session.add(RouteORM(**r))
-        for route_id, station_id, order in ROUTE_STOPS_DATA:
+        for route_id, station_id, order in route_stops:
             session.add(RouteStopORM(route_id=route_id, station_id=station_id, stop_order=order))
+
         session.commit()
-        print(f"Seeded {len(ASTANA_STATIONS)} stations, {len(ASTANA_ROUTES)} routes, {len(ROUTE_STOPS_DATA)} route stops.")
+        print(f"Seeded {len(stations)} stations, {len(routes)} routes, {len(route_stops)} route stops.")
     except Exception as e:
         session.rollback()
         print(f"Seed failed: {e}")
+        raise
     finally:
         session.close()
 

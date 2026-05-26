@@ -2,14 +2,16 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "6380:6379"
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     ports:
-      - "8000:8000"
+      - "8100:8000"
     environment:
-      - DATABASE_URL=sqlite:///./michi.db
+      - DATABASE_URL=sqlite:///./data/michi.db
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       - redis
@@ -19,33 +21,39 @@ services:
   dashboard:
     build: ./dashboard
     ports:
-      - "80:80"
+      - "3100:80"
     depends_on:
       - backend
 
   streamlit:
     build: .
     ports:
-      - "8501:8501"
+      - "8600:8501"
     environment:
       - API_URL=http://backend:8000
     depends_on:
       - backend
 
   celery:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     command: celery -A backend.tasks worker --loglevel=info
     environment:
-      - DATABASE_URL=sqlite:///./michi.db
+      - DATABASE_URL=sqlite:///./data/michi.db
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       - redis
+    volumes:
+      - backend_data:/app/data
 
   celery-beat:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     command: celery -A backend.tasks beat --loglevel=info
     environment:
-      - DATABASE_URL=sqlite:///./michi.db
+      - DATABASE_URL=sqlite:///./data/michi.db
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       - redis

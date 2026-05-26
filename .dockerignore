@@ -1,0 +1,12 @@
+.git
+.github
+node_modules
+__pycache__
+*.pyc
+.venv
+.env
+.claude
+*.egg-info
+dist
+build
+.next

@@ -246,6 +246,7 @@ class NetworkSpec:
     lines: Dict[str, List[int]]
     A_phys: np.ndarray
     edges: List[Tuple[int, int]]
+    latlon: List[Tuple[float, float]]
 
 def build_astana_network(use_real_data: bool = False, n_stations: int = 28, n_lines: int = 9, seed: int = 7) -> NetworkSpec:
     """Build Astana bus network — real OSM data or synthetic fallback."""
@@ -283,6 +284,7 @@ def build_astana_network(use_real_data: bool = False, n_stations: int = 28, n_li
                         if A_phys[i, j] > 0:
                             edges.append((i, j))
 
+                latlon = [(float(s["lat"]), float(s["lon"])) for s in stops]
                 print(f"Using real OSM network: {n_stations} stations, {n_lines} lines")
                 return NetworkSpec(
                     station_names=station_names,
@@ -290,6 +292,7 @@ def build_astana_network(use_real_data: bool = False, n_stations: int = 28, n_li
                     lines=lines,
                     A_phys=A_phys.astype(np.float32),
                     edges=edges,
+                    latlon=latlon,
                 )
         except Exception as e:
             print(f"Real data loading failed: {e}. Falling back to synthetic.")
@@ -341,12 +344,20 @@ def build_astana_network(use_real_data: bool = False, n_stations: int = 28, n_li
     np.fill_diagonal(A, 1.0)
     A = A / (A.sum(axis=1, keepdims=True) + 1e-8)
 
+    # Generate synthetic coordinates spread across Astana
+    district_centers = {"Esil": (51.15, 71.46), "Almaty": (51.14, 71.44), "Saryarka": (51.10, 71.40), "Baikonur": (51.16, 71.49)}
+    latlon = []
+    for i, d in enumerate(station_district):
+        cy, cx = district_centers.get(d, (51.13, 71.47))
+        latlon.append((cy + float(rng.uniform(-0.02, 0.02)), cx + float(rng.uniform(-0.02, 0.02))))
+
     return NetworkSpec(
         station_names=names,
         station_district=station_district,
         lines=lines,
         A_phys=A.astype(np.float32),
         edges=edges_list,
+        latlon=latlon,
     )
 
 @dataclass(frozen=True)
@@ -2101,10 +2112,11 @@ def ui_app() -> None:
             st.caption("Detects distribution shifts in ridership patterns using Page-Hinkley test. Stations flagged have sustained mean shifts indicating potential route or schedule changes.", help="Drift is injected from day 45 at 30% of stations with 25% uplift — this panel visualizes which stations are affected.")
             if b.meta.get("drift_stations"):
                 drift_names = b.meta["drift_stations"]
-                drift_start = b.meta.get("drift_start", "")
-                st.warning(f"Drift detected at {len(drift_names)} stations starting {drift_start}")
+                drift_start_raw = b.meta.get("drift_start", "")
+                drift_start = pd.Timestamp(drift_start_raw) if drift_start_raw else b.time_index[len(b.time_index) // 2] if len(b.time_index) > 0 else None
+                st.warning(f"Drift detected at {len(drift_names)} stations starting {drift_start_raw}")
                 drift_idx = [b.net.station_names.index(n) for n in drift_names if n in b.net.station_names]
-                if drift_idx:
+                if drift_idx and drift_start is not None:
                     fig_drift = go.Figure()
                     for di in drift_idx[:6]:
                         fig_drift.add_trace(go.Scatter(

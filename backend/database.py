@@ -25,6 +25,12 @@ def get_db():
 
 def init_db():
     """Create all tables and seed initial data."""
+    # Import all ORM models so they register with Base.metadata
+    from backend.models_orm import (  # noqa: F401
+        StationORM, RouteORM, RouteStopORM, AlertORM, RidershipORM, ForecastORM,
+        HistoricalRidershipORM, WeatherReadingORM, EventORM, InterventionORM,
+        ModelArtifactORM, PredictionAccuracyORM,
+    )
     Base.metadata.create_all(bind=engine)
     from backend.seed import seed
     seed()

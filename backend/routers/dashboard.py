@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Query
 from fastapi.responses import StreamingResponse
 from backend.services.forecast_service import get_kpi_metrics
+from backend.services.suggestion_service import generate_suggestions
 from backend.routers.stations import _get_stations
 from backend.database import get_db
 from backend.models import KPIResponse, OperationsReportResponse
@@ -56,3 +57,20 @@ def get_operations_report(report_format: str = Query("json", alias="format"), db
         return StreamingResponse(io.BytesIO(output.getvalue().encode()), media_type="text/csv", headers={"Content-Disposition": f"attachment; filename=operations_{report['date']}.csv"})
 
     return report
+
+
+@router.get("/suggestions")
+def get_suggestions(db: Session = Depends(get_db)):
+    """Get optimization suggestions based on current predictions and alerts."""
+    from backend.models_orm import StationORM, RouteORM, AlertORM, ForecastORM
+    stations = [{"stop_id": s.stop_id, "name": s.name, "ridership_24h": s.ridership_24h, "district": s.district}
+                for s in db.query(StationORM).all()]
+    routes = [{"route_id": r.route_id, "name": r.name, "color": r.color, "avg_ridership": r.avg_ridership}
+              for r in db.query(RouteORM).all()]
+    alerts = [{"id": a.id, "severity": a.severity, "title": a.title, "what": a.what or "",
+               "route_id": a.route_id, "station_id": a.station_id}
+              for a in db.query(AlertORM).order_by(AlertORM.created_at.desc()).limit(20).all()]
+    forecasts = [{"station_id": f.station_id, "predicted": f.predicted, "horizon_minutes": f.horizon_minutes or 60}
+                 for f in db.query(ForecastORM).order_by(ForecastORM.timestamp.desc()).limit(200).all()]
+    suggestions = generate_suggestions(forecasts, alerts, stations, routes)
+    return {"suggestions": suggestions}

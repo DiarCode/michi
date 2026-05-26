@@ -6,6 +6,7 @@ from backend.services.forecast_service import get_forecast
 from backend.routers.stations import _get_stations
 from backend.database import get_db
 from backend.models import AlertListResponse
+from backend.models_orm import AlertORM
 from sqlalchemy.orm import Session
 
 router = APIRouter()
@@ -20,6 +21,29 @@ class AlertRuleInput(BaseModel):
 @router.get("", response_model=AlertListResponse)
 def get_alerts(severity: Optional[str] = None, active_only: bool = True):
     return {"alerts": list_alerts(severity, active_only)}
+
+@router.get("/rich")
+def get_rich_alerts(db: Session = Depends(get_db)):
+    """Return alerts with rich fields (family, what, why, etc.)."""
+    alerts = db.query(AlertORM).order_by(AlertORM.created_at.desc()).limit(50).all()
+    return {"alerts": [{
+        "id": a.id,
+        "family": a.family,
+        "severity": a.severity,
+        "title": a.title,
+        "what": a.what,
+        "when_hint": a.when_hint,
+        "where_hint": a.where_hint,
+        "why": a.why,
+        "confidence": a.confidence,
+        "consequence_if_ignored": a.consequence_if_ignored,
+        "sla_timer_minutes": a.sla_timer_minutes,
+        "acknowledged": a.acknowledged or False,
+        "assigned_to": a.assigned_to,
+        "station_id": a.station_id,
+        "route_id": a.route_id,
+        "created_at": a.created_at.isoformat() if a.created_at else None,
+    } for a in alerts]}
 
 @router.get("/active", response_model=AlertListResponse)
 def get_active_alerts():
