@@ -12,6 +12,16 @@ from backend.websocket import websocket_router, mock_bus_stream
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db()
+    # Warm-load the DTS-GSSF model into cache
+    try:
+        from backend.ml.predictor import get_cached_model
+        model = get_cached_model()
+        if model:
+            print("DTS-GSSF model loaded and cached.")
+        else:
+            print("No production model artifact found — using mock predictions.")
+    except Exception as e:
+        print(f"Model warm-load failed: {e} — using mock predictions.")
     task = asyncio.create_task(mock_bus_stream())
     print("Backend started — DB initialized, bus stream running.")
     yield

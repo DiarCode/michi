@@ -3,7 +3,7 @@ import pytest
 import numpy as np
 import torch
 
-from backend.ml.model import DTSGSSF, LoRALinear, GatedSSMBlock, GraphPropagation, nb_nll, softplus
+from backend.ml.model import DTSGSSF, LoRALinear, GatedSSMBlock, GraphPropagation, TemporalAttention, nb_nll, softplus
 
 
 class TestLoRALinear:

@@ -30,44 +30,41 @@ def _get_db_session():
 
 @celery_app.task
 def generate_forecasts():
-    """Generate 24h forecasts for all stations and persist to DB."""
-    from backend.models_orm import StationORM, ForecastORM
-    from backend.services.forecast_service import generate_24h_forecast
+    """Generate forecasts for all stations using DTS-GSSF model and persist to DB."""
+    from backend.models_orm import ForecastORM
+    from backend.services.forecast_service import generate_all_forecasts
     from datetime import datetime, timezone
 
     db = _get_db_session()
     try:
-        stations = db.query(StationORM).all()
-        if not stations:
-            return {"status": "skipped", "reason": "no stations in DB"}
+        predictions = generate_all_forecasts(db)
+        if not predictions:
+            return {"status": "skipped", "reason": "no predictions generated"}
 
         count = 0
         now = datetime.now(timezone.utc)
-        for station in stations:
-            base = station.ridership_24h or 1000
-            hourly = generate_24h_forecast(station.stop_id, base_ridership=base)
-            for entry in hourly:
-                from datetime import datetime as _dt
-                ts = _dt.fromisoformat(entry["timestamp"])
-                existing = (db.query(ForecastORM)
-                            .filter(ForecastORM.station_id == station.stop_id,
-                                    ForecastORM.timestamp == ts)
-                            .first())
-                if existing:
-                    existing.predicted = entry["predicted"]
-                    existing.confidence = entry["confidence"]
-                    existing.model_version = "dts-gssf-celery"
-                    existing.created_at = now
-                else:
-                    db.add(ForecastORM(
-                        station_id=station.stop_id,
-                        timestamp=ts,
-                        predicted=entry["predicted"],
-                        confidence=entry["confidence"],
-                        model_version="dts-gssf-celery",
-                        created_at=now,
-                    ))
-                count += 1
+        for entry in predictions:
+            from datetime import datetime as _dt
+            ts = _dt.fromisoformat(entry["timestamp"])
+            existing = (db.query(ForecastORM)
+                        .filter(ForecastORM.station_id == entry["station_id"],
+                                ForecastORM.timestamp == ts)
+                        .first())
+            if existing:
+                existing.predicted = entry["predicted"]
+                existing.confidence = entry["confidence"]
+                existing.model_version = entry.get("model_version", "dts-gssf")
+                existing.created_at = now
+            else:
+                db.add(ForecastORM(
+                    station_id=entry["station_id"],
+                    timestamp=ts,
+                    predicted=entry["predicted"],
+                    confidence=entry["confidence"],
+                    model_version=entry.get("model_version", "dts-gssf"),
+                    created_at=now,
+                ))
+            count += 1
         db.commit()
         return {"status": "ok", "forecasts_generated": count}
     except Exception as e:

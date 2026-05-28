@@ -1,35 +1,46 @@
-"""Forecast service - generates and retrieves ridership forecasts."""
-import numpy as np
-from datetime import datetime, timedelta, timezone
+"""Forecast service — generates ridership forecasts using DTS-GSSF model with mock fallback."""
+from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
-MOCK_FORECAST: Dict[str, List[dict]] = {}
+from backend.ml.predictor import generate_predictions_from_cache, generate_mock_predictions
 
 
 def generate_24h_forecast(station_id: str, base_ridership: int = 1000) -> List[dict]:
-    """Generate a 24-hour forecast for a station."""
-    now = datetime.now(timezone.utc)
-    hourly = []
-    for h in range(24):
-        ts = now.replace(hour=h, minute=0, second=0, microsecond=0)
-        if h < now.hour:
-            ts += timedelta(days=1)
-        factor = 0.3 + 0.7 * max(0, np.sin(np.pi * (h - 6) / 12)) if 6 <= h <= 22 else 0.1
-        predicted = int(base_ridership * factor + np.random.randint(-50, 50))
-        confidence = round(0.85 + np.random.random() * 0.12, 3)
-        hourly.append({
-            "station_id": station_id,
-            "timestamp": ts.isoformat(),
-            "predicted": max(0, predicted),
-            "confidence": confidence,
-        })
-    return hourly
+    """Generate a 24-hour forecast for a station using the real model if available."""
+    from backend.database import SessionLocal
+    session = SessionLocal()
+    try:
+        predictions = generate_predictions_from_cache(session)
+        if predictions:
+            station_preds = [p for p in predictions if p["station_id"] == station_id]
+            if station_preds:
+                return station_preds
+        from backend.models_orm import StationORM
+        station = session.query(StationORM).filter(StationORM.stop_id == station_id).first()
+        stations = [{"stop_id": station_id, "ridership_24h": base_ridership}]
+        if station:
+            stations = [{"stop_id": station.stop_id, "ridership_24h": station.ridership_24h or base_ridership}]
+        return generate_mock_predictions(stations)
+    finally:
+        session.close()
+
+
+def generate_all_forecasts(db) -> List[dict]:
+    """Generate forecasts for all stations using the real model if available."""
+    predictions = generate_predictions_from_cache(db)
+    if predictions:
+        return predictions
+    from backend.models_orm import StationORM
+    stations = db.query(StationORM).all()
+    if not stations:
+        return []
+    station_dicts = [{"stop_id": s.stop_id, "ridership_24h": s.ridership_24h or 1000} for s in stations]
+    return generate_mock_predictions(station_dicts)
 
 
 def get_forecast(station_id: str) -> List[dict]:
-    if station_id not in MOCK_FORECAST:
-        MOCK_FORECAST[station_id] = generate_24h_forecast(station_id)
-    return MOCK_FORECAST[station_id]
+    """Get cached or generate forecast for a station."""
+    return generate_24h_forecast(station_id)
 
 
 def get_kpi_metrics(db=None) -> dict:

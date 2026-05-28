@@ -1,4 +1,5 @@
 """Prediction engine — loads model artifact and generates multi-horizon forecasts."""
+import threading
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional
 
@@ -7,19 +8,73 @@ import torch
 
 from backend.ml.model import DTSGSSF
 from backend.ml.data_loader import build_adjacency, build_feature_tensor
+from backend.ml.artifact_store import get_production_artifact
+
+# Module-level model cache (thread-safe singleton)
+_model_cache: Dict[str, DTSGSSF] = {}
+_cache_lock = threading.Lock()
 
 
 def load_model(artifact_path: str, N: int, n_series: int, n_agg: int, A_phys: np.ndarray,
-              device: str = "cpu") -> DTSGSSF:
-    """Load a trained model from artifact path."""
+               device: str = "cpu") -> DTSGSSF:
+    """Load a trained model from artifact path, reading config from the saved artifact."""
+    state = torch.load(artifact_path, map_location=device, weights_only=False)
+    config = state.get("config", {})
+
     model = DTSGSSF(
-        N=N, F_in=11, n_series=n_series, n_agg=n_agg, A_phys=A_phys,
-        d_model=128, horizon=4, K=3, lora_r=8,
+        N=N,
+        F_in=config.get("F_in", 11),
+        n_series=n_series,
+        n_agg=n_agg,
+        A_phys=A_phys,
+        d_model=config.get("d_model", 192),
+        horizon=config.get("horizon", 4),
+        K=config.get("K", 3),
+        lora_r=config.get("lora_r", 16),
+        dropout=config.get("dropout", 0.1),
+        n_heads=config.get("n_heads", 6),
     )
-    state = torch.load(artifact_path, map_location=device, weights_only=True)
-    model.load_state_dict(state["model_state_dict"] if "model_state_dict" in state else state)
+    model_state = state.get("model_state_dict", state)
+    model.load_state_dict(model_state)
     model.eval()
     return model
+
+
+def get_cached_model() -> Optional[DTSGSSF]:
+    """Get or load the production model (cached across calls)."""
+    artifact = get_production_artifact()
+    if artifact is None:
+        return None
+
+    version = artifact.version
+    if version in _model_cache:
+        return _model_cache[version]
+
+    with _cache_lock:
+        if version in _model_cache:
+            return _model_cache[version]
+
+        from backend.database import SessionLocal
+        session = SessionLocal()
+        try:
+            A_phys, stop_ids, station_idx = build_adjacency(session)
+            N = len(stop_ids)
+            n_series = N
+            n_agg = 3
+            model = load_model(
+                artifact_path=artifact.artifact_path,
+                N=N, n_series=n_series, n_agg=n_agg, A_phys=A_phys,
+                device="cpu",
+            )
+            # Clear old entries, keep only latest
+            _model_cache.clear()
+            _model_cache[version] = model
+            return model
+        except Exception as e:
+            print(f"Failed to load production model: {e}")
+            return None
+        finally:
+            session.close()
 
 
 def generate_predictions(
@@ -29,10 +84,7 @@ def generate_predictions(
     stop_ids: List[str],
     horizons: List[int] = [15, 30, 60, 120],
 ) -> List[Dict]:
-    """Generate multi-horizon predictions using the loaded model.
-
-    Returns list of prediction dicts suitable for storing in forecasts table.
-    """
+    """Generate multi-horizon predictions using the loaded model."""
     now = datetime.now(timezone.utc)
     predictions = []
 
@@ -42,13 +94,12 @@ def generate_predictions(
         x_tensor = torch.as_tensor(x, dtype=torch.float32, device=device)
         with torch.no_grad():
             mu, kappa = model(x_tensor)
-        mu_np = mu.cpu().numpy().squeeze()  # (H, n_series)
+        mu_np = mu.cpu().numpy().squeeze()
         kappa_val = float(torch.clamp(kappa, min=0.01).cpu())
 
         N = len(stop_ids)
         for h_idx, horizon_min in enumerate(horizons):
             h_hours = horizon_min / 60.0
-            # Map horizon index to model output
             step = min(h_idx + 1, mu_np.shape[0] - 1)
             ts = now + timedelta(minutes=horizon_min)
             for n_idx, sid in enumerate(stop_ids):
@@ -67,6 +118,16 @@ def generate_predictions(
         print(f"Prediction generation failed: {e}")
 
     return predictions
+
+
+def generate_predictions_from_cache(session) -> List[Dict]:
+    """Generate predictions using the cached production model."""
+    model = get_cached_model()
+    if model is None:
+        return []
+
+    A_phys, stop_ids, station_idx = build_adjacency(session)
+    return generate_predictions(model, session, station_idx, stop_ids)
 
 
 def generate_mock_predictions(

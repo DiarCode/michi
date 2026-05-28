@@ -70,7 +70,7 @@ def build_feature_tensor(
     # Build time-indexed data
     T_window = window_hours
     T_horizon = horizon_hours
-    F = 11  # boarding, alighting, load, temp, precip, is_holiday, hour_sin, hour_cos, dow_sin, dow_cos, rush_hour
+    F = 11  # Must match model's F_in — v2 best model uses 11 features
 
     x_data = np.zeros((T_window, N, F), dtype=np.float32)
     y_data = np.zeros((T_horizon, N), dtype=np.float32)

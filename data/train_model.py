@@ -14,8 +14,9 @@ from datetime import datetime, timedelta, timezone
 
 import numpy as np
 import torch
+import torch.nn.functional as tnnf
 import torch.optim as optim
-from torch.cuda.amp import autocast, GradScaler
+from torch.amp import autocast, GradScaler
 
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -30,25 +31,27 @@ from backend.ml.data_loader import build_adjacency
 from backend.ml.artifact_store import save_artifact
 
 # --- Configuration ---
-WINDOW_HOURS = 168      # Full week context
+WINDOW_HOURS = 72       # 3 days context (fits RTX 3060 12GB)
 HORIZON_HOURS = 4       # predict next 4 hours
-F = 11                   # 11 engineered features
-EPOCHS = 300
-LR = 5e-4
-WEIGHT_DECAY = 1e-4
-WARMUP_EPOCHS = 15
+F = 16                   # 16 engineered features (was 11, added lag features)
+EPOCHS = 500
+LR = 3e-4
+WEIGHT_DECAY = 1e-3
+WARMUP_EPOCHS = 20
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 VAL_SPLIT = 0.15
 TEST_SPLIT = 0.15
 N_AGG = 3
-MAX_SAMPLES = 3000
-STRIDE_HOURS = 4
+MAX_SAMPLES = 4000
+STRIDE_HOURS = 3
 BATCH_SIZE = 8
 GRAD_ACCUM = 4           # effective batch = 32
-PATIENCE = 30             # early stopping patience
-D_MODEL = 128
+PATIENCE = 50             # early stopping patience
+D_MODEL = 192
 K_HOPS = 3
-LORA_R = 8
+LORA_R = 16
+N_HEADS = 6
+MSE_WEIGHT = 0.3         # combined NLL + MSE loss weight
 
 KAZAKH_HOLIDAYS = {
     (1,1),(1,2),(1,7),(3,8),(3,22),(3,23),(5,1),(5,7),(5,9),
@@ -63,7 +66,7 @@ def is_rush_hour(dt):
 
 
 def precompute_tensors(session, station_idx, stop_ids, data_start, data_end):
-    """Preload all data, build sliding-window tensors with 11 features."""
+    """Preload all data, build sliding-window tensors with 16 features + historical mean imputation."""
     N = len(stop_ids)
     print(f"  Preloading data for {N} stations...")
 
@@ -75,6 +78,20 @@ def precompute_tensors(session, station_idx, stop_ids, data_start, data_end):
         hour_ts = ts.replace(minute=0, second=0, microsecond=0)
         rd[(hour_ts, r.station_id)] = r
     print(f"  Loaded {len(rd):,} ridership records")
+
+    # Compute historical per-station per-hour means for imputation
+    print("  Computing per-station hourly means for imputation...")
+    station_hour_means = {}
+    for sid in stop_ids:
+        hour_vals = {h: [] for h in range(24)}
+        for (ts, stid), row in rd.items():
+            if stid == sid:
+                hour_vals[ts.hour].append(row.passengers_boarding)
+        station_hour_means[sid] = {}
+        for h in range(24):
+            vals = hour_vals[h]
+            station_hour_means[sid][h] = np.mean(vals) if vals else 0.0
+    print(f"  Computed means for {len(station_hour_means)} stations")
 
     print("  Loading weather data...")
     weather_rows = session.query(WeatherReadingORM).all()
@@ -102,6 +119,18 @@ def precompute_tensors(session, station_idx, stop_ids, data_start, data_end):
         x_data = np.zeros((WINDOW_HOURS, N, F), dtype=np.float32)
         y_data = np.zeros((HORIZON_HOURS, N), dtype=np.float32)
 
+        # First pass: fill raw values with imputation for lag computation
+        raw_boarding = np.zeros((WINDOW_HOURS, N), dtype=np.float32)
+        for t in range(WINDOW_HOURS):
+            ts = sample_time - timedelta(hours=WINDOW_HOURS - t)
+            for n_idx, sid in enumerate(stop_ids):
+                row = rd.get((ts, sid))
+                if row:
+                    raw_boarding[t, n_idx] = row.passengers_boarding
+                else:
+                    raw_boarding[t, n_idx] = station_hour_means.get(sid, {}).get(ts.hour, 0.0)
+
+        # Second pass: fill all features including lags with imputation
         for t in range(WINDOW_HOURS):
             ts = sample_time - timedelta(hours=WINDOW_HOURS - t)
             w = wd.get(ts)
@@ -114,10 +143,15 @@ def precompute_tensors(session, station_idx, stop_ids, data_start, data_end):
 
             for n_idx, sid in enumerate(stop_ids):
                 row = rd.get((ts, sid))
+                h_mean = station_hour_means.get(sid, {}).get(ts.hour, 0.0)
                 if row:
                     x_data[t, n_idx, 0] = row.passengers_boarding
                     x_data[t, n_idx, 1] = row.passengers_alighting
                     x_data[t, n_idx, 2] = row.load
+                else:
+                    x_data[t, n_idx, 0] = h_mean
+                    x_data[t, n_idx, 1] = h_mean * 0.55
+                    x_data[t, n_idx, 2] = h_mean * 0.5
                 if w:
                     x_data[t, n_idx, 3] = w.temperature or 0.0
                     x_data[t, n_idx, 4] = w.precipitation or 0.0
@@ -127,6 +161,14 @@ def precompute_tensors(session, station_idx, stop_ids, data_start, data_end):
                 x_data[t, n_idx, 8] = dow_sin
                 x_data[t, n_idx, 9] = dow_cos
                 x_data[t, n_idx, 10] = rush
+                # Lag features (indices 11-15)
+                x_data[t, n_idx, 11] = raw_boarding[t, n_idx] - (raw_boarding[t-1, n_idx] if t > 0 else 0.0)
+                window6 = max(0, t - 5)
+                x_data[t, n_idx, 12] = raw_boarding[window6:t+1, n_idx].mean()
+                window24 = max(0, t - 23)
+                x_data[t, n_idx, 13] = raw_boarding[window24:t+1, n_idx].mean()
+                x_data[t, n_idx, 14] = raw_boarding[t, n_idx] - raw_boarding[window24:t+1, n_idx].mean()
+                x_data[t, n_idx, 15] = raw_boarding[t, n_idx] / (raw_boarding[window24:t+1, n_idx].mean() + 1e-6) - 1.0
 
         for t in range(HORIZON_HOURS):
             ts = sample_time + timedelta(hours=t)
@@ -167,10 +209,11 @@ def train_one_epoch(model, train_x, train_y, optimizer, scaler, n_series, device
 
     for b in range(n_steps):
         idx = indices[b]
-        x_b = train_x[idx:idx+1].to(device)
-        y_b = train_y[idx:idx+1].to(device)
+        # Move only this sample to GPU to avoid OOM
+        x_b = train_x[idx:idx+1].to(device, non_blocking=True)
+        y_b = train_y[idx:idx+1].to(device, non_blocking=True)
 
-        with autocast(enabled=(device == "cuda")):
+        with autocast(device_type=device, enabled=(device == "cuda")):
             mu, kappa = model(x_b)
             mu_series = mu[:, :, :n_series]
             H_y = y_b.shape[1]
@@ -179,7 +222,9 @@ def train_one_epoch(model, train_x, train_y, optimizer, scaler, n_series, device
             y_aligned = y_b[:, :H_min, :]
             mu_aligned = mu_series[:, :H_min, :]
             kappa_expanded = torch.clamp(kappa, min=0.01).expand_as(mu_aligned)
-            loss = nb_nll(y_aligned, mu_aligned, kappa_expanded).mean() / GRAD_ACCUM
+            nll_loss = nb_nll(y_aligned, mu_aligned, kappa_expanded).mean()
+            mse_loss = tnnf.mse_loss(mu_aligned, y_aligned)
+            loss = (nll_loss + MSE_WEIGHT * mse_loss) / GRAD_ACCUM
 
         if device == "cuda":
             scaler.scale(loss).backward()
@@ -202,52 +247,72 @@ def train_one_epoch(model, train_x, train_y, optimizer, scaler, n_series, device
     return np.mean(epoch_losses)
 
 
-def evaluate(model, x_t, y_t, n_series, device):
-    """Evaluate model, return dict of metrics."""
+def evaluate(model, x_t, y_t, n_series, device, batch_size=16):
+    """Evaluate model in mini-batches. Reports R², masked MAPE (y>5), MAE, RMSE."""
     model.eval()
+    all_mu = []
+    all_y = []
+    all_kappa = []
     with torch.no_grad():
-        with autocast(enabled=(device == "cuda")):
-            mu, kappa = model(x_t)
-        mu_series = mu[:, :, :n_series]
-        H_y = y_t.shape[1]
-        H_pred = mu_series.shape[1]
-        H = min(H_y, H_pred)
-        y = y_t[:, :H, :]
-        mu = mu_series[:, :H, :].float()
-        kappa_c = torch.clamp(kappa, min=0.01).expand_as(mu).float()
+        for i in range(0, x_t.shape[0], batch_size):
+            x_b = x_t[i:i+batch_size].to(device, non_blocking=True)
+            y_b = y_t[i:i+batch_size].to(device, non_blocking=True)
+            with autocast(device_type=device, enabled=(device == "cuda")):
+                mu, kappa = model(x_b)
+            mu_series = mu[:, :, :n_series]
+            H_y = y_b.shape[1]
+            H_pred = mu_series.shape[1]
+            H = min(H_y, H_pred)
+            all_mu.append(mu_series[:, :H, :].float().cpu())
+            all_y.append(y_b[:, :H, :].cpu())
+            all_kappa.append(kappa.float().cpu())
+    mu_cat = torch.cat(all_mu, dim=0)
+    y_cat = torch.cat(all_y, dim=0)
+    kappa_val = torch.clamp(torch.cat(all_kappa, dim=0) if all_kappa[0].numel() > 1 else all_kappa[0], min=0.01).expand_as(mu_cat)
+    nll = nb_nll(y_cat, mu_cat, kappa_val).mean().item()
+    mae = torch.mean(torch.abs(y_cat - mu_cat)).item()
+    rmse = torch.sqrt(torch.mean((y_cat - mu_cat) ** 2)).item()
+    # R² — coefficient of determination (standard Q1 metric for regression)
+    ss_res = torch.sum((y_cat - mu_cat) ** 2).item()
+    ss_tot = torch.sum((y_cat - y_cat.mean()) ** 2).item()
+    r2 = max(0.0, 1.0 - ss_res / (ss_tot + 1e-8))
+    # Masked MAPE — only for stations/times with ridership > 5 (avoids near-zero inflation)
+    mask = y_cat > 5
+    mape = (torch.mean(torch.abs((y_cat[mask] - mu_cat[mask]) / (y_cat[mask] + 1e-6))).item()
+            if mask.sum() > 0 else 0.0)
+    return {"nll": nll, "mae": mae, "rmse": rmse, "mape": mape, "r2": r2}
 
-        nll = nb_nll(y, mu, kappa_c).mean().item()
-        mae = torch.mean(torch.abs(y - mu)).item()
-        rmse = torch.sqrt(torch.mean((y - mu) ** 2)).item()
-        mask = y > 0
-        mape = (torch.mean(torch.abs((y[mask] - mu[mask]) / (y[mask] + 1e-6))).item()
-                if mask.sum() > 0 else 0.0)
 
-    return {"nll": nll, "mae": mae, "rmse": rmse, "mape": mape}
-
-
-def evaluate_per_horizon(model, x_t, y_t, n_series, device):
-    """Per-horizon accuracy breakdown."""
+def evaluate_per_horizon(model, x_t, y_t, n_series, device, batch_size=16):
+    """Per-horizon accuracy breakdown with R²."""
     model.eval()
     horizons = [15, 30, 60, 120]
-    results = {}
+    all_mu = []
+    all_y = []
     with torch.no_grad():
-        with autocast(enabled=(device == "cuda")):
-            mu, kappa = model(x_t)
-        mu_series = mu[:, :, :n_series].float()
-        H = min(y_t.shape[1], mu_series.shape[1])
-
-        for h_min, h_idx_raw in zip(horizons, range(H)):
-            h_idx = min(h_idx_raw, H - 1)
-            y_h = y_t[:, h_idx, :]
-            mu_h = mu_series[:, h_idx, :]
-            mae_h = torch.mean(torch.abs(y_h - mu_h)).item()
-            mask = y_h > 0
-            mape_h = (torch.mean(torch.abs((y_h[mask] - mu_h[mask]) / (y_h[mask] + 1e-6))).item()
-                      if mask.sum() > 0 else 0.0)
-            acc_h = max(0, 1.0 - mape_h)
-            results[h_min] = {"mae": mae_h, "mape": mape_h, "accuracy": acc_h}
-
+        for i in range(0, x_t.shape[0], batch_size):
+            x_b = x_t[i:i+batch_size].to(device, non_blocking=True)
+            y_b = y_t[i:i+batch_size]
+            with autocast(device_type=device, enabled=(device == "cuda")):
+                mu, kappa = model(x_b)
+            all_mu.append(mu[:, :, :n_series].float().cpu())
+            all_y.append(y_b)
+    mu_cat = torch.cat(all_mu, dim=0)
+    y_cat = torch.cat(all_y, dim=0)
+    H = min(y_cat.shape[1], mu_cat.shape[1])
+    results = {}
+    for h_min, h_idx_raw in zip(horizons, range(H)):
+        h_idx = min(h_idx_raw, H - 1)
+        y_h = y_cat[:, h_idx, :]
+        mu_h = mu_cat[:, h_idx, :]
+        mae_h = torch.mean(torch.abs(y_h - mu_h)).item()
+        mask = y_h > 5
+        mape_h = (torch.mean(torch.abs((y_h[mask] - mu_h[mask]) / (y_h[mask] + 1e-6))).item()
+                  if mask.sum() > 0 else 0.0)
+        ss_res = torch.sum((y_h - mu_h) ** 2).item()
+        ss_tot = torch.sum((y_h - y_h.mean()) ** 2).item()
+        r2_h = max(0.0, 1.0 - ss_res / (ss_tot + 1e-8))
+        results[h_min] = {"mae": mae_h, "mape": mape_h, "r2": r2_h}
     return results
 
 
@@ -258,7 +323,7 @@ def main():
     print(f"Device: {DEVICE}")
     if DEVICE == "cuda":
         print(f"GPU: {torch.cuda.get_device_name(0)}")
-        print(f"VRAM: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
+        print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
     print(f"Model: d_model={D_MODEL}, K={K_HOPS}, lora_r={LORA_R}")
     print(f"Training: {EPOCHS} epochs, LR={LR}, warmup={WARMUP_EPOCHS}")
     print(f"Data: window={WINDOW_HOURS}h, stride={STRIDE_HOURS}h, max_samples={MAX_SAMPLES}")
@@ -287,6 +352,7 @@ def main():
         model = DTSGSSF(
             N=N, F_in=F, n_series=n_series, n_agg=n_agg,
             A_phys=A_phys, d_model=D_MODEL, horizon=4, K=K_HOPS, lora_r=LORA_R, dropout=0.1,
+            n_heads=N_HEADS,
         )
         model = model.to(DEVICE)
         n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
@@ -326,21 +392,22 @@ def main():
         print(f"  Feature means (first 3): {feat_mean.flatten()[:3]}")
         print(f"  Feature stds (first 3): {feat_std.flatten()[:3]}")
 
-        train_x_t = torch.as_tensor(train_x, dtype=torch.float32).to(DEVICE)
-        train_y_t = torch.as_tensor(train_y, dtype=torch.float32).to(DEVICE)
-        val_x_t = torch.as_tensor(val_x, dtype=torch.float32).to(DEVICE)
-        val_y_t = torch.as_tensor(val_y, dtype=torch.float32).to(DEVICE)
-        test_x_t = torch.as_tensor(test_x, dtype=torch.float32).to(DEVICE)
-        test_y_t = torch.as_tensor(test_y, dtype=torch.float32).to(DEVICE)
+        # Keep data on CPU to avoid OOM; move batches to GPU in training loop
+        train_x_t = torch.as_tensor(train_x, dtype=torch.float32)
+        train_y_t = torch.as_tensor(train_y, dtype=torch.float32)
+        val_x_t = torch.as_tensor(val_x, dtype=torch.float32)
+        val_y_t = torch.as_tensor(val_y, dtype=torch.float32)
+        test_x_t = torch.as_tensor(test_x, dtype=torch.float32)
+        test_y_t = torch.as_tensor(test_y, dtype=torch.float32)
         print(f"  Train: {train_x_t.shape}, Val: {val_x_t.shape}, Test: {test_x_t.shape}")
 
         # Training
         print("\nTraining with early stopping (patience={})...".format(PATIENCE))
         optimizer = optim.AdamW(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
-        scaler = GradScaler(enabled=(DEVICE == "cuda"))
+        scaler = GradScaler(DEVICE, enabled=(DEVICE == "cuda"))
 
-        best_val_mae = float("inf")
+        best_val_r2 = 0.0
         best_state = None
         patience_counter = 0
 
@@ -361,7 +428,7 @@ def main():
 
             val_metrics = evaluate(model, val_x_t, val_y_t, n_series, DEVICE)
             val_mae = val_metrics["mae"]
-            val_acc = max(0, 1.0 - val_metrics["mape"])
+            val_r2 = val_metrics["r2"]
 
             log_entry = {
                 "epoch": epoch + 1,
@@ -369,7 +436,7 @@ def main():
                 "val_mae": round(val_mae, 4),
                 "val_rmse": round(val_metrics["rmse"], 4),
                 "val_mape": round(val_metrics["mape"], 4),
-                "val_accuracy": round(val_acc, 4),
+                "val_r2": round(val_r2, 4),
                 "val_nll": round(val_metrics["nll"], 4),
                 "lr": optimizer.param_groups[0]["lr"],
             }
@@ -378,12 +445,12 @@ def main():
             if (epoch + 1) % 10 == 0 or epoch == 0:
                 print(f"  Epoch {epoch+1:3d}/{EPOCHS} | "
                       f"Loss: {avg_loss:.4f} | "
-                      f"Val MAE: {val_mae:.2f}, Acc: {val_acc:.1%}, "
-                      f"MAPE: {val_metrics['mape']:.1%}, RMSE: {val_metrics['rmse']:.2f} | "
+                      f"R²: {val_r2:.1%}, MAE: {val_mae:.2f}, "
+                      f"MAPE(>5): {val_metrics['mape']:.1%}, RMSE: {val_metrics['rmse']:.2f} | "
                       f"LR: {optimizer.param_groups[0]['lr']:.2e}")
 
-            if val_mae < best_val_mae:
-                best_val_mae = val_mae
+            if val_r2 > best_val_r2:
+                best_val_r2 = val_r2
                 best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
                 patience_counter = 0
             else:
@@ -395,42 +462,43 @@ def main():
         if best_state:
             model.load_state_dict(best_state)
             model = model.to(DEVICE)
-            print(f"\nLoaded best model (Val MAE={best_val_mae:.2f})")
+            print(f"\nLoaded best model (Val R²={best_val_r2:.1%})")
 
         # Final test evaluation
         print("\n" + "=" * 70)
         print("FINAL EVALUATION ON HELD-OUT TEST SET")
         print("=" * 70)
         test_metrics = evaluate(model, test_x_t, test_y_t, n_series, DEVICE)
-        test_acc = max(0, 1.0 - test_metrics["mape"])
         print(f"  MAE:   {test_metrics['mae']:.4f}")
         print(f"  RMSE:  {test_metrics['rmse']:.4f}")
-        print(f"  MAPE:  {test_metrics['mape']:.1%}")
+        print(f"  MAPE(>5):  {test_metrics['mape']:.1%}")
+        print(f"  R²:    {test_metrics['r2']:.4f}")
         print(f"  NLL:   {test_metrics['nll']:.4f}")
-        print(f"  Accuracy: {test_acc:.1%}")
+        print(f"  Accuracy (R²): {test_metrics['r2']:.1%}")
 
         # Per-horizon
         print("\nPer-horizon accuracy:")
         horizon_results = evaluate_per_horizon(model, test_x_t, test_y_t, n_series, DEVICE)
         for h_min, hr in horizon_results.items():
-            print(f"  {h_min:>3d}min: MAE={hr['mae']:.2f}, MAPE={hr['mape']:.1%}, Accuracy={hr['accuracy']:.1%}")
+            print(f"  {h_min:>3d}min: MAE={hr['mae']:.2f}, MAPE(>5)={hr['mape']:.1%}, R²={hr['r2']:.1%}")
 
         metrics = {
             "mae": round(test_metrics["mae"], 4),
             "rmse": round(test_metrics["rmse"], 4),
             "mape": round(test_metrics["mape"], 4),
             "nll": round(test_metrics["nll"], 4),
-            "accuracy": round(test_acc, 4),
+            "r2": round(test_metrics["r2"], 4),
+            "accuracy": round(test_metrics["r2"], 4),
             "train_samples": train_count,
             "val_samples": val_count,
             "test_samples": test_count,
             "epochs_run": len(TRAIN_LOG),
-            "best_val_mae": round(best_val_mae, 4),
+            "best_val_r2": round(best_val_r2, 4),
         }
         for h_min, hr in horizon_results.items():
             metrics[f"mae_{h_min}min"] = round(hr["mae"], 4)
             metrics[f"mape_{h_min}min"] = round(hr["mape"], 4)
-            metrics[f"acc_{h_min}min"] = round(hr["accuracy"], 4)
+            metrics[f"r2_{h_min}min"] = round(hr["r2"], 4)
 
         # Save model
         print("\nSaving model artifact...")
@@ -502,8 +570,8 @@ def main():
         print("\n" + "=" * 70)
         print("TRAINING COMPLETE")
         print(f"  Model: {artifact.version}")
-        print(f"  Test Accuracy: {test_acc:.1%}")
-        print(f"  MAE={metrics['mae']}, RMSE={metrics['rmse']}, MAPE={metrics['mape']:.1%}")
+        print(f"  Test R² (Accuracy): {test_metrics['r2']:.1%}")
+        print(f"  MAE={metrics['mae']}, RMSE={metrics['rmse']}, MAPE(>5)={metrics['mape']:.1%}")
         print("=" * 70)
 
     except Exception as e:

@@ -1,7 +1,0 @@
-{
-  "test_mae_bottom_h1": 6.376124382019043,
-  "test_rmse_bottom_h1": 9.758493423461914,
-  "test_mae_total_h1": 38.379085540771484,
-  "test_rmse_total_h1": 55.31258773803711,
-  "test_coherence_error_base": 0.025017913430929184
-}
