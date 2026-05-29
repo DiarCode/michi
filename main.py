@@ -754,13 +754,29 @@ class GraphPropagation(nn.Module):
             out = F.gelu(self.Wg(out))
         return self.norm(out + h)
 
+class TemporalAttention(nn.Module):
+    """Multi-head attention over the time dimension of per-station sequences."""
+    def __init__(self, d_model: int, n_heads: int = 4, dropout: float = 0.1):
+        super().__init__()
+        self.attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout, batch_first=True)
+        self.norm = nn.LayerNorm(d_model)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # x: (B*N, L, d_model)
+        attn_out, _ = self.attn(x, x, x)
+        return self.norm(attn_out + x)
+
 class DTSGSSF(nn.Module):
     def __init__(self, N: int, F_in: int, n_series: int, n_agg: int, A_phys: np.ndarray,
-                 d_model: int = 192, horizon: int = 4, K: int = 3, lora_r: int = 16, dropout: float = 0.1):
+                 d_model: int = 192, horizon: int = 4, K: int = 3, lora_r: int = 16, dropout: float = 0.1,
+                 n_heads: int = 4):
         super().__init__()
         self.horizon = horizon
+        self.d_model = d_model
         self.ssm = GatedSSMBlock(F_in, d_model, dropout=dropout, lora_r=lora_r)
         self.graph = GraphPropagation(N, d_model, A_phys=A_phys, K=K, alpha_phys=0.6, d_emb=16)
+        self.attn = TemporalAttention(d_model, n_heads=n_heads, dropout=dropout)
+        self.fusion_proj = nn.Linear(d_model * 2, d_model)  # concatenation fusion
         self.head_bottom = LoRALinear(d_model, horizon, r=lora_r, alpha=16.0, bias=True)
         self.pool = nn.Sequential(nn.LayerNorm(d_model), nn.Linear(d_model, d_model), nn.GELU())
         self.head_agg = LoRALinear(d_model, horizon * n_agg, r=lora_r, alpha=16.0, bias=True)
@@ -770,13 +786,24 @@ class DTSGSSF(nn.Module):
         self.n_agg = n_agg
 
     def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        h = self.graph(self.ssm(x))                          # (B,N,d)
-        eta_bottom = self.head_bottom(h)                     # (B,N,H)
-        mu_bottom = torch.exp(eta_bottom).permute(0, 2, 1)   # (B,H,N)
-        pooled = self.pool(h).mean(dim=1)                    # (B,d)
-        eta_agg = self.head_agg(pooled).view(x.shape[0], self.horizon, self.n_agg)
-        mu_agg = torch.exp(eta_agg)                          # (B,H,n_agg)
-        mu_all = torch.cat([mu_bottom, mu_agg], dim=-1)      # (B,H,n_series)
+        B, L, N, _ = x.shape
+        # SSM: process each station's temporal sequence
+        h_ssm = self.ssm(x)  # (B, N, d_model)
+        # Graph propagation: spatial diffusion
+        h_graph = self.graph(h_ssm)  # (B, N, d_model)
+        # Temporal attention over per-timestep SSM projections
+        u = self.ssm.drop(F.gelu(self.ssm.in_proj(x)))  # (B, L, N, d_model)
+        u = u.permute(0, 2, 1, 3).reshape(B * N, L, self.d_model)
+        h_temp = self.attn(u).reshape(B, N, L, self.d_model).mean(dim=2)  # (B, N, d_model)
+        # Concatenation fusion: [h_graph; h_temp] -> projection -> d_model
+        h = self.fusion_proj(torch.cat([h_graph, h_temp], dim=-1))  # (B, N, d_model)
+        # Prediction heads
+        eta_bottom = self.head_bottom(h)  # (B, N, H)
+        mu_bottom = torch.exp(eta_bottom).permute(0, 2, 1)  # (B, H, N)
+        pooled = self.pool(h).mean(dim=1)  # (B, d)
+        eta_agg = self.head_agg(pooled).view(B, self.horizon, self.n_agg)
+        mu_agg = torch.exp(eta_agg)  # (B, H, n_agg)
+        mu_all = torch.cat([mu_bottom, mu_agg], dim=-1)  # (B, H, n_series)
         kappa = softplus(self.log_kappa) + 1e-4
         return mu_all, kappa
 

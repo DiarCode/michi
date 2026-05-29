@@ -133,6 +133,7 @@ class DTSGSSF(nn.Module):
         self.ssm = GatedSSMBlock(F_in, d_model, dropout=dropout, lora_r=lora_r)
         self.graph = GraphPropagation(N, d_model, A_phys=A_phys, K=K, alpha_phys=0.6, d_emb=16)
         self.attn = TemporalAttention(d_model, n_heads=n_heads, dropout=dropout)
+        self.fusion_proj = nn.Linear(d_model * 2, d_model)  # concatenation fusion
         self.head_bottom = nn.Sequential(
             nn.Linear(d_model, d_model * 2),
             nn.GELU(),
@@ -160,7 +161,7 @@ class DTSGSSF(nn.Module):
         u = u.permute(0, 2, 1, 3).reshape(B * N, L, self.d_model)
         h_temp = self.attn(u).reshape(B, N, L, self.d_model).mean(dim=2)  # (B, N, d_model)
         # Combine graph + temporal
-        h = h_graph + h_temp
+        h = self.fusion_proj(torch.cat([h_graph, h_temp], dim=-1))
         # Prediction heads
         eta_bottom = self.head_bottom(h)
         mu_bottom = torch.exp(eta_bottom).permute(0, 2, 1)
