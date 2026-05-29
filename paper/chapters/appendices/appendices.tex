@@ -1,0 +1,141 @@
+%
+% File: appendices.tex
+% Author: Diar Begisbayev
+%
+\chapter{Appendix}
+\label{app:appendix}
+\setlength{\parskip}{1em}
+
+\section{Public Holidays and Special Events}
+\label{app:holidays}
+
+Table~\ref{Tab.holidays} lists the public holidays and special events included in the synthetic dataset for the year 2025. These events were modelled with attendance-driven demand multipliers ranging from 5{,}000 to 60{,}000 attendees.
+
+\begin{table}[H]
+\centering
+\caption{Public holidays and special events in the synthetic dataset (2025).}
+\label{Tab.holidays}
+\begin{tabular}{llcc}
+\toprule
+Date & Event & Type & Attendance \\
+\midrule
+1 January & New Year & Public Holiday & --- \\
+7 January & Orthodox Christmas & Public Holiday & --- \\
+8 March & International Women's Day & Public Holiday & --- \\
+21--23 March & Nauryz Meyrami & Public Holiday & --- \\
+1 May & Kazakhstan Unity Day & Public Holiday & --- \\
+7 May & Defender of the Fatherland Day & Public Holiday & --- \\
+9 May & Victory Day & Public Holiday & --- \\
+6 July & Capital City Day & Public Holiday & --- \\
+30 August & Constitution Day & Public Holiday & --- \\
+25 October & Republic Day & Public Holiday & --- \\
+16 December & Independence Day & Public Holiday & --- \\
+15--20 June & EXPO-2025 Astana & Special Event & 40{,}000 \\
+10 August & City Marathon & Special Event & 12{,}000 \\
+5 September & Astana Day Concert & Special Event & 25{,}000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Network Route Definitions}
+\label{app:routes}
+
+Table~\ref{Tab.routes} summarises the ten synthetic bus routes generated from OpenStreetMap data for the Astana network.
+
+\begin{table}[H]
+\centering
+\caption{Synthetic bus route definitions.}
+\label{Tab.routes}
+\begin{tabular}{llcc}
+\toprule
+Route ID & Orientation & Stops & Districts Served \\
+\midrule
+R1 & North--South & 18 & Esil, Saryarka \\
+R2 & East--West & 20 & Almaty, Baikonur \\
+R3 & Central Loop & 16 & Esil \\
+R4 & Peripheral Ring & 14 & All four \\
+R5 & Express Corridor & 12 & Esil, Almaty \\
+R6 & North Loop & 15 & Saryarka \\
+R7 & South Cross & 17 & Baikonur, Almaty \\
+R8 & University Line & 19 & Esil, Saryarka \\
+R9 & Residential Line & 20 & Baikonur \\
+R10 & Business District & 14 & Esil \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Feature Engineering Details}
+\label{app:features}
+
+Table~\ref{Tab.features} provides the complete list of 16 input features with their descriptions, ranges, and normalization strategies.
+
+\begin{table}[H]
+\centering
+\caption{Complete input feature specifications.}
+\label{Tab.features}
+\begin{tabular}{cl>{\raggedright\arraybackslash}p{4.5cm}c@{}}
+\toprule
+Idx & Feature & Description & Normalisation \\
+\midrule
+0 & passengers\_boarding & Hourly passenger boardings at station & z-score \\
+1 & passengers\_alighting & Hourly passenger alightings at station & z-score \\
+2 & load & Net passengers on vehicle after stop & z-score \\
+3 & temperature & Ambient temperature ($^\circ$C) & z-score \\
+4 & precipitation & Binary rain/snow indicator & none \\
+5 & is\_holiday & Binary public holiday flag & none \\
+6--7 & hour\_sin, hour\_cos & Diurnal cyclical encoding & z-score \\
+8--9 & dow\_sin, dow\_cos & Day-of-week cyclical encoding & z-score \\
+10 & rush\_hour & Binary morning/evening peak flag & none \\
+11 & delta\_h & Hours to next holiday & z-score \\
+12 & roll\_6h & 6-hour rolling mean of boardings & z-score \\
+13 & roll\_24h & 24-hour rolling mean of boardings & z-score \\
+14 & dev\_24h & Deviation from 24-hour rolling mean & z-score \\
+15 & ratio\_24h & Ratio of current to 24-hour mean & z-score \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Hyperparameter Search Space}
+\label{app:hyperparams}
+
+Table~\ref{Tab.hypersearch} reports the hyperparameter search space explored during model development. Final values are shown in bold.
+
+\begin{table}[H]
+\centering
+\caption{Hyperparameter search space and final values.}
+\label{Tab.hypersearch}
+\begin{tabular}{lccc}
+\toprule
+Parameter & Search Range & Final Value \\
+\midrule
+Model dimension $d_{\text{model}}$ & \{128, 192, 256\} & \textbf{192} \\
+LoRA rank $r$ & \{8, 16, 32\} & \textbf{16} \\
+Attention heads $n_h$ & \{4, 6, 8\} & \textbf{6} \\
+Graph hops $K$ & \{2, 3, 4\} & \textbf{3} \\
+Learning rate & \{1e-4, 3e-4, 1e-3\} & \textbf{3e-4} \\
+Weight decay & \{1e-4, 1e-3, 1e-2\} & \textbf{1e-3} \\
+Dropout & \{0.0, 0.1, 0.2\} & \textbf{0.1} \\
+Auxiliary loss $\lambda$ & \{0.1, 0.3, 0.5\} & \textbf{0.3} \\
+Batch size & \{16, 32, 64\} & \textbf{32} \\
+Warmup epochs & \{10, 20, 30\} & \textbf{20} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Software and Hardware Environment}
+\label{app:environment}
+
+All experiments were conducted on a single workstation with the following specifications:
+
+\begin{itemize}
+    \item \textbf{CPU}: AMD Ryzen 5 5600X (6 cores, 12 threads)
+    \item \textbf{GPU}: NVIDIA GeForce RTX 3060 (12 GB GDDR6)
+    \item \textbf{RAM}: 32 GB DDR4-3200
+    \item \textbf{OS}: Windows 11 Pro (build 26200)
+    \item \textbf{Python}: 3.11.8
+    \item \textbf{PyTorch}: 2.12.0+cu126
+    \item \textbf{CUDA}: 12.6
+    \item \textbf{Key packages}: NumPy 1.26, pandas 2.1, scikit-learn 1.4, matplotlib 3.8, networkx 3.2
+\end{itemize}
+
+The complete source code, training scripts, and model weights will be released upon acceptance to facilitate reproducibility.

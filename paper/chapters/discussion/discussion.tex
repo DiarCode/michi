@@ -1,0 +1,67 @@
+%
+% File: discussion.tex
+% Author: Diar Begisbayev
+%
+\chapter{Discussion}
+\label{chap:discussion}
+\setlength{\parskip}{1em}
+
+This chapter discusses the implications of our findings, identifies the limitations of the current study, addresses ethical considerations, and outlines directions for future research.
+
+\section{Summary of Findings}
+\label{sec:findings}
+
+Our experiments demonstrate that DTS-GSSF achieves the best performance among all evaluated methods on our benchmark for the synthetic Astana bus network dataset, with an $R^2$ of 0.889 and MAE of 2.43 passengers per station-hour. Three architectural choices emerged as particularly important:
+
+\begin{enumerate}
+    \item \textbf{Gated Recurrent Temporal Modelling}: The gated recurrent encoder provides stable gradient propagation across the 72-hour context window, avoiding the vanishing-gradient problems that plague deep LSTMs and the quadratic complexity of full self-attention.
+    \item \textbf{Dual Adjacency Propagation}: Combining a fixed physical adjacency matrix with a learnable adaptive matrix enables the model to respect known route topology while discovering latent passenger transfer patterns. The learnable mixing coefficient $\alpha$ converged to approximately 0.58 during training, close to the initial value of 0.6, confirming that both components contribute positively.
+    \item \textbf{Negative Binomial Likelihood}: The distributional output appropriately models overdispersed count data, providing calibrated uncertainty estimates that are essential for operational decision-making.
+\end{enumerate}
+
+These findings are consistent with the broader literature on spatiotemporal forecasting \cite{zhang2021deep,fan2020urban}, which identifies the integration of spatial and temporal modelling as the key driver of performance improvements over univariate baselines.
+
+\section{Limitations}
+\label{sec:discussion_limitations}
+
+Several limitations of this study must be acknowledged:
+
+\textbf{Synthetic Data}: The primary evaluation was conducted on synthetic data generated from OpenStreetMap topology and heuristic demand simulation. While the simulation incorporates realistic factors (weather, holidays, events, cyclical patterns) and the cross-dataset evaluation on METR-LA (Section~\ref{sec:metr_la}) confirms generalisation to real-world traffic data, performance on real-world ridership logs from the Astana transit operator may differ. Real ridership data may contain unmodelled noise sources such as fare evasion, GPS drift, and irregular vehicle dispatching. Collaboration with the Astana municipal transit authority to obtain Automatic Passenger Counting (APC) data remains a priority for future validation.
+
+\textbf{Performance Ceiling}: The $R^2$ ceiling near 89\% suggests that a portion of variance is irreducible given the current feature set. This residual variance likely reflects unobserved special events, service disruptions, and stochastic individual behaviour.
+
+\textbf{Scalability}: The temporal attention complexity of $O(N T^2 d)$ dominates at our configuration, and the graph propagation term $O(K N^2 d)$ may become a bottleneck for networks with thousands of stations. For the Astana network ($N = 374$, $T = 72$), both terms are tractable, but megacity networks with $N > 2{,}000$ or contexts exceeding $T = 200$ hours may require linear-attention approximations and graph clustering or sparse adaptive matrices.
+
+\textbf{Static Graph}: The current model assumes a fixed network topology. In reality, bus routes are periodically adjusted due to construction, policy changes, or special events. A dynamic graph formulation that evolves the adjacency matrix over time would be more robust to such changes.
+
+\section{Ethics and Data Privacy}
+\label{sec:ethics}
+
+This research raises several ethical considerations relevant to the deployment of passenger flow prediction systems in public transit.
+
+\textbf{Synthetic Data and Privacy}: The use of synthetic data avoids the privacy risks associated with real passenger records, which may contain personally identifiable information (PII) when combined with payment card or mobile device data. However, future work involving real ridership data must comply with the General Data Protection Regulation (GDPR) and Kazakhstan's Law on Personal Data Protection (No. 94-V, 2013). Data anonymization, aggregation to the station-hour level, and differential privacy techniques \cite{dwork2006calibrating,dwork2014algorithmic} should be employed when handling real passenger records.
+
+\textbf{Equity and Accessibility}: Predictive models for transit planning must be evaluated for fairness across demographic groups. If the training data underrepresents ridership from low-income neighbourhoods or peripheral districts, the model may produce less accurate forecasts for these areas, leading to suboptimal service allocation. We recommend stratified evaluation by district and route type as a standard practice.
+
+\textbf{Transparency and Accountability}: Automated dispatching systems based on predictive models should maintain human oversight. The model's uncertainty estimates (provided by the Negative Binomial distribution) should be surfaced to operators to flag low-confidence predictions that require manual review.
+
+\section{Future Work}
+\label{sec:future}
+
+Promising directions for future work include:
+
+\begin{enumerate}
+    \item \textbf{Multi-Modal Transit Networks}: Extend the model to incorporate metro, light rail, and ride-hailing data, creating a unified graph that captures transfers between modes. This would require a heterogeneous graph formulation with different edge types for each mode.
+
+    \item \textbf{Dynamic Adaptive Graphs}: Replace the static adaptive adjacency matrix with a fully learned dynamic graph that evolves over time. This could be achieved through a temporal graph attention mechanism that reweights edges based on current traffic conditions.
+
+    \item \textbf{Causal Intervention Modelling}: Develop a counterfactual prediction framework to estimate the effect of service changes (route cancellations, frequency adjustments, new line openings) on passenger flows. This would require structural causal models or reinforcement learning approaches.
+
+    \item \textbf{Edge Deployment}: Leverage the compact 470K-parameter architecture for real-time inference at bus stops using edge devices (Raspberry Pi, NVIDIA Jetson). Quantization to INT8 could further reduce latency and power consumption.
+
+    \item \textbf{Real-World Validation}: Collaborate with the Astana municipal transit authority to evaluate the model on actual Automatic Passenger Counting (APC) data. This would provide the ground-truth validation necessary to confirm the synthetic results.
+
+    \item \textbf{Extreme Weather Resilience}: Investigate the model's robustness to climate-change-driven extreme weather events (prolonged heatwaves, flash floods) that may not be represented in historical data.
+\end{enumerate}
+
+We will release the training code, model weights, and synthetic dataset upon acceptance to facilitate reproducibility and community benchmarking.

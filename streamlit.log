@@ -1,0 +1,688 @@
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://192.168.8.115:8501
+  External URL: http://85.117.113.7:8501
+
+2026-05-28 16:37:10.646 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:37:10.700 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:37:10.704 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:37:10.747 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2869, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2856, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2126, in ui_app
+    fig_drift.add_vline(x=drift_start, line_dash="dash", line_color="red",
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        annotation_text="Drift onset")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\graph_objs\_figure.py", line 473, in add_vline
+    return super().add_vline(
+           ~~~~~~~~~~~~~~~~~^
+        x, row, col, exclude_empty_subplots, annotation, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\basedatatypes.py", line 4152, in add_vline
+    self._process_multiple_axis_spanning_shapes(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dict(type="line", x0=x, x1=x, y0=0, y1=1),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\basedatatypes.py", line 4093, in _process_multiple_axis_spanning_shapes
+    augmented_annotation = shapeannotation.axis_spanning_shape_annotation(
+        annotation, shape_type, shape_args, annotation_kwargs
+    )
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 216, in axis_spanning_shape_annotation
+    shape_dict = annotation_params_for_line(
+        shape_type, shape_args, annotation_position
+    )
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 63, in annotation_params_for_line
+    eX = _mean(X)
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 7, in _mean
+    return float(sum(x)) / len(x)
+                 ~~~^^^
+  File "pandas/_libs/tslibs/timestamps.pyx", line 483, in pandas._libs.tslibs.timestamps._Timestamp.__radd__
+  File "pandas/_libs/tslibs/timestamps.pyx", line 465, in pandas._libs.tslibs.timestamps._Timestamp.__add__
+TypeError: Addition/subtraction of integers and integer-arrays with Timestamp is no longer supported.  Instead of adding/subtracting `n`, use `n * obj.freq`
+2026-05-28 16:37:19.138 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:37:19.145 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:37:19.147 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:37:19.160 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2869, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2856, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2126, in ui_app
+    fig_drift.add_vline(x=drift_start, line_dash="dash", line_color="red",
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        annotation_text="Drift onset")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\graph_objs\_figure.py", line 473, in add_vline
+    return super().add_vline(
+           ~~~~~~~~~~~~~~~~~^
+        x, row, col, exclude_empty_subplots, annotation, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\basedatatypes.py", line 4152, in add_vline
+    self._process_multiple_axis_spanning_shapes(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dict(type="line", x0=x, x1=x, y0=0, y1=1),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\basedatatypes.py", line 4093, in _process_multiple_axis_spanning_shapes
+    augmented_annotation = shapeannotation.axis_spanning_shape_annotation(
+        annotation, shape_type, shape_args, annotation_kwargs
+    )
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 216, in axis_spanning_shape_annotation
+    shape_dict = annotation_params_for_line(
+        shape_type, shape_args, annotation_position
+    )
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 63, in annotation_params_for_line
+    eX = _mean(X)
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 7, in _mean
+    return float(sum(x)) / len(x)
+                 ~~~^^^
+  File "pandas/_libs/tslibs/timestamps.pyx", line 483, in pandas._libs.tslibs.timestamps._Timestamp.__radd__
+  File "pandas/_libs/tslibs/timestamps.pyx", line 465, in pandas._libs.tslibs.timestamps._Timestamp.__add__
+TypeError: Addition/subtraction of integers and integer-arrays with Timestamp is no longer supported.  Instead of adding/subtracting `n`, use `n * obj.freq`
+2026-05-28 16:42:34.681 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:42:34.689 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:42:34.691 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:42:34.711 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2869, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2856, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2126, in ui_app
+    fig_drift.add_vline(x=str(drift_start), line_dash="dash", line_color="red",
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        annotation_text="Drift onset")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\graph_objs\_figure.py", line 473, in add_vline
+    return super().add_vline(
+           ~~~~~~~~~~~~~~~~~^
+        x, row, col, exclude_empty_subplots, annotation, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\basedatatypes.py", line 4152, in add_vline
+    self._process_multiple_axis_spanning_shapes(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dict(type="line", x0=x, x1=x, y0=0, y1=1),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\basedatatypes.py", line 4093, in _process_multiple_axis_spanning_shapes
+    augmented_annotation = shapeannotation.axis_spanning_shape_annotation(
+        annotation, shape_type, shape_args, annotation_kwargs
+    )
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 216, in axis_spanning_shape_annotation
+    shape_dict = annotation_params_for_line(
+        shape_type, shape_args, annotation_position
+    )
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 63, in annotation_params_for_line
+    eX = _mean(X)
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\plotly\shapeannotation.py", line 7, in _mean
+    return float(sum(x)) / len(x)
+                 ~~~^^^
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+2026-05-28 16:48:56.491 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:48:56.500 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:48:56.502 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:48:56.544 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:48:56.887 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:02.140 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:02.161 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:02.169 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:02.234 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:02.670 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:03.673 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:04.177 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:19.087 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:19.101 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:19.105 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:19.149 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:19.539 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:19.740 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:20.254 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2873, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2860, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2220, in ui_app
+    res = online_run_stream(
+        b, st.session_state.model, wcfg, split, ocfg, dev,
+        step_callback=step_callback, max_steps=steps
+    )
+  File "C:\Users\begis\development\michi\main.py", line 1247, in online_run_stream
+    adapt_on_buffer()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 1188, in adapt_on_buffer
+    loss.backward()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\torch\_tensor.py", line 625, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\torch\autograd\__init__.py", line 354, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\torch\autograd\graph.py", line 841, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.FloatTensor [8, 96]], which is output 0 of AsStridedBackward0, is at version 36; expected version 34 instead. Hint: enable anomaly detection to find the operation that failed to compute its gradient, with torch.autograd.set_detect_anomaly(True).
+2026-05-28 16:49:20.543 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.440 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.450 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.453 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.482 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.810 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.828 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.867 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:25.871 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2873, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2860, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2463, in ui_app
+    parquet_files = export_parquet(b)
+                    ^^^^^^^^^^^^^^
+NameError: name 'export_parquet' is not defined
+2026-05-28 16:49:40.751 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:40.765 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:40.769 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:40.809 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:41.099 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:41.118 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:41.142 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:41.146 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2873, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2860, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2463, in ui_app
+    parquet_files = export_parquet(b)
+                    ^^^^^^^^^^^^^^
+NameError: name 'export_parquet' is not defined
+2026-05-28 16:49:42.086 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.099 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.102 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.133 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.408 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.423 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.445 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.449 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2873, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2860, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2463, in ui_app
+    parquet_files = export_parquet(b)
+                    ^^^^^^^^^^^^^^
+NameError: name 'export_parquet' is not defined
+2026-05-28 16:49:42.943 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.951 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.955 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:42.975 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:43.232 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:43.249 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:45.005 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:49:45.010 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\begis\development\michi\.venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 671, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\main.py", line 2873, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2860, in main
+    ui_app()
+    ~~~~~~^^
+  File "C:\Users\begis\development\michi\main.py", line 2463, in ui_app
+    parquet_files = export_parquet(b)
+                    ^^^^^^^^^^^^^^
+NameError: name 'export_parquet' is not defined
+2026-05-28 16:50:36.322 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:36.331 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:36.333 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:36.352 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:36.619 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:36.678 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:39.844 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:39.940 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:48.308 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:50:55.057 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:04.194 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:04.273 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:13.532 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:13.606 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:13.711 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:13.782 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:13.861 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:13.940 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:14.013 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:14.123 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:14.202 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:14.286 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:14.363 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:14.436 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:14.538 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-05-28 16:51:34.373 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.

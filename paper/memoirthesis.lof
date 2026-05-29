@@ -1,0 +1,24 @@
+\babel@toc {english}{}\relax 
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\par \nobreak \textbf {{\scshape Figure} \hfill Page}\par \nobreak 
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces DTS-GSSF architecture. The input tensor $\mathbf {X} \in \mathbb {R}^{B \times T \times N \times F}$ flows through the Gated Recurrent Encoder (temporal encoding), GraphPropagation (spatial diffusion), TemporalAttention (long-range dependencies), and Prediction Heads (per-station and aggregate forecasts).}}{19}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces React-based command centre dashboard providing an overview of network-wide ridership predictions, station status, and anomaly alerts.}}{25}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Live station map displaying real-time passenger flow predictions across the Astana bus network, with colour-coded confidence intervals.}}{25}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Depot operations interface for monitoring vehicle dispatch schedules, capacity utilisation, and route-level demand forecasts.}}{26}{figure.caption.18}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Operational forecast view for a single station, showing predicted boarding counts with confidence intervals across multiple horizons.}}{26}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Streamlit interface for live simulation of real-time data ingestion and model validation. The panel displays incoming ridership observations alongside predicted values and confidence intervals.}}{26}{figure.caption.20}%
+\addvspace {10pt}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Per-horizon test-set accuracy: $R^2$ and MAE across 15, 30, 60, and 120 minute prediction horizons.}}{33}{figure.caption.24}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Training and validation loss curves. The vertical dashed line marks the best validation epoch (epoch 40).}}{34}{figure.caption.26}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Calibration analysis. Left: Expected Calibration Error (ECE) across distributional output heads (lower is better). Right: Quantile coverage at 50\% and 90\% credible intervals. Dashed lines indicate nominal coverage levels.}}{36}{figure.caption.28}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Normalized feature importance from gradient-based attribution.}}{37}{figure.caption.29}%
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}

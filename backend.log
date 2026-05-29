@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\backend\app.py", line 6, in <module>
+    from backend.database import init_db
+ModuleNotFoundError: No module named 'backend'

@@ -69,10 +69,14 @@ class GatedSSMBlock(nn.Module):
 
 
 class GraphPropagation(nn.Module):
-    def __init__(self, N: int, d: int, A_phys: np.ndarray, K: int = 2, alpha_phys: float = 0.6, d_emb: int = 16):
+    def __init__(self, N: int, d: int, A_phys: np.ndarray, K: int = 2, alpha_phys: float = 0.6, d_emb: int = 16, learnable_alpha: bool = True):
         super().__init__()
         self.K = K
-        self.alpha_phys = alpha_phys
+        self.learnable_alpha = learnable_alpha
+        if learnable_alpha:
+            self.log_alpha = nn.Parameter(torch.tensor(math.log(alpha_phys), dtype=torch.float32))
+        else:
+            self.register_buffer("log_alpha", torch.tensor(math.log(alpha_phys), dtype=torch.float32))
         self.register_buffer("A_phys", torch.from_numpy(A_phys).float())
         self.E1 = nn.Parameter(torch.randn(N, d_emb) * 0.05)
         self.E2 = nn.Parameter(torch.randn(N, d_emb) * 0.05)
@@ -85,7 +89,8 @@ class GraphPropagation(nn.Module):
 
     def forward(self, h: torch.Tensor) -> torch.Tensor:
         A_adp = self.adaptive_adj()
-        A = self.alpha_phys * self.A_phys + (1.0 - self.alpha_phys) * A_adp
+        alpha = torch.sigmoid(self.log_alpha)
+        A = alpha * self.A_phys + (1.0 - alpha) * A_adp
         out = h
         for _ in range(self.K):
             out = torch.einsum("ij,bjd->bid", A, out)

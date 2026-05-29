@@ -1,0 +1,28 @@
+\babel@toc {english}{}\relax 
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\par \nobreak \textbf {{\scshape Table} \hfill Page}\par \nobreak 
+\addvspace {10pt}
+\addvspace {10pt}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Peer-reviewed publications during Master's studies and their relationship to this thesis.}}{8}{table.caption.12}%
+\addvspace {10pt}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Comparison of representative spatiotemporal forecasting models.}}{13}{table.caption.13}%
+\addvspace {10pt}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Dataset properties and descriptive statistics.}}{17}{table.caption.14}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Complete training and model hyperparameters.}}{27}{table.caption.21}%
+\addvspace {10pt}
+\contentsline {table}{\numberline {5.1}{\ignorespaces Test-set performance comparison. Best results in \textbf {bold}; second-best underlined.}}{31}{table.caption.22}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Ablation study on architectural components.}}{32}{table.caption.23}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Computational cost comparison.}}{33}{table.caption.25}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Calibration comparison across distributional output heads (shared DTS-GSSF backbone).}}{35}{table.caption.27}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Per-district test-set performance.}}{37}{table.caption.30}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Cross-dataset evaluation on METR-LA (traffic speed, $N = 207$). Results from original papers and our re-implementation.}}{40}{table.caption.31}%
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\contentsline {table}{\numberline {A.1}{\ignorespaces Public holidays and special events in the synthetic dataset (2025).}}{49}{table.caption.32}%
+\contentsline {table}{\numberline {A.2}{\ignorespaces Synthetic bus route definitions.}}{50}{table.caption.33}%
+\contentsline {table}{\numberline {A.3}{\ignorespaces Complete input feature specifications.}}{51}{table.caption.34}%
+\contentsline {table}{\numberline {A.4}{\ignorespaces Hyperparameter search space and final values.}}{52}{table.caption.35}%

@@ -1,0 +1,66 @@
+%
+% File: app0A.tex
+% Author: Diar Begisbayev
+%
+\chapter{Appendix A: Dataset and Implementation Details}
+
+\section{Astana Bus Network Topology}
+
+The synthetic bus network was generated from OpenStreetMap data for Astana, Kazakhstan. The OSM extract was parsed to identify bus stops, which were then deduplicated using an 80-metre minimum separation threshold. Stops were assigned to one of four administrative districts (Esil, Almaty, Saryarka, Baikonur) based on bounding-box containment. Ten routes were defined with distinct corridor orientations (north-south, east-west, central, peripheral, express, north-loop, south-cross, university, residential, business). Each route was populated with up to 20 stops selected by spatial filtering and sorted by trajectory direction.
+
+\section{Kazakh Holidays and Special Events}
+
+The following holidays were treated as non-working days with reduced ridership:
+\begin{itemize}
+    \item January 1--2 (New Year), January 7 (Orthodox Christmas)
+    \item March 8 (International Women's Day), March 22--23 (Nauryz)
+    \item May 1 (Spring/Labor Day), May 7, May 9 (Victory Day)
+    \item June 10 (Capital City Day), July 6 (Astana Day)
+    \item August 30 (Constitution Day), October 25 (Republic Day)
+    \item December 16--17 (Independence Day)
+\end{itemize}
+
+Special events included Astana Arena football matches, Khan Shatyr concerts, Expo exhibitions, Independence Day parades, Nauryz festivals, university graduations, Capital City Day celebrations, and Barys hockey games. Events were injected into the simulation with attendance-driven demand multipliers ranging from 5,000 to 60,000 attendees.
+
+\section{Weather Simulation}
+
+Hourly weather was drawn from a set of eight templates (clear, cloudy, rain, snow, blizzard, fog, extreme cold, heatwave) with seasonally adjusted sampling probabilities. Temperature ranged from $-40$\textdegree C to $+45$\textdegree C, precipitation from 0 to 30 mm, and wind speed from 0 to 60 km/h. A 5\% probability of sudden weather change was included to simulate meteorological volatility.
+
+\section{Negative Binomial Likelihood}
+
+The probability mass function for the Negative Binomial distribution is:
+\begin{equation}
+    P(y \mid \mu, \kappa) = \frac{\Gamma(y + \kappa)}{\Gamma(\kappa) \, y!} \left( \frac{\kappa}{\kappa + \mu} \right)^{\kappa} \left( \frac{\mu}{\kappa + \mu} \right)^{y},
+\end{equation}
+where $\mu > 0$ is the mean, $\kappa > 0$ is the dispersion parameter, and $y \in \mathbb{N}_0$ is the observed count. As $\kappa \to \infty$, the distribution converges to Poisson with mean $\mu$. The learned $\kappa = 7.2$ indicates moderate overdispersion (variance $= \mu + \mu^2 / \kappa$).
+
+\section{Full Hyperparameter Configuration}
+
+\begin{table}[H]
+\centering
+\caption{Complete training and model hyperparameters.}
+\label{Tab.A.1}
+\begin{tabular}{ll}
+\toprule
+Parameter & Value \\
+\midrule
+Context window $T$ & 72 hours \\
+Prediction horizons $H_{\text{pred}}$ & 4 (15/30/60/120 min) \\
+Input features $F$ & 16 \\
+Model dimension $d_{\text{model}}$ & 192 \\
+LoRA rank $r$ & 16 \\
+Attention heads $n_h$ & 6 \\
+Graph hops $K$ & 3 \\
+Learning rate & $3 \times 10^{-4}$ \\
+Weight decay & $10^{-3}$ \\
+Warmup epochs & 20 \\
+LR scheduler & CosineAnnealing \\
+Batch size (effective) & 32 (8 $\times$ 4 accum) \\
+Gradient clipping & max\_norm $= 1.0$ \\
+Mixed precision & FP16 (CUDA) \\
+Early stopping patience & 50 epochs \\
+Max training epochs & 500 \\
+Train/Val/Test split & 70\% / 15\% / 15\% \\
+\bottomrule
+\end{tabular}
+\end{table}

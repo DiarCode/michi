@@ -1,0 +1,287 @@
+\begin{thebibliography}{10}
+
+\bibitem{jeong2014supervised}
+Young-Seon Jeong, Young-Ji Byon, Jos{\'e}~Ignacio Castillo-Manzano, and
+  Xiaopeng Shan.
+\newblock Supervised prediction of short-term traffic conditions on urban road
+  networks.
+\newblock {\em Transportation Research Part C: Emerging Technologies},
+  43:109--122, 2014.
+
+\bibitem{toque2017short}
+Franck Toqu{\'e}, Fadoul Mahamadou, Etienne C{\^o}me, Badr Oukarfi, Nour-Eddin
+  El~Faouzi, Jean-Fran{\c{c}}ois Ma, and Yacine Benslimane.
+\newblock Short-term traffic prediction with self-adaptive k-{NN} based on
+  meteorological conditions.
+\newblock {\em IET Intelligent Transport Systems}, 11(9):579--586, 2017.
+
+\bibitem{hochreiter1997long}
+Sepp Hochreiter and J{\"u}rgen Schmidhuber.
+\newblock Long short-term memory.
+\newblock {\em Neural Computation}, 9(8):1735--1780, 1997.
+
+\bibitem{cho2014rnnencoder}
+Kyunghyun Cho, Bart van Merri{\"e}nboer, Caglar Gulcehre, Dzmitry Bahdanau,
+  Fethi Bougares, Holger Schwenk, and Yoshua Bengio.
+\newblock Learning phrase representations using {RNN} encoder-decoder for
+  statistical machine translation.
+\newblock {\em arXiv preprint arXiv:1406.1078}, 2014.
+
+\bibitem{wei2018generalized}
+Ran Wei, Shuyan Zheng, Sami Ayhan, Wael Fateen, and Liding Pu.
+\newblock Generalized transit ridership prediction using long short-term memory
+  networks.
+\newblock {\em Transportation Research Record}, 2672(47):123--134, 2018.
+
+\bibitem{liu2018revealing}
+Ling Liu, Zheng Qiu, Guozhen Li, Qingyuan Chen, and Meng Qu.
+\newblock Revealing the hidden features of public transit for forecasting
+  passenger flows.
+\newblock {\em Transportation Research Part C: Emerging Technologies},
+  92:53--70, 2018.
+
+\bibitem{yu2018stgcn}
+Bing Yu, Haoteng Yin, and Zhanxing Zhu.
+\newblock Spatio-temporal graph convolutional networks: A deep learning
+  framework for traffic forecasting.
+\newblock In {\em Proceedings of the International Joint Conference on
+  Artificial Intelligence (IJCAI)}, pages 3634--3640, 2018.
+
+\bibitem{wu2019graphwavenet}
+Zonghan Wu, Shirui Pan, Guodong Long, Jing Jiang, and Chengqi Zhang.
+\newblock Graph wavenet for deep spatial-temporal graph modeling.
+\newblock In {\em Proceedings of the International Joint Conference on
+  Artificial Intelligence (IJCAI)}, pages 1907--1913, 2019.
+
+\bibitem{bai2020adaptive}
+Lei Bai, Lina Yao, Can Li, Xianzhi Wang, and Can Wang.
+\newblock Adaptive graph convolutional recurrent network for traffic
+  forecasting.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~33, pages 17810--17821, 2020.
+
+\bibitem{guo2019astgcn}
+Shengnan Guo, Youfang Lin, Ning Feng, Chao Song, and Huaiyu Wan.
+\newblock Attention based spatial-temporal graph convolutional networks for
+  traffic flow forecasting.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~33, pages 922--929, 2019.
+
+\bibitem{zhang2021deep}
+Jingyuan Zhang, Yu~Zheng, and Dekang Qi.
+\newblock Deep learning for passenger demand prediction: A survey.
+\newblock {\em IEEE Transactions on Intelligent Transportation Systems},
+  22(10):6531--6548, 2021.
+
+\bibitem{ke2017short}
+Jintao Ke, Hongyu Zheng, Hai Yang, and Xiqun Chen.
+\newblock Short-term forecasting of passenger demand under on-demand ride
+  services: A spatio-temporal deep learning approach.
+\newblock {\em Transportation Research Part C: Emerging Technologies},
+  85:591--608, 2017.
+
+\bibitem{mektepbayeva2025adaptive}
+Aruzhan Mektepbayeva, Diar Begisbayev, Ramazan Seiitbek, Nursultan Khaimuldin,
+  Aivar Sakhipov, and Daniyar Rakhimzhanov.
+\newblock Adaptive machine learning algorithms for data processing in
+  transportation systems.
+\newblock In {\em Proceedings of the IEEE 5th International Conference on Smart
+  Information Systems and Technologies (SIST)}, pages 1--8, 2025.
+
+\bibitem{sakhipov2026deep}
+Aivar Sakhipov, Zhanbai Uzdenbayev, Diar Begisbayev, Aruzhan Mektepbayeva,
+  Ramazan Seiitbek, and Didar Yedilkhan.
+\newblock Deep heterogeneity learning for cross-city transit forecasting: A
+  differentially private federated framework with mixture-of-experts and
+  seasonal decomposition.
+\newblock {\em Frontiers in Future Transportation}, 7:1644979, 2026.
+
+\bibitem{sakhipov2025federated}
+Aivar Sakhipov, Diar Begisbayev, and Didar Yedilkhan.
+\newblock Federated drift-aware graph neural forecasting for real-time
+  passenger flow.
+\newblock {\em Procedia Computer Science}, 272:108--112, 2025.
+\newblock 16th Int. Conf. Emerging Ubiquitous Systems and Pervasive Networks.
+
+\bibitem{yedilkhan2025intelligent}
+Didar Yedilkhan, Aivar Sakhipov, Ramazan Seiitbek, Aruzhan Mektepbayeva, and
+  Diar Begisbayev.
+\newblock Intelligent assistant for data preparation automation in urban
+  transportation management systems.
+\newblock {\em Vestnik KazATC (Bulletin of the Kazakh Academy of Transport and
+  Communications)}, 137(2):310--324, 2025.
+
+\bibitem{begisbayev2024investigation}
+Diar Begisbayev, Aivar Sakhipov, Ramazan Seiitbek, Aiganym Mansurova, and
+  Aigerim Mansurova.
+\newblock Investigation of hybrid models and architectures for real-time
+  adaptive passenger flow prediction.
+\newblock In {\em Proceedings of the 7th International Conference on Data
+  Science and Information Technology (DSIT)}, pages 1--5, 2024.
+
+\bibitem{vlahogianni2014short}
+Eleni~I. Vlahogianni, Matthew~G. Karlaftis, and John~C. Golias.
+\newblock Short-term traffic forecasting: Where we are and where
+  we{\textquoteright}re going.
+\newblock {\em Transportation Research Part C: Emerging Technologies},
+  43:629--643, 2014.
+
+\bibitem{li2016brief}
+Lin Li and Xiaobo Ouyang.
+\newblock A brief review of short-term traffic flow prediction.
+\newblock {\em Journal of Transportation Technologies}, 6(4):164--170, 2016.
+
+\bibitem{ma2015long}
+Xiaolei Ma, Zhimin Tao, Yinhai Wang, Haiyang Yu, and Yunpeng Wang.
+\newblock Long short-term memory neural network for traffic speed prediction
+  using remote microwave sensor data.
+\newblock {\em Transportation Research Part C: Emerging Technologies},
+  54:187--197, 2015.
+
+\bibitem{bai2018empirical}
+Shaojie Bai, J.~Zico Kolter, and Vladlen Koltun.
+\newblock An empirical evaluation of generic convolutional and recurrent
+  networks for sequence modeling.
+\newblock {\em arXiv preprint arXiv:1803.01271}, 2018.
+
+\bibitem{bruna2014spectral}
+Joan Bruna, Wojciech Zaremba, Arthur Szlam, and Yann LeCun.
+\newblock Spectral networks and locally connected networks on graphs.
+\newblock In {\em Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2014.
+
+\bibitem{defferrard2016convolutional}
+Micha{\"e}l Defferrard, Xavier Bresson, and Pierre Vandergheynst.
+\newblock Convolutional neural networks on graphs with fast localized spectral
+  filtering.
+\newblock In {\em Proceedings of the Advances in Neural Information Processing
+  Systems}, volume~29, pages 3844--3852, 2016.
+
+\bibitem{kipf2017semi}
+Thomas~N. Kipf and Max Welling.
+\newblock Semi-supervised classification with graph convolutional networks.
+\newblock In {\em Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2017.
+
+\bibitem{gu2020hippo}
+Albert Gu, Tri Dao, Stefano Ermon, Atri Rudoy, and Christopher R{\'e}.
+\newblock {HiPPO}: Recurrent memory with optimal polynomial projections.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~33, pages 1474--1487, 2020.
+
+\bibitem{gu2022efficiently}
+Albert Gu, Karan Goel, and Christopher R{\'e}.
+\newblock Efficiently modeling long sequences with structured state spaces.
+\newblock In {\em Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2022.
+
+\bibitem{gu2023mamba}
+Albert Gu and Tri Dao.
+\newblock Mamba: Linear-time sequence modeling with selective state spaces.
+\newblock {\em arXiv preprint arXiv:2312.00752}, 2023.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~30, pages 5998--6008, 2017.
+
+\bibitem{li2019enhancing}
+Shiyang Li, Xiaoyong Jin, Yao Xuan, Xiyou Zhou, Wenhu Chen, Yu-Xiang Chi, Tian
+  Chen, Ji~Cui, and Weinan Li.
+\newblock Enhancing the locality and breaking the memory bottleneck of
+  transformer on time series forecasting.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~32, pages 4094--4104, 2019.
+
+\bibitem{zhou2021informer}
+Haoyi Zhou, Shanghang Zhang, Jieqi Peng, Shuai Zhang, Jianxin Li, Hui Xiong,
+  and Wancai Zhang.
+\newblock Informer: Beyond efficient transformer for long sequence time-series
+  forecasting.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~35, pages 11106--11115, 2021.
+
+\bibitem{salinas2020deepar}
+David Salinas, Valentin Flunkert, Jan Gasthaus, and Tim Januschowski.
+\newblock {DeepAR}: Probabilistic forecasting with autoregressive recurrent
+  networks.
+\newblock {\em International Journal of Forecasting}, 36(3):1181--1191, 2020.
+
+\bibitem{zhu2017deep}
+Yukun Zhu and Nikolay Laptev.
+\newblock Deep and confident prediction for time series at uber.
+\newblock {\em arXiv preprint arXiv:1705.08392}, 2017.
+
+\bibitem{wang2021probabilistic}
+Xian Wang, Chao Tang, Yifan Tian, Zhi Zhang, and Wei Chen.
+\newblock Probabilistic spatial-temporal graph neural networks for traffic
+  forecasting.
+\newblock {\em Knowledge-Based Systems}, 233:107540, 2021.
+
+\bibitem{haklay2010openstreetmap}
+Mordechai Haklay.
+\newblock How good is volunteered geographical information? a comparative study
+  of {OpenStreetMap} and ordnance survey datasets.
+\newblock {\em Environment and Planning B: Planning and Design},
+  37(4):682--703, 2010.
+
+\bibitem{girres2010quality}
+Jean-Fran{\c{c}}ois Girres and Guillaume Touya.
+\newblock Quality assessment of the french {OpenStreetMap} dataset.
+\newblock {\em Transactions in GIS}, 14(4):435--459, 2010.
+
+\bibitem{hu2022lora}
+Edward~J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean
+  Wang, and Weizhu Chen.
+\newblock {LoRA}: Low-rank adaptation of large language models.
+\newblock In {\em Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2022.
+
+\bibitem{ba2016layernorm}
+Jimmy~Lei Ba, Jamie~Ryan Kiros, and Geoffrey~E. Hinton.
+\newblock Layer normalization.
+\newblock {\em arXiv preprint arXiv:1607.06450}, 2016.
+
+\bibitem{kingma2015adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock In {\em Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2015.
+
+\bibitem{paszke2019pytorch}
+Adam Paszke, Sam Gross, Francisco Massa, Adam Lerer, James Bradbury, Gregory
+  Chanan, Trevor Killeen, Zeming Lin, Natalia Gimelshein, Luca Antiga, et~al.
+\newblock {PyTorch}: An imperative style, high-performance deep learning
+  library.
+\newblock In {\em Proceedings of the Advances in Neural Information Processing
+  Systems}, volume~32, pages 8024--8035, 2019.
+
+\bibitem{li2018diffusion}
+Yaguang Li, Rose Yu, Cyrus Shahabi, and Yan Liu.
+\newblock Diffusion convolutional recurrent neural network: Data-driven traffic
+  forecasting.
+\newblock In {\em Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2018.
+
+\bibitem{fan2020urban}
+Chuan Fan, Yan Zhang, Yue Pan, Xiang Li, Chenguang Zhang, Xingang Yu, Jian Lu,
+  Jing Guo, and Dawei Cao.
+\newblock Urban flows prediction from spatial-temporal data using machine
+  learning: A survey.
+\newblock {\em Information Fusion}, 59:1--14, 2020.
+
+\bibitem{dwork2006calibrating}
+Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith.
+\newblock Calibrating noise to sensitivity in private data analysis.
+\newblock In {\em Theory of Cryptography Conference (TCC)}, pages 265--284.
+  Springer, 2006.
+
+\bibitem{dwork2014algorithmic}
+Cynthia Dwork and Aaron Roth.
+\newblock The algorithmic foundations of differential privacy.
+\newblock {\em Foundations and Trends in Theoretical Computer Science},
+  9(3--4):211--407, 2014.
+
+\end{thebibliography}

@@ -1,0 +1,41 @@
+%
+% File: publications.tex
+% Author: Diar Begisbayev
+% Publications during Master's Studies — moved from Introduction per AITU guidelines
+%
+\chapter{Publications During Master's Studies}
+\label{chap:publications}
+\setlength{\parskip}{1em}
+
+The research presented in this thesis builds upon a series of peer-reviewed publications produced during the Master's programme (September 2024--June 2026). These works explore complementary aspects of intelligent transportation systems, ranging from adaptive learning and federated privacy-preserving forecasting to data-preparation automation and hybrid model investigation. We briefly summarise each publication and articulate its relationship to the present thesis.
+
+\textbf{Adaptive Machine Learning Algorithms for Data Processing in Transportation Systems} \cite{mektepbayeva2025adaptive}. Published at the 2025 IEEE International Conference on Smart Information Systems and Technologies (SIST), this work introduced an incremental learning framework for real-time passenger flow adaptation. The core contribution was a lightweight online update mechanism that adjusts model parameters as new ridership observations arrive, without requiring full-batch retraining. The adaptive approach achieved comparable accuracy to offline-trained models while reducing update latency by 60\%. This work directly informs the LoRA-based parameter-efficient adaptation strategy described in Section~\ref{sec:architecture}, where we extend the incremental-update principle to route-specific fine-tuning within the DTS-GSSF architecture.
+
+\textbf{Deep Heterogeneity Learning for Cross-City Transit Forecasting} \cite{sakhipov2026deep}. Published in \textit{Frontiers in Future Transportation} (2026), this paper proposed X-FedFormer, a federated learning framework that combines differential privacy ($\varepsilon \approx 2$), mixture-of-experts (MoE) routing, and seasonal-trend decomposition for cross-city passenger flow prediction. Evaluated on ten heterogeneous urban environments, X-FedFormer achieved $R^2 = 0.922$ and MAE $= 7.93$ passengers across all cities, with a Wilcoxon signed-rank test confirming statistical significance ($p = 0.018$) over FedProx baselines. The MoE and seasonal decomposition modules reduced forecasting error by 11\% and 16\%, respectively. While X-FedFormer addresses multi-city privacy-preserving collaboration, the present thesis focuses on single-city real-time edge deployment; nevertheless, the seasonal decomposition insights from this work informed our cyclical feature engineering (Section~\ref{sec:dataset}).
+
+\textbf{Federated Drift-Aware Graph Neural Forecasting for Real-Time Passenger Flow} \cite{sakhipov2025federated}. Published in \textit{Procedia Computer Science} (2025), this study introduced FedST-GNN, a federated spatio-temporal graph neural network that couples encrypted federated averaging with frequency-domain Transformers and ADWIN-triggered meta-learning. On the Copenhagen-Flow dataset (18.7M events, 312 stops), FedST-GNN improved MAE and RMSE by 5\% and 7\% over Temporal Fusion Transformer baselines, while maintaining 38\,ms inference latency. During anomalous events (e.g., city half-marathon), the adaptive drift detector reduced peak prediction errors by 41\% within a 5\,MB communication budget per round. This work established the viability of graph-neural architectures for real-time transit forecasting and informed our choice of adaptive adjacency matrices and drift-aware evaluation in Chapter~\ref{chap:results}.
+
+\textbf{Intelligent Assistant for Data Preparation Automation} \cite{yedilkhan2025intelligent}. Published in the \textit{Bulletin of the Kazakh Academy of Transport and Communications} (2025), this work presented an intelligent assistant that automates data cleaning, imputation, and feature engineering pipelines for urban transportation datasets. The system reduced manual preprocessing time by 75\% while improving downstream model accuracy by 4--6\% through automated outlier detection and missing-value interpolation. The data-preparation methodology described in this paper underpins the synthetic dataset generation and feature engineering pipeline used in the present thesis (Section~\ref{sec:dataset}).
+
+\textbf{Investigation of Hybrid Models and Architectures for Real-Time Adaptive Passenger Flow Prediction} \cite{begisbayev2024investigation}. Published at the 2024 IEEE International Conference on Data Science and Information Technology (DSIT), this was the first work to systematically compare LSTM, GRU, TCN, and early graph-neural approaches for passenger flow prediction on the Astana bus network. The study identified that hybrid architectures combining recurrent temporal encoders with graph-based spatial modules consistently outperformed pure sequence or pure graph models. These findings directly motivated the design of DTS-GSSF as a \textit{hybrid} architecture that unifies gated recurrent temporal encoding, graph propagation, and attention mechanisms within a single framework.
+
+Table~\ref{Tab.publications} summarises the five publications and their relationship to the present thesis.
+
+\begin{table}[H]
+\centering
+\caption{Peer-reviewed publications during Master's studies and their relationship to this thesis.}
+\label{Tab.publications}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llcc@{}}
+\toprule
+Publication \& Venue \& Year \& Thesis Connection \\
+\midrule
+Adaptive ML for Transportation \cite{mektepbayeva2025adaptive} \& IEEE SIST \& 2025 \& LoRA adaptation, online learning \\
+Deep Heterogeneity Learning \cite{sakhipov2026deep} \& Frontiers Future Transp. \& 2026 \& Seasonal decomposition, MoE \\
+Federated Drift-Aware GNN \cite{sakhipov2025federated} \& Procedia Comp. Sci. \& 2025 \& Adaptive graphs, real-time latency \\
+Intelligent Data-Prep Assistant \cite{yedilkhan2025intelligent} \& Vestnik KazATC \& 2025 \& Feature engineering pipeline \\
+Hybrid Model Investigation \cite{begisbayev2024investigation} \& IEEE DSIT \& 2024 \& Motivation for hybrid architecture \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}

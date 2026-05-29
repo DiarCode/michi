@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: memoirthesis.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: unsrt.bst
+Reallocating 'name_of_file' (item size: 1) to 13 items.
+Database file #1: thesisbiblio.bib
+Warning--can't use both volume and number fields in guo2019astgcn
+Warning--can't use both volume and number fields in zhou2021informer
+You've used 43 entries,
+            1791 wiz_defined-function locations,
+            688 strings with 12611 characters,
+and the built_in function-call counts, 12733 in all, are:
+= -- 1097
+> -- 661
+< -- 21
++ -- 235
+- -- 192
+* -- 906
+:= -- 1920
+add.period$ -- 131
+call.type$ -- 43
+change.case$ -- 43
+chr.to.int$ -- 0
+cite$ -- 45
+duplicate$ -- 570
+empty$ -- 1183
+format.name$ -- 192
+if$ -- 2867
+int.to.chr$ -- 0
+int.to.str$ -- 43
+missing$ -- 43
+newline$ -- 219
+num.names$ -- 43
+pop$ -- 142
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 333
+stack$ -- 0
+substring$ -- 939
+swap$ -- 203
+text.length$ -- 21
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 118
+width$ -- 45
+write$ -- 475
+(There were 2 warnings)

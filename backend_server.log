@@ -1,0 +1,445 @@
+INFO:     Will watch for changes in these directories: ['C:\\Users\\begis\\development\\michi']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [21368] using WatchFiles
+WARNING:  WatchFiles detected changes in '.venv\Lib\site-packages\uvicorn\loops\asyncio.py', '.venv\Lib\site-packages\uvicorn\protocols\http\auto.py'. Reloading...
+ INFO:     Started server process [6816]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Database already seeded with 374 stations. Skipping.
+DTS-GSSF model loaded and cached.
+Backend started — DB initialized, bus stream running.
+INFO:     127.0.0.1:56711 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54876 - "GET /api/v1/stations/ HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:61960 - "GET /api/v1/dashboard/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59586 - "GET /api/v1/stations/ HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:63863 - "GET /api/v1/alerts/ HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:60658 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:51319 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54443 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57046 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60658 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61426 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49988 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49988 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:49988 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49988 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49988 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49988 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64157 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:64157 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61090 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:53320 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51898 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:51898 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49478 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49478 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49478 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49478 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:49478 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49478 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57427 - "GET /api/v1/routes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57427 - "GET /api/v1/routes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50532 - "GET /api/v1/analytics/predictions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57427 - "GET /api/v1/analytics/predictions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60864 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:50395 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:63854 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:64113 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60264 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60210 - "GET /api/v1/analytics/predictions?horizon_minutes=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60210 - "GET /api/v1/analytics/predictions?horizon_minutes=60 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63425 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:56578 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60210 - "GET /api/v1/analytics/predictions?horizon_minutes=120 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60210 - "GET /api/v1/analytics/predictions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64201 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:61156 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:62651 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:59896 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55751 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:56045 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65510 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:57476 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:62081 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:51977 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:51734 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54095 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:61001 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:64793 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:50456 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65378 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:63788 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63788 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63788 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63788 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63788 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:63788 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55819 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:63783 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:58675 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49547 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:58675 - "GET /api/v1/analytics/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52459 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:58675 - "GET /api/v1/analytics/compare HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52018 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63566 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:52018 - "GET /api/v1/analytics/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58675 - "GET /api/v1/analytics/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54105 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:63608 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:57198 - "OPTIONS /api/v1/scenarios/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52043 - "POST /api/v1/scenarios/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63267 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54385 - "POST /api/v1/scenarios/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54385 - "GET /api/v1/analytics/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50796 - "GET /api/v1/analytics/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65499 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:61647 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65376 - "POST /api/v1/scenarios/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65376 - "GET /api/v1/analytics/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65265 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:62030 - "GET /api/v1/executive/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65376 - "GET /api/v1/executive/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62030 - "GET /api/v1/executive/roi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63072 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54726 - "GET /api/v1/depot/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54726 - "GET /api/v1/depot/D01/dispatch-recommendations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54726 - "GET /api/v1/depot/D02/dispatch-recommendations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54726 - "GET /api/v1/depot/D03/dispatch-recommendations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49948 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:64830 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60961 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:59109 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:50297 - "GET /api/v1/passenger/service-changes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50297 - "GET /api/v1/passenger/messaging-templates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64293 - "GET /api/v1/passenger/crowding HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63966 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:50271 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:50271 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49601 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:62189 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49601 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62235 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54096 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62235 - "GET /api/v1/routes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54096 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "GET /api/v1/analytics/predictions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54096 - "GET /api/v1/routes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62235 - "GET /api/v1/analytics/predictions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62174 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60095 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:51360 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55342 - "GET /api/v1/stations/S165/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49746 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:64351 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65250 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "GET /api/v1/dashboard/suggestions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "GET /api/v1/interventions HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:65250 - "GET /api/v1/interventions/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "GET /api/v1/alerts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59254 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65250 - "GET /api/v1/analytics/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63979 - "GET /api/v1/analytics/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56195 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:63979 - "GET /api/v1/analytics/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "GET /api/v1/analytics/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55325 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65250 - "POST /api/v1/scenarios/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "POST /api/v1/scenarios/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52770 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65250 - "POST /api/v1/scenarios/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65250 - "GET /api/v1/analytics/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56933 - "GET /api/v1/analytics/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55397 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65250 - "GET /api/v1/analytics/compare HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56933 - "GET /api/v1/stations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61702 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55231 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:50552 - "GET /api/v1/analytics/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60339 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54655 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:50552 - "GET /api/v1/analytics/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54474 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54026 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:61032 - "GET /api/v1/analytics/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57873 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60382 - "GET /api/v1/analytics/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61698 - "GET /api/v1/analytics/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52300 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:52894 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55525 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55944 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55944 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53955 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:50690 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:64221 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60682 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:49365 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:63645 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:56842 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60492 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:59104 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60103 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:57769 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:49415 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:58039 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54918 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:53181 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:58302 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:58809 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:62787 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:53109 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:61923 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:57543 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:56634 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:56119 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:61399 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:51904 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65365 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55901 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:59223 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:59922 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60851 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:53729 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:57680 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60788 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:63001 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:59021 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:61739 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54795 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55697 - "GET /api/v1/analytics/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50429 - "GET /api/v1/analytics/trends?days=30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56832 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:65226 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:57973 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:54725 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:58477 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:60567 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55464 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:53756 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:59293 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     127.0.0.1:55352 - "WebSocket /ws/realtime" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed

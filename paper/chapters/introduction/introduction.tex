@@ -1,0 +1,70 @@
+%
+% File: introduction.tex
+% Author: Diar Begisbayev
+%
+\chapter{Introduction}
+\label{chap:intro}
+\setlength{\parskip}{1em}
+
+Urban public transit systems are the backbone of sustainable mobility in rapidly growing cities. In Astana, the capital of Kazakhstan, the bus network serves as the primary mode of public transportation for over one million residents, with demand patterns that fluctuate dramatically across space, time, and weather conditions. Accurate real-time prediction of passenger flows at individual bus stops is critical for operational planning, dynamic vehicle dispatching, and proactive crowd management. Yet accurate prediction is hindered by three compounding factors: the intricate spatio-temporal dependencies among stops, the multi-timescale nature of ridership dynamics, and the inherent uncertainty of human mobility behaviour.
+
+We address the problem of multi-horizon passenger flow prediction on the Astana bus network. Formally, given a historical context window of $T$ hours across $N$ bus stations, we seek to predict the expected number of boarding passengers at each station for the next $H_{\text{pred}}$ hours. The input tensor is $\mathbf{x} \in \mathbb{R}^{B \times T \times N \times F}$, where $B$ is the batch size, $T = 72$ hours (a three-day context), $N = 374$ stations, and $F = 16$ engineered features including raw ridership counts, weather variables, calendar indicators, and cyclical encodings. The output comprises negative-binomial parameters $(\mu, \kappa)$ for each station and horizon, enabling both point estimates and uncertainty quantification.
+
+Existing approaches to spatio-temporal forecasting fall into three broad categories. First, classical statistical methods such as ARIMA and Historical Average are computationally efficient but fail to capture non-linear spatial correlations \cite{jeong2014supervised,toque2017short}. Second, deep learning models including LSTM \cite{hochreiter1997long} and GRU networks \cite{cho2014rnnencoder} excel at temporal modelling but treat each station independently, ignoring the network topology \cite{wei2018generalized,liu2018revealing}. Third, graph neural networks such as STGCN \cite{yu2018stgcn}, Graph WaveNet \cite{wu2019graphwavenet}, AGCRN \cite{bai2020adaptive}, and ASTGCN \cite{guo2019astgcn} jointly model spatial and temporal dependencies, yet they typically rely on either pure convolutional or recurrent architectures that struggle with very long sequences or require pre-defined adjacency matrices that may not reflect true ridership correlations \cite{zhang2021deep,ke2017short}.
+
+Three specific limitations motivate our work. \textbf{(L1)} Existing graph-based methods predominantly use convolutional message passing, which limits their ability to model fine-grained temporal state transitions within each station. \textbf{(L2)} Most approaches require a fixed physical graph (e.g., road distance or route topology), overlooking latent spatial dependencies that emerge from passenger transfer behaviour. \textbf{(L3)} Prior work either produces deterministic point forecasts or uses Gaussian likelihoods, neither of which is appropriate for overdispersed count data such as passenger boardings.
+
+We make the following contributions:
+\begin{itemize}
+    \item We propose DTS-GSSF (Dual-Timescale Graph Gated Forecasting), a hybrid architecture that unifies a gated recurrent temporal encoder, adaptive graph propagation, and multi-head temporal attention for passenger flow prediction.
+    \item We introduce a learnable adaptive adjacency matrix that complements the physical route topology, enabling the model to discover latent spatial dependencies without manual graph construction.
+    \item We employ a Negative Binomial likelihood with an MSE auxiliary loss, providing both appropriate count-data modelling and stable gradient propagation during training.
+    \item We demonstrate that LoRA-based parameter-efficient adaptation enables rapid specialization to individual routes without full model retraining.
+    \item We evaluate DTS-GSSF on a synthetic but realistic dataset of 1.3 million ridership records across 374 Astana bus stations, achieving $R^2 = 0.889$ and MAE $= 2.43$ passengers per station-hour, outperforming six baseline methods.
+\end{itemize}
+
+\section{Purpose of the Thesis}
+\label{sec:purpose}
+
+The purpose of this thesis is to develop and validate a hybrid deep learning method for real-time passenger flow prediction on the Astana bus network that achieves higher accuracy than existing graph-based approaches, by integrating gated recurrent temporal encoding with dual-adjacency graph propagation and Negative Binomial likelihood, for the benefit of urban transit operators and dispatching services who require reliable demand forecasts for operational decision-making.
+
+\section{Object and Subject of Research}
+\label{sec:object_subject}
+
+\textbf{Object of research:} The processes of passenger flow formation and dynamics in urban bus transit networks.
+
+\textbf{Subject of research:} Spatio-temporal prediction methods for passenger boarding counts at individual bus stops using hybrid graph-gated deep learning architectures with adaptive adjacency and distributional output.
+
+\section{Research Hypotheses}
+\label{sec:hypotheses}
+
+Based on the limitations identified above and the proposed architectural design, we formulate the following hypotheses:
+
+\begin{enumerate}
+    \item[\textbf{H1:}] A gated recurrent temporal encoder with input-dependent forget gating provides more stable gradient propagation and higher predictive accuracy than LSTM, GRU, or purely convolutional temporal backbones for 72-hour ridership context windows.
+    \item[\textbf{H2:}] Combining a fixed physical adjacency matrix with a learnable adaptive adjacency matrix yields superior forecasting performance over either matrix alone, as the adaptive component captures latent passenger transfer patterns not reflected in route topology.
+    \item[\textbf{H3:}] A Negative Binomial distributional output is better calibrated for overdispersed passenger boarding counts than Gaussian or Poisson likelihoods, providing actionable uncertainty estimates for operational dispatching.
+    \item[\textbf{H4:}] LoRA-based parameter-efficient adaptation enables route-specific specialisation of the DTS-GSSF model without full retraining, reducing deployment cost while retaining at least 98\% of the full-model test accuracy.
+\end{enumerate}
+
+\section{Research Questions}
+\label{sec:rqs}
+
+To guide the design and evaluation of DTS-GSSF, we formulate five research questions that address the key architectural and operational challenges identified above.
+
+\begin{enumerate}
+    \item[\textbf{RQ1:}] \textit{Temporal Modelling}: How does a gated recurrent temporal backbone compare to recurrent (LSTM, GRU) and convolutional (TCN) alternatives in terms of predictive accuracy and training stability for long-context ridership forecasting?
+    \item[\textbf{RQ2:}] \textit{Spatial Modelling}: Does combining a fixed physical adjacency matrix with a learnable adaptive matrix improve forecasting performance over either matrix alone, and what latent spatial patterns does the adaptive component discover?
+    \item[\textbf{RQ3:}] \textit{Uncertainty Quantification}: Is a Negative Binomial distributional output better calibrated for overdispersed passenger count data than Gaussian or Poisson alternatives, and does it provide actionable uncertainty estimates for operational dispatching?
+    \item[\textbf{RQ4:}] \textit{Computational Efficiency}: Can the proposed architecture achieve real-time inference latency suitable for edge deployment while maintaining competitive accuracy, and how does parameter-efficient fine-tuning (LoRA) affect model scalability?
+    \item[\textbf{RQ5:}] \textit{Generalisation}: Does the model generalise across prediction horizons (15, 30, 60, 120 minutes) and station types (central, peripheral, residential, business), and what are the primary sources of residual prediction error?
+\end{enumerate}
+
+These questions motivate the ablation studies, per-horizon analysis, and computational benchmarks presented in Chapter~\ref{chap:results}.
+
+A detailed account of the author's peer-reviewed publications during the Master's programme and their relationship to this thesis is provided in Chapter~\ref{chap:publications}.
+
+\section{Paper Organisation}
+\label{sec:organisation}
+
+The remainder of this thesis is organised as follows. Chapter~\ref{chap:litreview} reviews related work in spatiotemporal forecasting, graph neural networks, state-space models, and attention mechanisms. Chapter~\ref{chap:method} formulates the prediction problem, describes the synthetic Astana bus network dataset, and presents the complete DTS-GSSF architecture, training strategy, and system workflow. Chapter~\ref{chap:results} reports the main experimental results, ablation studies, per-horizon accuracy, computational cost, and statistical analysis. Chapter~\ref{chap:discussion} discusses the implications of our findings, acknowledges limitations, addresses ethical considerations, and outlines directions for future research. Chapter~\ref{chap:conclusion} summarises the key findings and provides detailed answers to each research question.

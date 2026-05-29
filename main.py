@@ -2123,8 +2123,12 @@ def ui_app() -> None:
                             x=b.time_index, y=b.y_bottom[:, di],
                             name=b.net.station_names[di], mode="lines", opacity=0.8
                         ))
-                    fig_drift.add_vline(x=drift_start, line_dash="dash", line_color="red",
-                                        annotation_text="Drift onset")
+                    fig_drift.add_shape(type="line", x0=drift_start, x1=drift_start,
+                                        y0=0, y1=1, xref="x", yref="paper",
+                                        line=dict(color="red", dash="dash", width=1.5))
+                    fig_drift.add_annotation(x=drift_start, y=0.97, text="Drift onset",
+                                             showarrow=False, xref="x", yref="paper",
+                                             font=dict(color="red", size=11))
                     fig_drift.update_layout(height=300, margin=dict(l=0, r=0, t=10, b=0),
                                             yaxis_title="Ridership", xaxis_title="Time",
                                             legend=dict(orientation="h", yanchor="bottom", y=1.02))

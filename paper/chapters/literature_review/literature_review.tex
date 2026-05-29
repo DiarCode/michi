@@ -1,0 +1,110 @@
+%
+% File: literature_review.tex
+% Author: Diar Begisbayev
+%
+\chapter{Literature Review}
+\label{chap:litreview}
+\setlength{\parskip}{1em}
+
+This chapter reviews the academic landscape relevant to passenger flow prediction on urban transit networks. We examine four interconnected research threads: spatiotemporal forecasting, graph neural networks, state-space models, and attention mechanisms with probabilistic forecasting. We conclude with a positioning of our contribution relative to existing work.
+
+\section{Spatiotemporal Forecasting}
+\label{sec:spatiotemporal}
+
+Passenger flow prediction is a specific instance of spatiotemporal forecasting, in which the goal is to predict future values of a variable that varies across both space and time. Early approaches relied on classical time-series methods applied independently at each spatial location. The Historical Average (HA) model uses the mean of past observations at the same hour and day-of-week, while Seasonal Naive repeats the value from the previous week. Moving Average (MA) and exponential smoothing methods capture local trends but ignore spatial dependencies entirely. These univariate methods remain common benchmarks because they are interpretable and computationally cheap, yet they fail to capture cross-station correlations that are essential during events or disruptions \cite{vlahogianni2014short,li2016brief}.
+
+Deep learning methods enabled joint modelling of spatial and temporal dependencies in traffic data. Recurrent Neural Networks (RNNs), particularly Long Short-Term Memory (LSTM) \cite{hochreiter1997long} and Gated Recurrent Units (GRU) \cite{cho2014rnnencoder}, became the default temporal encoders because their gating mechanisms mitigate vanishing gradients over moderate-length sequences. LSTM-based traffic predictors were among the first neural models to outperform classical methods on highway flow datasets \cite{ma2015long}. However, plain RNNs process each station independently; they cannot share information between spatially adjacent locations unless augmented with external graph structure.
+
+Temporal Convolutional Networks (TCNs) \cite{bai2018empirical} offer an alternative temporal backbone based on dilated causal convolutions. TCNs provide several advantages over RNNs: training stability via feed-forward computation, flexible receptive fields controlled by dilation factors, and inherent parallelism during training. In traffic forecasting, TCN variants have achieved strong results by stacking dilated convolutions with residual connections \cite{zhang2021deep}. Nevertheless, TCNs still require an explicit spatial module to model network topology, and their receptive field grows only logarithmically with depth, which can limit long-range temporal modelling.
+
+\section{Graph Neural Networks}
+\label{sec:gnn}
+
+Urban transit networks are naturally represented as graphs, where stations are nodes and route segments are edges. Graph Neural Networks (GNNs) generalise convolutional operations to irregular graph domains by defining message-passing schemes that aggregate information from local neighbourhoods.
+
+The earliest graph-based traffic predictors used spectral graph convolutions \cite{bruna2014spectral,defferrard2016convolutional}, which rely on the graph Laplacian eigenbasis. These methods are mathematically elegant but computationally expensive for large graphs because eigendecomposition scales as $O(N^3)$. Kipf and Welling \cite{kipf2017semi} introduced Graph Convolutional Networks (GCNs), which approximate spectral convolutions with a first-order Chebyshev expansion, reducing complexity to $O(|\mathcal{E}|)$ and yielding the simple symmetric-normalised propagation rule:
+\begin{equation}
+    \mathbf{H}^{(l+1)} = \sigma\left(\tilde{\mathbf{D}}^{-1/2} \tilde{\mathbf{A}} \tilde{\mathbf{D}}^{-1/2} \mathbf{H}^{(l)} \mathbf{W}^{(l)}\right).
+    \label{eq:gcn}
+\end{equation}
+
+For traffic forecasting, Spatio-Temporal Graph Convolutional Networks (ST-GCN) \cite{yu2018stgcn} interleaved GCN layers with 1-D convolutions along the time axis, jointly modelling spatial diffusion and temporal evolution. Graph WaveNet \cite{wu2019graphwavenet} extended this by introducing an adaptive adjacency matrix learned end-to-end via node embeddings, allowing the model to capture latent spatial dependencies beyond the physical road network. The Adaptive Graph Convolutional Recurrent Network (AGCRN) \cite{bai2020adaptive} combined adaptive graph convolution with GRU gating, achieving the best reported results on several traffic benchmarks (as of 2020) by learning both node-specific patterns and dynamic spatial correlations.
+
+Attention-based spatial mechanisms have also been explored. Guo et al. \cite{guo2019astgcn} proposed ASTGCN, which applies spatial and temporal attention modules to weight the contributions of different neighbours and time steps dynamically. While effective, these models typically assume a static graph topology and do not explicitly model long-range temporal dependencies beyond the receptive field of stacked convolutions.
+
+\section{State-Space Models}
+\label{sec:ssm}
+
+State-Space Models (SSMs) provide a principled framework for sequential modelling by maintaining a latent state that evolves linearly over time. The canonical linear SSM is defined by:
+\begin{equation}
+    \mathbf{h}_t = \mathbf{A} \mathbf{h}_{t-1} + \mathbf{B} \mathbf{x}_t, \qquad
+    \mathbf{y}_t = \mathbf{C} \mathbf{h}_t,
+    \label{eq:linear_ssm}
+\end{equation}
+where $\mathbf{A}$ is the state transition matrix, $\mathbf{B}$ is the input matrix, and $\mathbf{C}$ is the observation matrix. The computational advantage of linear SSMs arises from the ability to parallelise training via convolutional or FFT-based scans, rather than sequential backpropagation through time.
+
+Recent advances have reinvigorated SSMs for deep learning. Gu et al. \cite{gu2020hippo} introduced HiPPO (High-order Polynomial Projection Operator) theory, which constructs state matrices that optimally compress historical input into a polynomial basis. Building on HiPPO, the Structured State-Space sequence model (S4) \cite{gu2022efficiently} demonstrated that carefully parameterised SSMs can match or exceed Transformer performance on long-range sequence tasks while maintaining linear-time training and inference. S4 uses a diagonal-plus-low-rank state matrix and employs a special initialisation (HiPPO-LegS) to capture long-range dependencies.
+
+Mamba \cite{gu2023mamba} removed the need for the HiPPO constraint by introducing input-dependent state transitions through selective SSM layers. Mamba hardware-aware parallel scan enables training on sequences of length $10^6$ with sub-quadratic complexity, making it attractive for time-series forecasting with long context windows. However, Mamba and its variants have been primarily evaluated on language and audio tasks; their application to spatiotemporal graph forecasting remains under-explored.
+
+In our work, we adopt a gated recurrent encoder that trades the full expressivity of Mamba for training stability and simplicity, while still achieving linear-time per-step processing.
+
+\section{Attention Mechanisms and Probabilistic Forecasting}
+\label{sec:attention}
+
+The Transformer architecture \cite{vaswani2017attention} replaced recurrent and convolutional layers with multi-head self-attention, enabling direct modelling of pairwise dependencies across the entire sequence. Self-attention computes a weighted sum of all positions, where the weights are derived from scaled dot-product similarities:
+\begin{equation}
+    \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}\right)\mathbf{V}.
+    \label{eq:self_attention}
+\end{equation}
+
+For time-series forecasting, Transformers have been adapted through various positional encodings and sparse attention patterns. LogSparse Transformer \cite{li2019enhancing} reduces complexity to $O(L \log L)$ by enforcing exponential dilation in the attention mask. Informer \cite{zhou2021informer} introduced ProbSparse attention and a self-attention distillation mechanism to achieve linear complexity, enabling forecasting on very long sequences.
+
+While attention excels at capturing long-range temporal dependencies, its quadratic complexity with respect to sequence length remains a bottleneck. Moreover, plain Transformers do not inherently model graph structure; they must be augmented with graph-aware position encodings or explicit graph attention layers to handle spatial dependencies \cite{zhang2021deep}.
+
+\subsection{Probabilistic Forecasting}
+
+Most deep learning models for traffic prediction output a point estimate, which is insufficient for operational decision-making under uncertainty. Probabilistic forecasting models the full conditional distribution $P(y_{t+h} \mid \mathbf{x}_{1:t})$, enabling risk-aware planning.
+
+DeepAR \cite{salinas2020deepar} combines autoregressive RNNs with parametric likelihoods (Gaussian or Negative Binomial) to produce probabilistic forecasts. Zhu and Laptev \cite{zhu2017deep} applied Negative Binomial distributions to overdispersed count data, showing improved calibration for sparse demand patterns. Wang et al. \cite{wang2021probabilistic} extended probabilistic forecasting to graph-structured data by coupling GNN encoders with distributional output heads.
+
+In public transit, passenger boarding counts are discrete, non-negative, and often overdispersed (variance exceeds mean). The Poisson distribution assumes equidispersion and tends to underestimate uncertainty. The Negative Binomial distribution introduces a dispersion parameter $\kappa$ that captures excess variance, making it a natural choice for ridership modelling.
+
+\section{Positioning of Our Work}
+\label{sec:positioning}
+
+Table~\ref{Tab.comparison} summarises the architectural characteristics of representative models in the literature. None of the existing approaches combine all four properties that we identify as critical for real-time bus passenger flow prediction:
+
+\begin{enumerate}
+    \item \textbf{Linear-time temporal encoding} for stable gradient propagation across long context windows (72 hours).
+    \item \textbf{Dual graph propagation} that respects physical route topology while discovering latent passenger transfer patterns.
+    \item \textbf{Long-range temporal attention} to capture periodic and event-driven demand surges beyond the recurrent horizon.
+    \item \textbf{Calibrated uncertainty estimates} via a parametric Negative Binomial likelihood.
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{Comparison of representative spatiotemporal forecasting models.}
+\label{Tab.comparison}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Model & Temporal & Spatial & Uncertainty & Complexity \\
+\midrule
+HA / ARIMA & Classical & None & --- & $O(1)$ \\
+LSTM \cite{hochreiter1997long} & RNN & None & None & $O(T)$ \\
+TCN \cite{bai2018empirical} & CNN & None & None & $O(T)$ \\
+ST-GCN \cite{yu2018stgcn} & CNN & GCN (fixed) & None & $O(T \cdot |\mathcal{E}|)$ \\
+Graph WaveNet \cite{wu2019graphwavenet} & CNN & Adaptive GCN & None & $O(T \cdot N^2)$ \\
+AGCRN \cite{bai2020adaptive} & RNN & Adaptive GCN & None & $O(T \cdot N^2)$ \\
+ASTGCN \cite{guo2019astgcn} & Attention & Attention GCN & None & $O(T^2 \cdot N^2)$ \\
+Informer \cite{zhou2021informer} & Attention & None & None & $O(T \log T)$ \\
+DeepAR \cite{salinas2020deepar} & RNN & None & Gaussian/NB & $O(T)$ \\
+\midrule
+DTS-GSSF (ours) & GRE + Attn. & Dual GCN & Negative Binomial & $O(T \cdot N + T^2 \cdot N + N^2)$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+DTS-GSSF is, to our knowledge, the first model to integrate a gated recurrent temporal encoder with dual adjacency graph propagation, multi-head temporal attention, and Negative Binomial likelihood within a single compact architecture suitable for real-time edge deployment.
