@@ -604,15 +604,15 @@ def generate_astana_data(cfg: DataGenConfig, net: NetworkSpec) -> DataBundle:
 
 @dataclass(frozen=True)
 class WindowConfig:
-    lookback: int = 48
-    horizon: int = 12
+    lookback: int = 72
+    horizon: int = 4
     stride: int = 1
 
 @dataclass
 class SplitConfig:
     train_frac: float = 0.70
-    val_frac: float = 0.10
-    test_frac: float = 0.20
+    val_frac: float = 0.15
+    test_frac: float = 0.15
 
 class WindowDataset(torch.utils.data.Dataset):
     def __init__(self, X: np.ndarray, y_all: np.ndarray, wcfg: WindowConfig, start: int, end: int):
@@ -647,7 +647,7 @@ def make_splits(T: int, cfg: SplitConfig) -> Tuple[Tuple[int,int], Tuple[int,int
 # ----------------------------
 
 class LoRALinear(nn.Module):
-    def __init__(self, in_features: int, out_features: int, r: int = 8, alpha: float = 16.0, bias: bool = True):
+    def __init__(self, in_features: int, out_features: int, r: int = 16, alpha: float = 16.0, bias: bool = True):
         super().__init__()
         self.r = r
         self.scale = alpha / max(1, r)
@@ -673,7 +673,7 @@ class LoRALinear(nn.Module):
         return [self.A, self.B]
 
 class GatedSSMBlock(nn.Module):
-    def __init__(self, d_in: int, d_model: int, dropout: float = 0.1, lora_r: int = 8):
+    def __init__(self, d_in: int, d_model: int, dropout: float = 0.1, lora_r: int = 16):
         super().__init__()
         self.d_model = d_model
         self.in_proj = LoRALinear(d_in, d_model, r=lora_r, alpha=16.0)
@@ -698,7 +698,7 @@ class GatedSSMBlock(nn.Module):
         return s
 
 class GraphPropagation(nn.Module):
-    def __init__(self, N: int, d: int, A_phys: np.ndarray, K: int = 2, alpha_phys: float = 0.6, d_emb: int = 16):
+    def __init__(self, N: int, d: int, A_phys: np.ndarray, K: int = 3, alpha_phys: float = 0.6, d_emb: int = 16):
         super().__init__()
         self.K = K
         self.alpha_phys = alpha_phys
@@ -723,7 +723,7 @@ class GraphPropagation(nn.Module):
 
 class DTSGSSF(nn.Module):
     def __init__(self, N: int, F_in: int, n_series: int, n_agg: int, A_phys: np.ndarray,
-                 d_model: int = 64, horizon: int = 12, K: int = 2, lora_r: int = 8, dropout: float = 0.1):
+                 d_model: int = 192, horizon: int = 4, K: int = 3, lora_r: int = 16, dropout: float = 0.1):
         super().__init__()
         self.horizon = horizon
         self.ssm = GatedSSMBlock(F_in, d_model, dropout=dropout, lora_r=lora_r)
@@ -880,18 +880,18 @@ class TrainConfig:
     - Gradient accumulation for larger effective batch sizes
     """
     epochs: int = 30
-    batch_size: int = 64
-    lr: float = 2e-3
+    batch_size: int = 32
+    lr: float = 3e-4
     lr_min: float = 1e-6
-    weight_decay: float = 5e-4
+    weight_decay: float = 1e-3
     grad_clip: float = 1.0
     loss_bottom_weight: float = 1.3
     loss_agg_weight: float = 0.7
     # Learning rate scheduling
-    warmup_epochs: int = 1
+    warmup_epochs: int = 20
     use_cosine_schedule: bool = True
     # Early stopping
-    early_stopping_patience: int = 8
+    early_stopping_patience: int = 50
     early_stopping_min_delta: float = 1e-4
     # Gradient accumulation
     accumulation_steps: int = 1
@@ -963,11 +963,11 @@ def train_offline(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
 
     model = DTSGSSF(
         N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
-        d_model=int(mcfg.get("d_model", 64)), horizon=wcfg.horizon, K=int(mcfg.get("K", 2)),
-        lora_r=int(mcfg.get("lora_r", 8)), dropout=float(mcfg.get("dropout", 0.1))
+        d_model=int(mcfg.get("d_model", 192)), horizon=wcfg.horizon, K=int(mcfg.get("K", 3)),
+        lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1))
     ).to(device)
 
-    opt = torch.optim.AdamW(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
+    opt = torch.optim.Adam(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
     
     # Learning rate scheduler with warmup + cosine annealing
     if tcfg.use_cosine_schedule:
@@ -1172,7 +1172,7 @@ def online_run_stream(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig, sp
         if ocfg.adapt_steps <= 0 or len(buf_x) < 8:
             return
         model.freeze_base_for_adaptation()
-        opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],
+        opt = torch.optim.Adam([p for p in model.parameters() if p.requires_grad],
                                 lr=ocfg.adapt_lr, weight_decay=ocfg.adapt_weight_decay)
         model.train()
         idxs = np.arange(len(buf_x))
@@ -1324,8 +1324,8 @@ def load_model_checkpoint(path: str, bundle: DataBundle, device: torch.device
     wcfg = WindowConfig(**wcfg_dict) if wcfg_dict else WindowConfig()
     model = DTSGSSF(
         N=N, F_in=F_in, n_series=n_series, n_agg=n_series - N, A_phys=bundle.net.A_phys,
-        d_model=int(mcfg.get("d_model", 64)), horizon=wcfg.horizon, K=int(mcfg.get("K", 2)),
-        lora_r=int(mcfg.get("lora_r", 8)), dropout=float(mcfg.get("dropout", 0.1))
+        d_model=int(mcfg.get("d_model", 192)), horizon=wcfg.horizon, K=int(mcfg.get("K", 3)),
+        lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1))
     ).to(device)
     try:
         model.load_state_dict(state_dict)
@@ -1735,10 +1735,10 @@ def ui_app() -> None:
 
             model = DTSGSSF(
                 N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
-                d_model=int(ckpt_config.get("d_model", 64)),
+                d_model=int(ckpt_config.get("d_model", 192)),
                 horizon=wcfg.horizon,
-                K=int(ckpt_config.get("K", 2)),
-                lora_r=int(ckpt_config.get("lora_r", 8)),
+                K=int(ckpt_config.get("K", 3)),
+                lora_r=int(ckpt_config.get("lora_r", 16)),
                 dropout=float(ckpt_config.get("dropout", 0.1))
             ).to(dev)
 
@@ -1821,10 +1821,10 @@ def ui_app() -> None:
 
                                 model = DTSGSSF(
                                     N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=b.net.A_phys,
-                                    d_model=int(ckpt_config.get("d_model", 64)),
+                                    d_model=int(ckpt_config.get("d_model", 192)),
                                     horizon=wcfg.horizon,
-                                    K=int(ckpt_config.get("K", 2)),
-                                    lora_r=int(ckpt_config.get("lora_r", 8)),
+                                    K=int(ckpt_config.get("K", 3)),
+                                    lora_r=int(ckpt_config.get("lora_r", 16)),
                                     dropout=float(ckpt_config.get("dropout", 0.1))
                                 ).to(dev)
 
@@ -2553,9 +2553,9 @@ def train_offline_streamlit(bundle: DataBundle, wcfg: WindowConfig, split: Split
     dl_val = torch.utils.data.DataLoader(ds_val, batch_size=tcfg.batch_size, shuffle=False, drop_last=False)
 
     model = DTSGSSF(N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
-                    d_model=int(mcfg.get("d_model", 64)), horizon=wcfg.horizon, K=int(mcfg.get("K", 2)),
-                    lora_r=int(mcfg.get("lora_r", 8)), dropout=float(mcfg.get("dropout", 0.1))).to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
+                    d_model=int(mcfg.get("d_model", 192)), horizon=wcfg.horizon, K=int(mcfg.get("K", 3)),
+                    lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1))).to(device)
+    opt = torch.optim.Adam(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
 
     best_val = float("inf")
     best_state = None
@@ -2823,13 +2823,13 @@ def build_argparser() -> argparse.ArgumentParser:
     p.add_argument("--days", type=int, default=365)
     p.add_argument("--freq-min", dest="freq_min", type=int, default=10)
     p.add_argument("--drift-day", dest="drift_day", type=int, default=24)
-    p.add_argument("--lookback", type=int, default=48)
-    p.add_argument("--horizon", type=int, default=12)
-    p.add_argument("--d-model", dest="d_model", type=int, default=64)
-    p.add_argument("--K", type=int, default=2)
-    p.add_argument("--lora-r", dest="lora_r", type=int, default=8)
+    p.add_argument("--lookback", type=int, default=72)
+    p.add_argument("--horizon", type=int, default=4)
+    p.add_argument("--d-model", dest="d_model", type=int, default=192)
+    p.add_argument("--K", type=int, default=3)
+    p.add_argument("--lora-r", dest="lora_r", type=int, default=16)
     p.add_argument("--epochs", type=int, default=30)
-    p.add_argument("--batch-size", dest="batch_size", type=int, default=64)
+    p.add_argument("--batch-size", dest="batch_size", type=int, default=32)
     p.add_argument("--online", action="store_true")
     p.add_argument("--ph-delta", dest="ph_delta", type=float, default=0.005)
     p.add_argument("--ph-lambda", dest="ph_lambda", type=float, default=0.85)
