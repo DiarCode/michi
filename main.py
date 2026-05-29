@@ -215,6 +215,39 @@ def to_tensor(x: np.ndarray, device: torch.device, dtype=torch.float32) -> torch
 def softplus(x: torch.Tensor) -> torch.Tensor:
     return F.softplus(x, beta=1.0, threshold=20.0)
 
+class FeatureNormalizer:
+    """Z-score normalizer fit on training data only.
+
+    Computes per-feature mean and std on the training split,
+    then applies (X - mean) / std to all splits. Stores stats
+    in checkpoints for inference-time normalization.
+    """
+    def __init__(self):
+        self.mean_: Optional[np.ndarray] = None
+        self.std_: Optional[np.ndarray] = None
+
+    def fit(self, X_train: np.ndarray) -> 'FeatureNormalizer':
+        """Fit on training data. X_train shape: (T, N, F) or (T, F)."""
+        self.mean_ = X_train.mean(axis=tuple(range(X_train.ndim - 1)), keepdims=True)
+        self.std_ = X_train.std(axis=tuple(range(X_train.ndim - 1)), keepdims=True)
+        self.std_ = np.where(self.std_ < 1e-8, 1.0, self.std_)  # avoid division by zero
+        return self
+
+    def transform(self, X: np.ndarray) -> np.ndarray:
+        """Apply z-score normalization."""
+        return (X - self.mean_) / self.std_
+
+    def inverse_transform(self, X: np.ndarray) -> np.ndarray:
+        """Reverse z-score normalization (for metrics on original scale)."""
+        return X * self.std_ + self.mean_
+
+    def state_dict(self) -> Dict[str, np.ndarray]:
+        return {'mean': self.mean_, 'std': self.std_}
+
+    def load_state_dict(self, d: Dict[str, np.ndarray]) -> None:
+        self.mean_ = d['mean']
+        self.std_ = d['std']
+
 # ----------------------------
 # Astana bus-network generator
 # ----------------------------
@@ -942,8 +975,13 @@ def train_offline(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
     n_agg = n_series - N
     train_rng, val_rng, test_rng = make_splits(T, split)
 
-    ds_train = WindowDataset(bundle.X, bundle.y_all, wcfg, train_rng[0], train_rng[1])
-    ds_val = WindowDataset(bundle.X, bundle.y_all, wcfg, val_rng[0], val_rng[1])
+    # Z-score normalization fitted on training data only
+    norm = FeatureNormalizer()
+    norm.fit(bundle.X[:train_rng[1]])
+    X_normed = norm.transform(bundle.X)
+
+    ds_train = WindowDataset(X_normed, bundle.y_all, wcfg, train_rng[0], train_rng[1])
+    ds_val = WindowDataset(X_normed, bundle.y_all, wcfg, val_rng[0], val_rng[1])
 
     # Optimized DataLoader (pin_memory for faster GPU transfer, if available)
     dl_train = torch.utils.data.DataLoader(
@@ -1059,6 +1097,7 @@ def train_offline(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
                     "freq_min": bundle.cfg.freq_min,
                     "days": bundle.cfg.days,
                 },
+                "normalizer": norm.state_dict(),
             }
             # Save checkpoint on improvement
             os.makedirs("checkpoints", exist_ok=True)
@@ -1081,16 +1120,18 @@ def train_offline(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
         RichLogger.success(f"Training complete. Best validation loss: {best_val:.4f}")
         RichLogger.info("Best model saved to 'checkpoints/model_best.pt'")
     
-    metrics = evaluate_offline(bundle, model, wcfg, split, device)
+    metrics = evaluate_offline(bundle, model, wcfg, split, device, norm=norm)
     if best_state is not None:
         best_state["metrics"] = metrics
         os.makedirs("checkpoints", exist_ok=True)
         torch.save(best_state, "checkpoints/model_best.pt")
-    return model, metrics
+    return model, metrics, norm
 
 def predict_windows(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig,
-                    rng: Tuple[int,int], device: torch.device, batch_size: int = 128) -> Tuple[np.ndarray, np.ndarray]:
-    ds = WindowDataset(bundle.X, bundle.y_all, wcfg, rng[0], rng[1])
+                    rng: Tuple[int,int], device: torch.device, batch_size: int = 128,
+                    norm: Optional[FeatureNormalizer] = None) -> Tuple[np.ndarray, np.ndarray]:
+    X_in = norm.transform(bundle.X) if norm is not None else bundle.X
+    ds = WindowDataset(X_in, bundle.y_all, wcfg, rng[0], rng[1])
     dl = torch.utils.data.DataLoader(ds, batch_size=batch_size, shuffle=False, drop_last=False)
     ys, yhats = [], []
     model.eval()
@@ -1104,10 +1145,10 @@ def predict_windows(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig,
     return np.concatenate(ys, axis=0), np.concatenate(yhats, axis=0)
 
 def evaluate_offline(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig, split: SplitConfig,
-                     device: torch.device) -> Dict[str, float]:
+                     device: torch.device, norm: Optional[FeatureNormalizer] = None) -> Dict[str, float]:
     T = bundle.X.shape[0]
     train_rng, val_rng, test_rng = make_splits(T, split)
-    y_true, y_pred = predict_windows(bundle, model, wcfg, test_rng, device=device)
+    y_true, y_pred = predict_windows(bundle, model, wcfg, test_rng, device=device, norm=norm)
 
     N = bundle.y_bottom.shape[1]
     idx_total = len(bundle.series_names) - 1
@@ -1143,8 +1184,10 @@ def rolling_sigma_update(sig: np.ndarray, r: np.ndarray, beta: float = 0.04) -> 
 def online_run_stream(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig, split: SplitConfig,
                       ocfg: OnlineConfig, device: torch.device,
                       step_callback: Optional[Callable[[Dict[str, object]], None]] = None,
-                      max_steps: Optional[int] = None) -> OnlineRunResult:
-    T, N, _ = bundle.X.shape
+                      max_steps: Optional[int] = None,
+                      norm: Optional[FeatureNormalizer] = None) -> OnlineRunResult:
+    X_in = norm.transform(bundle.X) if norm is not None else bundle.X
+    T, N, _ = X_in.shape
     n_series = bundle.y_all.shape[1]
     train_rng, val_rng, test_rng = make_splits(T, split)
 
@@ -1193,7 +1236,7 @@ def online_run_stream(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig, sp
 
     model.eval()
     for t in range(start, end):
-        x_win = bundle.X[t - wcfg.lookback : t]
+        x_win = X_in[t - wcfg.lookback : t]
         y_obs = bundle.y_all[t]
 
         x_t = to_tensor(x_win[None, ...], device=device)
@@ -1259,8 +1302,9 @@ def online_run_stream(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig, sp
     )
 
 def online_run(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig, split: SplitConfig,
-               ocfg: OnlineConfig, device: torch.device, max_steps: Optional[int] = None) -> OnlineRunResult:
-    return online_run_stream(bundle, model, wcfg, split, ocfg, device, max_steps=max_steps)
+               ocfg: OnlineConfig, device: torch.device, max_steps: Optional[int] = None,
+               norm: Optional[FeatureNormalizer] = None) -> OnlineRunResult:
+    return online_run_stream(bundle, model, wcfg, split, ocfg, device, max_steps=max_steps, norm=norm)
 
 # ----------------------------
 # UI dataset helpers
@@ -1314,6 +1358,20 @@ def load_model_checkpoint(path: str, bundle: DataBundle, device: torch.device
         data_meta = {}
         metrics = {}
 
+    # Restore feature normalizer if present in checkpoint
+    norm = FeatureNormalizer()
+    if isinstance(state, dict) and "normalizer" in state:
+        try:
+            norm.load_state_dict(state["normalizer"])
+        except Exception:
+            import logging as _logging
+            _logging.getLogger(__name__).warning("Failed to load normalizer from checkpoint; features will not be normalized.")
+            norm = None
+    else:
+        import logging as _logging
+        _logging.getLogger(__name__).warning("No normalizer found in checkpoint; features will not be normalized.")
+        norm = None
+
     N = bundle.y_bottom.shape[1]
     F_in = bundle.X.shape[2]
     n_series = bundle.y_all.shape[1]
@@ -1332,7 +1390,7 @@ def load_model_checkpoint(path: str, bundle: DataBundle, device: torch.device
     except Exception as e:
         return None, None, {"error": f"Checkpoint load failed: {e}"}
     model.eval()
-    return model, wcfg, {"checkpoint": state, "metrics": metrics}
+    return model, wcfg, {"checkpoint": state, "metrics": metrics, "normalizer": norm}
 
 def checkpoint_summary(state: Dict[str, object]) -> Dict[str, object]:
     summary: Dict[str, object] = {}
@@ -1376,12 +1434,14 @@ def build_exogenous_features(cfg: DataGenConfig, net: NetworkSpec, idx: pd.Datet
     return time_feat, weather, event_flag, disrupt_flag, drift_flag
 
 def iterative_forecast(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig,
-                       steps_ahead: int, device: torch.device) -> Tuple[np.ndarray, np.ndarray]:
+                       steps_ahead: int, device: torch.device,
+                       norm: Optional[FeatureNormalizer] = None) -> Tuple[np.ndarray, np.ndarray]:
     if steps_ahead <= 0:
         empty = np.zeros((0, bundle.y_all.shape[1]), dtype=np.float32)
         return empty, empty
 
-    T = bundle.X.shape[0]
+    X_in = norm.transform(bundle.X) if norm is not None else bundle.X
+    T = X_in.shape[0]
     N = bundle.y_bottom.shape[1]
     F_in = bundle.X.shape[2]
     freq = f"{bundle.cfg.freq_min}min"
@@ -1394,7 +1454,7 @@ def iterative_forecast(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig,
     )
 
     from collections import deque
-    x_window = deque(bundle.X[-wcfg.lookback:], maxlen=wcfg.lookback)
+    x_window = deque(X_in[-wcfg.lookback:], maxlen=wcfg.lookback)
     lag_buffer = deque(bundle.y_bottom[-4:], maxlen=4)
     preds = []
     confs = []
@@ -1995,11 +2055,12 @@ def ui_app() -> None:
                             
                             status.write("Initializing model...")
                             # Call training
-                            model, metrics = train_offline(
+                            model, metrics, norm = train_offline(
                                 st.session_state.bundle, wcfg, split, mcfg, tcfg, dev, verbose=True
                             )
                             st.session_state.model = model
                             st.session_state.metrics = metrics
+                            st.session_state.normalizer = norm
                             st.session_state.model_info = None
                             model_loaded, wcfg_loaded, info = load_model_checkpoint(
                                 ckpt_path, st.session_state.bundle, dev
@@ -2010,6 +2071,8 @@ def ui_app() -> None:
                                     st.session_state.wcfg = wcfg_loaded
                                 if info.get("metrics"):
                                     st.session_state.metrics = info["metrics"]
+                                if info.get("normalizer") is not None:
+                                    st.session_state.normalizer = info["normalizer"]
                                 if "checkpoint" in info:
                                     st.session_state.model_info = checkpoint_summary(info["checkpoint"])
                                 st.session_state.load_error = None
@@ -2219,7 +2282,8 @@ def ui_app() -> None:
 
                         res = online_run_stream(
                             b, st.session_state.model, wcfg, split, ocfg, dev,
-                            step_callback=step_callback, max_steps=steps
+                            step_callback=step_callback, max_steps=steps,
+                            norm=st.session_state.get("normalizer")
                         )
                         st.session_state.online_res = res
                         st.success("Simulation Complete")
@@ -2336,7 +2400,8 @@ def ui_app() -> None:
                     if st.button("Generate Forecast", type="primary"):
                         with st.spinner("Running model inference..."):
                             preds, confs = iterative_forecast(
-                                b, st.session_state.model, st.session_state.wcfg, steps_ahead, dev
+                                b, st.session_state.model, st.session_state.wcfg, steps_ahead, dev,
+                                norm=st.session_state.get("normalizer")
                             )
                             pred_val = float(preds[-1, station_idx])
                             conf_val = float(confs[-1, station_idx])
@@ -2367,7 +2432,7 @@ def ui_app() -> None:
 
                 if st.button("Generate Line Forecast", key="line_fc_btn"):
                     with st.spinner("Forecasting line..."):
-                        preds, confs = iterative_forecast(b, st.session_state.model, st.session_state.wcfg, steps_line, dev)
+                        preds, confs = iterative_forecast(b, st.session_state.model, st.session_state.wcfg, steps_line, dev, norm=st.session_state.get("normalizer"))
                         line_pred = preds[-1, line_idxs].sum()
                         line_conf = confs[-1, line_idxs].mean()
 
@@ -2529,7 +2594,7 @@ def ui_app() -> None:
             uploaded = st.file_uploader("Upload forecast CSV", type=["csv"], key="batch_csv_upload")
             if uploaded and st.session_state.model:
                 try:
-                    result_df = batch_forecast_csv(uploaded, b, st.session_state.model, st.session_state.wcfg, dev)
+                    result_df = batch_forecast_csv(uploaded, b, st.session_state.model, st.session_state.wcfg, dev, norm=st.session_state.get("normalizer"))
                     st.dataframe(result_df, use_container_width=True, hide_index=True)
                     st.download_button(
                         "⬇ Download Forecast Results", result_df.to_csv(index=False).encode(),
@@ -2547,8 +2612,13 @@ def train_offline_streamlit(bundle: DataBundle, wcfg: WindowConfig, split: Split
     n_agg = n_series - N
     train_rng, val_rng, test_rng = make_splits(T, split)
 
-    ds_train = WindowDataset(bundle.X, bundle.y_all, wcfg, train_rng[0], train_rng[1])
-    ds_val = WindowDataset(bundle.X, bundle.y_all, wcfg, val_rng[0], val_rng[1])
+    # Z-score normalization fitted on training data only
+    norm = FeatureNormalizer()
+    norm.fit(bundle.X[:train_rng[1]])
+    X_normed = norm.transform(bundle.X)
+
+    ds_train = WindowDataset(X_normed, bundle.y_all, wcfg, train_rng[0], train_rng[1])
+    ds_val = WindowDataset(X_normed, bundle.y_all, wcfg, val_rng[0], val_rng[1])
     dl_train = torch.utils.data.DataLoader(ds_train, batch_size=tcfg.batch_size, shuffle=True, drop_last=True)
     dl_val = torch.utils.data.DataLoader(ds_val, batch_size=tcfg.batch_size, shuffle=False, drop_last=False)
 
@@ -2599,8 +2669,8 @@ def train_offline_streamlit(bundle: DataBundle, wcfg: WindowConfig, split: Split
         model.load_state_dict(best_state)
 
     model.eval()
-    metrics = evaluate_offline(bundle, model, wcfg, split, device)
-    return model, metrics
+    metrics = evaluate_offline(bundle, model, wcfg, split, device, norm=norm)
+    return model, metrics, norm
 
 # ----------------------------
 # CLI
@@ -2710,7 +2780,18 @@ def cli_main(args: argparse.Namespace) -> None:
 
         # Evaluate on loaded data
         RichLogger.section("OFFLINE EVALUATION")
-        metrics = evaluate_offline(bundle, model, wcfg, split, dev)
+        # Restore normalizer from checkpoint if available
+        norm = None
+        if "normalizer" in state:
+            try:
+                norm = FeatureNormalizer()
+                norm.load_state_dict(state["normalizer"])
+                RichLogger.info("Feature normalizer restored from checkpoint")
+            except Exception:
+                RichLogger.warning("Failed to restore normalizer from checkpoint")
+        else:
+            RichLogger.warning("No normalizer found in checkpoint; using unnormalized features")
+        metrics = evaluate_offline(bundle, model, wcfg, split, dev, norm=norm)
     else:
         RichLogger.metric("Stations", args.stations)
         RichLogger.metric("Lines", args.lines)
@@ -2757,7 +2838,8 @@ def cli_main(args: argparse.Namespace) -> None:
 
         # Re-evaluate on current data
         RichLogger.section("OFFLINE EVALUATION")
-        metrics = evaluate_offline(bundle, model, wcfg, split, dev)
+        norm = info.get("normalizer")
+        metrics = evaluate_offline(bundle, model, wcfg, split, dev, norm=norm)
     else:
         RichLogger.section("MODEL TRAINING")
         RichLogger.subsection("Architecture")
@@ -2772,7 +2854,7 @@ def cli_main(args: argparse.Namespace) -> None:
         RichLogger.metric("Learning rate", f"{tcfg.lr:.2e}")
         print()  # spacing
 
-        model, metrics = train_offline(bundle, wcfg, split, mcfg, tcfg, dev, verbose=True)
+        model, metrics, norm = train_offline(bundle, wcfg, split, mcfg, tcfg, dev, verbose=True)
     
     RichLogger.section("OFFLINE EVALUATION")
     RichLogger.table(
@@ -2794,7 +2876,7 @@ def cli_main(args: argparse.Namespace) -> None:
         RichLogger.metric("Adapt steps", args.adapt_steps)
         
         ocfg = OnlineConfig(ph_delta=args.ph_delta, ph_lambda=args.ph_lambda, adapt_steps=args.adapt_steps)
-        res = online_run(bundle, model, wcfg, split, ocfg, dev, max_steps=args.max_steps)
+        res = online_run(bundle, model, wcfg, split, ocfg, dev, max_steps=args.max_steps, norm=norm)
         N = bundle.y_bottom.shape[1]
         mae_base = mae_np(res.y_true[:, :N], res.y_base[:, :N])
         mae_rec = mae_np(res.y_true[:, :N], res.y_recon[:, :N])
@@ -2960,7 +3042,8 @@ def export_gtfs(net: NetworkSpec, bundle: DataBundle) -> bytes:
 
 
 def batch_forecast_csv(uploaded_file, bundle: DataBundle, model: nn.Module,
-                       wcfg: WindowConfig, device: torch.device) -> pd.DataFrame:
+                       wcfg: WindowConfig, device: torch.device,
+                       norm: Optional[FeatureNormalizer] = None) -> pd.DataFrame:
     """Run batch forecasts from a CSV of station names and target times."""
     import tempfile
     df_in = pd.read_csv(uploaded_file)
@@ -2983,7 +3066,7 @@ def batch_forecast_csv(uploaded_file, bundle: DataBundle, model: nn.Module,
             continue
         steps_ahead = int((target_time - now_ts) / pd.Timedelta(minutes=bundle.cfg.freq_min))
         try:
-            preds, confs = iterative_forecast(bundle, model, wcfg, min(steps_ahead, 1008), device)
+            preds, confs = iterative_forecast(bundle, model, wcfg, min(steps_ahead, 1008), device, norm=norm)
             rows.append({"station": station_name, "target_time": str(target_time),
                          "predicted": float(preds[steps_ahead - 1, si]),
                          "confidence": float(confs[steps_ahead - 1, si]),
