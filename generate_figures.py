@@ -1,481 +1,517 @@
 #!/usr/bin/env python3
 """
-Q1-Level Figure Generation for DTS-GSSF Research Paper
-=======================================================
+Publication-Quality Figure Generation for DTS-GSSF Research Paper
+===================================================================
 
-Generates publication-quality figures following Q1 Scopus journal standards.
+All figures are generated from REAL experimental output files.
+No hardcoded or fabricated numbers — every data point comes from
+actual experiment results saved in research_output/ directories.
 
-Run: uv run python generate_figures.py
+Data sources expected:
+  - research_output/multi_seed/          — multi-seed aggregate results
+  - research_output/baselines/           — baseline comparison results
+  - research_output/ablation/            — ablation study results
+  - research_output/multi_seed/seed_XX/  — per-seed results with training history
+
+Usage:
+    python generate_figures.py
+    python generate_figures.py --data_dir research_output/multi_seed
 """
 
-import os
-import sys
 import json
-import math
-import numpy as np
-import pandas as pd
+import sys
 from pathlib import Path
-from typing import Dict, List, Tuple, Any, Optional
+from typing import Dict, List, Optional
 
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.lines import Line2D
-from matplotlib.gridspec import GridSpec
-import matplotlib.ticker as mticker
 
-# Import main module
-import main as dts
-
-# Output directory
 OUTPUT_DIR = Path("research_output/figures")
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+DEFAULT_DATA_DIR = Path("research_output/multi_seed")
 
-# Professional color palette
 COLORS = {
-    'primary': '#2E86AB',      # Blue
-    'secondary': '#A23B72',    # Magenta
-    'tertiary': '#F18F01',     # Orange
-    'quaternary': '#C73E1D',   # Red
-    'success': '#28A745',      # Green
-    'dark': '#212529',         # Dark gray
-    'light': '#F8F9FA',        # Light gray
+    "primary": "#2E86AB",
+    "secondary": "#A23B72",
+    "tertiary": "#F18F01",
+    "quaternary": "#C73E1D",
+    "success": "#28A745",
+    "dark": "#212529",
+    "light": "#F8F9FA",
 }
 
-# Model colors
 MODEL_COLORS = {
-    'DTS-GSSF': COLORS['primary'],
-    'LSTM': COLORS['secondary'],
-    'GRU': COLORS['tertiary'],
-    'TCN': COLORS['quaternary'],
-    'Seasonal Naive': '#6C757D',
-    'Historical Avg': '#ADB5BD',
+    "DTS-GSSF": COLORS["primary"],
+    "LSTM": COLORS["secondary"],
+    "GRU": COLORS["tertiary"],
+    "TCN": COLORS["quaternary"],
+    "Seasonal Naive": "#6C757D",
+    "Historical Avg": "#ADB5BD",
+    "Moving Average": "#868E96",
+    "STGCN": "#E83E8C",
+    "Graph WaveNet": "#6F42C1",
+    "AGCRN": "#FD7E14",
 }
+
 
 def setup_style():
-    """Configure matplotlib for publication quality."""
     plt.rcParams.update({
-        'font.family': 'serif',
-        'font.size': 11,
-        'axes.labelsize': 12,
-        'axes.titlesize': 14,
-        'axes.titleweight': 'bold',
-        'xtick.labelsize': 10,
-        'ytick.labelsize': 10,
-        'legend.fontsize': 10,
-        'figure.titlesize': 16,
-        'axes.linewidth': 1.2,
-        'lines.linewidth': 2,
-        'savefig.dpi': 300,
-        'savefig.bbox': 'tight',
-        'axes.spines.top': False,
-        'axes.spines.right': False,
+        "font.family": "serif",
+        "font.size": 11,
+        "axes.labelsize": 12,
+        "axes.titlesize": 14,
+        "axes.titleweight": "bold",
+        "xtick.labelsize": 10,
+        "ytick.labelsize": 10,
+        "legend.fontsize": 10,
+        "figure.titlesize": 16,
+        "axes.linewidth": 1.2,
+        "lines.linewidth": 2,
+        "savefig.dpi": 300,
+        "savefig.bbox": "tight",
+        "axes.spines.top": False,
+        "axes.spines.right": False,
     })
 
-setup_style()
+
+def load_aggregate(data_dir: Path) -> Optional[Dict]:
+    path = data_dir / "DTS-GSSF_aggregate.json"
+    if not path.exists():
+        print(f"  WARNING: {path} not found. Skipping figures that need aggregate data.")
+        return None
+    with open(path) as f:
+        return json.load(f)
 
 
-def fig1_training_dynamics(history: Dict, save_path: Path):
-    """Training and validation loss curves."""
+def load_seed_results(data_dir: Path, seed: int) -> Optional[Dict]:
+    path = data_dir / f"seed_{seed:02d}" / "results.json"
+    if not path.exists():
+        return None
+    with open(path) as f:
+        return json.load(f)
+
+
+def load_config(data_dir: Path) -> Optional[Dict]:
+    path = data_dir / "config.json"
+    if not path.exists():
+        return None
+    with open(path) as f:
+        return json.load(f)
+
+
+def load_baseline_results(data_dir: Path) -> Optional[Dict]:
+    path = data_dir / "baselines_aggregate.json"
+    if not path.exists():
+        print(f"  WARNING: {path} not found. Skipping baseline comparison figures.")
+        return None
+    with open(path) as f:
+        return json.load(f)
+
+
+def load_ablation_results(data_dir: Path) -> Optional[Dict]:
+    path = data_dir / "ablation_results.json"
+    if not path.exists():
+        print(f"  WARNING: {path} not found. Skipping ablation figures.")
+        return None
+    with open(path) as f:
+        return json.load(f)
+
+
+# ─── Figure 1: Training Dynamics ──────────────────────────────────────────
+
+def fig1_training_dynamics(data_dir: Path, save_path: Path):
+    """Training and validation loss curves from seed results."""
+    config = load_config(data_dir)
+    n_seeds = config.get("n_seeds", 10) if config else 10
+
+    histories = []
+    for seed in range(n_seeds):
+        result = load_seed_results(data_dir, seed)
+        if result and "history" in result and result["history"]:
+            histories.append(result["history"])
+        else:
+            print(f"  WARNING: No training history for seed {seed:02d}")
+
+    if not histories:
+        print("  SKIP: fig1_training_dynamics — no history data found")
+        return
+
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    epochs = range(1, len(history['train_loss']) + 1)
+    min_len = min(len(h.get("train_loss", [])) for h in histories)
+    all_train = [h.get("train_loss", [])[:min_len] for h in histories]
+    all_val = [h.get("val_loss", [])[:min_len] for h in histories]
 
-    ax.plot(epochs, history['train_loss'], color=COLORS['primary'],
-            linewidth=2.5, label='Training Loss', marker='o', markevery=5)
-    ax.plot(epochs, history['val_loss'], color=COLORS['secondary'],
-            linewidth=2.5, label='Validation Loss', linestyle='--', marker='s', markevery=5)
+    train_arr = np.array(all_train)
+    val_arr = np.array(all_val)
+    epochs = np.arange(1, min_len + 1)
 
-    best_epoch = np.argmin(history['val_loss']) + 1
-    best_val = min(history['val_loss'])
-    ax.scatter([best_epoch], [best_val], color=COLORS['success'], s=150, zorder=5, marker='*')
-    ax.annotate(f'Best: {best_val:.4f}', xy=(best_epoch, best_val),
-                xytext=(best_epoch+2, best_val+0.03), fontsize=10,
-                arrowprops=dict(arrowstyle='->', color=COLORS['dark']))
+    train_mean = train_arr.mean(axis=0)
+    train_std = train_arr.std(axis=0)
+    val_mean = val_arr.mean(axis=0)
+    val_std = val_arr.std(axis=0)
 
-    ax.set_xlabel('Epoch', fontweight='bold')
-    ax.set_ylabel('Loss (NLL)', fontweight='bold')
-    ax.set_title('Training Dynamics of DTS-GSSF Model', fontweight='bold')
-    ax.legend(loc='upper right')
+    ax.plot(epochs, train_mean, color=COLORS["primary"], linewidth=2.5, label="Training Loss")
+    ax.fill_between(epochs, train_mean - train_std, train_mean + train_std, alpha=0.15, color=COLORS["primary"])
+    ax.plot(epochs, val_mean, color=COLORS["secondary"], linewidth=2.5, label="Validation Loss", linestyle="--")
+    ax.fill_between(epochs, val_mean - val_std, val_mean + val_std, alpha=0.15, color=COLORS["secondary"])
+
+    best_epoch = int(np.argmin(val_mean)) + 1
+    best_val = float(val_mean[best_epoch - 1])
+    ax.scatter([best_epoch], [best_val], color=COLORS["success"], s=150, zorder=5, marker="*")
+    ax.annotate(f"Best: {best_val:.4f}", xy=(best_epoch, best_val),
+                xytext=(best_epoch + 2, best_val + val_std[best_epoch - 1]),
+                fontsize=10, arrowprops=dict(arrowstyle="->", color=COLORS["dark"]))
+
+    ax.set_xlabel("Epoch", fontweight="bold")
+    ax.set_ylabel("Loss (NLL)", fontweight="bold")
+    ax.set_title("Training Dynamics of DTS-GSSF Model", fontweight="bold")
+    ax.legend(loc="upper right")
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig(save_path / 'fig1_training_dynamics.pdf')
-    plt.savefig(save_path / 'fig1_training_dynamics.png', dpi=300)
+    plt.savefig(save_path / "fig1_training_dynamics.pdf")
+    plt.savefig(save_path / "fig1_training_dynamics.png", dpi=300)
     plt.close()
-    print("  ✓ fig1_training_dynamics")
+    print("  Done: fig1_training_dynamics")
 
+
+# ─── Figure 2: Prediction Comparison ──────────────────────────────────────
 
 def fig2_prediction_comparison(y_true: np.ndarray, y_pred: np.ndarray,
                                station_names: List[str], save_path: Path):
-    """Prediction vs actual time series."""
+    """Prediction vs actual time series from model output."""
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
     axes = axes.flatten()
 
-    indices = np.linspace(0, len(station_names)-1, 6, dtype=int)
+    n_stations = y_true.shape[1] if y_true.ndim > 1 else 1
+    indices = np.linspace(0, n_stations - 1, min(6, n_stations), dtype=int)
 
     for i, (ax, idx) in enumerate(zip(axes, indices)):
         window = min(200, y_true.shape[0])
         t = np.arange(window)
 
-        ax.plot(t, y_true[:window, idx], color=COLORS['dark'], linewidth=1.5, label='Actual', alpha=0.8)
-        ax.plot(t, y_pred[:window, idx], color=COLORS['primary'], linewidth=1.5, linestyle='--', label='Predicted')
+        true_col = y_true[:window, idx] if y_true.ndim > 1 else y_true[:window]
+        pred_col = y_pred[:window, idx] if y_pred.ndim > 1 else y_pred[:window]
 
-        mae = np.mean(np.abs(y_true[:window, idx] - y_pred[:window, idx]))
-        ax.set_title(f'Station: {station_names[idx][:12]}...\nMAE={mae:.2f}', fontsize=11)
-        ax.legend(loc='upper right', fontsize=9)
+        ax.plot(t, true_col, color=COLORS["dark"], linewidth=1.5, label="Actual", alpha=0.8)
+        ax.plot(t, pred_col, color=COLORS["primary"], linewidth=1.5, linestyle="--", label="Predicted")
+
+        mae = float(np.mean(np.abs(true_col - pred_col)))
+        name = station_names[idx][:12] if idx < len(station_names) else f"Series {idx}"
+        ax.set_title(f"{name}...\nMAE={mae:.2f}", fontsize=11)
+        ax.legend(loc="upper right", fontsize=9)
         ax.grid(True, alpha=0.3)
 
-    plt.suptitle('Prediction vs Actual: Station-Level Comparison', fontsize=16, fontweight='bold')
+    plt.suptitle("Prediction vs Actual: Station-Level Comparison", fontsize=16, fontweight="bold")
     plt.tight_layout()
-    plt.savefig(save_path / 'fig2_prediction_comparison.pdf')
-    plt.savefig(save_path / 'fig2_prediction_comparison.png', dpi=300)
+    plt.savefig(save_path / "fig2_prediction_comparison.pdf")
+    plt.savefig(save_path / "fig2_prediction_comparison.png", dpi=300)
     plt.close()
-    print("  ✓ fig2_prediction_comparison")
+    print("  Done: fig2_prediction_comparison")
 
 
-def fig3_baseline_comparison(metrics: Dict, save_path: Path):
-    """Bar chart comparing with baselines."""
+# ─── Figure 3: Baseline Comparison ─────────────────────────────────────────
+
+def fig3_baseline_comparison(data_dir: Path, save_path: Path):
+    """Bar chart comparing DTS-GSSF with baselines from real results."""
+    baseline_data = load_baseline_results(data_dir)
+    if baseline_data is None:
+        print("  SKIP: fig3_baseline_comparison — no baseline data")
+        return
+
+    dts_agg = load_aggregate(data_dir)
+    if dts_agg is None:
+        print("  SKIP: fig3_baseline_comparison — no DTS-GSSF aggregate data")
+        return
+
+    models = []
+    mae_vals = []
+    mae_stds = []
+    rmse_vals = []
+    rmse_stds = []
+
+    for model_name, data in baseline_data.items():
+        models.append(model_name)
+        mae_vals.append(data["mae_total"]["mean"])
+        mae_stds.append(data["mae_total"].get("std", 0))
+        rmse_vals.append(data["rmse_total"]["mean"])
+        rmse_stds.append(data["rmse_total"].get("std", 0))
+
+    models.append("DTS-GSSF\n(Ours)")
+    mae_vals.append(dts_agg["mae_total"]["mean"])
+    mae_stds.append(dts_agg["mae_total"].get("std", 0))
+    rmse_vals.append(dts_agg["rmse_total"]["mean"])
+    rmse_stds.append(dts_agg["rmse_total"].get("std", 0))
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    models = ['Seasonal\nNaive', 'Historical\nAvg', 'Moving\nAvg', 'LSTM', 'GRU', 'TCN', 'DTS-GSSF\n(Ours)']
-    mae_vals = [8.42, 10.15, 8.95, 7.28, 7.15, 7.02, 6.38]
-    rmse_vals = [12.85, 15.02, 13.21, 11.05, 10.92, 10.78, 9.76]
-
-    colors = [MODEL_COLORS.get(m.replace('\n', ' '), COLORS['dark']) for m in models]
-    colors[-1] = COLORS['success']
-
     x = np.arange(len(models))
+    colors = [MODEL_COLORS.get(m.replace("\n", " "), COLORS["dark"]) for m in models]
+    colors[-1] = COLORS["success"]
 
-    bars1 = ax1.bar(x, mae_vals, color=colors, edgecolor='black', linewidth=1.5)
-    ax1.set_ylabel('MAE (Lower is Better)', fontweight='bold')
-    ax1.set_title('Model Comparison: Mean Absolute Error', fontweight='bold')
+    bars1 = ax1.bar(x, mae_vals, yerr=mae_stds, color=colors, edgecolor="black", linewidth=1.5, capsize=4)
+    ax1.set_ylabel("MAE (Lower is Better)", fontweight="bold")
+    ax1.set_title("Model Comparison: Mean Absolute Error", fontweight="bold")
     ax1.set_xticks(x)
     ax1.set_xticklabels(models, fontsize=9)
-    ax1.grid(True, alpha=0.3, axis='y')
+    ax1.grid(True, alpha=0.3, axis="y")
 
     for bar, val in zip(bars1, mae_vals):
-        ax1.annotate(f'{val:.2f}', xy=(bar.get_x() + bar.get_width()/2, bar.get_height()),
-                    xytext=(0, 3), textcoords="offset points", ha='center', fontsize=9, fontweight='bold')
+        ax1.annotate(f"{val:.2f}", xy=(bar.get_x() + bar.get_width() / 2, bar.get_height()),
+                     xytext=(0, 3), textcoords="offset points", ha="center", fontsize=9, fontweight="bold")
 
-    bars2 = ax2.bar(x, rmse_vals, color=colors, edgecolor='black', linewidth=1.5)
-    ax2.set_ylabel('RMSE (Lower is Better)', fontweight='bold')
-    ax2.set_title('Model Comparison: Root Mean Squared Error', fontweight='bold')
+    bars2 = ax2.bar(x, rmse_vals, yerr=rmse_stds, color=colors, edgecolor="black", linewidth=1.5, capsize=4)
+    ax2.set_ylabel("RMSE (Lower is Better)", fontweight="bold")
+    ax2.set_title("Model Comparison: Root Mean Squared Error", fontweight="bold")
     ax2.set_xticks(x)
     ax2.set_xticklabels(models, fontsize=9)
-    ax2.grid(True, alpha=0.3, axis='y')
+    ax2.grid(True, alpha=0.3, axis="y")
 
     for bar, val in zip(bars2, rmse_vals):
-        ax2.annotate(f'{val:.2f}', xy=(bar.get_x() + bar.get_width()/2, bar.get_height()),
-                    xytext=(0, 3), textcoords="offset points", ha='center', fontsize=9, fontweight='bold')
+        ax2.annotate(f"{val:.2f}", xy=(bar.get_x() + bar.get_width() / 2, bar.get_height()),
+                     xytext=(0, 3), textcoords="offset points", ha="center", fontsize=9, fontweight="bold")
 
     plt.tight_layout()
-    plt.savefig(save_path / 'fig3_baseline_comparison.pdf')
-    plt.savefig(save_path / 'fig3_baseline_comparison.png', dpi=300)
+    plt.savefig(save_path / "fig3_baseline_comparison.pdf")
+    plt.savefig(save_path / "fig3_baseline_comparison.png", dpi=300)
     plt.close()
-    print("  ✓ fig3_baseline_comparison")
+    print("  Done: fig3_baseline_comparison")
 
 
-def fig4_ablation_studies(save_path: Path):
-    """Ablation study plots."""
+# ─── Figure 4: Ablation Studies ────────────────────────────────────────────
+
+def fig4_ablation_studies(data_dir: Path, save_path: Path):
+    """Ablation study plots from real ablation results."""
+    ablation = load_ablation_results(data_dir)
+    if ablation is None:
+        print("  SKIP: fig4_ablation_studies — no ablation data")
+        return
+
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    all_axes = axes.flatten()
 
-    # Model dimension
-    ax1, ax2, ax3, ax4 = axes.flatten()
+    plotted = 0
+    for key, entry in ablation.items():
+        if plotted >= 4:
+            break
+        if "values" not in entry or "mae" not in entry:
+            continue
+        ax = all_axes[plotted]
+        vals = entry["values"]
+        mae = entry["mae"]
+        rmse = entry.get("rmse")
 
-    x = [32, 64, 96, 128]
-    mae = [6.82, 6.38, 6.35, 6.33]
-    rmse = [10.45, 9.76, 9.74, 9.72]
+        if rmse is not None:
+            width = (max(vals) - min(vals)) / (len(vals) * 3) if len(vals) > 1 else 2
+            ax.bar([v - width / 2 for v in vals], mae, width, label="MAE",
+                   color=COLORS["primary"], edgecolor="black")
+            ax.bar([v + width / 2 for v in vals], rmse, width, label="RMSE",
+                   color=COLORS["secondary"], edgecolor="black")
+            ax.legend()
+            ylabel = "Error"
+        else:
+            if len(vals) <= 5:
+                ax.plot(vals, mae, "o-", color=COLORS["primary"], linewidth=2.5, markersize=10)
+            else:
+                ax.bar(vals, mae, color=COLORS["primary"], edgecolor="black")
+            ylabel = "MAE"
 
-    width = 8
-    ax1.bar([i-width/2 for i in x], mae, width, label='MAE', color=COLORS['primary'], edgecolor='black')
-    ax1.bar([i+width/2 for i in x], rmse, width, label='RMSE', color=COLORS['secondary'], edgecolor='black')
-    ax1.set_xlabel('Model Dimension (d)', fontweight='bold')
-    ax1.set_ylabel('Error', fontweight='bold')
-    ax1.set_title('Effect of Model Dimension', fontweight='bold')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3, axis='y')
+        ax.set_xlabel(key, fontweight="bold")
+        ax.set_ylabel(ylabel, fontweight="bold")
+        ax.set_title(f"Effect of {key}", fontweight="bold")
+        ax.grid(True, alpha=0.3, axis="y")
+        plotted += 1
 
-    # Graph depth
-    k_vals = [0, 1, 2, 3]
-    mae_k = [7.12, 6.58, 6.38, 6.41]
-    ax2.plot(k_vals, mae_k, 'o-', color=COLORS['primary'], linewidth=2.5, markersize=10)
-    ax2.axvline(x=2, color=COLORS['success'], linestyle='--', linewidth=2, label='Optimal K=2')
-    ax2.set_xlabel('Graph Propagation Depth (K)', fontweight='bold')
-    ax2.set_ylabel('MAE', fontweight='bold')
-    ax2.set_title('Effect of Graph Depth', fontweight='bold')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
+    for idx in range(plotted, 4):
+        all_axes[idx].set_visible(False)
 
-    # LoRA rank
-    lora_r = [0, 2, 4, 8, 16]
-    mae_lora = [6.52, 6.45, 6.41, 6.38, 6.37]
-    ax3.bar(lora_r, mae_lora, color=COLORS['primary'], edgecolor='black', width=1.5)
-    ax3.set_xlabel('LoRA Rank (r)', fontweight='bold')
-    ax3.set_ylabel('MAE', fontweight='bold')
-    ax3.set_title('Effect of LoRA Rank', fontweight='bold')
-    ax3.grid(True, alpha=0.3, axis='y')
-
-    # Lookback
-    lb = [24, 36, 48, 72, 96]
-    mae_lb = [6.65, 6.48, 6.38, 6.39, 6.38]
-    ax4.bar(lb, mae_lb, color=COLORS['primary'], edgecolor='black', width=4)
-    ax4.set_xlabel('Lookback Window (L)', fontweight='bold')
-    ax4.set_ylabel('MAE', fontweight='bold')
-    ax4.set_title('Effect of Lookback Window', fontweight='bold')
-    ax4.grid(True, alpha=0.3, axis='y')
-
-    plt.suptitle('Ablation Studies: Hyperparameter Sensitivity', fontsize=16, fontweight='bold')
+    plt.suptitle("Ablation Studies: Hyperparameter Sensitivity", fontsize=16, fontweight="bold")
     plt.tight_layout()
-    plt.savefig(save_path / 'fig4_ablation_studies.pdf')
-    plt.savefig(save_path / 'fig4_ablation_studies.png', dpi=300)
+    plt.savefig(save_path / "fig4_ablation_studies.pdf")
+    plt.savefig(save_path / "fig4_ablation_studies.png", dpi=300)
     plt.close()
-    print("  ✓ fig4_ablation_studies")
+    print("  Done: fig4_ablation_studies")
 
 
-def fig5_horizon_analysis(save_path: Path):
-    """Horizon-wise performance."""
+# ─── Figure 5: Horizon Analysis ────────────────────────────────────────────
+
+def fig5_horizon_analysis(data_dir: Path, save_path: Path):
+    """Per-horizon forecast performance from real data."""
+    agg = load_aggregate(data_dir)
+    if agg is None:
+        print("  SKIP: fig5_horizon_analysis — no aggregate data")
+        return
+
+    horizon_keys = sorted([k for k in agg.keys() if k.startswith("mae_h") or k.startswith("mae_horizon")])
+    if not horizon_keys:
+        print("  SKIP: fig5_horizon_analysis — no per-horizon metrics in aggregate data")
+        return
+
+    horizons = []
+    mae_vals = []
+    mae_stds = []
+    rmse_vals = []
+    rmse_stds = []
+
+    for k in horizon_keys:
+        h_num = k.split("h")[-1]
+        horizons.append(int(h_num))
+        mae_vals.append(agg[k]["mean"])
+        mae_stds.append(agg[k].get("std", 0))
+        rmse_key = k.replace("mae", "rmse")
+        if rmse_key in agg:
+            rmse_vals.append(agg[rmse_key]["mean"])
+            rmse_stds.append(agg[rmse_key].get("std", 0))
+
     fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(horizons, mae_vals, "o-", color=COLORS["primary"], linewidth=2.5, markersize=10, label="MAE")
+    ax.fill_between(horizons,
+                    [v - s for v, s in zip(mae_vals, mae_stds)],
+                    [v + s for v, s in zip(mae_vals, mae_stds)],
+                    alpha=0.2, color=COLORS["primary"])
 
-    horizons = [1, 3, 6, 9, 12]
-    mae = [6.38, 6.82, 7.35, 7.92, 8.58]
-    rmse = [9.76, 10.42, 11.15, 12.05, 13.12]
+    if rmse_vals:
+        ax.plot(horizons, rmse_vals, "s-", color=COLORS["secondary"], linewidth=2.5, markersize=10, label="RMSE")
+        ax.fill_between(horizons,
+                        [v - s for v, s in zip(rmse_vals, rmse_stds)],
+                        [v + s for v, s in zip(rmse_vals, rmse_stds)],
+                        alpha=0.2, color=COLORS["secondary"])
 
-    ax.plot(horizons, mae, 'o-', color=COLORS['primary'], linewidth=2.5, markersize=10, label='MAE')
-    ax.plot(horizons, rmse, 's-', color=COLORS['secondary'], linewidth=2.5, markersize=10, label='RMSE')
-
-    ax.fill_between(horizons, [v*0.95 for v in mae], [v*1.05 for v in mae], alpha=0.2, color=COLORS['primary'])
-
-    ax.set_xlabel('Forecast Horizon (steps)', fontweight='bold')
-    ax.set_ylabel('Error', fontweight='bold')
-    ax.set_title('Multi-Step Forecast Performance', fontweight='bold')
+    ax.set_xlabel("Forecast Horizon (steps)", fontweight="bold")
+    ax.set_ylabel("Error", fontweight="bold")
+    ax.set_title("Multi-Step Forecast Performance", fontweight="bold")
     ax.legend()
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig(save_path / 'fig5_horizon_analysis.pdf')
-    plt.savefig(save_path / 'fig5_horizon_analysis.png', dpi=300)
+    plt.savefig(save_path / "fig5_horizon_analysis.pdf")
+    plt.savefig(save_path / "fig5_horizon_analysis.png", dpi=300)
     plt.close()
-    print("  ✓ fig5_horizon_analysis")
+    print("  Done: fig5_horizon_analysis")
 
 
-def fig6_online_correction(online_results: Dict, save_path: Path):
-    """Online correction analysis."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Correction stages
-    stages = ['Base', 'Corrected', 'Reconciled']
-    mae_vals = [7.17, 7.45, 7.74]
-    colors_bar = [COLORS['quaternary'], COLORS['tertiary'], COLORS['primary']]
-
-    ax1 = axes[0]
-    bars = ax1.bar(stages, mae_vals, color=colors_bar, edgecolor='black', linewidth=2)
-    ax1.set_ylabel('MAE', fontweight='bold')
-    ax1.set_title('Correction Pipeline Stages', fontweight='bold')
-    ax1.grid(True, alpha=0.3, axis='y')
-
-    for bar, val in zip(bars, mae_vals):
-        ax1.annotate(f'{val:.2f}', xy=(bar.get_x() + bar.get_width()/2, bar.get_height()),
-                    xytext=(0, 3), textcoords="offset points", ha='center', fontsize=11, fontweight='bold')
-
-    # Drift detection
-    ax2 = axes[1]
-    n_steps = 100
-    t = np.arange(n_steps)
-    drift_scores = np.abs(np.random.randn(n_steps)) * 0.5 + 1.5
-
-    ax2.plot(t, drift_scores, color=COLORS['primary'], linewidth=1.5)
-    ax2.axhline(y=0.85, color=COLORS['quaternary'], linestyle='--', linewidth=2, label='Threshold')
-
-    drift_idx = [i for i, s in enumerate(drift_scores) if s > 0.85]
-    ax2.scatter(drift_idx, [drift_scores[i] for i in drift_idx], color=COLORS['quaternary'],
-               s=50, marker='v', label='Drift Detected')
-
-    ax2.set_xlabel('Time Step', fontweight='bold')
-    ax2.set_ylabel('Drift Score', fontweight='bold')
-    ax2.set_title('Concept Drift Detection', fontweight='bold')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig(save_path / 'fig6_online_correction.pdf')
-    plt.savefig(save_path / 'fig6_online_correction.png', dpi=300)
-    plt.close()
-    print("  ✓ fig6_online_correction")
-
+# ─── Figure 7: Hierarchical Structure (diagram) ────────────────────────────
 
 def fig7_hierarchical_structure(save_path: Path):
-    """Hierarchical structure diagram."""
+    """Hierarchical structure diagram (no experimental data required)."""
     fig, ax = plt.subplots(figsize=(12, 8))
     ax.set_xlim(0, 12)
     ax.set_ylim(0, 10)
-    ax.axis('off')
+    ax.axis("off")
 
-    # Network level
-    ax.text(6, 9, 'Network Total (n=1)', fontsize=14, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.8', facecolor=COLORS['light'], edgecolor=COLORS['primary'], linewidth=3))
+    ax.text(6, 9, "Network Total (n=1)", fontsize=14, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.8", facecolor=COLORS["light"], edgecolor=COLORS["primary"], linewidth=3))
 
-    # Districts
-    districts = ['Esil', 'Almaty', 'Saryarka', 'Baikonur']
+    districts = ["Esil", "Almaty", "Saryarka", "Baikonur"]
     for i, d in enumerate(districts):
-        ax.text(1.5 + i*3, 7, f'District\n{d}', fontsize=10, ha='center', va='center',
-                bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow', edgecolor=COLORS['secondary'], linewidth=2))
+        ax.text(1.5 + i * 3, 7, f"District\n{d}", fontsize=10, ha="center", va="center",
+                bbox=dict(boxstyle="round,pad=0.5", facecolor="lightyellow", edgecolor=COLORS["secondary"], linewidth=2))
 
-    # Lines
-    lines = ['Line 1-3', 'Line 4-5', 'Line 6-8', 'Line 9']
+    lines = ["Line 1-3", "Line 4-5", "Line 6-8", "Line 9"]
     for i, ln in enumerate(lines):
-        ax.text(1.5 + i*3, 5, ln, fontsize=9, ha='center', va='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', edgecolor=COLORS['tertiary'], linewidth=1.5))
+        ax.text(1.5 + i * 3, 5, ln, fontsize=9, ha="center", va="center",
+                bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgreen", edgecolor=COLORS["tertiary"], linewidth=1.5))
 
-    # Stations
-    ax.text(6, 3, '28 Stations', fontsize=12, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.8', facecolor='lightblue', edgecolor=COLORS['primary'], linewidth=2))
+    ax.text(6, 3, "28 Stations", fontsize=12, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.8", facecolor="lightblue", edgecolor=COLORS["primary"], linewidth=2))
 
-    # Formula
-    ax.text(6, 1, r'$\tilde{y} = S(S^\top W^{-1}S)^{-1}S^\top W^{-1}\hat{y}$',
-            fontsize=14, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.8', facecolor='white', edgecolor=COLORS['primary'], linewidth=2))
+    ax.text(6, 1, r"$\tilde{y} = S(S^\top W^{-1}S)^{-1}S^\top W^{-1}\hat{y}$",
+            fontsize=14, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.8", facecolor="white", edgecolor=COLORS["primary"], linewidth=2))
 
-    ax.set_title('Hierarchical Forecasting Structure (MinT Reconciliation)', fontsize=16, fontweight='bold', pad=20)
-
+    ax.set_title("Hierarchical Forecasting Structure (MinT Reconciliation)", fontsize=16, fontweight="bold", pad=20)
     plt.tight_layout()
-    plt.savefig(save_path / 'fig7_hierarchical_structure.pdf')
-    plt.savefig(save_path / 'fig7_hierarchical_structure.png', dpi=300)
+    plt.savefig(save_path / "fig7_hierarchical_structure.pdf")
+    plt.savefig(save_path / "fig7_hierarchical_structure.png", dpi=300)
     plt.close()
-    print("  ✓ fig7_hierarchical_structure")
+    print("  Done: fig7_hierarchical_structure")
 
 
-def fig8_error_analysis(save_path: Path):
-    """Error distribution analysis."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    np.random.seed(42)
-
-    # Histogram
-    ax1 = axes[0]
-    errors = np.random.normal(0, 6.38, 5000)
-    ax1.hist(errors, bins=50, color=COLORS['primary'], alpha=0.7, edgecolor='black', density=True)
-
-    from scipy.stats import norm
-    x = np.linspace(-20, 20, 100)
-    ax1.plot(x, norm.pdf(x, 0, 6.38), color=COLORS['quaternary'], linewidth=2.5,
-             label=f'Normal: μ=0, σ={6.38:.2f}')
-
-    ax1.axvline(x=0, color=COLORS['success'], linestyle='--', linewidth=2)
-    ax1.set_xlabel('Prediction Error', fontweight='bold')
-    ax1.set_ylabel('Density', fontweight='bold')
-    ax1.set_title('Error Distribution', fontweight='bold')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
-
-    # Error by hour
-    ax2 = axes[1]
-    hours = np.arange(24)
-    hourly_errors = 5 + 3 * np.sin(2 * np.pi * hours / 24) + np.random.randn(24) * 0.5
-
-    ax2.plot(hours, hourly_errors, 'o-', color=COLORS['primary'], linewidth=2, markersize=8)
-    ax2.fill_between(hours, hourly_errors - 1, hourly_errors + 1, alpha=0.2, color=COLORS['primary'])
-
-    for h in [8, 18]:
-        ax2.axvline(x=h, color=COLORS['quaternary'], linestyle='--', alpha=0.7)
-
-    ax2.set_xlabel('Hour of Day', fontweight='bold')
-    ax2.set_ylabel('MAE', fontweight='bold')
-    ax2.set_title('Error by Time of Day', fontweight='bold')
-    ax2.set_xlim(0, 23)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig(save_path / 'fig8_error_analysis.pdf')
-    plt.savefig(save_path / 'fig8_error_analysis.png', dpi=300)
-    plt.close()
-    print("  ✓ fig8_error_analysis")
-
+# ─── Figure 9: Architecture (diagram) ──────────────────────────────────────
 
 def fig9_architecture(save_path: Path):
-    """Model architecture schematic."""
+    """Model architecture schematic (no experimental data required)."""
     fig, ax = plt.subplots(figsize=(14, 8))
     ax.set_xlim(0, 14)
     ax.set_ylim(0, 10)
-    ax.axis('off')
+    ax.axis("off")
 
-    # Input
-    ax.text(2, 8, 'Input Features\n$x_t$', fontsize=11, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#E8F4F8', edgecolor=COLORS['dark'], linewidth=2))
+    ax.text(2, 8, "Input Features\n$x_t$", fontsize=11, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#E8F4F8", edgecolor=COLORS["dark"], linewidth=2))
 
-    # Backbone
-    ax.text(5, 8, 'Gated SSM\n(Temporal)', fontsize=11, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#D4EDDA', edgecolor=COLORS['dark'], linewidth=2))
-    ax.text(8, 8, 'Graph Prop\n(K hops)', fontsize=11, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#D4EDDA', edgecolor=COLORS['dark'], linewidth=2))
-    ax.text(11, 8, 'Output\n(LoRA)', fontsize=11, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#D4EDDA', edgecolor=COLORS['dark'], linewidth=2))
+    ax.text(5, 8, "Gated SSM\n(Temporal)", fontsize=11, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#D4EDDA", edgecolor=COLORS["dark"], linewidth=2))
+    ax.text(8, 8, "Graph Prop\n(K hops)", fontsize=11, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#D4EDDA", edgecolor=COLORS["dark"], linewidth=2))
+    ax.text(11, 8, "Temporal Attn\n+ Fusion", fontsize=11, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#D4EDDA", edgecolor=COLORS["dark"], linewidth=2))
 
-    # Online
-    ax.text(5, 5, 'Kalman Filter\n(Residual)', fontsize=11, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#FFF3CD', edgecolor=COLORS['dark'], linewidth=2))
-    ax.text(9, 5, 'Drift Detector\n(Page-Hinkley)', fontsize=11, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#FFF3CD', edgecolor=COLORS['dark'], linewidth=2))
+    ax.text(5, 5, "Kalman Filter\n(Residual)", fontsize=11, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#FFF3CD", edgecolor=COLORS["dark"], linewidth=2))
+    ax.text(9, 5, "Drift Detector\n(Page-Hinkley)", fontsize=11, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#FFF3CD", edgecolor=COLORS["dark"], linewidth=2))
 
-    # Reconciliation
-    ax.text(7, 2, 'MinT Reconciliation', fontsize=12, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.8', facecolor='#F8D7DA', edgecolor=COLORS['dark'], linewidth=2))
+    ax.text(7, 2, "MinT Reconciliation", fontsize=12, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.8", facecolor="#F8D7DA", edgecolor=COLORS["dark"], linewidth=2))
 
-    # Output
-    ax.text(12, 2, 'Final\nForecast', fontsize=11, ha='center', va='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#D1ECF1', edgecolor=COLORS['dark'], linewidth=2))
+    ax.text(12, 2, "Final\nForecast", fontsize=11, ha="center", va="center",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#D1ECF1", edgecolor=COLORS["dark"], linewidth=2))
 
-    # Arrows
-    arrow_props = dict(arrowstyle='->', color=COLORS['dark'], lw=2)
-    ax.annotate('', xy=(4, 8), xytext=(3, 8), arrowprops=arrow_props)
-    ax.annotate('', xy=(7, 8), xytext=(6, 8), arrowprops=arrow_props)
-    ax.annotate('', xy=(10, 8), xytext=(9, 8), arrowprops=arrow_props)
-    ax.annotate('', xy=(7.5, 2), xytext=(11.5, 8), arrowprops=arrow_props)
-    ax.annotate('', xy=(7.5, 2), xytext=(7, 4.5), arrowprops=arrow_props)
-    ax.annotate('', xy=(11.5, 2), xytext=(8.5, 2), arrowprops=arrow_props)
+    arrow_props = dict(arrowstyle="->", color=COLORS["dark"], lw=2)
+    ax.annotate("", xy=(4, 8), xytext=(3, 8), arrowprops=arrow_props)
+    ax.annotate("", xy=(7, 8), xytext=(6, 8), arrowprops=arrow_props)
+    ax.annotate("", xy=(10, 8), xytext=(9, 8), arrowprops=arrow_props)
+    ax.annotate("", xy=(7.5, 2), xytext=(11.5, 8), arrowprops=arrow_props)
+    ax.annotate("", xy=(7.5, 2), xytext=(7, 4.5), arrowprops=arrow_props)
+    ax.annotate("", xy=(11.5, 2), xytext=(8.5, 2), arrowprops=arrow_props)
 
-    ax.set_title('DTS-GSSF Architecture Overview', fontsize=18, fontweight='bold', pad=20)
-
+    ax.set_title("DTS-GSSF Architecture Overview", fontsize=18, fontweight="bold", pad=20)
     plt.tight_layout()
-    plt.savefig(save_path / 'fig9_architecture.pdf')
-    plt.savefig(save_path / 'fig9_architecture.png', dpi=300)
+    plt.savefig(save_path / "fig9_architecture.pdf")
+    plt.savefig(save_path / "fig9_architecture.png", dpi=300)
     plt.close()
-    print("  ✓ fig9_architecture")
+    print("  Done: fig9_architecture")
 
+
+# ─── Main ──────────────────────────────────────────────────────────────────
 
 def main():
-    print("=" * 60)
-    print("GENERATING Q1-LEVEL FIGURES")
-    print("=" * 60)
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate publication-quality figures from real experimental data")
+    parser.add_argument("--data_dir", type=str, default=str(DEFAULT_DATA_DIR),
+                        help="Directory containing experimental results")
+    parser.add_argument("--output_dir", type=str, default=str(OUTPUT_DIR),
+                        help="Directory to save generated figures")
+    args = parser.parse_args()
 
-    # Generate sample history
-    np.random.seed(42)
-    history = {
-        'train_loss': [4.2 - 0.08*i + np.random.randn()*0.02 for i in range(30)],
-        'val_loss': [4.15 - 0.075*i + np.random.randn()*0.025 for i in range(30)]
-    }
+    data_dir = Path(args.data_dir)
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    fig1_training_dynamics(history, OUTPUT_DIR)
-
-    # Generate sample predictions
-    y_true = np.random.poisson(20, (200, 28)).astype(float)
-    y_pred = y_true + np.random.randn(200, 28) * 3
-    station_names = [f'Station {i+1}' for i in range(28)]
-    fig2_prediction_comparison(y_true, y_pred, station_names, OUTPUT_DIR)
-
-    # Metrics
-    model_metrics = {'test_mae_bottom_h1': 6.38, 'test_rmse_bottom_h1': 9.76}
-    fig3_baseline_comparison(model_metrics, OUTPUT_DIR)
-    fig4_ablation_studies(OUTPUT_DIR)
-    fig5_horizon_analysis(OUTPUT_DIR)
-
-    online_results = {'base': {}, 'reconciled': {}}
-    fig6_online_correction(online_results, OUTPUT_DIR)
-    fig7_hierarchical_structure(OUTPUT_DIR)
-    fig8_error_analysis(OUTPUT_DIR)
-    fig9_architecture(OUTPUT_DIR)
+    setup_style()
 
     print("=" * 60)
-    print(f"ALL FIGURES SAVED TO: {OUTPUT_DIR.absolute()}")
+    print("GENERATING PUBLICATION-QUALITY FIGURES")
+    print(f"Data directory: {data_dir.absolute()}")
+    print(f"Output directory: {output_dir.absolute()}")
+    print("=" * 60)
+
+    fig1_training_dynamics(data_dir, output_dir)
+    fig3_baseline_comparison(data_dir, output_dir)
+    fig4_ablation_studies(data_dir, output_dir)
+    fig5_horizon_analysis(data_dir, output_dir)
+
+    # Diagrams (no experimental data needed)
+    fig7_hierarchical_structure(output_dir)
+    fig9_architecture(output_dir)
+
+    print("\n  NOTE: fig2 (prediction comparison) and fig6 (online correction)")
+    print("        require raw prediction arrays from inference runs.")
+    print("        Generate them after running evaluate_offline() with save_predictions=True.")
+
+    print("\n" + "=" * 60)
+    print(f"FIGURES SAVED TO: {output_dir.absolute()}")
     print("=" * 60)
 
 
