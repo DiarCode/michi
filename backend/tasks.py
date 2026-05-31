@@ -85,15 +85,16 @@ def retrain_model():
 @celery_app.task(bind=True, name="run_simulation")
 def run_simulation(self):
     """Run the simulation engine as a Celery task, publishing ticks to Redis."""
-    import redis
+    import redis as _redis
     from backend.database import SessionLocal
     from backend.services.simulation_service import SimulationEngine
 
-    r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+    r = _redis.from_url(REDIS_URL, decode_responses=True)
     db = SessionLocal()
 
     try:
         engine = SimulationEngine(db)
+        print(f"Simulation engine started with {len(engine.stations)} stations.")
 
         while True:
             tick_data = engine.tick()
@@ -119,6 +120,7 @@ def run_simulation(self):
             time.sleep(1)  # 1 tick per second
 
     except Exception as e:
+        print(f"Simulation error: {e}")
         r.publish("michi:simulation", json.dumps({"type": "simulation_error", "error": str(e)}))
         raise
     finally:
@@ -128,8 +130,8 @@ def run_simulation(self):
 @celery_app.task(name="get_simulation_state")
 def get_simulation_state():
     """Get current simulation state from Redis."""
-    import redis
-    r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+    import redis as _redis
+    r = _redis.from_url(REDIS_URL, decode_responses=True)
     checkpoint = r.get("michi:simulation:checkpoint")
     metrics = r.get("michi:simulation:metrics_history")
     return {

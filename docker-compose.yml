@@ -13,6 +13,7 @@ services:
     environment:
       - DATABASE_URL=sqlite:///./data/michi.db
       - REDIS_URL=redis://redis:6379/0
+      - PYTHONPATH=/app
     depends_on:
       - redis
     volumes:
@@ -42,6 +43,7 @@ services:
     environment:
       - DATABASE_URL=sqlite:///./data/michi.db
       - REDIS_URL=redis://redis:6379/0
+      - PYTHONPATH=/app
     depends_on:
       - redis
     volumes:
@@ -55,6 +57,7 @@ services:
     environment:
       - DATABASE_URL=sqlite:///./data/michi.db
       - REDIS_URL=redis://redis:6379/0
+      - PYTHONPATH=/app
     depends_on:
       - redis
 

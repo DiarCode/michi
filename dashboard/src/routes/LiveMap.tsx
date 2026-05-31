@@ -23,11 +23,10 @@ export default function LiveMap() {
   const buses: BusPosition[] = useMemo(() => Object.values(busPositions) as unknown as BusPosition[], [busPositions]);
 
   // Timeline integration
-  const { mode: timelineMode, currentTime: timelineTime, getStationData: getTimelineStationData } = useTimeline();
+  const { mode: timelineMode, currentTime: _timelineTime, getStationData: getTimelineStationData } = useTimeline();
 
   const [routes, setRoutes] = useState<Route[]>([]);
   const [selectedRoutes, setSelectedRoutes] = useState<Set<string>>(new Set());
-  const [hour, setHour] = useState<number>(new Date().getHours());
   const [showHeatmap, setShowHeatmap] = useState(true);
   const [selectedStation, setSelectedStation] = useState<StationDetail | null>(null);
   const [routeForecast, setRouteForecast] = useState<RouteForecast | null>(null);
@@ -37,11 +36,6 @@ export default function LiveMap() {
   const [currentTime, setCurrentTime] = useState<string>(
     new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   );
-
-  // Derive hour from timeline when in historical mode
-  const effectiveHour = timelineMode === "historical"
-    ? new Date(timelineTime).getHours()
-    : hour;
 
   useEffect(() => { fetchRoutes().then((r) => setRoutes(r.routes ?? [])).catch((err) => showToast.error(`Failed to load routes: ${err.message}`)); }, []);
 
@@ -147,19 +141,6 @@ export default function LiveMap() {
         </div>
 
         <div className="border-t dark:border-gray-700 pt-3">
-          <h3 className="font-semibold text-sm mb-2 dark:text-gray-300">Time of Day</h3>
-          <input
-            type="range"
-            min={0}
-            max={23}
-            value={effectiveHour}
-            onChange={(e) => setHour(Number(e.target.value))}
-            className="w-full accent-blue-600"
-          />
-          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{String(effectiveHour).padStart(2, "0")}:00</p>
-        </div>
-
-        <div className="border-t dark:border-gray-700 pt-3">
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" checked={showHeatmap} onChange={(e) => setShowHeatmap(e.target.checked)} />
             <span className="text-sm dark:text-gray-300">Show Heatmap</span>
@@ -197,7 +178,6 @@ export default function LiveMap() {
           <MapContainer
             stations={stations}
             buses={filteredBuses}
-            hour={effectiveHour}
             onStationClick={handleStationClick}
             showHeatmap={showHeatmap}
             predictions={predictions}
@@ -256,11 +236,10 @@ export default function LiveMap() {
                     {selectedStation.hourly_ridership.map((h) => {
                       const maxR = Math.max(...selectedStation.hourly_ridership.map((x) => x.ridership), 1);
                       const pct = (h.ridership / maxR) * 100;
-                      const isNow = h.hour === effectiveHour;
                       const isRush = (h.hour >= 7 && h.hour <= 9) || (h.hour >= 17 && h.hour <= 19);
                       return (
                         <div key={h.hour} className="flex-1 flex flex-col justify-end">
-                          <div className={isNow ? "bg-blue-600" : isRush ? "bg-amber-400" : "bg-gray-300 dark:bg-gray-600"} style={{ height: pct + "%", minHeight: 2 }} />
+                          <div className={isRush ? "bg-amber-400" : "bg-gray-300 dark:bg-gray-600"} style={{ height: pct + "%", minHeight: 2 }} />
                         </div>
                       );
                     })}

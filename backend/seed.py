@@ -8,7 +8,7 @@ from pathlib import Path
 from backend.database import SessionLocal
 from backend.models_orm import StationORM, RouteORM, RouteStopORM
 
-SEED_PATH = Path(__file__).parent.parent / "data" / "cache" / "astana_network_seed.json"
+SEED_PATH = Path(__file__).parent / "data" / "cache" / "astana_network_seed.json"
 
 FALLBACK_STATIONS = [
     {"stop_id": "S001", "name": "Nurly Zhol Station", "lat": 51.1605, "lon": 71.4704, "district": "Esil", "ridership_24h": 1840},
@@ -50,18 +50,37 @@ def load_seed_data():
         print(f"Loaded OSM data: {data['metadata']['total_stations']} stations, "
               f"{data['metadata']['total_routes']} routes")
         return data["stations"], data["routes"], data["route_stops"]
-    print(f"OSM seed not found, using fallback data")
+    
+    # Try the old relative path as a secondary fallback
+    OLD_SEED_PATH = Path(__file__).parent.parent / "data" / "cache" / "astana_network_seed.json"
+    if OLD_SEED_PATH.exists():
+        with open(OLD_SEED_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data["stations"], data["routes"], data["route_stops"]
+
+    print(f"OSM seed not found at {SEED_PATH}, using fallback data")
     return FALLBACK_STATIONS, FALLBACK_ROUTES, FALLBACK_ROUTE_STOPS
 
 
 def seed():
     session = SessionLocal()
+    from backend.models_orm import StationORM, RouteORM, RouteStopORM, RidershipORM, AlertORM, InterventionORM, PredictionAccuracyORM
     try:
         existing = session.query(StationORM).count()
-        if existing > 0:
+        # If we have very few stations (likely fallbacks), force a re-seed if the seed file is available
+        stations, routes, route_stops = load_seed_data()
+        
+        if existing >= len(stations) and existing > 12:
             print(f"Database already seeded with {existing} stations. Skipping.")
             return
-        stations, routes, route_stops = load_seed_data()
+        
+        if existing > 0:
+            print(f"Current station count ({existing}) is low. Clearing and re-seeding with full dataset.")
+            # Simple way to clear tables for a fresh seed
+            session.query(RouteStopORM).delete()
+            session.query(RouteORM).delete()
+            session.query(StationORM).delete()
+            session.commit()
 
         for s in stations:
             session.add(StationORM(**s))
@@ -70,8 +89,23 @@ def seed():
         for route_id, station_id, order in route_stops:
             session.add(RouteStopORM(route_id=route_id, station_id=station_id, stop_order=order))
 
+        # Seed Executive Dashboard tables
+        from datetime import datetime, timedelta, timezone
+        now = datetime.now(timezone.utc)
+        
+        # Ridership
+        for i in range(30):
+            session.add(RidershipORM(station_id="S001", timestamp=now - timedelta(days=i), passengers=1000 + i*10))
+        
+        # Interventions
+        session.add(InterventionORM(intervention_type="re-route", created_at=now, status="completed"))
+        session.add(InterventionORM(intervention_type="frequency", created_at=now, status="pending"))
+        
+        # Alerts
+        session.add(AlertORM(severity="critical", title="Station Closed", created_at=now, station_id="S002"))
+        
         session.commit()
-        print(f"Seeded {len(stations)} stations, {len(routes)} routes, {len(route_stops)} route stops.")
+        print(f"Seeded {len(stations)} stations, {len(routes)} routes, {len(route_stops)} route stops and dashboard data.")
     except Exception as e:
         session.rollback()
         print(f"Seed failed: {e}")
@@ -82,5 +116,6 @@ def seed():
 
 if __name__ == "__main__":
     from backend.database import Base, engine
-    Base.metadata.create_all(bind=engine)
+    # In some environments, we might want to create all here, but usually Alembic handles it.
+    # Base.metadata.create_all(bind=engine)
     seed()

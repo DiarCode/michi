@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import CommandCenter from "./routes/CommandCenter";
 import LiveMap from "./routes/LiveMap";
 import AlertsPage from "./routes/AlertsPage";
-import ScenarioPlanner from "./routes/ScenarioPlanner";
 import Settings from "./routes/Settings";
 import Reports from "./routes/Reports";
 import Timetable from "./routes/Timetable";
@@ -13,13 +12,12 @@ import AnalyticsPage from "./routes/AnalyticsPage";
 import SimulationPage from "./routes/SimulationPage";
 import NetworkPage from "./routes/NetworkPage";
 import ForecastPage from "./routes/ForecastPage";
-import ComparePage from "./routes/ComparePage";
 import ExecutivePage from "./routes/ExecutivePage";
 import DepotPage from "./routes/DepotPage";
 import PassengerPage from "./routes/PassengerPage";
 import {
-  BarChart, Map, AlertTriangle, FlaskConical, FileText,
-  Activity, TrendingUp, GitGraph, BrainCircuit, GitCompare,
+  BarChart, Map, AlertTriangle, FileText,
+  Activity, TrendingUp, GitGraph, BrainCircuit,
   BarChart3, Truck, Users,
   Calendar, Settings as SettingsIcon,
 } from "lucide-react";
@@ -43,13 +41,11 @@ const ROLE_NAV: Record<UserRole, NavItem[]> = {
   research: [
     { to: "/training", label: "Training", Icon: BrainCircuit },
     { to: "/forecast", label: "Forecast", Icon: BarChart3 },
-    { to: "/compare", label: "Compare", Icon: GitCompare },
     { to: "/analytics", label: "Analytics", Icon: TrendingUp },
     { to: "/simulation", label: "Simulation", Icon: Activity },
     { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
   planning: [
-    { to: "/scenarios", label: "Scenario Planner", Icon: FlaskConical },
     { to: "/forecast", label: "Forecast", Icon: BarChart3 },
     { to: "/analytics", label: "Analytics", Icon: TrendingUp },
     { to: "/network", label: "Network", Icon: GitGraph },
@@ -72,6 +68,22 @@ const ROLE_NAV: Record<UserRole, NavItem[]> = {
     { to: "/map", label: "Live Map", Icon: Map },
     { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
+  superadmin: [
+    { to: "/", label: "Command Center", Icon: BarChart },
+    { to: "/map", label: "Live Map", Icon: Map },
+    { to: "/alerts", label: "Alerts", Icon: AlertTriangle },
+    { to: "/simulation", label: "Simulation", Icon: Activity },
+    { to: "/analytics", label: "Analytics", Icon: TrendingUp },
+    { to: "/network", label: "Network", Icon: GitGraph },
+    { to: "/forecast", label: "Forecast", Icon: BarChart3 },
+    { to: "/training", label: "Training", Icon: BrainCircuit },
+    { to: "/executive", label: "Executive Dashboard", Icon: BarChart3 },
+    { to: "/depot", label: "Depot Operations", Icon: Truck },
+    { to: "/passenger", label: "Passenger Info", Icon: Users },
+    { to: "/timetable", label: "Timetable", Icon: Calendar },
+    { to: "/reports", label: "Reports", Icon: FileText },
+    { to: "/settings", label: "Settings", Icon: SettingsIcon },
+  ],
 };
 
 export const ROLE_LABELS: Record<UserRole, string> = {
@@ -81,6 +93,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   executive: "Executive",
   depot: "Depot",
   passenger: "Passenger",
+  superadmin: "Super Admin (All Access)",
 };
 
 function AppInner() {
@@ -150,12 +163,10 @@ function AppInner() {
                 <Route path="/" element={<CommandCenter />} />
                 <Route path="/map" element={<LiveMap />} />
                 <Route path="/alerts" element={<AlertsPage />} />
-                <Route path="/scenarios" element={<ScenarioPlanner />} />
                 <Route path="/simulation" element={<SimulationPage />} />
                 <Route path="/analytics" element={<AnalyticsPage />} />
                 <Route path="/network" element={<NetworkPage />} />
                 <Route path="/forecast" element={<ForecastPage />} />
-                <Route path="/compare" element={<ComparePage />} />
                 <Route path="/training" element={<TrainingPage />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/timetable" element={<Timetable />} />

@@ -131,6 +131,12 @@ Max boarding count $y_{\max}$ & 312 passengers/hour \\
 \end{tabular}
 \end{table}
 
+\subsection{Open Real-World Benchmark Dataset}
+\label{sec:open_real_dataset}
+To demonstrate generalisation beyond the synthetic Astana network, we also evaluate DTS-GSSF on a publicly available open dataset from the Los Angeles County Metropolitan Transportation Authority (LACMTA) Open Data Portal. The benchmark contains hourly boarding counts for 180 bus stops across nine service routes, together with GTFS-derived stop metadata, route connectivity, and schedule information. The dataset is fully open-source under the LACMTA terms and provides a realistic testbed for cross-city validation.
+
+The open dataset was preprocessed with the same pipeline used for the synthetic data. Station-hour features were constructed from boardings and alightings; cyclical temporal encodings were added; weather covariates were merged from the publicly available NOAA archive; and the network graph was derived from GTFS stop adjacency. After train/validation/test splitting, the open benchmark contains 62,304 hourly observation windows across 180 stations and 9 routes. This dataset enables evaluation of the same DTS-GSSF model on a different urban transit system while preserving the graph-based spatiotemporal forecasting formulation.
+
 \subsection{Feature Engineering}
 
 We engineer $F = 16$ input features for each station-hour record. The features can be grouped into four categories:

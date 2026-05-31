@@ -274,7 +274,8 @@ export type UserRole =
   | "planning"
   | "executive"
   | "depot"
-  | "passenger";
+  | "passenger"
+  | "superadmin";
 
 // Timeline types
 export type TimelineMode = "live" | "historical";
