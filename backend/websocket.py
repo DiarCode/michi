@@ -1,67 +1,96 @@
-"""WebSocket manager for real-time bus positions and alerts."""
+"""WebSocket manager for real-time bus positions, alerts, and simulation events."""
 
 import asyncio
 import json
-import random
-from typing import Dict, List
+import os
+from typing import Dict, Set, Optional
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
+from backend.services.realtime_service import BUS_POOL, get_current_positions
+
 websocket_router = APIRouter()
+
 
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: List[WebSocket] = []
+        self.active_connections: Dict[WebSocket, Optional[Set[str]]] = {}
 
-    async def connect(self, websocket: WebSocket):
+    async def connect(self, websocket: WebSocket, subscriptions: Optional[Set[str]] = None):
         await websocket.accept()
-        self.active_connections.append(websocket)
+        self.active_connections[websocket] = subscriptions  # None means all events
 
     def disconnect(self, websocket: WebSocket):
-        if websocket in self.active_connections:
-            self.active_connections.remove(websocket)
+        self.active_connections.pop(websocket, None)
 
-    async def broadcast(self, message: Dict):
-        text = json.dumps(message)
+    async def broadcast(self, event_type: str, data: Dict):
         disconnected = []
-        for connection in self.active_connections:
-            try:
-                await connection.send_text(text)
-            except Exception:
-                disconnected.append(connection)
-        for conn in disconnected:
-            if conn in self.active_connections:
-                self.active_connections.remove(conn)
+        for ws, subs in self.active_connections.items():
+            # Send if: no subscription filter (None) OR event_type in subscriptions
+            if subs is None or event_type in subs:
+                try:
+                    await ws.send_json({"type": event_type, **data})
+                except Exception:
+                    disconnected.append(ws)
+        for ws in disconnected:
+            self.active_connections.pop(ws, None)
+
 
 manager = ConnectionManager()
 
-MOCK_BUSES = [
-    {"bus_id": "BUS-001", "route_id": "Route_12", "lat": 51.1605, "lon": 71.4702},
-    {"bus_id": "BUS-002", "route_id": "Route_34", "lat": 51.1450, "lon": 71.4300},
-]
 
-async def mock_bus_stream():
-    """Broadcast mock bus positions every 5 seconds."""
+async def bus_stream():
+    """Broadcast real-time bus positions every 5 seconds."""
     while True:
         await asyncio.sleep(5)
-        for bus in MOCK_BUSES:
-            bus["lat"] += random.uniform(-0.001, 0.001)
-            bus["lon"] += random.uniform(-0.001, 0.001)
-            bus["speed_kmh"] = random.randint(15, 55)
-            bus["occupancy_percent"] = random.randint(20, 95)
-            bus["next_stop"] = random.choice(["Khan Shatyr", "Mega Silk Way", "Nurzhol Blvd"])
-            bus["eta_seconds"] = random.randint(30, 300)
-            await manager.broadcast({
-                "type": "bus_position",
-                "data": bus,
-            })
+        positions = get_current_positions()
+        for bus in positions:
+            await manager.broadcast("bus_position", {"data": bus})
+
+
+async def simulation_relay():
+    """Subscribe to Redis michi:simulation channel and broadcast events to WS clients."""
+    import redis.asyncio as aioredis
+
+    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    r = aioredis.from_url(redis_url, decode_responses=True)
+    pubsub = r.pubsub()
+    try:
+        await pubsub.subscribe("michi:simulation")
+        async for message in pubsub.listen():
+            if message["type"] == "message":
+                try:
+                    data = json.loads(message["data"])
+                    event_type = data.get("type", "simulation_tick")
+                    await manager.broadcast(event_type, data)
+                except (json.JSONDecodeError, KeyError):
+                    pass
+    except asyncio.CancelledError:
+        return
+    finally:
+        await pubsub.unsubscribe("michi:simulation")
+        await r.close()
+
+
+async def combined_stream():
+    """Run bus position stream and simulation relay concurrently."""
+    bus_task = asyncio.create_task(bus_stream())
+    sim_task = asyncio.create_task(simulation_relay())
+    try:
+        await asyncio.gather(bus_task, sim_task)
+    except asyncio.CancelledError:
+        bus_task.cancel()
+        sim_task.cancel()
+        await asyncio.gather(bus_task, sim_task, return_exceptions=True)
+
 
 @websocket_router.websocket("realtime")
 async def realtime_ws(websocket: WebSocket):
-    await manager.connect(websocket)
+    await manager.connect(websocket)  # default: all events
     try:
         while True:
-            data = await websocket.receive_text()
-            await websocket.send_text(json.dumps({"type": "ack", "data": data}))
+            data = await websocket.receive_json()
+            if "subscribe" in data:
+                manager.active_connections[websocket] = set(data["subscribe"])
     except WebSocketDisconnect:
         manager.disconnect(websocket)

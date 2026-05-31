@@ -281,7 +281,7 @@ class NetworkSpec:
     edges: List[Tuple[int, int]]
     latlon: List[Tuple[float, float]]
 
-def build_astana_network(use_real_data: bool = False, n_stations: int = 28, n_lines: int = 9, seed: int = 7) -> NetworkSpec:
+def build_astana_network(use_real_data: bool = False, n_stations: int = 374, n_lines: int = 10, seed: int = 7) -> NetworkSpec:
     """Build Astana bus network — real OSM data or synthetic fallback."""
     if use_real_data:
         try:
@@ -396,17 +396,17 @@ def build_astana_network(use_real_data: bool = False, n_stations: int = 28, n_li
 @dataclass(frozen=True)
 class DataGenConfig:
     seed: int = 7
-    days: int = 365  # Default ensures >=50k records with freq_min=10
-    freq_min: int = 10
+    days: int = 365
+    freq_min: int = 60  # hourly resolution (paper: 72-hour lookback, 4-hour horizon)
     start: str = "2025-10-01 05:00:00"
     base_mean: float = 18.0
     overdispersion_kappa: float = 8.0
     rush_hour_boost: float = 2.2
     weekend_scale: float = 0.78
     night_scale: float = 0.45
-    event_prob_per_day: float = 0.35  # Increased for richness
-    disruption_prob_per_day: float = 0.15 # Increased for richness
-    drift_day: int = 45 # Adjusted for longer duration
+    event_prob_per_day: float = 0.35
+    disruption_prob_per_day: float = 0.15
+    drift_day: int = 45
     drift_scale: float = 1.25
     drift_station_frac: float = 0.30
 
@@ -426,7 +426,7 @@ def total_records(days: int, freq_min: int) -> int:
     steps_per_day = int((24 * 60) // max(1, freq_min))
     return int(steps_per_day * max(1, days))
 
-def ensure_min_records(cfg: DataGenConfig, min_records: int = 50_000) -> DataGenConfig:
+def ensure_min_records(cfg: DataGenConfig, min_records: int = 5_000) -> DataGenConfig:
     steps_per_day = int((24 * 60) // max(1, cfg.freq_min))
     min_days = int(math.ceil(min_records / max(1, steps_per_day)))
     if cfg.days < min_days:
@@ -450,6 +450,60 @@ def _astana_weather(idx: pd.DatetimeIndex, seed: int) -> np.ndarray:
     precip = (rng.random(len(idx)) < 0.05).astype(np.float32)
     wind = 4 + 2 * rng.random(len(idx))
     return np.stack([temp, precip, wind], axis=1).astype(np.float32)
+
+def _holiday_features(idx: pd.DatetimeIndex) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Compute holiday calendar features: is_holiday, rush_hour, delta_h (hours to next holiday)."""
+    import datetime
+    # Kazakh holidays (fixed dates)
+    KZ_HOLIDAYS = [
+        (1, 1), (1, 2), (1, 7),       # New Year + Orthodox Christmas
+        (3, 8),                          # International Women's Day
+        (3, 22), (3, 23),               # Nauryz
+        (5, 1), (5, 7), (5, 9),        # Spring/Labor Day, Defender, Victory
+        (7, 6),                          # Capital City Day
+        (8, 30),                         # Constitution Day
+        (10, 25),                        # Republic Day
+        (12, 16), (12, 17),             # Independence Day
+    ]
+    holiday_dates = set()
+    year = idx[0].year
+    for m, d in KZ_HOLIDAYS:
+        try:
+            holiday_dates.add(datetime.date(year, m, d))
+        except ValueError:
+            pass
+        # Also add next year if range spans it
+        try:
+            holiday_dates.add(datetime.date(year + 1, m, d))
+        except ValueError:
+            pass
+
+    dates = idx.date
+    is_holiday = np.array([d in holiday_dates for d in dates], dtype=np.float32)
+
+    # Rush hour: 7-9am or 5-7pm on non-holiday weekdays
+    hour = idx.hour.to_numpy(dtype=np.float32)
+    dow = idx.dayofweek.to_numpy(dtype=np.float32)
+    is_weekday = (dow < 5).astype(np.float32)
+    morning_rush = ((hour >= 7) & (hour < 9)).astype(np.float32)
+    evening_rush = ((hour >= 17) & (hour < 19)).astype(np.float32)
+    rush_hour_flag = (is_weekday * (1 - is_holiday) * (morning_rush + evening_rush).clip(0, 1)).astype(np.float32)
+
+    # delta_h: hours to next holiday
+    sorted_holidays = sorted(holiday_dates)
+    delta_h = np.zeros(len(idx), dtype=np.float32)
+    for i, ts in enumerate(idx):
+        d = ts.date()
+        next_hol = None
+        for hd in sorted_holidays:
+            if hd >= d:
+                next_hol = hd
+                break
+        if next_hol is None:
+            next_hol = sorted_holidays[0]  # wrap around
+        delta_h[i] = max(0, (datetime.datetime.combine(next_hol, datetime.time(0)) - ts.to_pydatetime()).total_seconds() / 3600.0)
+
+    return is_holiday, rush_hour_flag, delta_h.astype(np.float32)
 
 def _daily_events(idx: pd.DatetimeIndex, net: NetworkSpec, cfg: DataGenConfig) -> Tuple[np.ndarray, Dict]:
     rng = np.random.default_rng(cfg.seed + 202)
@@ -606,15 +660,61 @@ def generate_astana_data(cfg: DataGenConfig, net: NetworkSpec) -> DataBundle:
 
     y = _nb_sample(mu, kappa=cfg.overdispersion_kappa, rng=rng)
 
-    # Features: lag(1,2,4), time(5), weather(3), flags(event,disruption,drift)
-    X = np.zeros((T, N, 14), dtype=np.float32)
-    for lag_i, lag in enumerate([1, 2, 4]):
-        X[lag:, :, lag_i] = y[:-lag, :]
-    X[:, :, 3:8] = time_feat[:, None, :]
-    X[:, :, 8:11] = weather[:, None, :]
-    X[:, :, 11] = (event_mult > 1.0).astype(np.float32)
-    X[:, :, 12] = (disrupt_mult < 1.0).astype(np.float32)
-    X[:, :, 13] = drift_mask[:, None] * drift_station_flag[None, :]
+    # Features: F=16 matching paper Table 3.2
+    # 0: passengers_boarding (lag-1 ridership)
+    # 1: passengers_alighting (simulated)
+    # 2: load (net passengers on vehicle)
+    # 3: temperature
+    # 4: precipitation
+    # 5: is_holiday
+    # 6: rush_hour
+    # 7: delta_h (hours to next holiday)
+    # 8-9: hour_sin, hour_cos
+    # 10-11: dow_sin, dow_cos
+    # 12: roll_6h (6-hour rolling mean)
+    # 13: roll_24h (24-hour rolling mean)
+    # 14: dev_24h (deviation from 24h rolling mean)
+    # 15: ratio_24h (current / 24h rolling mean)
+    F = 16
+    X = np.zeros((T, N, F), dtype=np.float32)
+
+    # 0: passengers_boarding (most recent observed boarding, i.e., lag-1)
+    X[1:, :, 0] = y[:-1, :]
+
+    # 1: passengers_alighting (simulated as boarding * alight_ratio + noise)
+    alight_ratio = rng.uniform(0.7, 0.95, size=N).astype(np.float32)
+    alighting = y * alight_ratio[None, :] + rng.normal(0, 1.0, size=y.shape).astype(np.float32)
+    alighting = np.clip(alighting, 0, None)
+    X[1:, :, 1] = alighting[:-1, :]
+
+    # 2: load (net passenger flow at last stop: boarding - alighting, bounded)
+    load = (y - alighting).astype(np.float32)
+    load = np.clip(load, -50, 200)  # bound to realistic range
+    X[1:, :, 2] = load[:-1, :]
+
+    # 3-4: weather (temperature, precipitation)
+    X[:, :, 3] = weather[:, 0:1]  # temperature
+    X[:, :, 4] = weather[:, 1:2]  # precipitation
+
+    # 5-7: calendar features
+    is_holiday, rush_hour_flag, delta_h = _holiday_features(idx)
+    X[:, :, 5] = is_holiday[:, None]
+    X[:, :, 6] = rush_hour_flag[:, None]
+    X[:, :, 7] = delta_h[:, None]
+
+    # 8-11: cyclical time encodings
+    X[:, :, 8:12] = time_feat[:, None, :4]  # hour_sin, hour_cos, dow_sin, dow_cos
+
+    # 12-15: rolling statistics
+    for s in range(N):
+        roll6 = pd.Series(y[:, s]).rolling(6, min_periods=1).mean().values.astype(np.float32)
+        roll24 = pd.Series(y[:, s]).rolling(24, min_periods=1).mean().values.astype(np.float32)
+        X[:, s, 12] = roll6
+        X[:, s, 13] = roll24
+        X[:, s, 14] = y[:, s] - roll24  # dev_24h
+        with np.errstate(divide='ignore', invalid='ignore'):
+            ratio = np.where(roll24 > 1e-6, y[:, s] / roll24, 1.0)
+        X[:, s, 15] = ratio.astype(np.float32)
 
     S, series_names, line_groups, district_groups = build_hierarchy(net)
     y_all = (S @ y.T).T.astype(np.float32)
@@ -731,10 +831,26 @@ class GatedSSMBlock(nn.Module):
         return s
 
 class GraphPropagation(nn.Module):
-    def __init__(self, N: int, d: int, A_phys: np.ndarray, K: int = 3, alpha_phys: float = 0.6, d_emb: int = 16):
+    """Dual-adjacency graph propagation with learnable mixing coefficient.
+
+    A = σ(log_α) · A_phys + (1 − σ(log_α)) · A_adp
+    where σ(log_α) is initialised at alpha_phys (default 0.6).
+    """
+
+    def __init__(self, N: int, d: int, A_phys: np.ndarray, K: int = 3,
+                 alpha_phys: float = 0.6, d_emb: int = 16,
+                 learnable_alpha: bool = True):
         super().__init__()
         self.K = K
-        self.alpha_phys = alpha_phys
+        self.learnable_alpha = learnable_alpha
+        if learnable_alpha:
+            self.log_alpha = nn.Parameter(
+                torch.tensor(math.log(alpha_phys), dtype=torch.float32)
+            )
+        else:
+            self.register_buffer(
+                "log_alpha", torch.tensor(math.log(alpha_phys), dtype=torch.float32)
+            )
         self.register_buffer("A_phys", torch.from_numpy(A_phys).float())
         self.E1 = nn.Parameter(torch.randn(N, d_emb) * 0.05)
         self.E2 = nn.Parameter(torch.randn(N, d_emb) * 0.05)
@@ -747,7 +863,8 @@ class GraphPropagation(nn.Module):
 
     def forward(self, h: torch.Tensor) -> torch.Tensor:
         A_adp = self.adaptive_adj()
-        A = self.alpha_phys * self.A_phys + (1.0 - self.alpha_phys) * A_adp
+        alpha = torch.sigmoid(self.log_alpha)
+        A = alpha * self.A_phys + (1.0 - alpha) * A_adp
         out = h
         for _ in range(self.K):
             out = torch.einsum("ij,bjd->bid", A, out)
@@ -755,8 +872,12 @@ class GraphPropagation(nn.Module):
         return self.norm(out + h)
 
 class TemporalAttention(nn.Module):
-    """Multi-head attention over the time dimension of per-station sequences."""
-    def __init__(self, d_model: int, n_heads: int = 4, dropout: float = 0.1):
+    """Multi-head self-attention over the time dimension of per-station sequences.
+
+    Applied independently per station.  After attention, mean pooling over the
+    time dimension produces a fixed-size station representation.
+    """
+    def __init__(self, d_model: int, n_heads: int = 6, dropout: float = 0.1):
         super().__init__()
         self.attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout, batch_first=True)
         self.norm = nn.LayerNorm(d_model)
@@ -767,17 +888,34 @@ class TemporalAttention(nn.Module):
         return self.norm(attn_out + x)
 
 class DTSGSSF(nn.Module):
+    """Dual-Timescale Graph State-Space Forecasting model.
+
+    Paper defaults (Table 8):
+      d_model=192, horizon=4, K=3, lora_r=16, n_heads=6, dropout=0.1
+    """
+
     def __init__(self, N: int, F_in: int, n_series: int, n_agg: int, A_phys: np.ndarray,
                  d_model: int = 192, horizon: int = 4, K: int = 3, lora_r: int = 16, dropout: float = 0.1,
-                 n_heads: int = 4):
+                 n_heads: int = 6, alpha_phys: float = 0.6):
         super().__init__()
         self.horizon = horizon
         self.d_model = d_model
         self.ssm = GatedSSMBlock(F_in, d_model, dropout=dropout, lora_r=lora_r)
-        self.graph = GraphPropagation(N, d_model, A_phys=A_phys, K=K, alpha_phys=0.6, d_emb=16)
+        self.graph = GraphPropagation(N, d_model, A_phys=A_phys, K=K,
+                                      alpha_phys=alpha_phys, d_emb=16, learnable_alpha=True)
         self.attn = TemporalAttention(d_model, n_heads=n_heads, dropout=dropout)
-        self.fusion_proj = nn.Linear(d_model * 2, d_model)  # concatenation fusion
-        self.head_bottom = LoRALinear(d_model, horizon, r=lora_r, alpha=16.0, bias=True)
+        # Fusion: concatenation [h_graph; h_temp] -> projection -> d_model
+        self.fusion_proj = nn.Linear(d_model * 2, d_model)
+        # Prediction heads: 3-layer MLP for per-station forecasts
+        self.head_bottom = nn.Sequential(
+            nn.Linear(d_model, d_model * 2),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(d_model * 2, d_model),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(d_model, horizon),
+        )
         self.pool = nn.Sequential(nn.LayerNorm(d_model), nn.Linear(d_model, d_model), nn.GELU())
         self.head_agg = LoRALinear(d_model, horizon * n_agg, r=lora_r, alpha=16.0, bias=True)
         self.log_kappa = nn.Parameter(torch.tensor(math.log(8.0), dtype=torch.float32))
@@ -826,12 +964,17 @@ class DTSGSSF(nn.Module):
 # ----------------------------
 
 def nb_nll(y: torch.Tensor, mu: torch.Tensor, kappa: torch.Tensor, eps: float = 1e-8) -> torch.Tensor:
+    """Negative log-likelihood of the Negative Binomial distribution.
+
+    Clamps k+mu to avoid log(0) when both are small (review finding 14.7).
+    """
     y = torch.clamp(y, min=0.0)
     mu = torch.clamp(mu, min=eps)
     k = torch.clamp(kappa, min=eps)
+    k_plus_mu = torch.clamp(k + mu, min=eps)
     loglik = (torch.lgamma(y + k) - torch.lgamma(k) - torch.lgamma(y + 1.0)
-              + k * (torch.log(k) - torch.log(k + mu))
-              + y * (torch.log(mu) - torch.log(k + mu)))
+              + k * (torch.log(k) - torch.log(k_plus_mu))
+              + y * (torch.log(mu) - torch.log(k_plus_mu)))
     return -loglik
 
 def mae_np(a: np.ndarray, b: np.ndarray) -> float:
@@ -1029,10 +1172,11 @@ def train_offline(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
     model = DTSGSSF(
         N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
         d_model=int(mcfg.get("d_model", 192)), horizon=wcfg.horizon, K=int(mcfg.get("K", 3)),
-        lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1))
+        lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1)),
+        n_heads=int(mcfg.get("n_heads", 6))
     ).to(device)
 
-    opt = torch.optim.Adam(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
+    opt = torch.optim.AdamW(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
     
     # Learning rate scheduler with warmup + cosine annealing
     if tcfg.use_cosine_schedule:
@@ -1410,7 +1554,8 @@ def load_model_checkpoint(path: str, bundle: DataBundle, device: torch.device
     model = DTSGSSF(
         N=N, F_in=F_in, n_series=n_series, n_agg=n_series - N, A_phys=bundle.net.A_phys,
         d_model=int(mcfg.get("d_model", 192)), horizon=wcfg.horizon, K=int(mcfg.get("K", 3)),
-        lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1))
+        lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1)),
+        n_heads=int(mcfg.get("n_heads", 6))
     ).to(device)
     try:
         model.load_state_dict(state_dict)
@@ -1826,7 +1971,8 @@ def ui_app() -> None:
                 horizon=wcfg.horizon,
                 K=int(ckpt_config.get("K", 3)),
                 lora_r=int(ckpt_config.get("lora_r", 16)),
-                dropout=float(ckpt_config.get("dropout", 0.1))
+                dropout=float(ckpt_config.get("dropout", 0.1)),
+                n_heads=int(ckpt_config.get("n_heads", 6))
             ).to(dev)
 
             try:
@@ -1912,7 +2058,8 @@ def ui_app() -> None:
                                     horizon=wcfg.horizon,
                                     K=int(ckpt_config.get("K", 3)),
                                     lora_r=int(ckpt_config.get("lora_r", 16)),
-                                    dropout=float(ckpt_config.get("dropout", 0.1))
+                                    dropout=float(ckpt_config.get("dropout", 0.1)),
+                                    n_heads=int(ckpt_config.get("n_heads", 6))
                                 ).to(dev)
 
                                 try:
@@ -2064,9 +2211,9 @@ def ui_app() -> None:
                     st.caption("Longer training improves accuracy. Recommended: 30–50 epochs.")
                     epochs = st.slider("Epochs", 10, 80, 30)
                     batch_size = st.select_slider("Batch Size", options=[32, 64, 128], value=64)
-                    d_model = st.selectbox("Model Width (d_model)", [64, 96, 128], index=1)
-                    K = st.selectbox("Graph Hops (K)", [1, 2, 3], index=1)
-                    lora_r = st.selectbox("LoRA Rank", [4, 8, 16], index=1)
+                    d_model = st.selectbox("Model Width (d_model)", [64, 128, 192], index=2)
+                    K = st.selectbox("Graph Hops (K)", [1, 2, 3], index=2)
+                    lora_r = st.selectbox("LoRA Rank", [4, 8, 16], index=2)
                 
                 if st.button("Start Training", type="primary", use_container_width=True):
                     if not st.session_state.bundle:
@@ -2651,8 +2798,9 @@ def train_offline_streamlit(bundle: DataBundle, wcfg: WindowConfig, split: Split
 
     model = DTSGSSF(N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
                     d_model=int(mcfg.get("d_model", 192)), horizon=wcfg.horizon, K=int(mcfg.get("K", 3)),
-                    lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1))).to(device)
-    opt = torch.optim.Adam(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
+                    lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1)),
+                    n_heads=int(mcfg.get("n_heads", 6))).to(device)
+    opt = torch.optim.AdamW(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
 
     best_val = float("inf")
     best_state = None
@@ -2781,7 +2929,8 @@ def cli_main(args: argparse.Namespace) -> None:
             horizon=wcfg.horizon,
             K=int(ckpt_config.get("K", args.K)),
             lora_r=int(ckpt_config.get("lora_r", args.lora_r)),
-            dropout=float(ckpt_config.get("dropout", 0.1))
+            dropout=float(ckpt_config.get("dropout", 0.1)),
+            n_heads=int(ckpt_config.get("n_heads", 6))
         ).to(dev)
 
         try:

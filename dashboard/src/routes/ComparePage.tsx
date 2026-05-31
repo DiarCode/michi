@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useStations } from "@/hooks/useStations";
 import { fetchForecastCompare } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ChartSkeleton } from "@/components/ui/skeleton";
 
 const MODEL_COLORS: Record<string, string> = {
   "DTS-GSSF": "#3b82f6",
@@ -17,11 +18,13 @@ export default function ComparePage() {
   const stations = data?.stations ?? [];
   const [stationId, setStationId] = useState<string>("");
 
-  const { data: compare } = useQuery({
+  const { data: compare, isLoading } = useQuery({
     queryKey: ["forecast-compare", stationId],
     queryFn: () => fetchForecastCompare(stationId || undefined),
     enabled: true,
   });
+
+  if (isLoading) return <div className="p-6 space-y-6"><ChartSkeleton /></div>;
 
   const models = compare?.models ?? [];
   const hours = models.length > 0 ? models[0].forecast.map((f) => f.hour) : [];
@@ -67,7 +70,7 @@ export default function ComparePage() {
                         <td className="text-right py-2 font-mono">{m.mae}</td>
                         <td className="text-right py-2 font-mono">{m.rmse}</td>
                         <td className="text-right py-2">
-                          <span className={`px-2 py-0.5 rounded text-xs font-bold ${i === 0 ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300"}`}>
+                          <span className={`px-2 py-0.5 rounded text-xs font-bold ${i === 0 ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300" : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300"}`}>
                             #{i + 1}
                           </span>
                         </td>

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import { showToast } from "@/lib/toast";
+import { TableSkeleton } from "@/components/ui/skeleton";
 
 interface ScheduleEntry {
   stop_id: string;
@@ -40,11 +42,11 @@ export default function Timetable() {
     setLoading(true);
     api.get("/routes/" + selectedRoute + "/schedule")
       .then(({ data }) => setSchedule(data))
-      .catch(() => setSchedule(null))
+      .catch((err) => { showToast.error(`Failed to load schedule: ${err.message}`); setSchedule(null); })
       .finally(() => setLoading(false));
   }, [selectedRoute]);
 
-  if (routes.length === 0) return <div className="p-6">Loading routes...</div>;
+  if (routes.length === 0) return <div className="p-6"><TableSkeleton rows={5} /></div>;
 
   const filteredSchedule = schedule
     ? filterHour < 0

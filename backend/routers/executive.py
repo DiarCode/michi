@@ -4,14 +4,14 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
-from backend.database import get_db
+from backend.database import get_db_session
 from backend.models_orm import StationORM, RouteORM, AlertORM, RidershipORM, InterventionORM, PredictionAccuracyORM
 
 router = APIRouter()
 
 
 @router.get("/kpis")
-def get_executive_kpis(db: Session = Depends(get_db)):
+def get_executive_kpis(db: Session = Depends(get_db_session)):
     """High-level KPIs for executive dashboard."""
     total_stations = db.query(StationORM).count()
     active_routes = db.query(RouteORM).count()
@@ -41,12 +41,12 @@ def get_executive_kpis(db: Session = Depends(get_db)):
         "completed_interventions": completed_interventions,
         "prediction_accuracy_mape": round(avg_mape, 1) if avg_mape else None,
         "overcrowding_prevented": completed_interventions * 150,  # estimate
-        "on_time_performance": 94.2,
+        "on_time_performance": round(max(0.0, 100.0 - float(avg_mape)), 1) if avg_mape else 0.0,
     }
 
 
 @router.get("/trends")
-def get_executive_trends(days: int = Query(30, le=90), db: Session = Depends(get_db)):
+def get_executive_trends(days: int = Query(30, le=90), db: Session = Depends(get_db_session)):
     """Daily trends for executive dashboard."""
     cutoff = datetime.now(timezone.utc) - timedelta(days=days)
     ridership = db.query(RidershipORM).filter(RidershipORM.timestamp >= cutoff).all()
@@ -66,7 +66,7 @@ def get_executive_trends(days: int = Query(30, le=90), db: Session = Depends(get
 
 
 @router.get("/roi")
-def get_roi_summary(db: Session = Depends(get_db)):
+def get_roi_summary(db: Session = Depends(get_db_session)):
     """ROI summary for executive dashboard."""
     total_interventions = db.query(InterventionORM).count()
     completed = db.query(InterventionORM).filter(InterventionORM.status == "completed").count()

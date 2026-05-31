@@ -80,7 +80,7 @@ def run_multi_seed(
     config_overrides: Optional[Dict] = None,
 ) -> Path:
     """Run multi-seed evaluation and compute aggregate statistics."""
-    from main import load_dataset_csv
+    from main import load_bundle_pickle, generate_astana_data, DataGenConfig, build_astana_network
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -88,11 +88,17 @@ def run_multi_seed(
     device = torch.device("cuda" if gpu and torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
 
-    # Load data
-    bundle = load_dataset_csv(str(PROJECT_ROOT / "data"))
+    # Load data: try pickle first, then generate from scratch
+    bundle_path = str(PROJECT_ROOT / "data" / "bundle.pkl")
+    bundle = load_bundle_pickle(bundle_path)
     if bundle is None:
-        print("ERROR: Could not load dataset. Ensure data/ directory exists with CSV files.")
-        sys.exit(1)
+        print("No pickle found. Generating dataset from scratch...")
+        cfg = DataGenConfig()
+        net = build_astana_network(cfg)
+        bundle = generate_astana_data(cfg, net)
+        print(f"Dataset generated: X={bundle.X.shape}")
+    else:
+        print(f"Dataset loaded from pickle: X={bundle.X.shape}")
 
     # Paper-aligned configuration
     wcfg = WindowConfig()
@@ -103,6 +109,7 @@ def run_multi_seed(
         "horizon": 4,
         "K": 3,
         "lora_r": 16,
+        "n_heads": 6,
         "dropout": 0.1,
     }
 

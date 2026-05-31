@@ -42,20 +42,43 @@ def save_seed_results(
     return path
 
 
-def aggregate_results(results: List[Dict[str, float]]) -> Dict[str, Any]:
-    """Compute mean, std, and statistical tests across seeds."""
-    metrics = list(results[0].keys())
+def aggregate_results(results: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Compute mean, std, and statistical tests across seeds.
+
+    Handles both flat dicts {metric: float} and nested dicts
+    {metric: float, "metrics": {sub_metric: float}, ...}.
+    Only numeric (float/int) top-level keys and nested "metrics" keys
+    are aggregated; other keys are preserved as-is.
+    """
+    # Flatten: if a result has a "metrics" sub-dict, merge its values
+    flat_results = []
+    for r in results:
+        flat = {}
+        for k, v in r.items():
+            if k == "metrics" and isinstance(v, dict):
+                flat.update(v)
+            elif isinstance(v, (int, float, np.integer, np.floating)):
+                flat[k] = float(v)
+            # skip non-numeric top-level keys like "config", "elapsed_seconds"
+        flat_results.append(flat)
+
+    if not flat_results or not flat_results[0]:
+        return {"_raw": results}
+
+    metrics = list(flat_results[0].keys())
     agg = {}
 
     for metric in metrics:
-        values = [r[metric] for r in results]
-        arr = np.array(values)
+        values = [r.get(metric) for r in flat_results if metric in r and r[metric] is not None]
+        if not values:
+            continue
+        arr = np.array(values, dtype=float)
         agg[metric] = {
             "mean": float(arr.mean()),
-            "std": float(arr.std(ddof=1)),
+            "std": float(arr.std(ddof=max(1, len(arr) - 1))) if len(arr) > 1 else 0.0,
             "min": float(arr.min()),
             "max": float(arr.max()),
-            "values": values,
+            "values": [float(v) for v in values],
         }
 
     agg["_raw"] = results

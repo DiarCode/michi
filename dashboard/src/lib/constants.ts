@@ -12,3 +12,6 @@ export const RIDERSHIP_MID = 2000;
 // Peak hours for load calculation
 export const MORNING_PEAK = [7, 9] as const;
 export const EVENING_PEAK = [17, 19] as const;
+
+// Canonical route IDs used by seed data
+export const SEED_ROUTE_IDS = ["R12", "R18", "R25", "R31", "R40"] as const;

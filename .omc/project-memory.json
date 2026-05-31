@@ -1,0 +1,30 @@
+{
+  "build": "uv sync && .venv/Scripts/python -m pytest",
+  "conventions": {
+    "architecture": "3-layer MLP head (192→384→192→horizon), nn.MultiheadAttention, concatenation fusion, learnable alpha",
+    "model_defaults": "d_model=192, horizon=4, K=3, lora_r=16, n_heads=6, alpha_phys=0.6 (learnable)",
+    "normalization": "Z-score on X only, y untransformed (NB likelihood requires non-negative integers)",
+    "optimizer": "AdamW (not Adam)"
+  },
+  "lint": "ruff check .",
+  "notes": [
+    "Paper thesis (memoir class) with 6 chapters",
+    "EXPO-2017 Astana (not EXPO-2025)",
+    "Figures must be generated from research_output/ via generate_figures.py (tmp_gen_figs.py deleted)",
+    "Metr-LA pipeline at data/metr_la.py",
+    "All hyperparameters now aligned between code and paper (Table 8)"
+  ],
+  "structure": "backend/ml/model.py = canonical DTSGSSF, main.py = Streamlit app with DTSGSSF copy (now aligned), data/train_model.py = production trainer",
+  "techStack": [
+    "Python",
+    "PyTorch",
+    "FastAPI",
+    "Streamlit",
+    "React/TypeScript",
+    "LaTeX"
+  ],
+  "test": ".venv/Scripts/python -m pytest tests/",
+  "version": "1.0.0",
+  "lastScanned": 1780175475426,
+  "projectRoot": "C:/Users/begis/development/michi"
+}

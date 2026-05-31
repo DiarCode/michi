@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchExecutiveKPIs, fetchExecutiveTrends, fetchROISummary } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { BarChart3, AlertTriangle, TrendingUp, DollarSign, Target, Clock } from "lucide-react";
+import { GridSkeleton } from "@/components/ui/skeleton";
 
 export default function ExecutivePage() {
   const { data: kpis, isLoading: loadingKpis } = useQuery({
@@ -31,7 +32,7 @@ export default function ExecutivePage() {
       </div>
 
       {loadingKpis ? (
-        <p className="text-gray-400">Loading...</p>
+        <GridSkeleton />
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
+import { showToast } from "@/lib/toast";
 
 interface OperationsReport {
   date: string;
@@ -42,7 +43,7 @@ export default function Reports() {
       a.download = `operations_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
       URL.revokeObjectURL(url);
-    } catch {}
+    } catch (err: any) { showToast.error(`CSV export failed: ${err.message}`); }
   };
 
   const loadColor = (pct: number) =>

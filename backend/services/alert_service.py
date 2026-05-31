@@ -1,18 +1,10 @@
-"""Alert service - manages transit alerts with auto-generation from thresholds."""
+"""Alert service - manages transit alerts with DB-backed storage and auto-generation from thresholds."""
 from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any
 
-ALERTS = [
-    {"id": 1, "severity": "high", "title": "High demand at Bayterek",
-     "message": "Ridership 35% above forecast during 08:00-09:00.", "station_id": "S003",
-     "created_at": datetime.now(timezone.utc).isoformat(), "auto": False},
-    {"id": 2, "severity": "medium", "title": "Route 25 delay",
-     "message": "Average delay 8 minutes due to roadworks on Turan Ave.", "route_id": "R3",
-     "created_at": datetime.now(timezone.utc).isoformat(), "auto": False},
-    {"id": 3, "severity": "low", "title": "Weekend schedule change",
-     "message": "Route 40 frequency reduced on Sundays.", "route_id": "R5",
-     "created_at": datetime.now(timezone.utc).isoformat(), "auto": False},
-]
+from sqlalchemy.orm import Session
+
+from backend.models_orm import AlertORM
 
 ALERT_RULES: List[Dict[str, Any]] = [
     {"id": "rule_capacity_85", "metric": "station_capacity", "threshold": 85, "severity": "warning",
@@ -29,27 +21,64 @@ ALERT_RULES: List[Dict[str, Any]] = [
      "message_template": "Predicted ridership at {station} is {value}% above normal within 2h."},
 ]
 
-_acked: set = set()
-_next_id = 100
 
-
-def list_alerts(severity: Optional[str] = None, active_only: bool = True) -> List[dict]:
-    result = ALERTS
+def list_alerts(db: Session, severity: Optional[str] = None, active_only: bool = True) -> List[dict]:
+    """List alerts from the database, optionally filtered by severity or active status."""
+    query = db.query(AlertORM).order_by(AlertORM.created_at.desc())
     if severity:
-        result = [a for a in result if a["severity"] == severity]
+        query = query.filter(AlertORM.severity == severity)
     if active_only:
-        result = [a for a in result if a["id"] not in _acked]
-    return [{**a, "acknowledged": a["id"] in _acked} for a in result]
+        query = query.filter(AlertORM.acknowledged == False)
+
+    alerts = query.all()
+    return [
+        {
+            "id": a.id,
+            "severity": a.severity,
+            "title": a.title,
+            "message": a.message or "",
+            "station_id": a.station_id,
+            "route_id": a.route_id,
+            "created_at": a.created_at.isoformat() if a.created_at else "",
+            "acknowledged": a.acknowledged or False,
+            "auto": a.family == "auto",
+            "rule_id": a.what,
+        }
+        for a in alerts
+    ]
 
 
-def ack_alert(alert_id: int) -> bool:
-    _acked.add(alert_id)
+def get_alert(db: Session, alert_id: int) -> Optional[dict]:
+    """Get a single alert by ID from the database."""
+    alert = db.query(AlertORM).filter(AlertORM.id == alert_id).first()
+    if not alert:
+        return None
+    return {
+        "id": alert.id,
+        "severity": alert.severity,
+        "title": alert.title,
+        "message": alert.message or "",
+        "station_id": alert.station_id,
+        "route_id": alert.route_id,
+        "created_at": alert.created_at.isoformat() if alert.created_at else "",
+        "acknowledged": alert.acknowledged or False,
+        "auto": alert.family == "auto",
+        "rule_id": alert.what,
+    }
+
+
+def ack_alert(db: Session, alert_id: int) -> bool:
+    """Acknowledge an alert by setting its acknowledged flag in the database."""
+    alert = db.query(AlertORM).filter(AlertORM.id == alert_id).first()
+    if not alert:
+        return False
+    alert.acknowledged = True
+    db.commit()
     return True
 
 
-def generate_auto_alerts(stations: List[dict], forecasts: Optional[Dict[str, List[dict]]] = None) -> List[dict]:
+def generate_auto_alerts(db: Session, stations: List[dict], forecasts: Optional[Dict[str, List[dict]]] = None) -> List[dict]:
     """Auto-generate alerts from threshold rules based on current station data."""
-    global _next_id
     new_alerts = []
     for station in stations:
         rid = station.get("ridership_24h", 0) or 0
@@ -59,21 +88,32 @@ def generate_auto_alerts(stations: List[dict], forecasts: Optional[Dict[str, Lis
 
         for rule in ALERT_RULES:
             if rule["metric"] == "station_capacity" and load_pct >= rule["threshold"]:
-                existing = any(a.get("station_id") == station["id"] and a.get("severity") == rule["severity"] for a in ALERTS)
+                existing = db.query(AlertORM).filter(
+                    AlertORM.station_id == station.get("id", station.get("stop_id", "")),
+                    AlertORM.severity == rule["severity"],
+                ).first()
                 if not existing:
-                    alert = {
-                        "id": _next_id,
-                        "severity": rule["severity"],
-                        "title": rule["title_template"].format(station=station.get("name", station["id"])),
-                        "message": rule["message_template"].format(station=station.get("name", station["id"]), value=load_pct),
-                        "station_id": station["id"],
-                        "created_at": datetime.now(timezone.utc).isoformat(),
+                    alert = AlertORM(
+                        severity=rule["severity"],
+                        title=rule["title_template"].format(station=station.get("name", station.get("id", station.get("stop_id", "")))),
+                        message=rule["message_template"].format(station=station.get("name", station.get("id", station.get("stop_id", ""))), value=load_pct),
+                        station_id=station.get("id", station.get("stop_id", "")),
+                        created_at=datetime.now(timezone.utc),
+                        family="auto",
+                        what=rule["id"],
+                    )
+                    db.add(alert)
+                    db.flush()
+                    new_alerts.append({
+                        "id": alert.id,
+                        "severity": alert.severity,
+                        "title": alert.title,
+                        "message": alert.message,
+                        "station_id": alert.station_id,
+                        "created_at": alert.created_at.isoformat(),
                         "auto": True,
                         "rule_id": rule["id"],
-                    }
-                    ALERTS.append(alert)
-                    new_alerts.append(alert)
-                    _next_id += 1
+                    })
 
     if forecasts:
         for sid, fc in forecasts.items():
@@ -85,22 +125,36 @@ def generate_auto_alerts(stations: List[dict], forecasts: Optional[Dict[str, Lis
             for f in fc[1:min(12, len(fc))]:
                 pct = (f.get("predicted", 0) / baseline) * 100
                 if pct >= 200:
-                    existing = any(a.get("station_id") == sid and "Forecast spike" in a.get("title", "") for a in ALERTS)
+                    existing = db.query(AlertORM).filter(
+                        AlertORM.station_id == sid,
+                        AlertORM.title.like("Forecast spike at%"),
+                    ).first()
                     if not existing:
-                        alert = {
-                            "id": _next_id,
-                            "severity": "info",
-                            "title": f"Forecast spike at {sid}",
-                            "message": f"Predicted ridership is {int(pct)}% above normal within 2h.",
-                            "station_id": sid,
-                            "created_at": datetime.now(timezone.utc).isoformat(),
+                        alert = AlertORM(
+                            severity="info",
+                            title=f"Forecast spike at {sid}",
+                            message=f"Predicted ridership is {int(pct)}% above normal within 2h.",
+                            station_id=sid,
+                            created_at=datetime.now(timezone.utc),
+                            family="auto",
+                            what="forecast_spike",
+                        )
+                        db.add(alert)
+                        db.flush()
+                        new_alerts.append({
+                            "id": alert.id,
+                            "severity": alert.severity,
+                            "title": alert.title,
+                            "message": alert.message,
+                            "station_id": alert.station_id,
+                            "created_at": alert.created_at.isoformat(),
                             "auto": True,
                             "rule_id": "forecast_spike",
-                        }
-                        ALERTS.append(alert)
-                        new_alerts.append(alert)
-                        _next_id += 1
+                        })
                     break
+
+    if new_alerts:
+        db.commit()
     return new_alerts
 
 

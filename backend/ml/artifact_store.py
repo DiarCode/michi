@@ -6,8 +6,8 @@ from pathlib import Path
 from typing import Dict, Optional
 
 import torch
+from sqlalchemy.orm import Session
 
-from backend.database import SessionLocal
 from backend.models_orm import ModelArtifactORM
 
 ARTIFACTS_DIR = Path(__file__).parent.parent.parent / "artifacts"
@@ -15,6 +15,7 @@ ARTIFACTS_DIR.mkdir(exist_ok=True)
 
 
 def save_artifact(
+    db: Session,
     model_state: dict,
     metrics: Dict[str, float],
     config: Dict,
@@ -28,78 +29,58 @@ def save_artifact(
     path = ARTIFACTS_DIR / f"{version}.pt"
     torch.save({"model_state_dict": model_state, "version": version, "config": config}, str(path))
 
-    session = SessionLocal()
-    try:
-        artifact = ModelArtifactORM(
-            version=version,
-            artifact_path=str(path),
-            metrics_json=json.dumps(metrics),
-            training_config_json=json.dumps(config),
-            dataset_hash=dataset_hash,
-            feature_version=feature_version,
-            created_at=datetime.now(timezone.utc),
-            is_production=is_production,
-            is_shadow=is_shadow,
-        )
-        session.add(artifact)
-        session.commit()
-        session.refresh(artifact)
-        return artifact
-    finally:
-        session.close()
+    artifact = ModelArtifactORM(
+        version=version,
+        artifact_path=str(path),
+        metrics_json=json.dumps(metrics),
+        training_config_json=json.dumps(config),
+        dataset_hash=dataset_hash,
+        feature_version=feature_version,
+        created_at=datetime.now(timezone.utc),
+        is_production=is_production,
+        is_shadow=is_shadow,
+    )
+    db.add(artifact)
+    db.commit()
+    db.refresh(artifact)
+    return artifact
 
 
-def get_production_artifact() -> Optional[ModelArtifactORM]:
+def get_production_artifact(db: Session) -> Optional[ModelArtifactORM]:
     """Get the current production model artifact."""
-    session = SessionLocal()
-    try:
-        return (session.query(ModelArtifactORM)
-                .filter(ModelArtifactORM.is_production == True)
-                .order_by(ModelArtifactORM.created_at.desc())
-                .first())
-    finally:
-        session.close()
+    return (db.query(ModelArtifactORM)
+            .filter(ModelArtifactORM.is_production == True)
+            .order_by(ModelArtifactORM.created_at.desc())
+            .first())
 
 
-def get_shadow_artifact() -> Optional[ModelArtifactORM]:
+def get_shadow_artifact(db: Session) -> Optional[ModelArtifactORM]:
     """Get the current shadow (challenger) model artifact."""
-    session = SessionLocal()
-    try:
-        return (session.query(ModelArtifactORM)
-                .filter(ModelArtifactORM.is_shadow == True)
-                .order_by(ModelArtifactORM.created_at.desc())
-                .first())
-    finally:
-        session.close()
+    return (db.query(ModelArtifactORM)
+            .filter(ModelArtifactORM.is_shadow == True)
+            .order_by(ModelArtifactORM.created_at.desc())
+            .first())
 
 
-def promote_shadow_to_production(shadow_version: str) -> Optional[ModelArtifactORM]:
+def promote_shadow_to_production(db: Session, shadow_version: str) -> Optional[ModelArtifactORM]:
     """Promote a shadow model to production, demoting current production."""
-    session = SessionLocal()
-    try:
-        # Demote current production
-        current_prod = (session.query(ModelArtifactORM)
-                       .filter(ModelArtifactORM.is_production == True).all())
-        for a in current_prod:
-            a.is_production = False
-        # Promote shadow
-        shadow = (session.query(ModelArtifactORM)
-                 .filter(ModelArtifactORM.version == shadow_version).first())
-        if shadow:
-            shadow.is_shadow = False
-            shadow.is_production = True
-        session.commit()
-        return shadow
-    finally:
-        session.close()
+    # Demote current production
+    current_prod = (db.query(ModelArtifactORM)
+                   .filter(ModelArtifactORM.is_production == True).all())
+    for a in current_prod:
+        a.is_production = False
+    # Promote shadow
+    shadow = (db.query(ModelArtifactORM)
+             .filter(ModelArtifactORM.version == shadow_version).first())
+    if shadow:
+        shadow.is_shadow = False
+        shadow.is_production = True
+    db.commit()
+    return shadow
 
 
-def list_artifacts(limit: int = 20) -> list:
+def list_artifacts(db: Session, limit: int = 20) -> list:
     """List recent model artifacts."""
-    session = SessionLocal()
-    try:
-        return (session.query(ModelArtifactORM)
-                .order_by(ModelArtifactORM.created_at.desc())
-                .limit(limit).all())
-    finally:
-        session.close()
+    return (db.query(ModelArtifactORM)
+            .order_by(ModelArtifactORM.created_at.desc())
+            .limit(limit).all())

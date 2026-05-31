@@ -11,7 +11,7 @@ This chapter discusses the implications of our findings, identifies the limitati
 \section{Summary of Findings}
 \label{sec:findings}
 
-Our experiments demonstrate that DTS-GSSF achieves the best performance among all evaluated methods on our benchmark for the synthetic Astana bus network dataset, with an $R^2$ of 0.889 and MAE of 2.43 passengers per station-hour. Three architectural choices emerged as particularly important:
+Our experiments demonstrate that DTS-GSSF achieves the best performance among all evaluated methods on our benchmark for the synthetic Astana bus network dataset, with an $R^2$ of $0.978 \pm 0.001$ and MAE of $11.65 \pm 0.14$ passengers per station-hour (all 42 series). On bottom-level stations alone, DTS-GSSF achieves $R^2 = 0.692$, comparable to neural baselines, confirming that the model's primary advantage lies in its coherent hierarchical forecast structure. Three architectural choices emerged as particularly important:
 
 \begin{enumerate}
     \item \textbf{Gated Recurrent Temporal Modelling}: The gated recurrent encoder provides stable gradient propagation across the 72-hour context window, avoiding the vanishing-gradient problems that plague deep LSTMs and the quadratic complexity of full self-attention.
@@ -26,9 +26,9 @@ These findings are consistent with the broader literature on spatiotemporal fore
 
 Several limitations of this study must be acknowledged:
 
-\textbf{Synthetic Data}: The primary evaluation was conducted on synthetic data generated from OpenStreetMap topology and heuristic demand simulation. While the simulation incorporates realistic factors (weather, holidays, events, cyclical patterns) and the cross-dataset evaluation on METR-LA (Section~\ref{sec:metr_la}) confirms generalisation to real-world traffic data, performance on real-world ridership logs from the Astana transit operator may differ. Real ridership data may contain unmodelled noise sources such as fare evasion, GPS drift, and irregular vehicle dispatching. Collaboration with the Astana municipal transit authority to obtain Automatic Passenger Counting (APC) data remains a priority for future validation.
+\textbf{Synthetic Data}: The primary evaluation was conducted on synthetic data generated from OpenStreetMap topology and heuristic demand simulation. While the simulation incorporates realistic factors (weather, holidays, events, cyclical patterns), performance on real-world ridership logs from the Astana transit operator may differ. Real ridership data may contain unmodelled noise sources such as fare evasion, GPS drift, and irregular vehicle dispatching. Cross-dataset evaluation on real-world benchmarks and collaboration with the Astana municipal transit authority to obtain Automatic Passenger Counting (APC) data remain priorities for future validation.
 
-\textbf{Performance Ceiling}: The $R^2$ ceiling near 89\% suggests that a portion of variance is irreducible given the current feature set. This residual variance likely reflects unobserved special events, service disruptions, and stochastic individual behaviour.
+\textbf{Performance Ceiling}: The $R^2$ of 0.978 on the full hierarchy (0.69 on bottom-level stations) suggests that a substantial portion of bottom-level variance is irreducible given the current feature set. This residual variance likely reflects unobserved special events, service disruptions, and stochastic individual behaviour.
 
 \textbf{Scalability}: The temporal attention complexity of $O(N T^2 d)$ dominates at our configuration, and the graph propagation term $O(K N^2 d)$ may become a bottleneck for networks with thousands of stations. For the Astana network ($N = 374$, $T = 72$), both terms are tractable, but megacity networks with $N > 2{,}000$ or contexts exceeding $T = 200$ hours may require linear-attention approximations and graph clustering or sparse adaptive matrices.
 
@@ -57,7 +57,7 @@ Promising directions for future work include:
 
     \item \textbf{Causal Intervention Modelling}: Develop a counterfactual prediction framework to estimate the effect of service changes (route cancellations, frequency adjustments, new line openings) on passenger flows. This would require structural causal models or reinforcement learning approaches.
 
-    \item \textbf{Edge Deployment}: Leverage the compact 470K-parameter architecture for real-time inference at bus stops using edge devices (Raspberry Pi, NVIDIA Jetson). Quantization to INT8 could further reduce latency and power consumption.
+    \item \textbf{Edge Deployment}: Leverage the compact 542K-parameter architecture for real-time inference at bus stops using edge devices (Raspberry Pi, NVIDIA Jetson). Quantization to INT8 could further reduce latency and power consumption.
 
     \item \textbf{Real-World Validation}: Collaborate with the Astana municipal transit authority to evaluate the model on actual Automatic Passenger Counting (APC) data. This would provide the ground-truth validation necessary to confirm the synthetic results.
 

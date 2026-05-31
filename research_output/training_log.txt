@@ -1,0 +1,51 @@
+Device: cuda
+Data: X=(52560, 28, 14), y_all=(52560, 42)
+
+[Seed 00] Starting training on cuda...
+[Seed 00] Model: 542,366 params
+  [Seed 00] Epoch   1/30: train_loss=5280.7239 val_r2=0.8509 val_mae=25.2934 best_r2=0.8509
+  [Seed 00] Epoch  10/30: train_loss=155.0369 val_r2=0.9743 val_mae=12.3271 best_r2=0.9743
+  [Seed 00] Epoch  20/30: train_loss=147.5076 val_r2=0.9763 val_mae=11.8543 best_r2=0.9763
+  [Seed 00] Epoch  30/30: train_loss=138.2165 val_r2=0.9753 val_mae=12.0131 best_r2=0.9768
+[Seed 00] Done in 8465.1s — test_r2=0.9772 test_mae=11.7591
+
+[Seed 01] Starting training on cuda...
+[Seed 01] Model: 542,366 params
+  [Seed 01] Epoch   1/30: train_loss=5763.0978 val_r2=0.7123 val_mae=29.9119 best_r2=0.7123
+  [Seed 01] Epoch  10/30: train_loss=147.0344 val_r2=0.9737 val_mae=12.2225 best_r2=0.9756
+  [Seed 01] Epoch  20/30: train_loss=145.9649 val_r2=0.9751 val_mae=11.9081 best_r2=0.9764
+  [Seed 01] Epoch  30/30: train_loss=135.4783 val_r2=0.9774 val_mae=11.5897 best_r2=0.9774
+[Seed 01] Done in 8044.5s — test_r2=0.9779 test_mae=11.5590
+
+[Seed 02] Starting training on cuda...
+[Seed 02] Model: 542,366 params
+  [Seed 02] Epoch   1/30: train_loss=5157.8812 val_r2=0.8915 val_mae=23.6495 best_r2=0.8915
+  [Seed 02] Epoch  10/30: train_loss=155.8028 val_r2=0.9729 val_mae=12.5883 best_r2=0.9729
+  [Seed 02] Epoch  20/30: train_loss=148.5251 val_r2=0.9762 val_mae=11.9067 best_r2=0.9762
+  [Seed 02] Epoch  30/30: train_loss=137.4984 val_r2=0.9773 val_mae=11.6346 best_r2=0.9773
+[Seed 02] Done in 8034.3s — test_r2=0.9776 test_mae=11.6323
+
+[Seed 03] Starting training on cuda...
+[Seed 03] Model: 542,366 params
+  [Seed 03] Epoch   1/30: train_loss=5065.8611 val_r2=0.8808 val_mae=23.8545 best_r2=0.8808
+  [Seed 03] Epoch  10/30: train_loss=154.0005 val_r2=0.9718 val_mae=12.8698 best_r2=0.9730
+  [Seed 03] Epoch  20/30: train_loss=147.9477 val_r2=0.9749 val_mae=12.3433 best_r2=0.9752
+Traceback (most recent call last):
+  File "C:\Users\begis\development\michi\experiments\run_training.py", line 283, in <module>
+    "device": str(device),
+    ^^
+  File "C:\Users\begis\development\michi\experiments\run_training.py", line 262, in main
+    bundle = load_bundle_pickle(str(PROJECT_ROOT / "data" / "bundle.pkl"))
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\experiments\run_training.py", line 151, in run_seed
+    dl_val = torch.utils.data.DataLoader(ds_val, batch_size=tcfg.batch_size, shuffle=False)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\begis\development\michi\experiments\run_training.py", line 48, in train_one_epoch
+    total_loss += loss.item()
+                  ~~~~~~~~~^^
+torch.AcceleratorError: CUDA error: unknown error
+Search for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

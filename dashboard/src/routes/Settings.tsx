@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { ROLES, type Role } from "@/components/layout/RoleGuard";
+import type { UserRole } from "@/types";
+import { ROLE_LABELS } from "@/App";
 
 export default function Settings() {
-  const currentRole = localStorage.getItem("michi_role") || "Dispatch Manager";
+  const currentRole = (localStorage.getItem("michi-role") || "dispatch") as UserRole;
   const [dark, setDark] = useState(() => localStorage.getItem("michi_dark") === "true");
 
   useEffect(() => {
@@ -38,8 +39,8 @@ export default function Settings() {
       <Card>
         <CardHeader><CardTitle>Role Selection</CardTitle></CardHeader>
         <CardContent>
-          <select className="w-full border rounded px-3 py-2" value={currentRole} onChange={(e) => { localStorage.setItem("michi_role", e.target.value); window.location.reload(); }}>
-            {ROLES.map((r: Role) => <option key={r} value={r}>{r}</option>)}
+          <select className="w-full border rounded px-3 py-2" value={currentRole} onChange={(e) => { localStorage.setItem("michi-role", e.target.value); window.location.reload(); }}>
+            {(Object.entries(ROLE_LABELS) as [UserRole, string][]).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
           <p className="text-xs text-gray-500 mt-2">Changing role will reload the page.</p>
         </CardContent>

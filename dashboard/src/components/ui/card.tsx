@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 interface CardProps { children: ReactNode; className?: string }
 export function Card({ children, className = "" }: CardProps) {
-  return <div className={`rounded-xl border bg-white shadow-sm ${className}`}>{children}</div>;
+  return <div className={`rounded-xl border bg-white dark:bg-gray-800 shadow-sm ${className}`}>{children}</div>;
 }
 export function CardHeader({ children, className = "" }: CardProps) {
   return <div className={`p-4 pb-2 ${className}`}>{children}</div>;

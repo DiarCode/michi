@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchNetworkGraph } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { GitGraph, MapPin, Route } from "lucide-react";
+import { GridSkeleton, ChartSkeleton } from "@/components/ui/skeleton";
 
 export default function NetworkPage() {
   const { data: graph, isLoading } = useQuery({ queryKey: ["network-graph"], queryFn: fetchNetworkGraph });
 
-  if (isLoading) return <div className="p-6 text-gray-500 dark:text-gray-400">Loading network data...</div>;
+  if (isLoading) return <div className="p-6 space-y-6"><GridSkeleton /><ChartSkeleton /></div>;
 
   const nodes = graph?.nodes ?? [];
   const edges = graph?.edges ?? [];

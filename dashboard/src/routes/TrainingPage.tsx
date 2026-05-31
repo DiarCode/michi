@@ -36,7 +36,7 @@ export default function TrainingPage() {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold capitalize">{status?.status ?? "—"}</p>
-            <p className="text-xs text-gray-500 mt-1">{status?.model_version ?? "—"}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{status?.model_version ?? "—"}</p>
           </CardContent>
         </Card>
 
@@ -61,15 +61,15 @@ export default function TrainingPage() {
           <CardContent>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-xs text-gray-500 uppercase">MAE</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">MAE</p>
                 <p className="text-xl font-bold">{status.metrics.mae}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase">RMSE</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">RMSE</p>
                 <p className="text-xl font-bold">{status.metrics.rmse}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase">MAPE</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">MAPE</p>
                 <p className="text-xl font-bold">{status.metrics.mape}%</p>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function TrainingPage() {
               <input type="range" min={1} max={500} value={epochs} onChange={(e) => setEpochs(Number(e.target.value))} className="w-full" />
               <div className="flex justify-between text-xs text-gray-400"><span>1</span><span>500</span></div>
             </div>
-            <p className="text-xs text-gray-500">Estimated time: {epochs * 7}s (~{Math.round(epochs * 7 / 60)}min)</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Estimated time: {epochs * 7}s (~{Math.round(epochs * 7 / 60)}min)</p>
             <Button onClick={() => trainMut.mutate()} disabled={trainMut.isPending} className="w-full">
               <Play className="h-4 w-4 mr-2" />
               {trainMut.isPending ? "Starting..." : "Start Training"}
@@ -106,7 +106,7 @@ export default function TrainingPage() {
             <input
               type="file" accept=".csv"
               onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:bg-blue-50 dark:file:bg-blue-900/30 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/50"
             />
             <Button onClick={() => uploadMut.mutate()} disabled={!file || uploadMut.isPending} className="w-full">
               <Upload className="h-4 w-4 mr-2" />

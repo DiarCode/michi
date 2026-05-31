@@ -1,9 +1,9 @@
 """Intervention workflow API endpoints."""
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from typing import List, Optional
+from typing import Optional
 
-from backend.database import get_db
+from backend.database import get_db_session
 from backend.models_orm import InterventionORM
 from backend.services.intervention_service import (
     create_intervention, list_interventions, get_intervention,
@@ -14,14 +14,14 @@ router = APIRouter()
 
 
 @router.get("/")
-def list_interventions_api(status: Optional[str] = None, limit: int = Query(50, le=200), db: Session = Depends(get_db)):
-    interventions = list_interventions(status=status, limit=limit)
+def list_interventions_api(status: Optional[str] = None, limit: int = Query(50, le=200), db: Session = Depends(get_db_session)):
+    interventions = list_interventions(db, status=status, limit=limit)
     return {"interventions": [_to_dict(i) for i in interventions]}
 
 
 @router.post("/")
-def create_intervention_api(alert_id: Optional[int] = None, intervention_type: str = ..., route_id: Optional[str] = None, station_id: Optional[str] = None):
-    intervention = create_intervention(alert_id, intervention_type, route_id, station_id)
+def create_intervention_api(alert_id: Optional[int] = None, intervention_type: str = ..., route_id: Optional[str] = None, station_id: Optional[str] = None, db: Session = Depends(get_db_session)):
+    intervention = create_intervention(db, alert_id, intervention_type, route_id, station_id)
     return _to_dict(intervention)
 
 
@@ -36,16 +36,16 @@ def simulate_api(intervention_type: str, route_id: Optional[str] = None, station
 
 
 @router.get("/{intervention_id}")
-def get_intervention_api(intervention_id: int):
-    intervention = get_intervention(intervention_id)
+def get_intervention_api(intervention_id: int, db: Session = Depends(get_db_session)):
+    intervention = get_intervention(db, intervention_id)
     if not intervention:
         return {"error": "Not found"}
     return _to_dict(intervention)
 
 
 @router.patch("/{intervention_id}")
-def update_status_api(intervention_id: int, status: str, approved_by: Optional[str] = None, operator_note: Optional[str] = None):
-    intervention = update_intervention_status(intervention_id, status, approved_by, operator_note)
+def update_status_api(intervention_id: int, status: str, approved_by: Optional[str] = None, operator_note: Optional[str] = None, db: Session = Depends(get_db_session)):
+    intervention = update_intervention_status(db, intervention_id, status, approved_by, operator_note)
     if not intervention:
         return {"error": "Not found"}
     return _to_dict(intervention)

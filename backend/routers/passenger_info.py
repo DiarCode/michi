@@ -4,7 +4,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
-from backend.database import get_db
+from backend.database import get_db_session
 from backend.models_orm import StationORM, RouteORM, AlertORM, ForecastORM
 from backend.services.forecast_service import get_kpi_metrics
 
@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.get("/crowding")
-def get_crowding_predictions(db: Session = Depends(get_db)):
+def get_crowding_predictions(db: Session = Depends(get_db_session)):
     """Get current and predicted crowding levels for all stations."""
     stations = db.query(StationORM).all()
     result = []
@@ -46,7 +46,7 @@ def get_crowding_predictions(db: Session = Depends(get_db)):
 
 
 @router.get("/service-changes")
-def get_service_changes(db: Session = Depends(get_db)):
+def get_service_changes(db: Session = Depends(get_db_session)):
     """Get approved service changes visible to passengers."""
     interventions = db.query(AlertORM).filter(
         AlertORM.severity.in_(["high", "critical"])

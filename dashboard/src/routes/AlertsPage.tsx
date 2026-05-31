@@ -1,28 +1,33 @@
 import { useState } from "react";
 import { useAlerts, useAckAlert } from "@/hooks/useAlerts";
 import { api } from "@/lib/api";
+import { showToast } from "@/lib/toast";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
+import { ListSkeleton } from "@/components/ui/skeleton";
 
 export default function AlertsPage() {
-  const { data } = useAlerts();
+  const { data, isLoading } = useAlerts();
   const ack = useAckAlert();
   const [severity, setSeverity] = useState<string>("all");
   const alerts = (data?.alerts ?? []) as Array<{ id: number; severity: string; title: string; message: string; auto?: boolean }>;
   const filtered = severity === "all" ? alerts : alerts.filter((a) => a.severity === severity);
 
   const generateAlerts = async () => {
-    try { await api.post("/alerts/generate"); } catch { /* alert generation is optional */ }
+    try { await api.post("/alerts/generate"); }
+    catch (err: any) { showToast.error(`Failed to generate alerts: ${err.message}`); }
   };
+
+  if (isLoading) return <div className="p-6"><ListSkeleton count={3} /></div>;
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">Alerts</h2>
         <div className="flex gap-2">
-          <select className="border rounded px-3 py-1.5 text-sm" value={severity} onChange={(e) => setSeverity(e.target.value)}>
+          <select className="border rounded px-3 py-1.5 text-sm dark:bg-gray-800 dark:border-gray-600" value={severity} onChange={(e) => setSeverity(e.target.value)}>
             <option value="all">All Severities</option>
             <option value="critical">Critical</option>
             <option value="high">High</option>
@@ -43,15 +48,15 @@ export default function AlertsPage() {
                 <div className="flex items-center gap-2">
                   <span className="font-semibold">{a.title}</span>
                   <Badge variant={a.severity === "high" || a.severity === "critical" ? "danger" : a.severity === "medium" || a.severity === "warning" ? "warning" : "default"}>{a.severity}</Badge>
-                  {a.auto && <span className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">AUTO</span>}
+                  {a.auto && <span className="text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-1.5 py-0.5 rounded">AUTO</span>}
                 </div>
-                <p className="text-sm text-gray-600">{a.message}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{a.message}</p>
               </div>
               <Button variant="outline" size="sm" onClick={() => ack.mutate(a.id)}>Acknowledge</Button>
             </CardContent>
           </Card>
         ))}
-        {filtered.length === 0 && <p className="text-gray-500">No active alerts.</p>}
+        {filtered.length === 0 && <p className="text-gray-500 dark:text-gray-400">No active alerts.</p>}
       </div>
     </div>
   );

@@ -103,7 +103,7 @@ def generate_suggestions(
         sid = pred["station_id"]
         station = station_map.get(sid, {})
         base = station.get("ridership_24h", 1500) / 24
-        if base > 0 and predicted < base * 0.5:
+        if base > 0 and pred["predicted"] < base * 0.5:
             low_routes.extend(_get_station_routes(sid, routes))
 
     high_demand_stations = set()

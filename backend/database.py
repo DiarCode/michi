@@ -15,7 +15,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-def get_db():
+def get_db_session():
+    """FastAPI dependency that provides a DB session and closes it after the request."""
     db = SessionLocal()
     try:
         yield db
@@ -23,14 +24,17 @@ def get_db():
         db.close()
 
 
+# Backward-compatible alias
+get_db = get_db_session
+
+
 def init_db():
-    """Create all tables and seed initial data."""
+    """Seed initial data. Alembic handles all table creation/migration."""
     # Import all ORM models so they register with Base.metadata
     from backend.models_orm import (  # noqa: F401
         StationORM, RouteORM, RouteStopORM, AlertORM, RidershipORM, ForecastORM,
         HistoricalRidershipORM, WeatherReadingORM, EventORM, InterventionORM,
         ModelArtifactORM, PredictionAccuracyORM,
     )
-    Base.metadata.create_all(bind=engine)
     from backend.seed import seed
     seed()

@@ -3,11 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchAnalyticsSummary, fetchAnalyticsTrends } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { TrendingUp, Users, Clock, MapPin } from "lucide-react";
+import { GridSkeleton, ChartSkeleton } from "@/components/ui/skeleton";
 
 export default function AnalyticsPage() {
   const [days, setDays] = useState(30);
-  const { data: summary } = useQuery({ queryKey: ["analytics-summary"], queryFn: fetchAnalyticsSummary });
+  const { data: summary, isLoading: loadingSummary } = useQuery({ queryKey: ["analytics-summary"], queryFn: fetchAnalyticsSummary });
   const { data: trends } = useQuery({ queryKey: ["analytics-trends", days], queryFn: () => fetchAnalyticsTrends(days) });
+
+  if (loadingSummary) return <div className="p-6 space-y-6"><GridSkeleton /><ChartSkeleton /></div>;
 
   const districts = summary?.ridership_by_district ?? {};
   const routes = summary?.route_performance ?? [];

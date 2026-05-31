@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any
 from backend.services.alert_service import list_alerts, ack_alert as ack, generate_auto_alerts, get_alert_rules, add_alert_rule
 from backend.services.forecast_service import get_forecast
 from backend.routers.stations import _get_stations
-from backend.database import get_db
+from backend.database import get_db_session
 from backend.models import AlertListResponse
 from backend.models_orm import AlertORM
 from sqlalchemy.orm import Session
@@ -19,11 +19,11 @@ class AlertRuleInput(BaseModel):
     message_template: str
 
 @router.get("", response_model=AlertListResponse)
-def get_alerts(severity: Optional[str] = None, active_only: bool = True):
-    return {"alerts": list_alerts(severity, active_only)}
+def get_alerts(severity: Optional[str] = None, active_only: bool = True, db: Session = Depends(get_db_session)):
+    return {"alerts": list_alerts(db, severity, active_only)}
 
 @router.get("/rich")
-def get_rich_alerts(db: Session = Depends(get_db)):
+def get_rich_alerts(db: Session = Depends(get_db_session)):
     """Return alerts with rich fields (family, what, why, etc.)."""
     alerts = db.query(AlertORM).order_by(AlertORM.created_at.desc()).limit(50).all()
     return {"alerts": [{
@@ -46,25 +46,25 @@ def get_rich_alerts(db: Session = Depends(get_db)):
     } for a in alerts]}
 
 @router.get("/active", response_model=AlertListResponse)
-def get_active_alerts():
-    return {"alerts": list_alerts(active_only=True)}
+def get_active_alerts(db: Session = Depends(get_db_session)):
+    return {"alerts": list_alerts(db, active_only=True)}
 
 @router.post("/{alert_id}/ack")
-def ack_alert(alert_id: int):
-    return {"acknowledged": ack(alert_id), "alert_id": alert_id}
+def ack_alert(alert_id: int, db: Session = Depends(get_db_session)):
+    return {"acknowledged": ack(db, alert_id), "alert_id": alert_id}
 
 @router.post("/generate")
-def trigger_auto_alerts(db: Session = Depends(get_db)):
+def trigger_auto_alerts(db: Session = Depends(get_db_session)):
     """Auto-generate alerts from threshold rules using current station data."""
     stations = _get_stations(db)
     forecasts = {}
     for s in stations[:12]:
         sid = s.get("id") or s.get("stop_id", "")
         try:
-            forecasts[sid] = get_forecast(sid)
+            forecasts[sid] = get_forecast(sid, db=db)
         except Exception:
             pass
-    new_alerts = generate_auto_alerts(stations, forecasts if forecasts else None)
+    new_alerts = generate_auto_alerts(db, stations, forecasts if forecasts else None)
     return {"generated": len(new_alerts), "alerts": new_alerts}
 
 @router.get("/rules")

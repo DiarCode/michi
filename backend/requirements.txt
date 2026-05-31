@@ -1,11 +1,34 @@
+# Backend dependencies — Michi Transit Intelligence API
+# Core framework
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
+
+# Database
 sqlalchemy>=2.0.0
 psycopg2-binary>=2.9.0
+alembic>=1.13.0
+
+# Task queue
+celery[redis]>=5.4.0
 redis>=5.0.0
-celery>=5.4.0
-pydantic>=2.10.0
+
+# WebSocket (fastapi handles natively, but explicit dep for client testing)
+websockets>=12.0
+
+# ML / scientific
 numpy>=2.4.1
 pandas>=2.3.3
 torch>=2.9.1
+scikit-learn>=1.4.0
+
+# Validation / serialization
+pydantic>=2.10.0
+
+# HTTP client (FastAPI TestClient dependency)
+httpx>=0.27.0
+
+# File upload support
+python-multipart>=0.0.9
+
+# General HTTP (used by some services)
 requests>=2.32.0

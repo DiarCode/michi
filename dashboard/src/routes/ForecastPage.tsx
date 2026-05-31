@@ -4,9 +4,14 @@ import { useStations } from "@/hooks/useStations";
 import { fetchStationDetail } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { TrendingUp } from "lucide-react";
+import ForecastChart from "@/components/dashboard/ForecastChart";
+import { CardSkeleton } from "@/components/ui/skeleton";
+import {
+  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend,
+} from "recharts";
 
 export default function ForecastPage() {
-  const { data } = useStations();
+  const { data, isLoading: loadingStations } = useStations();
   const stations = data?.stations ?? [];
   const [selectedStation, setSelectedStation] = useState<string>("");
 
@@ -16,9 +21,20 @@ export default function ForecastPage() {
     enabled: !!selectedStation,
   });
 
+  if (loadingStations) return <div className="p-6 space-y-6"><CardSkeleton /><CardSkeleton /></div>;
+
   const forecast = detail?.forecast ?? [];
   const hourlyRidership = detail?.hourly_ridership ?? [];
   const maxVal = Math.max(...forecast.map((f) => f.predicted), ...hourlyRidership.map((h) => h.ridership), 1);
+
+  const comparisonData = forecast.map((f) => {
+    const actual = hourlyRidership.find((h) => h.hour === new Date(f.timestamp).getHours());
+    return {
+      hour: new Date(f.timestamp).getHours(),
+      predicted: f.predicted,
+      actual: actual?.ridership ?? null,
+    };
+  });
 
   return (
     <div className="p-6 space-y-6">
@@ -78,32 +94,33 @@ export default function ForecastPage() {
             </Card>
           )}
 
-          {forecast.length > 0 && (
+          {selectedStation && (
+            <ForecastChart stationId={selectedStation} stationName={detail.station.name} />
+          )}
+
+          {comparisonData.length > 0 && (
             <Card>
               <CardHeader className="flex-row items-center justify-between">
                 <CardTitle>Forecast vs Actual</CardTitle>
-                <div className="flex gap-3 text-xs">
-                  <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-blue-500" /> Forecast</span>
-                  <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-emerald-400" /> Actual</span>
-                </div>
               </CardHeader>
               <CardContent>
-                <div className="flex items-end gap-1 h-48">
-                  {forecast.map((f, i) => {
-                    const actual = hourlyRidership.find((h) => h.hour === new Date(f.timestamp).getHours());
-                    return (
-                      <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
-                        <div className="w-full flex flex-col gap-0.5" style={{ height: "160px" }}>
-                          <div className="flex-1 flex items-end gap-0.5">
-                            <div className="flex-1 bg-blue-500 rounded-t" style={{ height: `${(f.predicted / maxVal) * 100}%`, minHeight: "2px" }} />
-                            {actual && <div className="flex-1 bg-emerald-400 rounded-t" style={{ height: `${(actual.ridership / maxVal) * 100}%`, minHeight: "2px" }} />}
-                          </div>
-                        </div>
-                        {i % 3 === 0 && <span className="text-[9px] text-gray-400">{new Date(f.timestamp).getHours()}</span>}
-                      </div>
-                    );
-                  })}
-                </div>
+                <ResponsiveContainer width="100%" height={280}>
+                  <LineChart data={comparisonData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="hour" tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 11 }} domain={[0, maxVal]} />
+                    <Tooltip
+                      formatter={(value: unknown, name: string) => [
+                        typeof value === "number" ? `${value} pax` : "N/A",
+                        name === "predicted" ? "Forecast" : "Actual",
+                      ]}
+                      labelFormatter={(label: number) => `${String(label).padStart(2, "0")}:00`}
+                    />
+                    <Legend formatter={(value: string) => (value === "predicted" ? "Forecast" : "Actual")} />
+                    <Line type="monotone" dataKey="predicted" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                    <Line type="monotone" dataKey="actual" stroke="#34d399" strokeWidth={2} dot={false} connectNulls />
+                  </LineChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           )}

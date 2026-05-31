@@ -111,8 +111,6 @@ def build_feature_tensor(
             if row:
                 y_data[t, n] = row.passengers_boarding
 
-    x_tensor = x_data.transpose(1, 0, 2)[np.newaxis, :, :, :]  # (1, N, T, F) -> needs reshape
-    # Reshape to (1, T, N, F) for model
     x_tensor = x_data[np.newaxis, :, :, :]  # (1, T, N, F)
     y_tensor = y_data[np.newaxis, :, :]  # (1, H, N)
 

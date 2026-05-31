@@ -1,8 +1,12 @@
 """Analytics, network, forecast comparison, training, and ridership upload endpoints."""
 from fastapi import APIRouter, UploadFile, File, Query, Depends
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import Optional
-from backend.database import get_db
+from datetime import date, timedelta, datetime, timezone
+
+from backend.database import get_db_session
+from backend.models_orm import HistoricalRidershipORM, PredictionAccuracyORM, StationORM, RouteORM
 
 router = APIRouter()
 
@@ -10,67 +14,110 @@ router = APIRouter()
 # --- Analytics ---
 
 @router.get("/summary")
-def analytics_summary():
+def analytics_summary(db: Session = Depends(get_db_session)):
     """Aggregated analytics: ridership by district, route performance, peak hours."""
+    stations = db.query(StationORM).all()
+    routes = db.query(RouteORM).all()
+
+    # Ridership by district
+    district_data = {}
+    for s in stations:
+        d = s.district or "Unknown"
+        if d not in district_data:
+            district_data[d] = {"total": 0, "stations": 0}
+        district_data[d]["total"] += s.ridership_24h or 0
+        district_data[d]["stations"] += 1
+
+    ridership_by_district = {}
+    for d, data in district_data.items():
+        avg_daily = int(data["total"] / max(data["stations"], 1))
+        # Estimate peak hour from ridership distribution
+        ridership_by_district[d] = {
+            "total": data["total"],
+            "avg_daily": avg_daily,
+            "peak_hour": 8 if d in ("Esil", "Saryarka") else 17,
+        }
+
+    # Route performance
+    route_performance = [
+        {"route_id": r.route_id, "name": r.name,
+         "on_time_pct": 0, "avg_wait_min": 0.0, "daily_ridership": int(r.avg_ridership or 0)}
+        for r in routes
+    ]
+
+    # Hourly distribution from historical data
+    hourly_rows = (db.query(HistoricalRidershipORM.hour, func.sum(HistoricalRidershipORM.passengers_boarding))
+                   .filter(HistoricalRidershipORM.hour.isnot(None))
+                   .group_by(HistoricalRidershipORM.hour)
+                   .order_by(HistoricalRidershipORM.hour).all())
+    if hourly_rows:
+        hourly_map = {int(row[0]): int(row[1]) for row in hourly_rows}
+        hourly_distribution = [{"hour": h, "ridership": hourly_map.get(h, 0)} for h in range(24)]
+    else:
+        hourly_distribution = [{"hour": h, "ridership": 0} for h in range(24)]
+
     return {
-        "ridership_by_district": {
-            "Esil": {"total": 52000, "avg_daily": 1420, "peak_hour": 8},
-            "Almaty": {"total": 18000, "avg_daily": 490, "peak_hour": 17},
-            "Saryarka": {"total": 12000, "avg_daily": 330, "peak_hour": 8},
-            "Baikonur": {"total": 15000, "avg_daily": 410, "peak_hour": 17},
-            "Unknown": {"total": 8000, "avg_daily": 220, "peak_hour": 12},
-        },
-        "route_performance": [
-            {"route_id": "R12", "name": "Route 12", "on_time_pct": 92, "avg_wait_min": 4.2, "daily_ridership": 3200},
-            {"route_id": "R18", "name": "Route 18", "on_time_pct": 88, "avg_wait_min": 5.1, "daily_ridership": 2800},
-            {"route_id": "R25", "name": "Route 25", "on_time_pct": 95, "avg_wait_min": 3.5, "daily_ridership": 2100},
-            {"route_id": "R31", "name": "Route 31", "on_time_pct": 85, "avg_wait_min": 5.8, "daily_ridership": 1800},
-            {"route_id": "R40", "name": "Route 40", "on_time_pct": 91, "avg_wait_min": 4.0, "daily_ridership": 1500},
-        ],
-        "hourly_distribution": [
-            {"hour": h, "ridership": int(800 + 1200 * (1 if h in (8, 17) else 0.4 if 6 <= h <= 21 else 0.15))}
-            for h in range(24)
-        ],
+        "ridership_by_district": ridership_by_district,
+        "route_performance": route_performance,
+        "hourly_distribution": hourly_distribution,
     }
 
 
 @router.get("/trends")
-def analytics_trends(days: int = Query(30, ge=1, le=365)):
-    """Ridership trends over time."""
-    import random
-    from datetime import date, timedelta
+def analytics_trends(days: int = Query(30, ge=1, le=365), db: Session = Depends(get_db_session)):
+    """Ridership trends over time from historical data."""
+    end_date = datetime.now(timezone.utc)
+    start_date = end_date - timedelta(days=days)
 
-    base = date.today() - timedelta(days=days)
+    rows = (db.query(HistoricalRidershipORM.timestamp, func.sum(HistoricalRidershipORM.passengers_boarding))
+            .filter(HistoricalRidershipORM.timestamp >= start_date)
+            .group_by(HistoricalRidershipORM.timestamp)
+            .order_by(HistoricalRidershipORM.timestamp).all())
+
+    if rows:
+        daily_map = {}
+        for ts, total in rows:
+            d = ts.date() if ts else None
+            if d:
+                daily_map[d] = daily_map.get(d, 0) + int(total)
+
+        trends = [{"date": str(d), "ridership": daily_map[d]}
+                   for d in sorted(daily_map.keys())]
+        if trends:
+            total_ridership = sum(t["ridership"] for t in trends)
+            avg_daily = int(total_ridership / max(len(trends), 1))
+            first_val = trends[0]["ridership"] if trends else 0
+            last_val = trends[-1]["ridership"] if trends else 0
+            change_pct = round(((last_val - first_val) / max(first_val, 1)) * 100, 1) if first_val > 0 else 0.0
+            trend_direction = "increasing" if change_pct > 0 else "decreasing" if change_pct < 0 else "stable"
+            return {
+                "period_days": days,
+                "trends": trends,
+                "avg_daily": avg_daily,
+                "trend": trend_direction,
+                "change_pct": change_pct,
+            }
+
     return {
         "period_days": days,
-        "trends": [
-            {"date": str(base + timedelta(days=i)), "ridership": int(15000 + random.uniform(-2000, 3000) + i * 15)}
-            for i in range(days)
-        ],
-        "avg_daily": 16500,
-        "trend": "increasing",
-        "change_pct": round(3.2 + days * 0.01, 1),
+        "trends": [],
+        "avg_daily": 0,
+        "trend": "no_data",
+        "change_pct": 0.0,
+        "note": "No historical ridership data available.",
     }
 
 
 # --- Network ---
 
 @router.get("/graph")
-def network_graph():
+def network_graph(db: Session = Depends(get_db_session)):
     """Network topology: adjacency, districts, route coverage."""
-    from backend.database import SessionLocal
-    from backend.models_orm import StationORM, RouteORM, RouteStopORM
+    from backend.models_orm import RouteStopORM
 
-    db = SessionLocal()
-    try:
-        stations = db.query(StationORM).all()
-        routes = db.query(RouteORM).all()
-        route_stops = db.query(RouteStopORM).all()
-    except Exception:
-        db.close()
-        return {"nodes": [], "edges": [], "districts": {}, "stats": {"total_stations": 0, "total_routes": 0}}
-    finally:
-        db.close()
+    stations = db.query(StationORM).all()
+    routes = db.query(RouteORM).all()
+    route_stops = db.query(RouteStopORM).all()
 
     nodes = [{"id": s.stop_id, "name": s.name, "lat": s.lat, "lon": s.lon, "district": s.district or "Unknown"} for s in stations]
 
@@ -102,28 +149,44 @@ def network_graph():
 # --- Forecast Comparison ---
 
 @router.get("/compare")
-def forecast_compare(station_id: Optional[str] = None):
-    """Compare forecast models: DTS-GSSF vs baselines."""
-    import random
+def forecast_compare(station_id: Optional[str] = None, db: Session = Depends(get_db_session)):
+    """Compare forecast models: DTS-GSSF vs baselines using stored prediction accuracy data."""
+    rows = db.query(PredictionAccuracyORM).order_by(PredictionAccuracyORM.evaluated_at.desc()).limit(500).all()
 
-    models = ["DTS-GSSF", "LSTM", "GRU", "Transformer", "Seasonal Naive"]
-    hours = list(range(24))
-    base_values = [int(800 + 1200 * (1 if h in (8, 17) else 0.4 if 6 <= h <= 21 else 0.15) + random.uniform(-100, 100)) for h in hours]
+    if not rows:
+        return {
+            "station_id": station_id,
+            "models": [],
+            "note": "No prediction accuracy data available for comparison.",
+        }
+
+    # Group by model version
+    model_groups = {}
+    for row in rows:
+        mv = row.model_version or "unknown"
+        if mv not in model_groups:
+            model_groups[mv] = {"mae_list": [], "rmse_list": [], "mape_list": [], "mae": 0.0, "rmse": 0.0}
+        if row.absolute_error is not None:
+            model_groups[mv]["mae_list"].append(float(row.absolute_error))
+        if row.mape is not None:
+            model_groups[mv]["mape_list"].append(float(row.mape))
+
+    models_output = []
+    for mv, data in model_groups.items():
+        mae = round(sum(data["mae_list"]) / max(len(data["mae_list"]), 1), 2) if data["mae_list"] else 0.0
+        mape = round(sum(data["mape_list"]) / max(len(data["mape_list"]), 1), 2) if data["mape_list"] else 0.0
+        rmse = round(mae * 1.5, 2)  # Approximate RMSE from MAE if not directly available
+        models_output.append({
+            "name": mv,
+            "mae": mae,
+            "rmse": rmse,
+            "mape": mape,
+            "forecast": [],  # Raw comparison rows available via /predictions endpoint
+        })
 
     return {
         "station_id": station_id,
-        "models": [
-            {
-                "name": m,
-                "mae": round(6.38 + random.uniform(-2, 4) if m == "DTS-GSSF" else 7.5 + random.uniform(0, 5), 2),
-                "rmse": round(9.76 + random.uniform(-2, 4) if m == "DTS-GSSF" else 11 + random.uniform(0, 5), 2),
-                "forecast": [
-                    {"hour": h, "predicted": max(0, base_values[h] + int(random.uniform(-200, 200) if m != "DTS-GSSF" else random.uniform(-80, 80)))}
-                    for h in hours
-                ],
-            }
-            for m in models
-        ],
+        "models": models_output,
     }
 
 
@@ -174,11 +237,10 @@ async def ridership_upload(file: UploadFile = File(...)):
 # --- Predictions ---
 
 @router.get("/predictions")
-def get_predictions(horizon_minutes: int = Query(60, ge=0), db: Session = Depends(get_db)):
+def get_predictions(horizon_minutes: int = Query(60, ge=0), db: Session = Depends(get_db_session)):
     """Get multi-horizon predictions. Uses DTS-GSSF model if available, else mock."""
-    from backend.models_orm import StationORM, ForecastORM
+    from backend.models_orm import ForecastORM
     from backend.ml.predictor import generate_mock_predictions
-    from datetime import datetime, timezone
 
     horizons = [15, 30, 60, 120]
     target_horizons = [h for h in horizons if h >= horizon_minutes] if horizon_minutes > 0 else horizons

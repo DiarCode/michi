@@ -2,7 +2,7 @@
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
-from backend.database import SessionLocal
+from sqlalchemy.orm import Session
 from backend.models_orm import InterventionORM, AlertORM
 
 
@@ -10,69 +10,53 @@ INTERVENTION_TYPES = ["dispatch", "short_turn", "hold", "deadhead", "passenger_i
 VALID_STATUSES = ["pending", "approved", "executing", "completed", "cancelled"]
 
 
-def create_intervention(alert_id: Optional[int], intervention_type: str, route_id: Optional[str],
+def create_intervention(db: Session, alert_id: Optional[int], intervention_type: str, route_id: Optional[str],
                         station_id: Optional[str], predicted_impact: Optional[Dict] = None) -> InterventionORM:
     if intervention_type not in INTERVENTION_TYPES:
         raise ValueError(f"Invalid intervention type: {intervention_type}")
-    session = SessionLocal()
-    try:
-        intervention = InterventionORM(
-            alert_id=alert_id,
-            intervention_type=intervention_type,
-            route_id=route_id,
-            station_id=station_id,
-            created_at=datetime.now(timezone.utc),
-            status="pending",
-            predicted_impact=str(predicted_impact) if predicted_impact else None,
-        )
-        session.add(intervention)
-        session.commit()
-        session.refresh(intervention)
-        return intervention
-    finally:
-        session.close()
+    intervention = InterventionORM(
+        alert_id=alert_id,
+        intervention_type=intervention_type,
+        route_id=route_id,
+        station_id=station_id,
+        created_at=datetime.now(timezone.utc),
+        status="pending",
+        predicted_impact=str(predicted_impact) if predicted_impact else None,
+    )
+    db.add(intervention)
+    db.commit()
+    db.refresh(intervention)
+    return intervention
 
 
-def list_interventions(status: Optional[str] = None, limit: int = 50) -> List[InterventionORM]:
-    session = SessionLocal()
-    try:
-        q = session.query(InterventionORM)
-        if status:
-            q = q.filter(InterventionORM.status == status)
-        return q.order_by(InterventionORM.created_at.desc()).limit(limit).all()
-    finally:
-        session.close()
+def list_interventions(db: Session, status: Optional[str] = None, limit: int = 50) -> List[InterventionORM]:
+    q = db.query(InterventionORM)
+    if status:
+        q = q.filter(InterventionORM.status == status)
+    return q.order_by(InterventionORM.created_at.desc()).limit(limit).all()
 
 
-def get_intervention(intervention_id: int) -> Optional[InterventionORM]:
-    session = SessionLocal()
-    try:
-        return session.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
-    finally:
-        session.close()
+def get_intervention(db: Session, intervention_id: int) -> Optional[InterventionORM]:
+    return db.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
 
 
-def update_intervention_status(intervention_id: int, status: str, approved_by: Optional[str] = None,
+def update_intervention_status(db: Session, intervention_id: int, status: str, approved_by: Optional[str] = None,
                                 operator_note: Optional[str] = None, actual_impact: Optional[Dict] = None) -> Optional[InterventionORM]:
     if status not in VALID_STATUSES:
         raise ValueError(f"Invalid status: {status}")
-    session = SessionLocal()
-    try:
-        intervention = session.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
-        if not intervention:
-            return None
-        intervention.status = status
-        if approved_by:
-            intervention.approved_by = approved_by
-        if operator_note:
-            intervention.operator_note = operator_note
-        if actual_impact:
-            intervention.actual_impact = str(actual_impact)
-        session.commit()
-        session.refresh(intervention)
-        return intervention
-    finally:
-        session.close()
+    intervention = db.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
+    if not intervention:
+        return None
+    intervention.status = status
+    if approved_by:
+        intervention.approved_by = approved_by
+    if operator_note:
+        intervention.operator_note = operator_note
+    if actual_impact:
+        intervention.actual_impact = str(actual_impact)
+    db.commit()
+    db.refresh(intervention)
+    return intervention
 
 
 def simulate_intervention_impact(intervention_type: str, route_id: Optional[str],

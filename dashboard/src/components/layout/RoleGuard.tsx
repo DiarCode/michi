@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
+import type { UserRole } from "../../types";
 
-const ROLES = ["Dispatch Manager", "City Planner", "Executive"] as const;
-type Role = typeof ROLES[number];
+const ROLES: UserRole[] = ["dispatch", "research", "planning", "executive", "depot", "passenger"];
 
-interface Props { children: (role: Role) => ReactNode; fallback?: ReactNode }
+interface Props { children: (role: UserRole) => ReactNode; fallback?: ReactNode }
 
 export default function RoleGuard({ children, fallback = null }: Props) {
-  const role = (localStorage.getItem("michi_role") || "Dispatch Manager") as Role;
+  const role = (localStorage.getItem("michi-role") || "dispatch") as UserRole;
   return <>{children(role) ?? fallback}</>;
 }
 
-export { ROLES, type Role };
+export { ROLES };

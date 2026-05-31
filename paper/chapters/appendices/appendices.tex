@@ -9,28 +9,28 @@
 \section{Public Holidays and Special Events}
 \label{app:holidays}
 
-Table~\ref{Tab.holidays} lists the public holidays and special events included in the synthetic dataset for the year 2025. These events were modelled with attendance-driven demand multipliers ranging from 5{,}000 to 60{,}000 attendees.
+Table~\ref{Tab.holidays} lists the public holidays and special events included in the synthetic dataset for the year 2025. Public holidays apply city-wide demand multipliers affecting all 374 stations; special events generate localised demand surges concentrated at specific venues and transit corridors.
 
 \begin{table}[H]
 \centering
-\caption{Public holidays and special events in the synthetic dataset (2025).}
+\caption{Public holidays and special events in the synthetic dataset (2025). Public holiday impact denotes estimated additional daily transit riders across the network; special event attendance denotes venue-level estimated attendance.}
 \label{Tab.holidays}
 \begin{tabular}{llcc}
 \toprule
-Date & Event & Type & Attendance \\
+Date & Event & Type & Est.\ Impact \\
 \midrule
-1 January & New Year & Public Holiday & --- \\
-7 January & Orthodox Christmas & Public Holiday & --- \\
-8 March & International Women's Day & Public Holiday & --- \\
-21--23 March & Nauryz Meyrami & Public Holiday & --- \\
-1 May & Kazakhstan Unity Day & Public Holiday & --- \\
-7 May & Defender of the Fatherland Day & Public Holiday & --- \\
-9 May & Victory Day & Public Holiday & --- \\
-6 July & Capital City Day & Public Holiday & --- \\
-30 August & Constitution Day & Public Holiday & --- \\
-25 October & Republic Day & Public Holiday & --- \\
-16 December & Independence Day & Public Holiday & --- \\
-15--20 June & EXPO-2025 Astana & Special Event & 40{,}000 \\
+1 January & New Year & Public Holiday & 185{,}000 \\
+7 January & Orthodox Christmas & Public Holiday & 72{,}000 \\
+8 March & International Women's Day & Public Holiday & 145{,}000 \\
+21--23 March & Nauryz Meyrami & Public Holiday & 260{,}000 \\
+1 May & Kazakhstan Unity Day & Public Holiday & 110{,}000 \\
+7 May & Defender of the Fatherland Day & Public Holiday & 95{,}000 \\
+9 May & Victory Day & Public Holiday & 165{,}000 \\
+6 July & Capital City Day & Public Holiday & 210{,}000 \\
+30 August & Constitution Day & Public Holiday & 88{,}000 \\
+25 October & Republic Day & Public Holiday & 78{,}000 \\
+16 December & Independence Day & Public Holiday & 150{,}000 \\
+10 June--10 Sept & EXPO-2017 Astana & Special Event & 40{,}000 \\
 10 August & City Marathon & Special Event & 12{,}000 \\
 5 September & Astana Day Concert & Special Event & 25{,}000 \\
 \bottomrule
@@ -133,9 +133,49 @@ All experiments were conducted on a single workstation with the following specif
     \item \textbf{RAM}: 32 GB DDR4-3200
     \item \textbf{OS}: Windows 11 Pro (build 26200)
     \item \textbf{Python}: 3.11.8
-    \item \textbf{PyTorch}: 2.12.0+cu126
+    \item \textbf{PyTorch}: 2.6.0+cu126
     \item \textbf{CUDA}: 12.6
     \item \textbf{Key packages}: NumPy 1.26, pandas 2.1, scikit-learn 1.4, matplotlib 3.8, networkx 3.2
 \end{itemize}
 
 The complete source code, training scripts, and model weights will be released upon acceptance to facilitate reproducibility.
+
+\section{System Interface Screenshots}
+\label{sec:ui-screenshots}
+
+The deployed system provides three interfaces for different operational roles. The command centre dashboard (Figure~\ref{Fig.ui_command}) serves as the primary monitoring interface for network operations managers, aggregating predictions across all 374 stations and highlighting stations where predicted ridership exceeds configurable thresholds. The live station map (Figure~\ref{Fig.ui_map}) provides a geospatial view of the Astana bus network, colour-coding each station by predicted demand intensity. The depot operations interface (Figure~\ref{Fig.ui_depot}) targets fleet managers responsible for vehicle assignment and route scheduling. The Streamlit station forecast view (Figure~\ref{Fig.streamlit_forecast}) shows predicted boarding counts with Negative Binomial confidence intervals across the four prediction horizons. The live simulation panel (Figure~\ref{Fig.streamlit_validation}) supports model validation by overlaying real-time observations against predictions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{chapters/methodology/fig/ui-command-center.png}
+\caption{React-based command centre dashboard providing an overview of network-wide ridership predictions, station status, and anomaly alerts.}
+\label{Fig.ui_command}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{chapters/methodology/fig/ui-live-map.png}
+\caption{Live station map displaying real-time passenger flow predictions across the Astana bus network, with colour-coded confidence intervals.}
+\label{Fig.ui_map}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{chapters/methodology/fig/ui-depot-operations.png}
+\caption{Depot operations interface for monitoring vehicle dispatch schedules, capacity utilisation, and route-level demand forecasts.}
+\label{Fig.ui_depot}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{chapters/methodology/fig/streamlit-operational-forecast-of-station-in-time.png}
+\caption{Operational forecast view for a single station, showing predicted boarding counts with confidence intervals across multiple horizons.}
+\label{Fig.streamlit_forecast}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-and-validation.png}
+\caption{Streamlit interface for live simulation of real-time data ingestion and model validation. The panel displays incoming ridership observations alongside predicted values and confidence intervals.}
+\label{Fig.streamlit_validation}
+\end{figure}

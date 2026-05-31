@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommandCenter from "./routes/CommandCenter";
 import LiveMap from "./routes/LiveMap";
 import AlertsPage from "./routes/AlertsPage";
@@ -20,9 +20,14 @@ import PassengerPage from "./routes/PassengerPage";
 import {
   BarChart, Map, AlertTriangle, FlaskConical, FileText,
   Activity, TrendingUp, GitGraph, BrainCircuit, GitCompare,
-  BarChart3, Truck, Users, Route as RouteIcon,
+  BarChart3, Truck, Users,
+  Calendar, Settings as SettingsIcon,
 } from "lucide-react";
 import type { UserRole } from "./types";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ToastContainer } from "./components/ui/toast";
+import { useBusStore } from "./stores/busStore";
+import { useConnectionStore } from "./stores/connectionStore";
 
 const queryClient = new QueryClient();
 
@@ -32,36 +37,44 @@ const ROLE_NAV: Record<UserRole, NavItem[]> = {
   dispatch: [
     { to: "/", label: "Command Center", Icon: BarChart },
     { to: "/map", label: "Live Map", Icon: Map },
-    { to: "/route-command", label: "Route Command", Icon: RouteIcon },
     { to: "/alerts", label: "Alerts", Icon: AlertTriangle },
+    { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
   research: [
     { to: "/training", label: "Training", Icon: BrainCircuit },
+    { to: "/forecast", label: "Forecast", Icon: BarChart3 },
     { to: "/compare", label: "Compare", Icon: GitCompare },
     { to: "/analytics", label: "Analytics", Icon: TrendingUp },
     { to: "/simulation", label: "Simulation", Icon: Activity },
+    { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
   planning: [
     { to: "/scenarios", label: "Scenario Planner", Icon: FlaskConical },
+    { to: "/forecast", label: "Forecast", Icon: BarChart3 },
     { to: "/analytics", label: "Analytics", Icon: TrendingUp },
     { to: "/network", label: "Network", Icon: GitGraph },
     { to: "/reports", label: "Reports", Icon: FileText },
+    { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
   executive: [
     { to: "/executive", label: "Executive Dashboard", Icon: BarChart3 },
     { to: "/reports", label: "Reports", Icon: FileText },
+    { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
   depot: [
     { to: "/depot", label: "Depot Operations", Icon: Truck },
     { to: "/alerts", label: "Alerts", Icon: AlertTriangle },
+    { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
   passenger: [
     { to: "/passenger", label: "Passenger Info", Icon: Users },
+    { to: "/timetable", label: "Timetable", Icon: Calendar },
     { to: "/map", label: "Live Map", Icon: Map },
+    { to: "/settings", label: "Settings", Icon: SettingsIcon },
   ],
 };
 
-const ROLE_LABELS: Record<UserRole, string> = {
+export const ROLE_LABELS: Record<UserRole, string> = {
   dispatch: "Dispatch",
   research: "Research",
   planning: "Planning",
@@ -70,16 +83,28 @@ const ROLE_LABELS: Record<UserRole, string> = {
   passenger: "Passenger",
 };
 
-export default function App() {
+function AppInner() {
   const [role, setRole] = useState<UserRole>(() => {
     return (localStorage.getItem("michi-role") as UserRole) || "dispatch";
   });
 
+  const subscribeBuses = useBusStore((s) => s.subscribe);
+  const initConnection = useConnectionStore((s) => s.init);
+
+  // Initialize WS subscriptions at app root
+  useEffect(() => {
+    const unsubBuses = subscribeBuses();
+    const cleanupConn = initConnection();
+    return () => {
+      unsubBuses();
+      if (typeof cleanupConn === "function") cleanupConn();
+    };
+  }, [subscribeBuses, initConnection]);
+
   const nav = ROLE_NAV[role];
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+    <BrowserRouter>
         <div className="flex h-screen bg-gray-50 dark:bg-gray-950">
           <aside className="w-64 bg-slate-900 dark:bg-slate-950 text-white flex flex-col border-r border-slate-700/50">
             <div className="p-4 border-b border-slate-700/50">
@@ -135,7 +160,7 @@ export default function App() {
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/timetable" element={<Timetable />} />
                 <Route path="/settings" element={<Settings />} />
-                <Route path="/route-command" element={<CommandCenter />} />
+                <Route path="/route-command" element={<Navigate to="/" replace />} />
                 <Route path="/executive" element={<ExecutivePage />} />
                 <Route path="/depot" element={<DepotPage />} />
                 <Route path="/passenger" element={<PassengerPage />} />
@@ -144,6 +169,16 @@ export default function App() {
           </div>
         </div>
       </BrowserRouter>
+  );
+}
+
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ErrorBoundary>
+        <AppInner />
+      </ErrorBoundary>
+      <ToastContainer />
     </QueryClientProvider>
   );
 }

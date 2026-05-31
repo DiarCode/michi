@@ -391,6 +391,62 @@ def fig5_horizon_analysis(data_dir: Path, save_path: Path):
     print("  Done: fig5_horizon_analysis")
 
 
+# ─── Figure 6: Feature Importance (Integrated Gradients) ──────────────────
+
+def fig6_feature_importance(data_dir: Path, save_path: Path):
+    """Feature importance bar chart from Integrated Gradients results."""
+    ig_path = data_dir / "attributions" / "integrated_gradients.json"
+    if not ig_path.exists():
+        # Try alternative path
+        ig_path = data_dir.parent / "attributions" / "integrated_gradients.json"
+    if not ig_path.exists():
+        print("  SKIP: fig6_feature_importance — no Integrated Gradients data found")
+        return
+
+    with open(ig_path) as f:
+        ig_data = json.load(f)
+
+    feature_names = ig_data["feature_names"]
+    importance = ig_data["importance_mean"]
+    std = ig_data.get("importance_std", [0] * len(importance))
+
+    # Sort by importance
+    sorted_idx = np.argsort(importance)[::-1]
+    names = [feature_names[i] for i in sorted_idx]
+    values = [importance[i] for i in sorted_idx]
+    errors = [std[i] for i in sorted_idx]
+
+    # Colour cyclical features differently
+    cyclical = {"sin_hour", "cos_hour", "sin_dow", "cos_dow"}
+    colors = [COLORS["tertiary"] if n in cyclical else COLORS["primary"] for n in names]
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    y_pos = np.arange(len(names))
+    ax.barh(y_pos, values, xerr=errors, color=colors, edgecolor="black", linewidth=0.8, capsize=3)
+
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels([n.replace("_", " ").title() for n in names])
+    ax.invert_yaxis()
+    ax.set_xlabel("Normalised Attribution", fontweight="bold")
+    ax.set_title("Feature Importance via Integrated Gradients\n(50 reference points, zero-feature baseline)",
+                 fontweight="bold")
+    ax.grid(True, alpha=0.3, axis="x")
+
+    # Add legend for colours
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor=COLORS["primary"], edgecolor="black", label="Raw features"),
+        Patch(facecolor=COLORS["tertiary"], edgecolor="black", label="Cyclical encodings"),
+    ]
+    ax.legend(handles=legend_elements, loc="lower right")
+
+    plt.tight_layout()
+    plt.savefig(save_path / "fig6_feature_importance.pdf")
+    plt.savefig(save_path / "fig6_feature_importance.png", dpi=300)
+    plt.close()
+    print("  Done: fig6_feature_importance")
+
+
 # ─── Figure 7: Hierarchical Structure (diagram) ────────────────────────────
 
 def fig7_hierarchical_structure(save_path: Path):
@@ -501,6 +557,7 @@ def main():
     fig3_baseline_comparison(data_dir, output_dir)
     fig4_ablation_studies(data_dir, output_dir)
     fig5_horizon_analysis(data_dir, output_dir)
+    fig6_feature_importance(data_dir, output_dir)
 
     # Diagrams (no experimental data needed)
     fig7_hierarchical_structure(output_dir)

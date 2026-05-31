@@ -22,6 +22,7 @@ import type {
   DepotStatus,
   PassengerCrowding,
   PredictionPoint,
+  TimelineResponse,
 } from "@/types";
 
 export const api = axios.create({
@@ -140,3 +141,35 @@ export const fetchServiceChanges = (): Promise<{ service_changes: unknown[] }> =
 
 export const fetchMessagingTemplates = (): Promise<{ templates: unknown[] }> =>
   api.get("/passenger/messaging-templates").then((r) => r.data);
+
+// Timeline
+export const fetchTimeline = (params: {
+  station_id?: string;
+  start_time: string;
+  end_time: string;
+  resolution?: string;
+}): Promise<TimelineResponse> =>
+  api.get("/timeline", { params }).then((r) => r.data);
+
+// Simulation
+export const startSimulation = (): Promise<{ status: string; task_id?: string }> =>
+  api.post("/simulation/start").then((r) => r.data);
+
+export const stopSimulation = (): Promise<{ status: string; task_id?: string }> =>
+  api.post("/simulation/stop").then((r) => r.data);
+
+export const fetchSimulationState = (): Promise<{
+  running: boolean;
+  task_id?: string;
+  tick: number;
+  current_time?: string;
+  drift_status: string;
+  metrics: { mae: number | null; mape: number | null; accuracy: number | null };
+  station_count?: number;
+}> => api.get("/simulation/state").then((r) => r.data);
+
+export const fetchSimulationMetrics = (hoursBack?: number): Promise<{
+  realtime: { tick: number; mae: number; mape: number; accuracy: number; drift_status: string; timestamp: string }[];
+  database: { timestamp: string; mae: number | null; mape: number | null; count: number }[];
+  hours_back: number;
+}> => api.get("/simulation/metrics", { params: hoursBack ? { hours_back: hoursBack } : {} }).then((r) => r.data);

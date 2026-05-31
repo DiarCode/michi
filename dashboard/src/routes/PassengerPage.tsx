@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchPassengerCrowding, fetchServiceChanges, fetchMessagingTemplates } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Users, AlertTriangle, Megaphone } from "lucide-react";
+import { GridSkeleton } from "@/components/ui/skeleton";
 
 function levelBadge(level: string) {
   const colors: Record<string, string> = {
@@ -50,7 +51,7 @@ export default function PassengerPage() {
         </CardHeader>
         <CardContent>
           {loadingCrowding ? (
-            <p className="text-sm text-gray-400">Loading...</p>
+            <GridSkeleton count={3} />
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 max-h-96 overflow-y-auto">
               {stations.map((s) => (
@@ -61,7 +62,7 @@ export default function PassengerPage() {
                       {s.current_crowding}
                     </span>
                   </div>
-                  {s.district && <div className="text-[10px] text-gray-400">{s.district}</div>}
+                  {s.district && <div className="text-[10px] text-gray-400 dark:text-gray-500">{s.district}</div>}
                   {s.predictions.length > 0 && (
                     <div className="text-[10px] text-gray-500 dark:text-gray-400">
                       +{s.predictions[0].horizon_minutes}m: {s.predictions[0].level}

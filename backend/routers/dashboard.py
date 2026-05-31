@@ -3,7 +3,7 @@ from fastapi.responses import StreamingResponse
 from backend.services.forecast_service import get_kpi_metrics
 from backend.services.suggestion_service import generate_suggestions
 from backend.routers.stations import _get_stations
-from backend.database import get_db
+from backend.database import get_db_session
 from backend.models import KPIResponse, OperationsReportResponse
 from sqlalchemy.orm import Session
 import io, csv
@@ -12,11 +12,11 @@ from datetime import datetime, timezone
 router = APIRouter()
 
 @router.get("/kpis", response_model=KPIResponse)
-def get_kpis(db: Session = Depends(get_db)):
+def get_kpis(db: Session = Depends(get_db_session)):
     return get_kpi_metrics(db)
 
 @router.get("/operations", response_model=OperationsReportResponse)
-def get_operations_report(report_format: str = Query("json", alias="format"), db: Session = Depends(get_db)):
+def get_operations_report(report_format: str = Query("json", alias="format"), db: Session = Depends(get_db_session)):
     """Daily operations summary report."""
     kpis = get_kpi_metrics(db)
     stations = _get_stations(db)
@@ -60,7 +60,7 @@ def get_operations_report(report_format: str = Query("json", alias="format"), db
 
 
 @router.get("/suggestions")
-def get_suggestions(db: Session = Depends(get_db)):
+def get_suggestions(db: Session = Depends(get_db_session)):
     """Get optimization suggestions based on current predictions and alerts."""
     from backend.models_orm import StationORM, RouteORM, AlertORM, ForecastORM
     stations = [{"stop_id": s.stop_id, "name": s.name, "ridership_24h": s.ridership_24h, "district": s.district}

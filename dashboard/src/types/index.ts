@@ -29,6 +29,9 @@ export interface Alert {
   station_id?: string;
   route_id?: string;
   created_at: string;
+  acknowledged?: boolean;
+  auto?: boolean;
+  rule_id?: string;
 }
 
 export interface RichAlert {
@@ -100,6 +103,37 @@ export interface StationDetail {
   forecast: ForecastPoint[];
   alerts: { severity: string; title: string; message: string }[];
   hourly_ridership: { hour: number; ridership: number }[];
+}
+
+// Backend response wrappers
+export interface StationListResponse {
+  stations: Station[];
+  hour?: number;
+}
+
+export interface RouteListResponse {
+  routes: Route[];
+}
+
+export interface RouteStopsResponse {
+  route_id: string;
+  stops: RouteStop[];
+}
+
+export interface ForecastResponse {
+  station_id: string;
+  forecast: ForecastPoint[];
+}
+
+export interface AlertListResponse {
+  alerts: Alert[];
+}
+
+export interface ScenarioResult {
+  scenario_id: string;
+  base_metrics: Record<string, number>;
+  scenario_metrics: Record<string, number>;
+  changes: Record<string, number>;
 }
 
 export interface RouteForecast {
@@ -241,3 +275,93 @@ export type UserRole =
   | "executive"
   | "depot"
   | "passenger";
+
+// Timeline types
+export type TimelineMode = "live" | "historical";
+export type PlaybackSpeed = 1 | 2 | 5;
+
+export interface TimelinePoint {
+  timestamp: string;
+  station_id: string;
+  actual: number | null;
+  predicted: number | null;
+  confidence_upper: number | null;
+  confidence_lower: number | null;
+}
+
+export interface TimelineResponse {
+  timeline: TimelinePoint[];
+  resolution: string;
+  start_time: string;
+  end_time: string;
+  station_id: string | null;
+  total_points: number;
+}
+
+// Simulation types
+export interface SimulationTick {
+  tick: number;
+  timestamp: string;
+  events: SimulationEvent[];
+  metrics: ValidationMetric;
+  model_version: string;
+}
+
+export interface SimulationEvent {
+  type: string;
+  route_id?: string;
+  station_id?: string;
+  detail: string;
+}
+
+export interface ValidationMetric {
+  mae: number;
+  rmse?: number;
+  mape: number;
+  accuracy?: number;
+  drift_status?: "normal" | "warning" | "critical";
+  tick?: number;
+  timestamp?: string;
+}
+
+export interface DriftAlert {
+  metric: string;
+  current_value: number;
+  baseline_value: number;
+  deviation_pct: number;
+  severity: "low" | "medium" | "high";
+  timestamp: string;
+}
+
+export interface SimulationState {
+  running: boolean;
+  tick: number;
+  startTime: string | null;
+  metricsHistory: ValidationMetric[];
+  driftAlerts: DriftAlert[];
+  isStale: boolean;
+  lastTickAt: string | null;
+}
+
+// Backend-aligned API response for GET /simulation/state
+export interface SimulationStateResponse {
+  running: boolean;
+  task_id: string | null;
+  tick: number;
+  current_time: string | null;
+  drift_status: "normal" | "warning" | "critical";
+  metrics: {
+    mae: number | null;
+    mape: number | null;
+    accuracy: number | null;
+  };
+  station_count: number | null;
+}
+
+// Connection status
+export interface ConnectionStatus {
+  connected: boolean;
+  lastTickReceived: number;
+  reconnectAttempt: number;
+  lastConnectedAt: string | null;
+}

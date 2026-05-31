@@ -3,6 +3,7 @@ import { fetchDepotStatus, fetchDepotRecommendations } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Truck, Battery, Wrench, AlertTriangle } from "lucide-react";
 import type { DepotStatus } from "@/types";
+import { CardSkeleton } from "@/components/ui/skeleton";
 
 function DepotCard({ depot }: { depot: DepotStatus["depots"][number] }) {
   const { data: recData } = useQuery({
@@ -85,7 +86,9 @@ export default function DepotPage() {
       </div>
 
       {isLoading ? (
-        <p className="text-gray-400 dark:text-gray-500">Loading depot data...</p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <CardSkeleton /><CardSkeleton /><CardSkeleton />
+        </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {depots.map((d) => (

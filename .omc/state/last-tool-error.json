@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd C:/Users/begis/development/michi && py -c \\\"import py_compile; files=['backend/services/simulation_service.py','backend/routers/simulation.py','backend/routers/timeline.py','backend/ser...",
+  "error": "Exit code 127\n/usr/bin/bash: line 2: py: command not found",
+  "timestamp": "2026-05-31T10:33:22.758Z",
+  "retry_count": 2
+}

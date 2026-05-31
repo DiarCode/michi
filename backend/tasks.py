@@ -1,6 +1,8 @@
 """Celery background tasks."""
 
+import json
 import os
+import time
 from celery import Celery
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -78,3 +80,59 @@ def generate_forecasts():
 def retrain_model():
     """Trigger model retraining (placeholder for DTS-GSSF pipeline)."""
     return {"status": "queued", "message": "Model retraining requested — connect DTS-GSSF pipeline to execute"}
+
+
+@celery_app.task(bind=True, name="run_simulation")
+def run_simulation(self):
+    """Run the simulation engine as a Celery task, publishing ticks to Redis."""
+    import redis
+    from backend.database import SessionLocal
+    from backend.services.simulation_service import SimulationEngine
+
+    r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+    db = SessionLocal()
+
+    try:
+        engine = SimulationEngine(db)
+
+        while True:
+            tick_data = engine.tick()
+
+            # Publish simulation tick
+            r.publish("michi:simulation", json.dumps({
+                "type": "simulation_tick",
+                "tick": tick_data["tick"],
+                "timestamp": tick_data["timestamp"],
+                "hour": tick_data["hour"],
+                "station_count": len(tick_data["stations"]),
+            }))
+
+            # Publish validation metrics
+            r.publish("michi:simulation", json.dumps(tick_data["metrics"]))
+
+            # Checkpoint every 60 ticks
+            if tick_data["tick"] % 60 == 0:
+                checkpoint = engine.get_checkpoint()
+                r.set("michi:simulation:checkpoint", json.dumps(checkpoint))
+                r.set("michi:simulation:metrics_history", json.dumps(engine.get_metrics_history()[-100:]))
+
+            time.sleep(1)  # 1 tick per second
+
+    except Exception as e:
+        r.publish("michi:simulation", json.dumps({"type": "simulation_error", "error": str(e)}))
+        raise
+    finally:
+        db.close()
+
+
+@celery_app.task(name="get_simulation_state")
+def get_simulation_state():
+    """Get current simulation state from Redis."""
+    import redis
+    r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+    checkpoint = r.get("michi:simulation:checkpoint")
+    metrics = r.get("michi:simulation:metrics_history")
+    return {
+        "checkpoint": json.loads(checkpoint) if checkpoint else None,
+        "metrics": json.loads(metrics) if metrics else [],
+    }

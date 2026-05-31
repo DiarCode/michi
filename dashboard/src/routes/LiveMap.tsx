@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import MapContainer from "@/components/map/MapContainer";
+import TimelineBar from "@/components/map/TimelineBar";
 import { useStations } from "@/hooks/useStations";
-import { wsClient } from "@/lib/websocket";
+import { useTimeline } from "@/hooks/useTimeline";
 import { fetchRoutes, fetchStationDetail, fetchRouteForecast, fetchPredictions } from "@/lib/api";
+import { showToast } from "@/lib/toast";
+import { useBusStore } from "@/stores/busStore";
 import type { BusPosition, Route, StationDetail, RouteForecast, PredictionPoint } from "@/types";
 
 const PREDICTION_HORIZONS = [
@@ -14,9 +17,14 @@ const PREDICTION_HORIZONS = [
 ] as const;
 
 export default function LiveMap() {
-  const { data } = useStations();
+  const { data, isLoading } = useStations();
   const stations = data?.stations ?? [];
-  const [buses, setBuses] = useState<BusPosition[]>([]);
+  const busPositions = useBusStore((s) => s.buses);
+  const buses: BusPosition[] = useMemo(() => Object.values(busPositions) as unknown as BusPosition[], [busPositions]);
+
+  // Timeline integration
+  const { mode: timelineMode, currentTime: timelineTime, getStationData: getTimelineStationData } = useTimeline();
+
   const [routes, setRoutes] = useState<Route[]>([]);
   const [selectedRoutes, setSelectedRoutes] = useState<Set<string>>(new Set());
   const [hour, setHour] = useState<number>(new Date().getHours());
@@ -30,18 +38,12 @@ export default function LiveMap() {
     new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   );
 
-  useEffect(() => { fetchRoutes().then((r) => setRoutes(r.routes ?? [])).catch(() => {}); }, []);
+  // Derive hour from timeline when in historical mode
+  const effectiveHour = timelineMode === "historical"
+    ? new Date(timelineTime).getHours()
+    : hour;
 
-  useEffect(() => {
-    wsClient.connect();
-    const unsub = wsClient.subscribe((event) => {
-      if (event.type === "bus_position") {
-        const bus = event.data as unknown as BusPosition;
-        setBuses((prev) => [...prev.filter((b) => b.bus_id !== bus.bus_id), bus]);
-      }
-    });
-    return () => { unsub(); wsClient.disconnect(); };
-  }, []);
+  useEffect(() => { fetchRoutes().then((r) => setRoutes(r.routes ?? [])).catch((err) => showToast.error(`Failed to load routes: ${err.message}`)); }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -53,34 +55,63 @@ export default function LiveMap() {
   useEffect(() => {
     fetchPredictions(horizonMinutes || undefined)
       .then((r) => setPredictions(r.predictions ?? []))
-      .catch(() => setPredictions([]));
+      .catch((err) => { showToast.error(`Failed to load predictions: ${err.message}`); setPredictions([]); });
   }, [horizonMinutes]);
 
   const handleStationClick = async (stationId: string) => {
     setLoading(true);
     try { setSelectedStation(await fetchStationDetail(stationId)); }
-    catch { setSelectedStation(null); }
+    catch (err: any) { showToast.error(`Failed to load station: ${err.message}`); setSelectedStation(null); }
     setLoading(false);
   };
 
   const handleRouteClick = async (routeId: string) => {
     try { setRouteForecast(await fetchRouteForecast(routeId)); }
-    catch { setRouteForecast(null); }
+    catch (err: any) { showToast.error(`Failed to load route forecast: ${err.message}`); setRouteForecast(null); }
   };
 
   const toggleRoute = (id: string) => {
     setSelectedRoutes((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
   };
 
-  const filteredBuses = selectedRoutes.size > 0 ? buses.filter((b) => selectedRoutes.has(b.route_id)) : buses;
+  // In historical mode, hide buses (they don't exist in the past)
+  const filteredBuses = timelineMode === "historical"
+    ? []
+    : selectedRoutes.size > 0
+      ? buses.filter((b) => selectedRoutes.has(b.route_id))
+      : buses;
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[calc(100vh-4rem)]">
+        <div className="w-72 bg-white dark:bg-gray-900 border-r dark:border-gray-700 p-4 space-y-4">
+          <div className="animate-pulse space-y-3">
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+          </div>
+        </div>
+        <div className="flex-1 bg-gray-100 dark:bg-gray-800 animate-pulse" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-[calc(100vh-4rem)]">
       <div className="w-72 bg-white dark:bg-gray-900 border-r dark:border-gray-700 overflow-y-auto p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-bold text-lg dark:text-white">Live Map</h2>
+          <h2 className="font-bold text-lg dark:text-white">
+            {timelineMode === "historical" ? "Timeline View" : "Live Map"}
+          </h2>
           <span className="text-xs font-mono text-gray-500 dark:text-gray-400">{currentTime}</span>
         </div>
+
+        {/* Timeline mode indicator */}
+        {timelineMode === "historical" && (
+          <div className="bg-amber-50 dark:bg-amber-900/30 rounded p-2 text-xs text-amber-700 dark:text-amber-300">
+            Viewing historical data. Drag the timeline or click "Return to Live" to resume.
+          </div>
+        )}
 
         <div>
           <h3 className="font-semibold text-sm mb-2 dark:text-gray-300">Prediction Horizon</h3>
@@ -121,11 +152,11 @@ export default function LiveMap() {
             type="range"
             min={0}
             max={23}
-            value={hour}
+            value={effectiveHour}
             onChange={(e) => setHour(Number(e.target.value))}
             className="w-full accent-blue-600"
           />
-          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{String(hour).padStart(2, "0")}:00</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{String(effectiveHour).padStart(2, "0")}:00</p>
         </div>
 
         <div className="border-t dark:border-gray-700 pt-3">
@@ -161,77 +192,113 @@ export default function LiveMap() {
         )}
       </div>
 
-      <div className="flex-1 relative">
-        <MapContainer
-          stations={stations}
-          buses={filteredBuses}
-          hour={hour}
-          onStationClick={handleStationClick}
-          showHeatmap={showHeatmap}
-          predictions={predictions}
-        />
+      <div className="flex-1 flex flex-col relative">
+        <div className="flex-1 relative">
+          <MapContainer
+            stations={stations}
+            buses={filteredBuses}
+            hour={effectiveHour}
+            onStationClick={handleStationClick}
+            showHeatmap={showHeatmap}
+            predictions={predictions}
+            timelineMode={timelineMode}
+            getTimelineStationData={getTimelineStationData}
+          />
 
-        {selectedStation && (
-          <div className="absolute top-0 right-0 w-80 h-full bg-white/95 dark:bg-gray-900/95 shadow-lg overflow-y-auto p-4">
-            <button onClick={() => setSelectedStation(null)} className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">✕</button>
-            <h3 className="font-bold text-lg dark:text-white">{selectedStation.station.name}</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{selectedStation.station.district} · {selectedStation.station.ridership_24h} pax/24h</p>
-            {selectedStation.connected_routes.length > 0 && (
-              <div className="mt-3">
-                <h4 className="font-semibold text-sm dark:text-gray-300">Connected Routes</h4>
-                <div className="flex gap-2 mt-1 flex-wrap">
-                  {selectedStation.connected_routes.map((r) => (
-                    <button key={r.id} onClick={() => handleRouteClick(r.id)} className="px-2 py-1 text-xs rounded-full text-white" style={{ backgroundColor: r.color ?? "#888" }}>{r.name}</button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {selectedStation.hourly_ridership.length > 0 && (
-              <div className="mt-3">
-                <h4 className="font-semibold text-sm dark:text-gray-300">Hourly Pattern</h4>
-                <div className="flex items-end gap-px h-20 mt-1">
-                  {selectedStation.hourly_ridership.map((h) => {
-                    const maxR = Math.max(...selectedStation.hourly_ridership.map((x) => x.ridership), 1);
-                    const pct = (h.ridership / maxR) * 100;
-                    const isNow = h.hour === hour;
-                    const isRush = (h.hour >= 7 && h.hour <= 9) || (h.hour >= 17 && h.hour <= 19);
-                    return (
-                      <div key={h.hour} className="flex-1 flex flex-col justify-end">
-                        <div className={isNow ? "bg-blue-600" : isRush ? "bg-amber-400" : "bg-gray-300 dark:bg-gray-600"} style={{ height: pct + "%", minHeight: 2 }} />
+          {selectedStation && (
+            <div className="absolute top-0 right-0 w-80 h-full bg-white/95 dark:bg-gray-900/95 shadow-lg overflow-y-auto p-4">
+              <button onClick={() => setSelectedStation(null)} className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">✕</button>
+              <h3 className="font-bold text-lg dark:text-white">{selectedStation.station.name}</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{selectedStation.station.district} · {selectedStation.station.ridership_24h} pax/24h</p>
+
+              {/* Show timeline data in station detail panel when in historical mode */}
+              {timelineMode === "historical" && (() => {
+                const td = getTimelineStationData(selectedStation.station.id);
+                if (!td) return null;
+                return (
+                  <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-900/30 rounded text-xs">
+                    <div className="font-semibold text-amber-700 dark:text-amber-300 mb-1">
+                      Timeline Data
+                    </div>
+                    {td.actual !== null && (
+                      <div className="text-gray-600 dark:text-gray-300">
+                        Actual: <span className="font-mono font-bold">{Math.round(td.actual)} pax</span>
                       </div>
-                    );
-                  })}
+                    )}
+                    {td.predicted !== null && (
+                      <div className="text-purple-700 dark:text-purple-300">
+                        Predicted: <span className="font-mono font-bold">{Math.round(td.predicted)} pax</span>
+                        {td.confidence_upper !== null && td.confidence_lower !== null && (
+                          <span className="text-gray-400 ml-1">
+                            ({Math.round(td.confidence_lower)}–{Math.round(td.confidence_upper)})
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {selectedStation.connected_routes.length > 0 && (
+                <div className="mt-3">
+                  <h4 className="font-semibold text-sm dark:text-gray-300">Connected Routes</h4>
+                  <div className="flex gap-2 mt-1 flex-wrap">
+                    {selectedStation.connected_routes.map((r) => (
+                      <button key={r.id} onClick={() => handleRouteClick(r.id)} className="px-2 py-1 text-xs rounded-full text-white" style={{ backgroundColor: r.color ?? "#888" }}>{r.name}</button>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex justify-between text-[8px] text-gray-400 mt-0.5"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div>
-              </div>
-            )}
-            {selectedStation.forecast.length > 0 && (
-              <div className="mt-3">
-                <h4 className="font-semibold text-sm dark:text-gray-300">Forecast (next 6h)</h4>
-                <div className="space-y-1 mt-1">
-                  {selectedStation.forecast.slice(0, 6).map((f, i) => (
-                    <div key={i} className="flex justify-between text-xs dark:text-gray-300">
-                      <span>{new Date(f.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
-                      <span className="font-mono">{f.predicted} pax</span>
-                      <span className="text-gray-400">{(f.confidence * 100).toFixed(0)}%</span>
+              )}
+              {selectedStation.hourly_ridership.length > 0 && (
+                <div className="mt-3">
+                  <h4 className="font-semibold text-sm dark:text-gray-300">Hourly Pattern</h4>
+                  <div className="flex items-end gap-px h-20 mt-1">
+                    {selectedStation.hourly_ridership.map((h) => {
+                      const maxR = Math.max(...selectedStation.hourly_ridership.map((x) => x.ridership), 1);
+                      const pct = (h.ridership / maxR) * 100;
+                      const isNow = h.hour === effectiveHour;
+                      const isRush = (h.hour >= 7 && h.hour <= 9) || (h.hour >= 17 && h.hour <= 19);
+                      return (
+                        <div key={h.hour} className="flex-1 flex flex-col justify-end">
+                          <div className={isNow ? "bg-blue-600" : isRush ? "bg-amber-400" : "bg-gray-300 dark:bg-gray-600"} style={{ height: pct + "%", minHeight: 2 }} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="flex justify-between text-[8px] text-gray-400 mt-0.5"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div>
+                </div>
+              )}
+              {selectedStation.forecast.length > 0 && (
+                <div className="mt-3">
+                  <h4 className="font-semibold text-sm dark:text-gray-300">Forecast (next 6h)</h4>
+                  <div className="space-y-1 mt-1">
+                    {selectedStation.forecast.slice(0, 6).map((f, i) => (
+                      <div key={i} className="flex justify-between text-xs dark:text-gray-300">
+                        <span>{new Date(f.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                        <span className="font-mono">{f.predicted} pax</span>
+                        <span className="text-gray-400">{(f.confidence * 100).toFixed(0)}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {selectedStation.alerts.length > 0 && (
+                <div className="mt-3">
+                  <h4 className="font-semibold text-sm text-red-600">Active Alerts</h4>
+                  {selectedStation.alerts.map((a, i) => (
+                    <div key={i} className="mt-1 p-2 bg-red-50 dark:bg-red-900/30 rounded text-xs dark:text-red-300">
+                      <span className="font-semibold">{a.severity}</span>: {a.title}
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
-            {selectedStation.alerts.length > 0 && (
-              <div className="mt-3">
-                <h4 className="font-semibold text-sm text-red-600">Active Alerts</h4>
-                {selectedStation.alerts.map((a, i) => (
-                  <div key={i} className="mt-1 p-2 bg-red-50 dark:bg-red-900/30 rounded text-xs dark:text-red-300">
-                    <span className="font-semibold">{a.severity}</span>: {a.title}
-                  </div>
-                ))}
-              </div>
-            )}
-            {loading && <p className="text-xs text-gray-400 mt-2">Loading...</p>}
-          </div>
-        )}
+              )}
+              {loading && <p className="text-xs text-gray-400 mt-2">Loading...</p>}
+            </div>
+          )}
+        </div>
+
+        {/* Timeline Bar at the bottom */}
+        <TimelineBar />
       </div>
     </div>
   );

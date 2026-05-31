@@ -5,7 +5,10 @@ import AlertTicker from "@/components/dashboard/AlertTicker";
 import { fetchSuggestions, fetchInterventions, updateInterventionStatus } from "@/lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Lightbulb, Zap, CheckCircle, Clock, XCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Lightbulb, Zap, CheckCircle, Clock, XCircle, Activity } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useSimulationStore } from "@/stores/simulationStore";
 import type { Suggestion, Intervention } from "@/types";
 
 function statusIcon(status: string) {
@@ -22,6 +25,62 @@ function priorityColor(priority: string) {
   if (priority === "critical" || priority === "high") return "border-l-red-500";
   if (priority === "medium") return "border-l-amber-500";
   return "border-l-blue-500";
+}
+
+/** Compact simulation status card for the Command Center */
+function MiniSimulationCard() {
+  const { running, tick, metricsHistory } = useSimulationStore();
+  const latest = metricsHistory[metricsHistory.length - 1];
+
+  const driftStatus = latest?.mape !== undefined
+    ? latest.mape > 15 ? "critical" : latest.mape > 10 ? "warning" : "normal"
+    : "normal";
+
+  const driftBadge = driftStatus === "critical"
+    ? "bg-red-500 text-white"
+    : driftStatus === "warning"
+    ? "bg-amber-500 text-white"
+    : "bg-green-500 text-white";
+
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm flex items-center justify-between">
+          <span className="flex items-center gap-2">
+            <Activity className="h-4 w-4 text-blue-500" />
+            Simulation Engine
+          </span>
+          <Link to="/simulation" className="text-xs text-blue-600 hover:underline">
+            View details
+          </Link>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-4 gap-3 text-center">
+          <div>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400">Status</p>
+            <Badge className={running ? "bg-green-500 text-white" : "bg-gray-400 text-white"}>
+              {running ? "Running" : "Stopped"}
+            </Badge>
+          </div>
+          <div>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400">Tick</p>
+            <p className="text-lg font-bold dark:text-white">{tick}</p>
+          </div>
+          <div>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400">MAPE</p>
+            <p className="text-lg font-bold dark:text-white">
+              {latest?.mape !== undefined ? latest.mape.toFixed(1) : "--"}
+            </p>
+          </div>
+          <div>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400">Drift</p>
+            <Badge className={driftBadge}>{driftStatus.toUpperCase()}</Badge>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 export default function CommandCenter() {
@@ -52,6 +111,9 @@ export default function CommandCenter() {
         <CongestionHeatmap />
         <AlertTicker />
       </div>
+
+      {/* Mini simulation status card */}
+      <MiniSimulationCard />
 
       {suggestions.length > 0 && (
         <Card>

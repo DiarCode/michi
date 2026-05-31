@@ -6,7 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.database import init_db
 from backend.routers import stations, routes as routes_router, dashboard, alerts, scenarios, analytics
 from backend.routers import interventions, executive, depot, passenger_info
-from backend.websocket import websocket_router, mock_bus_stream
+from backend.routers import simulation, timeline
+from backend.websocket import websocket_router, combined_stream
 
 
 @asynccontextmanager
@@ -22,10 +23,17 @@ async def lifespan(app: FastAPI):
             print("No production model artifact found — using mock predictions.")
     except Exception as e:
         print(f"Model warm-load failed: {e} — using mock predictions.")
-    task = asyncio.create_task(mock_bus_stream())
-    print("Backend started — DB initialized, bus stream running.")
+    # Auto-start simulation (non-blocking; the Celery task runs independently)
+    try:
+        from backend.tasks import celery_app
+        celery_app.send_task("run_simulation")
+        print("Simulation task dispatched.")
+    except Exception as e:
+        print(f"Simulation auto-start skipped: {e}")
+    stream_task = asyncio.create_task(combined_stream())
+    print("Backend started — DB initialized, bus stream + simulation relay running.")
     yield
-    task.cancel()
+    stream_task.cancel()
     print("Shutting down backend...")
 
 
@@ -43,6 +51,8 @@ app.include_router(interventions.router, prefix="/api/v1/interventions", tags=["
 app.include_router(executive.router, prefix="/api/v1/executive", tags=["executive"])
 app.include_router(depot.router, prefix="/api/v1/depot", tags=["depot"])
 app.include_router(passenger_info.router, prefix="/api/v1/passenger", tags=["passenger"])
+app.include_router(simulation.router, prefix="/api/v1/simulation", tags=["simulation"])
+app.include_router(timeline.router, prefix="/api/v1/timeline", tags=["timeline"])
 app.include_router(websocket_router, prefix="/ws")
 
 

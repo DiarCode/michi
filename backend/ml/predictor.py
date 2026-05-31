@@ -23,7 +23,7 @@ def load_model(artifact_path: str, N: int, n_series: int, n_agg: int, A_phys: np
 
     model = DTSGSSF(
         N=N,
-        F_in=config.get("F_in", 11),
+        F_in=config.get("F_in", 16),
         n_series=n_series,
         n_agg=n_agg,
         A_phys=A_phys,
