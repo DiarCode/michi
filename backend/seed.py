@@ -86,8 +86,12 @@ def seed():
             session.add(StationORM(**s))
         for r in routes:
             session.add(RouteORM(**r))
-        for route_id, station_id, order in route_stops:
-            session.add(RouteStopORM(route_id=route_id, station_id=station_id, stop_order=order))
+        for rs in route_stops:
+            if isinstance(rs, dict):
+                session.add(RouteStopORM(route_id=rs["route_id"], station_id=rs["station_id"], stop_order=rs["stop_order"]))
+            else:
+                route_id, station_id, order = rs
+                session.add(RouteStopORM(route_id=route_id, station_id=station_id, stop_order=order))
 
         # Seed Executive Dashboard tables
         from datetime import datetime, timedelta, timezone

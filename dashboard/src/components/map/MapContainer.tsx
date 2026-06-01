@@ -15,6 +15,8 @@ interface Props {
   timelineMode?: TimelineMode;
   /** Get timeline data for a station at the selected time */
   getTimelineStationData?: (stationId: string) => TimelinePoint | undefined;
+  /** Route ID → color map for coloring bus markers by route */
+  routeColorMap?: Record<string, string>;
 }
 
 const ASTANA_CENTER: [number, number] = [71.47, 51.13];
@@ -85,6 +87,7 @@ export default function MapContainer({
   predictions = [],
   timelineMode,
   getTimelineStationData,
+  routeColorMap = {},
 }: Props) {
   const clusterData = showHeatmap
     ? buildClusterData(stations, hour, timelineMode, getTimelineStationData)
@@ -119,16 +122,16 @@ export default function MapContainer({
         })}
 
         {buses.map((b) => (
-          <BusMarker key={b.bus_id} bus={b} />
+          <BusMarker key={b.bus_id} bus={b} routeColor={routeColorMap[b.route_id]} />
         ))}
       </Map>
 
       {/* Legend */}
       <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-2 rounded-lg shadow-md text-xs space-y-1 z-10">
-        <div className="font-semibold text-gray-700 dark:text-gray-300">Load Level</div>
-        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-green-500" /> &lt;50%</div>
-        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-amber-500" /> 50–80%</div>
-        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-red-500" /> &gt;80%</div>
+        <div className="font-semibold text-gray-700 dark:text-gray-300">Capacity Used</div>
+        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-green-500" /> Low (&lt;50%)</div>
+        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-amber-500" /> Medium (50–80%)</div>
+        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-red-500" /> High (&gt;80%)</div>
         {timelineMode === "historical" && (
           <div className="border-t dark:border-gray-700 pt-1 mt-1 space-y-1">
             <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
@@ -152,7 +155,7 @@ export default function MapContainer({
           {timelineMode === "historical" ? "Historical View" : "Live Tracking"}
         </h3>
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          {buses.length} buses active · {String(hour).padStart(2, "0")}:00
+          {buses.length} buses · {String(hour).padStart(2, "0")}:00
         </p>
       </div>
     </div>

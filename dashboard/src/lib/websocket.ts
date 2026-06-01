@@ -1,4 +1,11 @@
-const WS_BASE = (import.meta.env.VITE_WS_URL as string) || "ws://localhost:8000/ws";
+// Derive WebSocket URL from current page location so it works through nginx proxy
+function getWSBase(): string {
+  if (import.meta.env.VITE_WS_URL) return import.meta.env.VITE_WS_URL as string;
+  const proto = typeof window !== "undefined" && window.location.protocol === "https:" ? "wss:" : "ws:";
+  const host = typeof window !== "undefined" ? window.location.host : "localhost:8000";
+  return `${proto}//${host}/ws`;
+}
+const WS_BASE = getWSBase();
 
 export type WSEventType = "bus_position" | "alert" | "forecast_update" | "simulation_tick" | "validation_metric" | "drift_alert";
 

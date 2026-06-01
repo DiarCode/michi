@@ -171,4 +171,5 @@ class SimulationEngine:
             "current_time": self.current_time.isoformat(),
             "drift_status": self.drift_status,
             "metrics_count": len(self.metrics_history),
+            "station_count": len(self.stations),
         }

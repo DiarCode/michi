@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,47 +7,87 @@ import { showToast } from "@/lib/toast";
 import { useSimulationStore } from "@/stores/simulationStore";
 import { useConnectionStore } from "@/stores/connectionStore";
 import SimulationMetrics from "@/components/dashboard/SimulationMetrics";
-import { Play, Square, Activity } from "lucide-react";
+import { Play, Square, Activity, Clock, Users, BarChart3, TrendingUp, AlertTriangle } from "lucide-react";
 
-const SIMULATION_TYPES = [
-  { value: "frequency", label: "Frequency Change" },
-  { value: "route_add", label: "Add Route" },
-  { value: "station_close", label: "Close Station" },
-  { value: "demand_surge", label: "Demand Surge" },
-];
-
-interface SimResult {
-  scenario_id: string;
-  base_metrics: { ridership: number; avg_wait: number };
-  scenario_metrics: { ridership: number; avg_wait: number };
-  changes: { ridership: number; avg_wait: number };
+interface StationSimData {
+  station_id: string;
+  name: string;
+  actual: number;
+  predicted: number;
+  confidence: number;
+  confidence_upper: number;
+  confidence_lower: number;
+  error_pct: number;
 }
 
 export default function SimulationPage() {
-  const [simType, setSimType] = useState("frequency");
-  const [headway, setHeadway] = useState(5);
-  const [result, setResult] = useState<SimResult | null>(null);
-  const [loading, setLoading] = useState(false);
   const [startingSim, setStartingSim] = useState(false);
   const [stoppingSim, setStoppingSim] = useState(false);
+  const [stationData, setStationData] = useState<StationSimData[]>([]);
+  const [simState, setSimState] = useState<{
+    running: boolean;
+    tick: number;
+    drift_status: string;
+    current_time: string | null;
+    station_count: number | null;
+    metrics: { mae: number | null; mape: number | null; accuracy: number | null };
+  } | null>(null);
 
   const { running, tick, subscribe, startSimulation: storeStart, stopSimulation: storeStop } = useSimulationStore();
   const connected = useConnectionStore((s) => s.connected);
 
-  // Subscribe to simulation WS events
   useEffect(() => {
     const unsub = subscribe();
     return unsub;
   }, [subscribe]);
 
-  // Fetch initial simulation state on mount
-  useEffect(() => {
-    api.get("/simulation/state").then((res) => {
-      if (res.data?.running) {
+  const fetchSimState = useCallback(async () => {
+    try {
+      const { data } = await api.get("/simulation/state");
+      setSimState(data);
+      if (data.running && !running) {
         storeStart();
       }
-    }).catch(() => { /* ignore if API not available */ });
-  }, [storeStart]);
+    } catch {
+      // API not available
+    }
+  }, [running, storeStart]);
+
+  useEffect(() => {
+    fetchSimState();
+    const interval = setInterval(fetchSimState, 5000);
+    return () => clearInterval(interval);
+  }, [fetchSimState]);
+
+  const fetchStationData = useCallback(async () => {
+    if (!running && !simState?.running) return;
+    try {
+      const { data } = await api.get("/simulation/station-data");
+      if (data?.stations) {
+        setStationData(
+          Object.entries(data.stations).map(([id, s]: [string, any]) => ({
+            station_id: id,
+            name: s.name ?? id,
+            actual: s.actual ?? 0,
+            predicted: s.predicted ?? 0,
+            confidence: s.confidence ?? 0,
+            confidence_upper: s.confidence_upper ?? 0,
+            confidence_lower: s.confidence_lower ?? 0,
+            error_pct: s.actual > 0 ? Math.abs(s.predicted - s.actual) / s.actual * 100 : 0,
+          }))
+        );
+      }
+    } catch {
+      // Endpoint may not be available yet
+    }
+  }, [running, simState?.running]);
+
+  useEffect(() => {
+    if (!running && !simState?.running) return;
+    fetchStationData();
+    const interval = setInterval(fetchStationData, 5000);
+    return () => clearInterval(interval);
+  }, [fetchStationData]);
 
   const handleStart = async () => {
     setStartingSim(true);
@@ -55,7 +95,7 @@ export default function SimulationPage() {
       const { data } = await api.post("/simulation/start");
       if (data.status === "started" || data.status === "already_running") {
         storeStart();
-        showToast.success("Simulation started");
+        showToast.success("Simulation engine started");
       }
     } catch (err: any) {
       showToast.error(`Failed to start simulation: ${err.message}`);
@@ -77,26 +117,24 @@ export default function SimulationPage() {
     }
   };
 
-  const runSim = async () => {
-    setLoading(true);
-    try {
-      const { data } = await api.post("/scenarios/run", {
-        name: simType,
-        modifications: [{ type: simType, target: "R12", params: { headway } }],
-      });
-      setResult(data);
-    } catch (err: any) { showToast.error(`Simulation failed: ${err.message}`); } finally { setLoading(false); }
+  const driftColor = (status: string) => {
+    if (status === "critical") return "bg-red-500 text-white";
+    if (status === "warning") return "bg-amber-500 text-white";
+    return "bg-green-500 text-white";
   };
 
-  const pctColor = (val: number, positiveIsGood = true) =>
-    val >= 0 ? (positiveIsGood ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400") : (positiveIsGood ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400");
+  const errorColor = (pct: number) => {
+    if (pct > 15) return "text-red-600 dark:text-red-400";
+    if (pct > 8) return "text-amber-600 dark:text-amber-400";
+    return "text-green-600 dark:text-green-400";
+  };
 
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold dark:text-white">Simulation</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Run transit simulations and monitor real-time model validation.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Real-time DTS-GSSF model validation and passenger flow simulation across all stations.</p>
         </div>
         <div className="flex items-center gap-3">
           <Badge variant="default" className="flex items-center gap-1.5">
@@ -112,30 +150,30 @@ export default function SimulationPage() {
         </div>
       </div>
 
-      {/* Simulation engine controls */}
+      {/* Engine controls + status */}
       <Card>
         <CardHeader>
           <CardTitle className="text-sm">Engine Control</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-3">
-            <Button
-              onClick={handleStart}
-              disabled={running || startingSim}
-              className="flex items-center gap-2"
-            >
+          <div className="flex items-center gap-4">
+            <Button onClick={handleStart} disabled={running || startingSim} className="flex items-center gap-2">
               <Play className="h-4 w-4" />
               {startingSim ? "Starting..." : "Start Engine"}
             </Button>
-            <Button
-              onClick={handleStop}
-              disabled={!running || stoppingSim}
-              variant="destructive"
-              className="flex items-center gap-2"
-            >
+            <Button onClick={handleStop} disabled={!running || stoppingSim} variant="destructive" className="flex items-center gap-2">
               <Square className="h-4 w-4" />
               {stoppingSim ? "Stopping..." : "Stop Engine"}
             </Button>
+            {simState && (
+              <div className="ml-auto flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {simState.current_time ?? "—"}</span>
+                <span className="flex items-center gap-1"><Users className="h-3 w-3" /> {simState.station_count ?? 0} stations</span>
+                <Badge className={driftColor(simState.drift_status)}>
+                  Drift: {simState.drift_status.toUpperCase()}
+                </Badge>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -143,92 +181,118 @@ export default function SimulationPage() {
       {/* Real-time validation metrics */}
       <SimulationMetrics />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Scenario planner */}
-        <Card>
-          <CardHeader><CardTitle>Configure Scenario</CardTitle></CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Simulation Type</label>
-              <select className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:text-gray-100" value={simType} onChange={(e) => setSimType(e.target.value)}>
-                {SIMULATION_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-              </select>
-            </div>
-            {simType === "frequency" && (
-              <div>
-                <label className="block text-sm font-medium mb-1">New Headway (min)</label>
-                <input type="range" min={2} max={20} value={headway} onChange={(e) => setHeadway(Number(e.target.value))} className="w-full" />
-                <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{headway} min between buses</p>
-              </div>
-            )}
-            {simType === "demand_surge" && (
-              <div>
-                <label className="block text-sm font-medium mb-1">Surge Factor</label>
-                <input type="range" min={110} max={200} value={headway * 10} onChange={(e) => setHeadway(Math.round(Number(e.target.value) / 10))} className="w-full" />
-                <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{Math.round(headway * 10)}% of normal demand</p>
-              </div>
-            )}
-            <Button onClick={runSim} disabled={loading} className="w-full">{loading ? "Running..." : "Run Scenario"}</Button>
-          </CardContent>
-        </Card>
-
-        {result && (
-          <Card>
-            <CardHeader><CardTitle>Impact Projection</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3"><p className="text-xs text-gray-500 dark:text-gray-400">Metric</p></div>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3"><p className="text-xs text-gray-500 dark:text-gray-400">Baseline</p></div>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3"><p className="text-xs text-gray-500 dark:text-gray-400">Simulated</p></div>
-                <div className="rounded-lg p-3"><p className="text-xs text-gray-500 dark:text-gray-400">Ridership</p></div>
-                <div className="rounded-lg p-3"><p className="text-lg font-bold dark:text-white">{result.base_metrics.ridership.toLocaleString()}</p></div>
-                <div className="rounded-lg p-3"><p className="text-lg font-bold dark:text-white">{result.scenario_metrics.ridership.toLocaleString()}</p></div>
-                <div className="rounded-lg p-3"><p className="text-xs text-gray-500 dark:text-gray-400">Avg Wait</p></div>
-                <div className="rounded-lg p-3"><p className="text-lg font-bold dark:text-white">{result.base_metrics.avg_wait} min</p></div>
-                <div className="rounded-lg p-3"><p className="text-lg font-bold dark:text-white">{result.scenario_metrics.avg_wait} min</p></div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center">
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ridership Change</p>
-                  <p className={`text-2xl font-bold ${pctColor(result.changes.ridership)}`}>{result.changes.ridership > 0 ? "+" : ""}{result.changes.ridership}%</p>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center">
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Wait Time Change</p>
-                  <p className={`text-2xl font-bold ${pctColor(result.changes.avg_wait, false)}`}>{result.changes.avg_wait > 0 ? "+" : ""}{result.changes.avg_wait}%</p>
-                </div>
-              </div>
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                <p className="text-sm font-medium text-blue-800 dark:text-blue-300">
-                  {result.changes.ridership > 0
-                    ? `Ridership increases by ${result.changes.ridership}% with ${result.changes.avg_wait > 0 ? "longer" : "shorter"} wait times.`
-                    : `Ridership decreases by ${Math.abs(result.changes.ridership)}% — consider adjusting parameters.`}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-
-      {/* Simulation type cards */}
+      {/* Station-level simulation data */}
       <Card>
-        <CardHeader><CardTitle>Simulation Types</CardTitle></CardHeader>
+        <CardHeader className="flex-row items-center justify-between">
+          <CardTitle className="text-sm">Station-Level Simulation Data</CardTitle>
+          {stationData.length > 0 && (
+            <span className="text-xs text-gray-400">Updates every 5s · {stationData.length} stations</span>
+          )}
+        </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {SIMULATION_TYPES.map((t) => (
-              <button key={t.value} onClick={() => setSimType(t.value)}
-                className={`p-4 rounded-lg border-2 text-left transition-colors ${simType === t.value ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20" : "border-gray-200 dark:border-gray-700 hover:border-gray-300"}`}>
-                <p className="font-medium text-sm dark:text-white">{t.label}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {t.value === "frequency" && "Adjust bus frequency and headway"}
-                  {t.value === "route_add" && "Add a new route to the network"}
-                  {t.value === "station_close" && "Simulate station closure impact"}
-                  {t.value === "demand_surge" && "Model demand surge scenarios"}
-                </p>
-              </button>
-            ))}
-          </div>
+          {!running && !simState?.running ? (
+            <div className="text-center py-12">
+              <Activity className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+              <p className="text-gray-500 dark:text-gray-400 text-sm">Start the simulation engine to view real-time station data.</p>
+              <p className="text-gray-400 text-xs mt-1">Data refreshes every 5 seconds with predicted vs actual passenger counts.</p>
+            </div>
+          ) : stationData.length === 0 ? (
+            <div className="text-center py-8">
+              <div className="animate-pulse flex flex-col items-center gap-2">
+                <Activity className="h-8 w-8 text-blue-400" />
+                <p className="text-sm text-gray-400">Waiting for simulation data...</p>
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b dark:border-gray-700 text-left">
+                    <th className="pb-2 pr-4 font-semibold text-gray-500 dark:text-gray-400">Stop Name</th>
+                    <th className="pb-2 pr-4 font-semibold text-gray-500 dark:text-gray-400 text-right">Actual Passengers</th>
+                    <th className="pb-2 pr-4 font-semibold text-gray-500 dark:text-gray-400 text-right">Forecast</th>
+                    <th className="pb-2 pr-4 font-semibold text-gray-500 dark:text-gray-400 text-right">Accuracy</th>
+                    <th className="pb-2 pr-4 font-semibold text-gray-500 dark:text-gray-400 text-right">Forecast Range</th>
+                    <th className="pb-2 font-semibold text-gray-500 dark:text-gray-400 text-right">Error Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stationData.slice(0, 20).map((s) => (
+                    <tr key={s.station_id} className="border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                      <td className="py-2 pr-4 font-medium dark:text-white truncate max-w-[200px]">{s.name}</td>
+                      <td className="py-2 pr-4 text-right font-mono dark:text-gray-300">{s.actual.toLocaleString()}</td>
+                      <td className="py-2 pr-4 text-right font-mono dark:text-gray-300">{s.predicted.toLocaleString()}</td>
+                      <td className="py-2 pr-4 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <div className="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div className="h-full bg-blue-500 rounded-full" style={{ width: `${s.confidence * 100}%` }} />
+                          </div>
+                          <span className="text-xs font-mono text-gray-500">{(s.confidence * 100).toFixed(0)}%</span>
+                        </div>
+                      </td>
+                      <td className="py-2 pr-4 text-right font-mono text-xs text-gray-400">
+                        {s.confidence_lower.toLocaleString()} – {s.confidence_upper.toLocaleString()}
+                      </td>
+                      <td className={`py-2 text-right font-mono font-medium ${errorColor(s.error_pct)}`}>
+                        {s.error_pct.toFixed(1)}%
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {stationData.length > 20 && (
+                <p className="text-xs text-gray-400 mt-2 text-center">Showing top 20 of {stationData.length} stations</p>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
+
+      {/* Summary cards */}
+      {stationData.length > 0 && (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <Users className="h-3 w-3" /> Total Actual Passengers
+              </div>
+              <p className="text-xl font-bold dark:text-white">
+                {stationData.reduce((sum, s) => sum + s.actual, 0).toLocaleString()}
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <BarChart3 className="h-3 w-3" /> Total Forecasted
+              </div>
+              <p className="text-xl font-bold dark:text-white">
+                {stationData.reduce((sum, s) => sum + s.predicted, 0).toLocaleString()}
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <TrendingUp className="h-3 w-3" /> Average Accuracy
+              </div>
+              <p className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                {(stationData.reduce((sum, s) => sum + s.confidence, 0) / stationData.length * 100).toFixed(1)}%
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <AlertTriangle className="h-3 w-3" /> Stops with High Error
+              </div>
+              <p className={`text-xl font-bold ${stationData.filter(s => s.error_pct > 15).length > 0 ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"}`}>
+                {stationData.filter(s => s.error_pct > 15).length} / {stationData.length}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

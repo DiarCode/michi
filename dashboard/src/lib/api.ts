@@ -25,8 +25,17 @@ import type {
   TimelineResponse,
 } from "@/types";
 
+// Derive API URL from current page location so it works through nginx proxy
+function getAPIBaseURL(): string {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL as string;
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}/api/v1`;
+  }
+  return "http://localhost:8000/api/v1";
+}
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1",
+  baseURL: getAPIBaseURL(),
 });
 
 // Stations
@@ -124,6 +133,9 @@ export const fetchExecutiveTrends = (days?: number): Promise<AnalyticsTrends> =>
 
 export const fetchROISummary = (): Promise<Record<string, unknown>> =>
   api.get("/executive/roi").then((r) => r.data);
+
+export const fetchFinancialSummary = (): Promise<Record<string, unknown>> =>
+  api.get("/executive/financial").then((r) => r.data);
 
 // Depot
 export const fetchDepotStatus = (): Promise<DepotStatus> =>

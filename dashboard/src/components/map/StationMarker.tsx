@@ -99,15 +99,15 @@ export default function StationMarker({ station, onClick, hour = new Date().getH
           {timelineMode === "historical" && timelineData ? (
             <div className="text-gray-500">
               {timelineData.actual !== null ? (
-                <span>Actual: {Math.round(timelineData.actual)} pax</span>
+                <span>Actual: {Math.round(timelineData.actual)} passengers</span>
               ) : timelineData.predicted !== null ? (
-                <span>Predicted: {Math.round(timelineData.predicted)} pax ({Math.round(timelineData.confidence_upper ?? timelineData.predicted)}-{Math.round(timelineData.confidence_lower ?? timelineData.predicted)})</span>
+                <span>Forecast: {Math.round(timelineData.predicted)} passengers (range: {Math.round(timelineData.confidence_lower ?? timelineData.predicted)}–{Math.round(timelineData.confidence_upper ?? timelineData.predicted)})</span>
               ) : (
-                <span>{station.ridership_24h ?? "—"} pax/24h · {load}% load</span>
+                <span>{station.ridership_24h?.toLocaleString() ?? "—"} passengers/day · {load}% capacity</span>
               )}
             </div>
           ) : (
-            <div className="text-gray-500">{station.ridership_24h ?? "—"} pax/24h · {load}% load</div>
+            <div className="text-gray-500">{station.ridership_24h?.toLocaleString() ?? "—"} passengers/day · {load}% load</div>
           )}
         </div>
       </MarkerTooltip>
@@ -120,31 +120,30 @@ export default function StationMarker({ station, onClick, hour = new Date().getH
             <>
               {timelineData.actual !== null && (
                 <div className="mt-1 text-xs">
-                  <span>Actual Ridership: </span>
-                  <span className="font-mono font-bold text-gray-600">{Math.round(timelineData.actual)} pax</span>
+                  <span>Actual Passengers: </span>
+                  <span className="font-mono font-bold text-gray-600">{Math.round(timelineData.actual)}</span>
                 </div>
               )}
               {timelineData.predicted !== null && (
                 <div className="mt-1 text-xs">
-                  <span>Predicted: </span>
-                  <span className="font-mono font-bold text-purple-600">{Math.round(timelineData.predicted)} pax</span>
+                  <span>Forecast: </span>
+                  <span className="font-mono font-bold text-purple-600">{Math.round(timelineData.predicted)} passengers</span>
                 </div>
               )}
               {timelineData.confidence_upper !== null && timelineData.confidence_lower !== null && (
                 <div className="text-xs text-gray-400">
-                  Range: {Math.round(timelineData.confidence_lower)} – {Math.round(timelineData.confidence_upper)} pax
+                  Range: {Math.round(timelineData.confidence_lower)} – {Math.round(timelineData.confidence_upper)} passengers
                 </div>
               )}
             </>
           ) : (
             <>
               <div className="mt-1 text-xs">
-                <span>Ridership: </span>
-                <span className="font-mono">{station.ridership_24h ?? "—"}</span>
-                <span> pax/24h</span>
+                <span>Daily Passengers: </span>
+                <span className="font-mono">{station.ridership_24h?.toLocaleString() ?? "—"}</span>
               </div>
               <div className="text-xs">
-                <span>Load: </span>
+                <span>Capacity Used: </span>
                 <span className="font-mono font-bold" style={{ color }}>{load}%</span>
               </div>
             </>
@@ -152,8 +151,8 @@ export default function StationMarker({ station, onClick, hour = new Date().getH
 
           {predictedLoad !== undefined && (
             <div className="text-xs mt-1 pt-1 border-t border-gray-200">
-              <span>Predicted: </span>
-              <span className="font-mono font-bold text-blue-600">{predictedLoad} pax</span>
+              <span>Forecast: </span>
+              <span className="font-mono font-bold text-blue-600">{predictedLoad} passengers</span>
             </div>
           )}
         </div>

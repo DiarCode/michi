@@ -9,6 +9,12 @@ from backend.database import Base
 from backend.models_orm import StationORM, RouteORM, RouteStopORM, AlertORM, RidershipORM, ForecastORM
 
 config = context.config
+
+# Override sqlalchemy.url with DATABASE_URL env var if set
+db_url = os.getenv("DATABASE_URL")
+if db_url:
+    config.set_main_option("sqlalchemy.url", db_url)
+
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 

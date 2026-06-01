@@ -2,11 +2,14 @@ import type { BusPosition } from "@/types";
 import { MapMarker, MarkerContent, MarkerTooltip, MarkerPopup } from "@/components/ui/map";
 import { LOAD_HIGH, LOAD_MID } from "@/lib/constants";
 
-interface Props { bus: BusPosition }
+interface Props { bus: BusPosition; routeColor?: string }
 
-export default function BusMarker({ bus }: Props) {
+export default function BusMarker({ bus, routeColor }: Props) {
   const occ = bus.occupancy_percent ?? 0;
-  const color = occ > LOAD_HIGH ? "#ef4444" : occ > LOAD_MID ? "#f59e0b" : "#22c55e";
+  const loadColor = occ > LOAD_HIGH ? "#ef4444" : occ > LOAD_MID ? "#f59e0b" : "#22c55e";
+  // Use route color as the border, occupancy as the fill — gives clear route identity
+  const markerColor = routeColor ?? loadColor;
+  const borderColor = routeColor ? loadColor : "#ffffff";
   const badgeBg = occ > LOAD_HIGH ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300" : occ > LOAD_MID ? "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300" : "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300";
 
   return (
@@ -14,8 +17,8 @@ export default function BusMarker({ bus }: Props) {
       <MarkerContent>
         <div className="relative">
           <div
-            className="rounded-full border-2 border-white dark:border-gray-900 shadow-lg animate-pulse cursor-pointer"
-            style={{ backgroundColor: color, width: 16, height: 16 }}
+            className="rounded-full border-2 shadow-lg animate-pulse cursor-pointer"
+            style={{ backgroundColor: markerColor, borderColor, width: 18, height: 18 }}
           />
           <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold whitespace-nowrap bg-white/90 px-1 rounded">
             {bus.bus_id}

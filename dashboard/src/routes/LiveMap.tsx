@@ -1,56 +1,32 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import MapContainer from "@/components/map/MapContainer";
 import TimelineBar from "@/components/map/TimelineBar";
 import { useStations } from "@/hooks/useStations";
 import { useTimeline } from "@/hooks/useTimeline";
-import { fetchRoutes, fetchStationDetail, fetchRouteForecast, fetchPredictions } from "@/lib/api";
+import { fetchStationDetail } from "@/lib/api";
 import { showToast } from "@/lib/toast";
 import { useBusStore } from "@/stores/busStore";
-import type { BusPosition, Route, StationDetail, RouteForecast, PredictionPoint } from "@/types";
-
-const PREDICTION_HORIZONS = [
-  { label: "Now", minutes: 0 },
-  { label: "+15m", minutes: 15 },
-  { label: "+30m", minutes: 30 },
-  { label: "+1h", minutes: 60 },
-  { label: "+2h", minutes: 120 },
-] as const;
+import type { BusPosition, StationDetail } from "@/types";
 
 export default function LiveMap() {
-  const { data, isLoading } = useStations();
+  const { mode: timelineMode, currentTime, getStationData: getTimelineStationData } = useTimeline();
+
+  // Derive hour from timeline position so station colors/heatmap update when scrubber moves
+  const timelineHour = useMemo(() => {
+    if (timelineMode === "historical" && currentTime) {
+      return new Date(currentTime).getHours();
+    }
+    return new Date().getHours();
+  }, [timelineMode, currentTime]);
+
+  const { data, isLoading } = useStations(timelineHour);
   const stations = data?.stations ?? [];
   const busPositions = useBusStore((s) => s.buses);
   const buses: BusPosition[] = useMemo(() => Object.values(busPositions) as unknown as BusPosition[], [busPositions]);
 
-  // Timeline integration
-  const { mode: timelineMode, currentTime: _timelineTime, getStationData: getTimelineStationData } = useTimeline();
-
-  const [routes, setRoutes] = useState<Route[]>([]);
-  const [selectedRoutes, setSelectedRoutes] = useState<Set<string>>(new Set());
-  const [showHeatmap, setShowHeatmap] = useState(true);
   const [selectedStation, setSelectedStation] = useState<StationDetail | null>(null);
-  const [routeForecast, setRouteForecast] = useState<RouteForecast | null>(null);
   const [loading, setLoading] = useState(false);
-  const [predictions, setPredictions] = useState<PredictionPoint[]>([]);
-  const [horizonMinutes, setHorizonMinutes] = useState<number>(0);
-  const [currentTime, setCurrentTime] = useState<string>(
-    new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-  );
-
-  useEffect(() => { fetchRoutes().then((r) => setRoutes(r.routes ?? [])).catch((err) => showToast.error(`Failed to load routes: ${err.message}`)); }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    fetchPredictions(horizonMinutes || undefined)
-      .then((r) => setPredictions(r.predictions ?? []))
-      .catch((err) => { showToast.error(`Failed to load predictions: ${err.message}`); setPredictions([]); });
-  }, [horizonMinutes]);
+  const [showHeatmap, setShowHeatmap] = useState(true);
 
   const handleStationClick = async (stationId: string) => {
     setLoading(true);
@@ -59,226 +35,133 @@ export default function LiveMap() {
     setLoading(false);
   };
 
-  const handleRouteClick = async (routeId: string) => {
-    try { setRouteForecast(await fetchRouteForecast(routeId)); }
-    catch (err: any) { showToast.error(`Failed to load route forecast: ${err.message}`); setRouteForecast(null); }
-  };
-
-  const toggleRoute = (id: string) => {
-    setSelectedRoutes((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
-  };
-
-  // In historical mode, hide buses (they don't exist in the past)
-  const filteredBuses = timelineMode === "historical"
-    ? []
-    : selectedRoutes.size > 0
-      ? buses.filter((b) => selectedRoutes.has(b.route_id))
-      : buses;
+  // In historical mode, hide buses; otherwise show all
+  const visibleBuses = timelineMode === "historical" ? [] : buses;
 
   if (isLoading) {
-    return (
-      <div className="flex h-[calc(100vh-4rem)]">
-        <div className="w-72 bg-white dark:bg-gray-900 border-r dark:border-gray-700 p-4 space-y-4">
-          <div className="animate-pulse space-y-3">
-            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
-          </div>
-        </div>
-        <div className="flex-1 bg-gray-100 dark:bg-gray-800 animate-pulse" />
-      </div>
-    );
+    return <div className="h-[calc(100vh-4rem)] bg-gray-100 dark:bg-gray-800 animate-pulse" />;
   }
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
-      <div className="w-72 bg-white dark:bg-gray-900 border-r dark:border-gray-700 overflow-y-auto p-4 space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold text-lg dark:text-white">
-            {timelineMode === "historical" ? "Timeline View" : "Live Map"}
-          </h2>
-          <span className="text-xs font-mono text-gray-500 dark:text-gray-400">{currentTime}</span>
-        </div>
+    <div className="h-[calc(100vh-4rem)] flex flex-col">
+      {/* Full-width map area */}
+      <div className="flex-1 relative">
+        <MapContainer
+          stations={stations}
+          buses={visibleBuses}
+          hour={timelineHour}
+          onStationClick={handleStationClick}
+          showHeatmap={showHeatmap}
+          timelineMode={timelineMode}
+          getTimelineStationData={getTimelineStationData}
+        />
 
-        {/* Timeline mode indicator */}
-        {timelineMode === "historical" && (
-          <div className="bg-amber-50 dark:bg-amber-900/30 rounded p-2 text-xs text-amber-700 dark:text-amber-300">
-            Viewing historical data. Drag the timeline or click "Return to Live" to resume.
+        {/* Floating heatmap toggle (top-right) */}
+        <button
+          onClick={() => setShowHeatmap(!showHeatmap)}
+          className="absolute top-4 right-4 z-10 px-3 py-1.5 text-xs font-medium rounded-lg shadow-md transition-colors bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-900"
+        >
+          {showHeatmap ? "● Heatmap" : "○ Heatmap"}
+        </button>
+
+        {/* Floating bus count badge (top-left) */}
+        {visibleBuses.length > 0 && (
+          <div className="absolute top-4 left-4 z-10 px-3 py-1.5 text-xs font-medium rounded-lg shadow-md bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-700 dark:text-gray-300">
+            {visibleBuses.length} buses active · {String(timelineHour).padStart(2, "0")}:00
           </div>
         )}
 
-        <div>
-          <h3 className="font-semibold text-sm mb-2 dark:text-gray-300">Prediction Horizon</h3>
-          <div className="flex gap-1">
-            {PREDICTION_HORIZONS.map((h) => (
-              <button
-                key={h.minutes}
-                onClick={() => setHorizonMinutes(h.minutes)}
-                className={`px-2 py-1 text-xs rounded font-medium transition-colors ${
-                  horizonMinutes === h.minutes
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
-              >
-                {h.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Station detail overlay (right panel, only when a station is clicked) */}
+        {selectedStation && (
+          <div className="absolute top-0 right-0 w-80 h-full bg-white/95 dark:bg-gray-900/95 shadow-lg overflow-y-auto p-4">
+            <button onClick={() => setSelectedStation(null)} className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">✕</button>
+            <h3 className="font-bold text-lg dark:text-white">{selectedStation.station.name}</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{selectedStation.station.district} · {selectedStation.station.ridership_24h?.toLocaleString() ?? "—"} passengers per day</p>
 
-        <div className="border-t dark:border-gray-700 pt-3">
-          <h3 className="font-semibold text-sm mb-2 dark:text-gray-300">Route Filter</h3>
-          <div className="space-y-1 max-h-48 overflow-y-auto">
-            {routes.map((r) => (
-              <label key={r.id} className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={selectedRoutes.has(r.id)} onChange={() => toggleRoute(r.id)} className="rounded" />
-                <span className="w-3 h-3 rounded-full inline-block flex-shrink-0" style={{ backgroundColor: r.color ?? "#888" }} />
-                <span className="text-sm dark:text-gray-300 truncate">{r.name}</span>
-                <span className="text-xs text-gray-400 ml-auto">{r.stop_count} stops</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="border-t dark:border-gray-700 pt-3">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" checked={showHeatmap} onChange={(e) => setShowHeatmap(e.target.checked)} />
-            <span className="text-sm dark:text-gray-300">Show Heatmap</span>
-          </label>
-        </div>
-
-        {routeForecast && (
-          <div className="border-t dark:border-gray-700 pt-3">
-            <h3 className="font-semibold text-sm mb-2 dark:text-gray-300">{routeForecast.route?.name ?? routeForecast.route_id}</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{routeForecast.stop_count} stops · avg {routeForecast.avg_ridership}/hr</p>
-            <div className="mt-2 space-y-1 max-h-40 overflow-y-auto">
-              {routeForecast.forecast.slice(0, 8).map((f) => (
-                <div key={f.hour} className="flex justify-between text-xs dark:text-gray-400">
-                  <span>{String(f.hour).padStart(2, "0")}:00</span>
-                  <span className="font-mono">{f.predicted} pax</span>
-                  <span className="text-gray-400">{(f.confidence * 100).toFixed(0)}%</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {predictions.length > 0 && (
-          <div className="border-t dark:border-gray-700 pt-3">
-            <h3 className="font-semibold text-sm mb-1 dark:text-gray-300">
-              Predictions {horizonMinutes > 0 ? `(+${horizonMinutes}m)` : "(Now)"}
-            </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{predictions.length} stations</p>
-          </div>
-        )}
-      </div>
-
-      <div className="flex-1 flex flex-col relative">
-        <div className="flex-1 relative">
-          <MapContainer
-            stations={stations}
-            buses={filteredBuses}
-            onStationClick={handleStationClick}
-            showHeatmap={showHeatmap}
-            predictions={predictions}
-            timelineMode={timelineMode}
-            getTimelineStationData={getTimelineStationData}
-          />
-
-          {selectedStation && (
-            <div className="absolute top-0 right-0 w-80 h-full bg-white/95 dark:bg-gray-900/95 shadow-lg overflow-y-auto p-4">
-              <button onClick={() => setSelectedStation(null)} className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-lg">✕</button>
-              <h3 className="font-bold text-lg dark:text-white">{selectedStation.station.name}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{selectedStation.station.district} · {selectedStation.station.ridership_24h} pax/24h</p>
-
-              {/* Show timeline data in station detail panel when in historical mode */}
-              {timelineMode === "historical" && (() => {
-                const td = getTimelineStationData(selectedStation.station.id);
-                if (!td) return null;
-                return (
-                  <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-900/30 rounded text-xs">
-                    <div className="font-semibold text-amber-700 dark:text-amber-300 mb-1">
-                      Timeline Data
+            {timelineMode === "historical" && (() => {
+              const td = getTimelineStationData(selectedStation.station.id);
+              if (!td) return null;
+              return (
+                <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-900/30 rounded text-xs">
+                  <div className="font-semibold text-amber-700 dark:text-amber-300 mb-1">Timeline Data</div>
+                  {td.actual !== null && (
+                    <div className="text-gray-600 dark:text-gray-300">
+                      Actual: <span className="font-mono font-bold">{Math.round(td.actual)} passengers</span>
                     </div>
-                    {td.actual !== null && (
-                      <div className="text-gray-600 dark:text-gray-300">
-                        Actual: <span className="font-mono font-bold">{Math.round(td.actual)} pax</span>
-                      </div>
-                    )}
-                    {td.predicted !== null && (
-                      <div className="text-purple-700 dark:text-purple-300">
-                        Predicted: <span className="font-mono font-bold">{Math.round(td.predicted)} pax</span>
-                        {td.confidence_upper !== null && td.confidence_lower !== null && (
-                          <span className="text-gray-400 ml-1">
-                            ({Math.round(td.confidence_lower)}–{Math.round(td.confidence_upper)})
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
+                  )}
+                  {td.predicted !== null && (
+                    <div className="text-purple-700 dark:text-purple-300">
+                      Forecast: <span className="font-mono font-bold">{Math.round(td.predicted)} passengers</span>
+                      {td.confidence_upper !== null && td.confidence_lower !== null && (
+                        <span className="text-gray-400 ml-1">
+                          (range: {Math.round(td.confidence_lower)}–{Math.round(td.confidence_upper)})
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
-              {selectedStation.connected_routes.length > 0 && (
-                <div className="mt-3">
-                  <h4 className="font-semibold text-sm dark:text-gray-300">Connected Routes</h4>
-                  <div className="flex gap-2 mt-1 flex-wrap">
-                    {selectedStation.connected_routes.map((r) => (
-                      <button key={r.id} onClick={() => handleRouteClick(r.id)} className="px-2 py-1 text-xs rounded-full text-white" style={{ backgroundColor: r.color ?? "#888" }}>{r.name}</button>
-                    ))}
-                  </div>
+            {selectedStation.connected_routes.length > 0 && (
+              <div className="mt-3">
+                <h4 className="font-semibold text-sm dark:text-gray-300">Connected Routes</h4>
+                <div className="flex gap-2 mt-1 flex-wrap">
+                  {selectedStation.connected_routes.map((r) => (
+                    <button key={r.id} className="px-2 py-1 text-xs rounded-full text-white" style={{ backgroundColor: r.color ?? "#888" }}>{r.name}</button>
+                  ))}
                 </div>
-              )}
-              {selectedStation.hourly_ridership.length > 0 && (
-                <div className="mt-3">
-                  <h4 className="font-semibold text-sm dark:text-gray-300">Hourly Pattern</h4>
-                  <div className="flex items-end gap-px h-20 mt-1">
-                    {selectedStation.hourly_ridership.map((h) => {
-                      const maxR = Math.max(...selectedStation.hourly_ridership.map((x) => x.ridership), 1);
-                      const pct = (h.ridership / maxR) * 100;
-                      const isRush = (h.hour >= 7 && h.hour <= 9) || (h.hour >= 17 && h.hour <= 19);
-                      return (
-                        <div key={h.hour} className="flex-1 flex flex-col justify-end">
-                          <div className={isRush ? "bg-amber-400" : "bg-gray-300 dark:bg-gray-600"} style={{ height: pct + "%", minHeight: 2 }} />
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="flex justify-between text-[8px] text-gray-400 mt-0.5"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div>
-                </div>
-              )}
-              {selectedStation.forecast.length > 0 && (
-                <div className="mt-3">
-                  <h4 className="font-semibold text-sm dark:text-gray-300">Forecast (next 6h)</h4>
-                  <div className="space-y-1 mt-1">
-                    {selectedStation.forecast.slice(0, 6).map((f, i) => (
-                      <div key={i} className="flex justify-between text-xs dark:text-gray-300">
-                        <span>{new Date(f.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
-                        <span className="font-mono">{f.predicted} pax</span>
-                        <span className="text-gray-400">{(f.confidence * 100).toFixed(0)}%</span>
+              </div>
+            )}
+            {selectedStation.hourly_ridership.length > 0 && (
+              <div className="mt-3">
+                <h4 className="font-semibold text-sm dark:text-gray-300">Hourly Pattern</h4>
+                <div className="flex items-end gap-px h-20 mt-1">
+                  {selectedStation.hourly_ridership.map((h) => {
+                    const maxR = Math.max(...selectedStation.hourly_ridership.map((x) => x.ridership), 1);
+                    const pct = (h.ridership / maxR) * 100;
+                    const isRush = (h.hour >= 7 && h.hour <= 9) || (h.hour >= 17 && h.hour <= 19);
+                    return (
+                      <div key={h.hour} className="flex-1 flex flex-col justify-end">
+                        <div className={isRush ? "bg-amber-400" : "bg-gray-300 dark:bg-gray-600"} style={{ height: pct + "%", minHeight: 2 }} />
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
-              )}
-              {selectedStation.alerts.length > 0 && (
-                <div className="mt-3">
-                  <h4 className="font-semibold text-sm text-red-600">Active Alerts</h4>
-                  {selectedStation.alerts.map((a, i) => (
-                    <div key={i} className="mt-1 p-2 bg-red-50 dark:bg-red-900/30 rounded text-xs dark:text-red-300">
-                      <span className="font-semibold">{a.severity}</span>: {a.title}
+                <div className="flex justify-between text-[8px] text-gray-400 mt-0.5"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div>
+              </div>
+            )}
+            {selectedStation.forecast.length > 0 && (
+              <div className="mt-3">
+                <h4 className="font-semibold text-sm dark:text-gray-300">Forecast (next 6 hours)</h4>
+                <div className="space-y-1 mt-1">
+                  {selectedStation.forecast.slice(0, 6).map((f, i) => (
+                    <div key={i} className="flex justify-between text-xs dark:text-gray-300">
+                      <span>{new Date(f.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                      <span className="font-mono">{f.predicted} passengers</span>
+                      <span className="text-gray-400">{(f.confidence * 100).toFixed(0)}% confidence</span>
                     </div>
                   ))}
                 </div>
-              )}
-              {loading && <p className="text-xs text-gray-400 mt-2">Loading...</p>}
-            </div>
-          )}
-        </div>
-
-        {/* Timeline Bar at the bottom */}
-        <TimelineBar />
+              </div>
+            )}
+            {selectedStation.alerts.length > 0 && (
+              <div className="mt-3">
+                <h4 className="font-semibold text-sm text-red-600">Active Alerts</h4>
+                {selectedStation.alerts.map((a, i) => (
+                  <div key={i} className="mt-1 p-2 bg-red-50 dark:bg-red-900/30 rounded text-xs dark:text-red-300">
+                    <span className="font-semibold">{a.severity}</span>: {a.title}
+                  </div>
+                ))}
+              </div>
+            )}
+            {loading && <p className="text-xs text-gray-400 mt-2">Loading...</p>}
+          </div>
+        )}
       </div>
+
+      {/* Timeline Bar at the bottom */}
+      <TimelineBar />
     </div>
   );
 }

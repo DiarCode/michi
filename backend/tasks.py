@@ -111,6 +111,9 @@ def run_simulation(self):
             # Publish validation metrics
             r.publish("michi:simulation", json.dumps(tick_data["metrics"]))
 
+            # Store latest station-level data in Redis (for /simulation/station-data API)
+            r.set("michi:simulation:latest_station_data", json.dumps(tick_data["stations"]))
+
             # Checkpoint every 60 ticks
             if tick_data["tick"] % 60 == 0:
                 checkpoint = engine.get_checkpoint()

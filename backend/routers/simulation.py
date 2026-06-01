@@ -17,6 +17,7 @@ REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 TASK_ID_KEY = "michi:sim:task_id"
 CHECKPOINT_KEY = "michi:simulation:checkpoint"
 METRICS_HISTORY_KEY = "michi:simulation:metrics_history"
+STATION_DATA_KEY = "michi:simulation:latest_station_data"
 
 
 def _redis():
@@ -112,6 +113,16 @@ def get_simulation_state():
     except Exception:
         pass
 
+    # Derive station_count from checkpoint or station data in Redis
+    station_count = checkpoint.get("station_count")
+    if station_count is None:
+        try:
+            raw_sd = _redis().get(STATION_DATA_KEY)
+            if raw_sd:
+                station_count = len(json.loads(raw_sd))
+        except Exception:
+            pass
+
     return {
         "running": running,
         "task_id": task_id,
@@ -123,7 +134,7 @@ def get_simulation_state():
             "mape": latest_metrics.get("mape") if latest_metrics else None,
             "accuracy": latest_metrics.get("accuracy") if latest_metrics else None,
         } if latest_metrics else {"mae": None, "mape": None, "accuracy": None},
-        "station_count": checkpoint.get("station_count"),
+        "station_count": station_count,
     }
 
 
@@ -179,3 +190,15 @@ def get_simulation_metrics(hours_back: int = 24, db: Session = Depends(get_db_se
         "database": db_metrics,
         "hours_back": hours_back,
     }
+
+
+@router.get("/station-data")
+def get_station_data():
+    """Return latest per-station simulation data (actual, predicted, confidence)."""
+    try:
+        raw = _redis().get(STATION_DATA_KEY)
+        if raw:
+            return {"stations": json.loads(raw), "updated_at": datetime.now(timezone.utc).isoformat()}
+    except Exception:
+        pass
+    return {"stations": {}, "updated_at": None}

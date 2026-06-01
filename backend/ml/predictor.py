@@ -40,9 +40,12 @@ def load_model(artifact_path: str, N: int, n_series: int, n_agg: int, A_phys: np
     return model
 
 
-def get_cached_model() -> Optional[DTSGSSF]:
+def get_cached_model(db_session=None) -> Optional[DTSGSSF]:
     """Get or load the production model (cached across calls)."""
-    artifact = get_production_artifact()
+    if db_session is None:
+        from backend.database import SessionLocal
+        db_session = SessionLocal()
+    artifact = get_production_artifact(db_session)
     if artifact is None:
         return None
 
@@ -122,7 +125,7 @@ def generate_predictions(
 
 def generate_predictions_from_cache(session) -> List[Dict]:
     """Generate predictions using the cached production model."""
-    model = get_cached_model()
+    model = get_cached_model(session)
     if model is None:
         return []
 

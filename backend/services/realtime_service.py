@@ -22,25 +22,26 @@ except (FileNotFoundError, KeyError, Exception):
     pass
 
 _FALLBACK_STOPS = [
-    {"name": "Khan Shatyr", "lat": 51.1334, "lon": 71.4244},
-    {"name": "Bayterek", "lat": 51.1283, "lon": 71.4305},
-    {"name": "Mega Silk Way", "lat": 51.0891, "lon": 71.4050},
-    {"name": "Nurzhol Blvd", "lat": 51.1605, "lon": 71.4704},
-    {"name": "Astana Arena", "lat": 51.1081, "lon": 71.4024},
-    {"name": "Presidential Park", "lat": 51.1250, "lon": 71.4650},
-    {"name": "Central Park", "lat": 51.1400, "lon": 71.4550},
-    {"name": "Talan Towers", "lat": 51.1280, "lon": 71.4350},
+    {"name": "Хан Шатыр", "lat": 51.1335, "lon": 71.4069},
+    {"name": "Байтерек", "lat": 51.1300, "lon": 71.4345},
+    {"name": "Дом Министерств", "lat": 51.1297, "lon": 71.4381},
+    {"name": "ТЦ Keruen City", "lat": 51.1435, "lon": 71.4109},
+    {"name": "Астана Опера", "lat": 51.1362, "lon": 71.4085},
+    {"name": "Министерство обороны", "lat": 51.1260, "lon": 71.4306},
+    {"name": "Парк Ж. Жабаева", "lat": 51.1521, "lon": 71.4433},
+    {"name": "Дворец Жастар", "lat": 51.1717, "lon": 71.4275},
 ]
-_FALLBACK_ROUTE_IDS = ["R12", "R18", "R25", "R31", "R40"]
+_FALLBACK_ROUTE_IDS = ["R12", "R18", "R24", "R30", "R36", "R42", "R48", "R54", "R60", "R66"]
 
 _STOPS = _REAL_STOPS if _REAL_STOPS else _FALLBACK_STOPS
 _ROUTE_IDS = _ROUTE_IDS if _ROUTE_IDS else _FALLBACK_ROUTE_IDS
 
+# Generate a realistic bus fleet: 3-5 buses per route
 BUS_POOL = [
     {"bus_id": f"BUS-{i:03d}", "route_id": _ROUTE_IDS[i % len(_ROUTE_IDS)],
-     "lat": float(_STOPS[i % len(_STOPS)]["lat"]) + random.uniform(-0.005, 0.005),
-     "lon": float(_STOPS[i % len(_STOPS)]["lon"]) + random.uniform(-0.005, 0.005)}
-    for i in range(1, 9)
+     "lat": float(_STOPS[i % len(_STOPS)]["lat"]) + random.uniform(-0.003, 0.003),
+     "lon": float(_STOPS[i % len(_STOPS)]["lon"]) + random.uniform(-0.003, 0.003)}
+    for i in range(1, 1 + len(_ROUTE_IDS) * 4)  # ~4 buses per route
 ]
 
 _STOP_NAMES = [s["name"] for s in _STOPS]

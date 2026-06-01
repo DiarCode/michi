@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import dataclasses
 import datetime as dt
+import glob
 import json
 import logging
 import math
@@ -1919,49 +1920,46 @@ def ui_app() -> None:
     
     # Auto-load on startup
     data_path = os.path.join(os.getcwd(), "data", "bundle.pkl")
-    ckpt_path = os.path.join(os.getcwd(), "checkpoints", "model_best.pt")
     dev = device_auto()
+
+    # Find checkpoint: prefer checkpoints/model_best.pt, else scan artifacts/ for latest .pt
+    ckpt_path = None
+    ckpt_dir_legacy = os.path.join(os.getcwd(), "checkpoints")
+    ckpt_dir_artifacts = os.path.join(os.getcwd(), "artifacts")
+    if os.path.exists(os.path.join(ckpt_dir_legacy, "model_best.pt")):
+        ckpt_path = os.path.join(ckpt_dir_legacy, "model_best.pt")
+    elif os.path.isdir(ckpt_dir_artifacts):
+        pt_files = sorted(glob.glob(os.path.join(ckpt_dir_artifacts, "*.pt")))
+        if pt_files:
+            ckpt_path = pt_files[-1]  # latest by name (timestamp-based)
 
     # Load bundle if exists
     if st.session_state.bundle is None and os.path.exists(data_path):
         st.session_state.bundle = load_bundle_pickle(data_path)
 
     # Auto-load model checkpoint
-    if os.path.exists(ckpt_path):
+    if ckpt_path:
         # Check if bundle matches checkpoint dimensions
         state = torch.load(ckpt_path, map_location=dev)
         ckpt_data_meta = state.get("data_meta", {})
         ckpt_config = state.get("config", {})
-        ckpt_N = ckpt_data_meta.get("N")
-        ckpt_n_series = ckpt_data_meta.get("n_series")
+        # Config may store N/n_series directly when data_meta is empty
+        ckpt_N = ckpt_data_meta.get("N") or ckpt_config.get("N")
+        ckpt_n_series = ckpt_data_meta.get("n_series") or ckpt_config.get("n_series")
 
         bundle = st.session_state.bundle
-        if bundle is not None:
-            bundle_N = bundle.y_bottom.shape[1]
-            bundle_n_series = bundle.y_all.shape[1]
+        # Derive n_agg from BUNDLE (not checkpoint) so model output matches bundle.y_all dimensions.
+        # The checkpoint's n_agg may differ (e.g. 3 vs 15), causing shape mismatches in simulation.
+        # We still load checkpoint weights with strict=False so base layers transfer correctly;
+        # the aggregate head will use random init if sizes differ — acceptable for visualization.
 
-            # Check dimension match
-            if ckpt_N != bundle_N or ckpt_n_series != bundle_n_series:
-                # Generate matching data
-                n_agg_ckpt = ckpt_n_series - ckpt_N if ckpt_n_series else 14
-                n_lines_ckpt = max(1, n_agg_ckpt - 5)  # 4 districts + 1 total
-                days = ckpt_data_meta.get("days", 365)
-                freq_min = ckpt_data_meta.get("freq_min", 10)
-
-                cfg = DataGenConfig(seed=7, days=days, freq_min=freq_min)
-                net = build_astana_network(use_real_data=use_real_data, n_stations=ckpt_N, n_lines=n_lines_ckpt, seed=7)
-                bundle = generate_astana_data(cfg, net)
-                st.session_state.bundle = bundle
-                st.session_state.metrics = None
-                st.session_state.model_info = None
-
-        # Now try to load model
+        # Now try to load model — use bundle dimensions for n_agg/n_series
         if st.session_state.model is None and st.session_state.bundle is not None:
             bundle = st.session_state.bundle
             N = bundle.y_bottom.shape[1]
             F_in = bundle.X.shape[2]
-            n_series = bundle.y_all.shape[1]
-            n_agg = n_series - N
+            n_agg = bundle.y_all.shape[1] - N  # e.g. 389 - 374 = 15
+            n_series = N + n_agg               # matches bundle.y_all.shape[1]
             wcfg_dict = state.get("window_config", {})
             wcfg = WindowConfig(**wcfg_dict) if wcfg_dict else WindowConfig()
 
@@ -1976,7 +1974,21 @@ def ui_app() -> None:
             ).to(dev)
 
             try:
-                model.load_state_dict(state["model_state_dict"])
+                # Filter checkpoint state dict: skip keys where shapes don't match
+                # (e.g. head_agg has different n_agg between checkpoint and bundle)
+                model_state = model.state_dict()
+                ckpt_state_dict = state["model_state_dict"]
+                filtered_state = {}
+                skipped_keys = []
+                for k, v in ckpt_state_dict.items():
+                    if k in model_state:
+                        if v.shape == model_state[k].shape:
+                            filtered_state[k] = v
+                        else:
+                            skipped_keys.append(k)
+                    # else: key not in current model — skip silently
+
+                result = model.load_state_dict(filtered_state, strict=False)
                 model.eval()
                 st.session_state.model = model
                 st.session_state.wcfg = wcfg
@@ -1984,7 +1996,18 @@ def ui_app() -> None:
                     st.session_state.metrics = state["metrics"]
                 if "checkpoint" in state:
                     st.session_state.model_info = checkpoint_summary(state)
-                st.session_state.load_error = None
+                # Log partial-load info
+                total_keys = len(ckpt_state_dict)
+                loaded_keys = len(filtered_state)
+                if skipped_keys or result.missing_keys:
+                    st.session_state.load_error = (
+                        f"Loaded {loaded_keys}/{total_keys} weights. "
+                        f"Skipped: {len(skipped_keys)} size-mismatched, "
+                        f"{len(result.missing_keys)} missing. "
+                        f"Retrain for full compatibility."
+                    )
+                else:
+                    st.session_state.load_error = None
             except Exception as e:
                 st.session_state.load_error = f"Failed to load model: {e}"
 
@@ -3127,11 +3150,8 @@ def main() -> None:
         else:
             cli_main(args)
 
-if __name__ == "__main__":
-    main()
-
 # ----------------------------
-# Export & Utility Functions
+# Export & Utility Functions (must be defined before __main__)
 # ----------------------------
 
 def export_torchscript(model: nn.Module, bundle: DataBundle, wcfg: WindowConfig, device: torch.device) -> bytes:
@@ -3251,3 +3271,6 @@ def batch_forecast_csv(uploaded_file, bundle: DataBundle, model: nn.Module,
             rows.append({"station": station_name, "target_time": str(target_time),
                          "predicted": None, "confidence": None, "error": str(e)})
     return pd.DataFrame(rows)
+
+if __name__ == "__main__":
+    main()

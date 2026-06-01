@@ -1,10 +1,231 @@
 {
-  "build": "uv sync && .venv/Scripts/python -m pytest",
+  "version": "1.0.0",
+  "lastScanned": 1780274443779,
+  "projectRoot": "/Users/diarcode/development/michi",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "fastapi",
+        "version": null,
+        "category": "backend"
+      },
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "find /Users/diarcode/development/michi -type f -not -path '*/.git/*' -not -path '*/__pycache__/*' -not -path '*/.venv/*' -not -path '*/node_modules/*' -not -path '*/.mypy_cache/*' -not -path '*/.pytest_cache/*' | sort",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
   "conventions": {
-    "architecture": "3-layer MLP head (192→384→192→horizon), nn.MultiheadAttention, concatenation fusion, learnable alpha",
-    "model_defaults": "d_model=192, horizon=4, K=3, lora_r=16, n_heads=6, alpha_phys=0.6 (learnable)",
-    "normalization": "Z-score on X only, y untransformed (NB likelihood requires non-negative integers)",
-    "optimizer": "AdamW (not Adam)"
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "directoryMap": {
+    "alembic": {
+      "path": "alembic",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1780274443765,
+      "keyFiles": [
+        "env.py",
+        "script.py.mako"
+      ]
+    },
+    "artifacts": {
+      "path": "artifacts",
+      "purpose": null,
+      "fileCount": 14,
+      "lastAccessed": 1780274443767,
+      "keyFiles": [
+        "dts-gssf-v20260526120936.pt",
+        "dts-gssf-v20260526124654.pt",
+        "dts-gssf-v20260527041822.pt",
+        "dts-gssf-v20260527041822_log.json",
+        "dts-gssf-v20260527041822_norm.json"
+      ]
+    },
+    "backend": {
+      "path": "backend",
+      "purpose": null,
+      "fileCount": 13,
+      "lastAccessed": 1780274443767,
+      "keyFiles": [
+        "Dockerfile",
+        "__init__.py",
+        "app.py",
+        "database.py",
+        "entrypoint.sh"
+      ]
+    },
+    "cache": {
+      "path": "cache",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1780274443768,
+      "keyFiles": [
+        "63a86a77b305ee2eccba1fa19dc55494d6d36d50.json",
+        "fed2b4085544dcfb0a60dc3824105a63d2518f1d.json"
+      ]
+    },
+    "chapters": {
+      "path": "chapters",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1780274443768,
+      "keyFiles": []
+    },
+    "checkpoints": {
+      "path": "checkpoints",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1780274443768,
+      "keyFiles": [
+        "model_best.pt"
+      ]
+    },
+    "configs": {
+      "path": "configs",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1780274443768,
+      "keyFiles": [
+        "paper_config.yaml"
+      ]
+    },
+    "dashboard": {
+      "path": "dashboard",
+      "purpose": null,
+      "fileCount": 13,
+      "lastAccessed": 1780274443768,
+      "keyFiles": [
+        "Dockerfile",
+        "components.json",
+        "frontend.log",
+        "index.html",
+        "nginx.conf"
+      ]
+    },
+    "data": {
+      "path": "data",
+      "purpose": "Data files",
+      "fileCount": 18,
+      "lastAccessed": 1780274443770,
+      "keyFiles": [
+        "__init__.py",
+        "astana_seed7_35d_15m_all.csv",
+        "astana_seed7_35d_15m_bottom.csv",
+        "astana_seed7_365d_10m_all.csv",
+        "astana_seed7_365d_10m_bottom.csv"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 3,
+      "lastAccessed": 1780274443770,
+      "keyFiles": [
+        "THESIS_REPORT.md",
+        "transit-improvement-plan.md"
+      ]
+    },
+    "experiments": {
+      "path": "experiments",
+      "purpose": null,
+      "fileCount": 10,
+      "lastAccessed": 1780274443771,
+      "keyFiles": [
+        "__init__.py",
+        "compute_calibration.py",
+        "compute_integrated_gradients.py",
+        "run_all_gpu.py",
+        "run_baselines.py"
+      ]
+    },
+    "model_eval_q1_full": {
+      "path": "model_eval_q1_full",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1780274443771,
+      "keyFiles": []
+    },
+    "paper": {
+      "path": "paper",
+      "purpose": null,
+      "fileCount": 21,
+      "lastAccessed": 1780274443771,
+      "keyFiles": [
+        "Appendix 23 Methodological Guidelines for Preparing Master’s Theses of «Astana IT University» LLP.md",
+        "defense_presentation.pdf",
+        "defense_presentation.tex",
+        "generate_real_dataset_figures.py",
+        "memoirthesis.aux"
+      ]
+    },
+    "research_output": {
+      "path": "research_output",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1780274443771,
+      "keyFiles": [
+        "training_log.txt"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1780274443771,
+      "keyFiles": [
+        "smoke_test.sh"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 8,
+      "lastAccessed": 1780274443772,
+      "keyFiles": [
+        "__init__.py",
+        "conftest.py",
+        "test_api.py",
+        "test_models_orm.py",
+        "test_osm_parser.py"
+      ]
+    }
   },
   "lint": "ruff check .",
   "notes": [
@@ -14,17 +235,5 @@
     "Metr-LA pipeline at data/metr_la.py",
     "All hyperparameters now aligned between code and paper (Table 8)"
   ],
-  "structure": "backend/ml/model.py = canonical DTSGSSF, main.py = Streamlit app with DTSGSSF copy (now aligned), data/train_model.py = production trainer",
-  "techStack": [
-    "Python",
-    "PyTorch",
-    "FastAPI",
-    "Streamlit",
-    "React/TypeScript",
-    "LaTeX"
-  ],
-  "test": ".venv/Scripts/python -m pytest tests/",
-  "version": "1.0.0",
-  "lastScanned": 1780175475426,
-  "projectRoot": "C:/Users/begis/development/michi"
+  "test": ".venv/Scripts/python -m pytest tests/"
 }
