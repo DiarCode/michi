@@ -1,6 +1,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,106 +8,69 @@
 @layer base {
   :root {
     --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
-    --text-primary: #111827;
-    --text-secondary: #6b7280;
-    --border: oklch(0.922 0 0);
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --bg-secondary: #FBFCF7;
+    --text-primary: #22201F;
+    --text-secondary: #555550;
+    --text-muted: #9C9C95;
+    --border: #E8E8E0;
+    --accent: #B1E743;
+    --accent-light: #D4F080;
+    --accent-dark: #8BC02A;
+    --destructive: #E54D4D;
+
+    --background: #F0F4E8;
+    --foreground: #22201F;
+    --card: #FFFFFF;
+    --card-foreground: #22201F;
+    --popover: #FFFFFF;
+    --popover-foreground: #22201F;
+    --primary: #22201F;
+    --primary-foreground: #FFFFFF;
+    --secondary: #FBFCF7;
+    --secondary-foreground: #22201F;
+    --muted: #FBFCF7;
+    --muted-foreground: #9C9C95;
+    --accent-foreground: #22201F;
+    --input: #E8E8E0;
+    --ring: #B1E743;
+    --chart-1: #B1E743;
+    --chart-2: #D4D4C8;
+    --chart-3: #9C9C95;
+    --chart-4: #555550;
+    --chart-5: #22201F;
+    --radius: 1rem;
+    --sidebar: #FFFFFF;
+    --sidebar-foreground: #22201F;
+    --sidebar-primary: #22201F;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #F0F4E8;
+    --sidebar-accent-foreground: #22201F;
+    --sidebar-border: #E8E8E0;
+    --sidebar-ring: #B1E743;
   }
-  .dark {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border: oklch(1 0 0 / 10%);
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
-  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
+    font-family: 'Geologica', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .dark aside { background-color: #0f172a !important; }
-  .dark header { background-color: #1e293b !important; border-color: #334155 !important; }
-  .dark .bg-white { background-color: #1e293b !important; }
-  .dark .bg-gray-50 { background-color: #0f172a !important; }
-  .dark .bg-gray-100 { background-color: #1e293b !important; }
-  .dark .text-gray-500 { color: #94a3b8 !important; }
-  .dark .text-gray-600 { color: #94a3b8 !important; }
-  .dark .text-gray-900 { color: #f1f5f9 !important; }
-  .dark .border-b { border-color: #334155 !important; }
-  .dark .border { border-color: #334155 !important; }
-  .dark table { color: #f1f5f9; }
-  .dark select, .dark input[type="range"] { background-color: #334155; color: #f1f5f9; border-color: #475569; }
+
   .theme {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
+    --font-sans: 'Geologica', sans-serif;
   }
+
   * {
     border-color: var(--border);
-    outline-color: oklch(0.708 0 0 / 50%);
+    outline-color: rgba(177, 231, 67, 0.5);
   }
+
   html {
-    font-family: 'Geist Variable', system-ui, -apple-system, sans-serif;
+    font-family: 'Geologica', system-ui, -apple-system, sans-serif;
   }
+
+  /* MapLibre popup overrides */
   .maplibregl-popup-content {
     background: transparent !important;
     box-shadow: none !important;
@@ -116,5 +79,46 @@
   }
   .maplibregl-popup-tip {
     display: none !important;
+  }
+
+  /* Custom tooltip style for Recharts */
+  .recharts-tooltip-wrapper .recharts-default-tooltip {
+    background: #22201F !important;
+    border: none !important;
+    border-radius: 0.75rem !important;
+    color: #fff !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15) !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+  .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-label {
+    color: #9C9C95 !important;
+    font-size: 0.75rem !important;
+  }
+  .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-item-list {
+    color: #fff !important;
+  }
+  .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-item {
+    color: #fff !important;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F0F4E8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #D4D4C8;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9C9C95;
+  }
+
+  /* Select styling */
+  select {
+    font-family: 'Geologica', system-ui, -apple-system, sans-serif;
   }
 }

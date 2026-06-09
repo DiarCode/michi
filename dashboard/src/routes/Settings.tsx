@@ -1,48 +1,76 @@
-import { useState, useEffect } from "react";
+// Light-mode only — no state toggle needed
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import type { UserRole } from "@/types";
 import { ROLE_LABELS } from "@/App";
+import { Palette, User } from "lucide-react";
 
 export default function Settings() {
   const currentRole = (localStorage.getItem("michi-role") || "dispatch") as UserRole;
-  const [dark, setDark] = useState(() => localStorage.getItem("michi_dark") === "true");
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-    localStorage.setItem("michi_dark", String(dark));
-  }, [dark]);
 
   return (
-    <div className="p-6 space-y-6">
-      <h2 className="text-2xl font-bold">Settings</h2>
+    <div className="p-8 space-y-8">
+      <div>
+        <h1 className="text-3xl font-extrabold text-michi-dark">Settings</h1>
+        <p className="text-base text-michi-muted mt-1">Application preferences and role configuration</p>
+      </div>
 
       <Card>
-        <CardHeader><CardTitle>Appearance</CardTitle></CardHeader>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Palette size={18} className="text-michi-lime-dark" />
+            Appearance
+          </CardTitle>
+        </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between p-4 bg-michi-warm rounded-xl">
             <div>
-              <p className="font-medium">Dark Mode</p>
-              <p className="text-sm text-gray-500">Switch between light and dark theme.</p>
+              <p className="font-semibold text-michi-dark">Light Mode</p>
+              <p className="text-sm text-michi-muted">The dashboard is optimized for light mode viewing</p>
             </div>
-            <button
-              onClick={() => setDark(!dark)}
-              className={"relative w-12 h-6 rounded-full transition-colors " + (dark ? "bg-blue-600" : "bg-gray-300")}
-            >
-              <span
-                className={"absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform " + (dark ? "translate-x-6" : "translate-x-0")}
-              />
-            </button>
+            <div className="w-12 h-6 rounded-full bg-michi-lime flex items-center justify-end px-0.5">
+              <span className="w-5 h-5 bg-white rounded-full shadow-sm" />
+            </div>
           </div>
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader><CardTitle>Role Selection</CardTitle></CardHeader>
-        <CardContent>
-          <select className="w-full border rounded px-3 py-2" value={currentRole} onChange={(e) => { localStorage.setItem("michi-role", e.target.value); window.location.reload(); }}>
-            {(Object.entries(ROLE_LABELS) as [UserRole, string][]).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-          </select>
-          <p className="text-xs text-gray-500 mt-2">Changing role will reload the page.</p>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <User size={18} className="text-michi-lime-dark" />
+            Role Selection
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-michi-muted font-medium">Select your role to customize navigation and available features</p>
+          <div className="flex flex-wrap gap-2">
+            {(Object.entries(ROLE_LABELS) as [UserRole, string][]).map(([k, v]) => (
+              <button
+                key={k}
+                onClick={() => { localStorage.setItem("michi-role", k); window.location.reload(); }}
+                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all ${
+                  currentRole === k
+                    ? "bg-michi-dark text-white shadow-sm"
+                    : "bg-michi-warm text-michi-body border border-michi-border hover:bg-michi-border"
+                }`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-michi-muted font-medium">Changing role will reload the page</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent className="p-5">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-michi-dark">Version</p>
+              <p className="text-sm text-michi-muted">Michi Dashboard v2.0</p>
+            </div>
+            <span className="text-xs text-michi-muted font-medium">© {new Date().getFullYear()}</span>
+          </div>
         </CardContent>
       </Card>
     </div>

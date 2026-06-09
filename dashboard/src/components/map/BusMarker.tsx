@@ -10,7 +10,7 @@ export default function BusMarker({ bus, routeColor }: Props) {
   // Use route color as the border, occupancy as the fill — gives clear route identity
   const markerColor = routeColor ?? loadColor;
   const borderColor = routeColor ? loadColor : "#ffffff";
-  const badgeBg = occ > LOAD_HIGH ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300" : occ > LOAD_MID ? "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300" : "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300";
+  const badgeBg = occ > LOAD_HIGH ? "bg-michi-red/10 text-michi-red" : occ > LOAD_MID ? "bg-michi-amber/10 text-michi-amber" : "bg-michi-lime/15 text-michi-lime-dark";
 
   return (
     <MapMarker longitude={bus.lon} latitude={bus.lat}>
@@ -31,7 +31,7 @@ export default function BusMarker({ bus, routeColor }: Props) {
       <MarkerPopup>
         <div className="p-2 min-w-[160px]">
           <div className="font-bold text-sm">{bus.bus_id}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Route: {bus.route_id}</div>
+          <div className="text-xs text-michi-muted mt-1">Route: {bus.route_id}</div>
           <div className="text-xs">Speed: {bus.speed_kmh ?? "—"} km/h</div>
           <div className="text-xs">ETA: {bus.eta_seconds ? Math.round(bus.eta_seconds / 60) + " min" : "—"}</div>
           <div className={`inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-bold ${badgeBg}`}>

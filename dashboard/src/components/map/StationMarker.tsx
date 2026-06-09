@@ -88,7 +88,7 @@ export default function StationMarker({ station, onClick, hour = new Date().getH
         />
         {/* Confidence badge for future predictions */}
         {style.badge && (
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 text-[7px] font-bold px-1 rounded">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-michi-purple/10 text-michi-purple text-[7px] font-bold px-1 rounded">
             {style.badge}
           </div>
         )}

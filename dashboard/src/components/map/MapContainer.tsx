@@ -99,6 +99,7 @@ export default function MapContainer({
       <Map
         center={ASTANA_CENTER}
         zoom={ASTANA_ZOOM}
+        theme="light"
         className="w-full h-full rounded-lg overflow-hidden"
       >
         <MapControls showZoom showCompass />
@@ -127,34 +128,34 @@ export default function MapContainer({
       </Map>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-2 rounded-lg shadow-md text-xs space-y-1 z-10">
-        <div className="font-semibold text-gray-700 dark:text-gray-300">Capacity Used</div>
-        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-green-500" /> Low (&lt;50%)</div>
-        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-amber-500" /> Medium (50–80%)</div>
-        <div className="flex items-center gap-1.5 dark:text-gray-300"><span className="w-3 h-3 rounded-full bg-red-500" /> High (&gt;80%)</div>
+      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-md text-xs space-y-1 z-10">
+        <div className="font-semibold text-michi-dark">Capacity Used</div>
+        <div className="flex items-center gap-1.5 text-michi-body"><span className="w-3 h-3 rounded-full bg-green-500" /> Low (&lt;50%)</div>
+        <div className="flex items-center gap-1.5 text-michi-body"><span className="w-3 h-3 rounded-full bg-amber-500" /> Medium (50–80%)</div>
+        <div className="flex items-center gap-1.5 text-michi-body"><span className="w-3 h-3 rounded-full bg-red-500" /> High (&gt;80%)</div>
         {timelineMode === "historical" && (
-          <div className="border-t dark:border-gray-700 pt-1 mt-1 space-y-1">
-            <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+          <div className="border-t border-michi-border pt-1 mt-1 space-y-1">
+            <div className="flex items-center gap-1.5 text-michi-muted">
               <span className="w-3 h-3 rounded-full border-2 border-gray-400" /> Past (actual)
             </div>
-            <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-1.5 text-michi-muted">
               <span className="w-3 h-3 rounded-full border-2 border-dashed border-purple-600 bg-purple-400/30" /> Future (predicted)
             </div>
           </div>
         )}
         {predictions.length > 0 && (
-          <div className="border-t dark:border-gray-700 pt-1 mt-1 text-gray-500 dark:text-gray-400">
+          <div className="border-t border-michi-border pt-1 mt-1 text-michi-muted">
             Showing +{predictions[0]?.horizon_minutes ?? 0}m predictions
           </div>
         )}
       </div>
 
       {/* Info overlay */}
-      <div className="absolute top-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-10">
-        <h3 className="font-bold text-sm text-gray-800 dark:text-white">
+      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-10">
+        <h3 className="font-bold text-sm text-michi-dark">
           {timelineMode === "historical" ? "Historical View" : "Live Tracking"}
         </h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400">
+        <p className="text-xs text-michi-muted">
           {buses.length} buses · {String(hour).padStart(2, "0")}:00
         </p>
       </div>

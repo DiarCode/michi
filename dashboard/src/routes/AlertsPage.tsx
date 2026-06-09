@@ -5,8 +5,18 @@ import { showToast } from "@/lib/toast";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { ListSkeleton } from "@/components/ui/skeleton";
+
+const SEVERITY_OPTIONS = [
+  { value: "all", label: "All" },
+  { value: "critical", label: "Critical" },
+  { value: "high", label: "High" },
+  { value: "medium", label: "Medium" },
+  { value: "warning", label: "Warning" },
+  { value: "low", label: "Low" },
+  { value: "info", label: "Info" },
+];
 
 export default function AlertsPage() {
   const { data, isLoading } = useAlerts();
@@ -20,43 +30,99 @@ export default function AlertsPage() {
     catch (err: any) { showToast.error(`Failed to generate alerts: ${err.message}`); }
   };
 
-  if (isLoading) return <div className="p-6"><ListSkeleton count={3} /></div>;
+  if (isLoading) return <div className="p-8"><ListSkeleton count={3} /></div>;
+
+  const criticalCount = alerts.filter(a => a.severity === "critical" || a.severity === "high").length;
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-bold">Alerts</h2>
-        <div className="flex gap-2">
-          <select className="border rounded px-3 py-1.5 text-sm dark:bg-gray-800 dark:border-gray-600" value={severity} onChange={(e) => setSeverity(e.target.value)}>
-            <option value="all">All Severities</option>
-            <option value="critical">Critical</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="warning">Warning</option>
-            <option value="low">Low</option>
-            <option value="info">Info</option>
-          </select>
-          <Button variant="outline" size="sm" onClick={generateAlerts}>Auto-Generate</Button>
-        </div>
+    <div className="p-8 space-y-8">
+      <div>
+        <h1 className="text-3xl font-extrabold text-michi-dark">Alerts</h1>
+        <p className="text-base text-michi-muted mt-1">Network-wide incident monitoring and response</p>
       </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <Card>
+          <CardContent className="p-5">
+            <span className="text-sm text-michi-muted font-medium">Total Alerts</span>
+            <p className="text-3xl font-extrabold text-michi-dark mt-2">{alerts.length}</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5">
+            <span className="text-sm text-michi-muted font-medium">Critical / High</span>
+            <p className="text-3xl font-extrabold text-michi-red mt-2">{criticalCount}</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5">
+            <span className="text-sm text-michi-muted font-medium">Auto-Generated</span>
+            <p className="text-3xl font-extrabold text-michi-dark mt-2">{alerts.filter(a => a.auto).length}</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5">
+            <span className="text-sm text-michi-muted font-medium">Severity Filter</span>
+            <p className="text-3xl font-extrabold text-michi-lime-dark mt-2 capitalize">{severity === "all" ? "Showing All" : severity}</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="flex gap-2 flex-wrap">
+          {SEVERITY_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => setSeverity(opt.value)}
+              className={`px-4 py-2 text-sm rounded-full font-semibold transition-all ${
+                severity === opt.value
+                  ? "bg-michi-dark text-white shadow-sm"
+                  : "bg-white border border-michi-border text-michi-body hover:bg-michi-warm"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+        <Button variant="outline" size="sm" onClick={generateAlerts}>Auto-Generate</Button>
+      </div>
+
       <div className="space-y-3">
-        {filtered.map((a) => (
-          <Card key={a.id}>
-            <CardContent className="flex items-center gap-4 p-4">
-              <AlertTriangle className={a.severity === "high" || a.severity === "critical" ? "text-red-500" : "text-amber-500"} />
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold">{a.title}</span>
-                  <Badge variant={a.severity === "high" || a.severity === "critical" ? "danger" : a.severity === "medium" || a.severity === "warning" ? "warning" : "default"}>{a.severity}</Badge>
-                  {a.auto && <span className="text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-1.5 py-0.5 rounded">AUTO</span>}
+        {filtered.map((a) => {
+          const isHigh = a.severity === "high" || a.severity === "critical";
+          const isMedium = a.severity === "medium" || a.severity === "warning";
+          const borderColor = isHigh ? "border-l-michi-red" : isMedium ? "border-l-michi-amber" : "border-l-michi-muted";
+          return (
+            <Card key={a.id}>
+              <CardContent className={`flex items-center gap-4 p-5 border-l-4 ${borderColor}`}>
+                <AlertTriangle size={20} className={isHigh ? "text-michi-red shrink-0" : "text-michi-amber shrink-0"} />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-michi-dark">{a.title}</span>
+                    <Badge variant={isHigh ? "danger" : isMedium ? "warning" : "default"}>{a.severity}</Badge>
+                    {a.auto && (
+                      <span className="text-xs bg-michi-warm text-michi-body px-2 py-0.5 rounded-full font-semibold border border-michi-border">AUTO</span>
+                    )}
+                  </div>
+                  <p className="text-sm text-michi-body mt-1">{a.message}</p>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{a.message}</p>
-              </div>
-              <Button variant="outline" size="sm" onClick={() => ack.mutate(a.id)}>Acknowledge</Button>
+                <Button variant="outline" size="sm" onClick={() => ack.mutate(a.id)}>
+                  <CheckCircle2 size={14} className="mr-1" />
+                  Acknowledge
+                </Button>
+              </CardContent>
+            </Card>
+          );
+        })}
+        {filtered.length === 0 && (
+          <Card>
+            <CardContent className="text-center py-12">
+              <CheckCircle2 size={32} className="text-michi-lime mx-auto mb-3" />
+              <p className="text-lg font-semibold text-michi-dark">No active alerts</p>
+              <p className="text-sm text-michi-muted mt-1">All systems operating normally</p>
             </CardContent>
           </Card>
-        ))}
-        {filtered.length === 0 && <p className="text-gray-500 dark:text-gray-400">No active alerts.</p>}
+        )}
       </div>
     </div>
   );

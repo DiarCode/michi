@@ -4,8 +4,8 @@ interface TabsProps { children: ReactNode; className?: string }
 interface TabProps { label: string; active?: boolean; onClick?: () => void }
 
 export function Tabs({ children, className = "" }: TabsProps) {
-  return <div className={`flex border-b ${className}`}>{children}</div>;
+  return <div className={`flex gap-1 ${className}`}>{children}</div>;
 }
 export function Tab({ label, active, onClick }: TabProps) {
-  return <button onClick={onClick} className={`px-4 py-2 text-sm font-medium border-b-2 transition ${active ? "border-blue-600 text-blue-600" : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"}`}>{label}</button>;
+  return <button onClick={onClick} className={`px-4 py-2 text-sm rounded-full font-semibold transition-all ${active ? "bg-michi-dark text-white shadow-sm" : "text-michi-body hover:bg-michi-warm hover:text-michi-dark"}`}>{label}</button>;
 }

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchKPIs } from "@/lib/api";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Route, Users, Clock, AlertTriangle, TrendingUp } from "lucide-react";
 
 const ICONS: Record<string, React.ElementType> = {
@@ -20,16 +20,20 @@ export default function KPIGrid() {
   ];
 
   return (
-    <div className="grid grid-cols-3 lg:grid-cols-6 gap-4">
+    <div className="grid grid-cols-3 lg:grid-cols-6 gap-5">
       {items.map((item) => {
         const Icon = ICONS[item.icon] ?? MapPin;
         return (
-          <Card key={item.label} className="hover:shadow-md transition-shadow">
-            <CardHeader className="pb-2 flex-row items-center justify-between space-y-0">
-              <CardTitle className="text-xs font-medium text-gray-500 dark:text-gray-400">{item.label}</CardTitle>
-              <Icon className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-            </CardHeader>
-            <CardContent><div className="text-2xl font-bold tracking-tight">{item.value}</div></CardContent>
+          <Card key={item.label} className="hover:shadow-card-hover transition-shadow">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-michi-muted">{item.label}</span>
+                <div className="w-8 h-8 rounded-full bg-michi-lime/15 flex items-center justify-center">
+                  <Icon size={16} className="text-michi-lime-dark" />
+                </div>
+              </div>
+              <div className="text-3xl font-extrabold text-michi-dark tracking-tight">{item.value}</div>
+            </CardContent>
           </Card>
         );
       })}

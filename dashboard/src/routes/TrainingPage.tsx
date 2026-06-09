@@ -24,34 +24,36 @@ export default function TrainingPage() {
   });
 
   return (
-    <div className="p-6 space-y-6">
-      <h2 className="text-2xl font-bold">Model Training</h2>
-      <p className="text-sm text-gray-500 dark:text-gray-400">Manage DTS-GSSF model training, monitor status, and upload ridership data.</p>
+    <div className="p-8 space-y-8">
+      <div>
+        <h1 className="text-3xl font-extrabold text-michi-dark">Model Training</h1>
+        <p className="text-base text-michi-muted mt-1">Manage DTS-GSSF model training, monitor status, and upload ridership data</p>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <Card>
-          <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</CardTitle>
-            <Activity className="h-4 w-4 text-gray-400" />
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold capitalize">{status?.status ?? "—"}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{status?.model_version ?? "—"}</p>
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-michi-muted font-medium">Status</span>
+              <div className="w-8 h-8 rounded-full bg-michi-lime/15 flex items-center justify-center">
+                <Activity size={16} className="text-michi-lime-dark" />
+              </div>
+            </div>
+            <p className="text-3xl font-extrabold text-michi-dark capitalize">{status?.status ?? "—"}</p>
+            <p className="text-sm text-michi-muted mt-1">{status?.model_version ?? "—"}</p>
           </CardContent>
         </Card>
-
         <Card>
-          <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">Epochs Trained</CardTitle>
-          </CardHeader>
-          <CardContent><p className="text-2xl font-bold">{status?.epochs_trained ?? "—"}</p></CardContent>
+          <CardContent className="p-5">
+            <span className="text-sm text-michi-muted font-medium">Epochs Trained</span>
+            <p className="text-3xl font-extrabold text-michi-dark mt-2">{status?.epochs_trained ?? "—"}</p>
+          </CardContent>
         </Card>
-
         <Card>
-          <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">Training Time</CardTitle>
-          </CardHeader>
-          <CardContent><p className="text-2xl font-bold">{status?.training_time_seconds ? `${status.training_time_seconds}s` : "—"}</p></CardContent>
+          <CardContent className="p-5">
+            <span className="text-sm text-michi-muted font-medium">Training Time</span>
+            <p className="text-3xl font-extrabold text-michi-dark mt-2">{status?.training_time_seconds ? `${status.training_time_seconds}s` : "—"}</p>
+          </CardContent>
         </Card>
       </div>
 
@@ -59,18 +61,18 @@ export default function TrainingPage() {
         <Card>
           <CardHeader><CardTitle>Model Metrics</CardTitle></CardHeader>
           <CardContent>
-            <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-3 gap-6 text-center">
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">MAE</p>
-                <p className="text-xl font-bold">{status.metrics.mae}</p>
+                <p className="text-sm text-michi-muted font-medium uppercase">MAE</p>
+                <p className="text-3xl font-extrabold text-michi-dark mt-2">{status.metrics.mae}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">RMSE</p>
-                <p className="text-xl font-bold">{status.metrics.rmse}</p>
+                <p className="text-sm text-michi-muted font-medium uppercase">RMSE</p>
+                <p className="text-3xl font-extrabold text-michi-dark mt-2">{status.metrics.rmse}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">MAPE</p>
-                <p className="text-xl font-bold">{status.metrics.mape}%</p>
+                <p className="text-sm text-michi-muted font-medium uppercase">MAPE</p>
+                <p className="text-3xl font-extrabold text-michi-dark mt-2">{status.metrics.mape}%</p>
               </div>
             </div>
           </CardContent>
@@ -80,19 +82,19 @@ export default function TrainingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader><CardTitle>Start Training</CardTitle></CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-5">
             <div>
-              <label className="block text-sm font-medium mb-1">Epochs: {epochs}</label>
-              <input type="range" min={1} max={500} value={epochs} onChange={(e) => setEpochs(Number(e.target.value))} className="w-full" />
-              <div className="flex justify-between text-xs text-gray-400"><span>1</span><span>500</span></div>
+              <label className="block text-sm font-semibold text-michi-dark mb-2">Epochs: {epochs}</label>
+              <input type="range" min={1} max={500} value={epochs} onChange={(e) => setEpochs(Number(e.target.value))} className="w-full accent-michi-lime" />
+              <div className="flex justify-between text-xs text-michi-muted font-medium mt-1"><span>1</span><span>500</span></div>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Estimated time: {epochs * 7}s (~{Math.round(epochs * 7 / 60)}min)</p>
-            <Button onClick={() => trainMut.mutate()} disabled={trainMut.isPending} className="w-full">
-              <Play className="h-4 w-4 mr-2" />
+            <p className="text-sm text-michi-muted font-medium">Estimated time: {epochs * 7}s (~{Math.round(epochs * 7 / 60)}min)</p>
+            <Button onClick={() => trainMut.mutate()} disabled={trainMut.isPending} variant="lime" className="w-full">
+              <Play size={16} className="mr-1.5" />
               {trainMut.isPending ? "Starting..." : "Start Training"}
             </Button>
             {trainMut.data && (
-              <p className="text-sm text-green-600 dark:text-green-400">
+              <p className="text-sm text-michi-lime-dark font-semibold">
                 Training started — {trainMut.data.epochs} epochs, version {trainMut.data.model_version}
               </p>
             )}
@@ -101,19 +103,19 @@ export default function TrainingPage() {
 
         <Card>
           <CardHeader><CardTitle>Upload Ridership Data</CardTitle></CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Upload a CSV with columns: station_id, timestamp, passengers</p>
+          <CardContent className="space-y-5">
+            <p className="text-sm text-michi-muted font-medium">Upload a CSV with columns: station_id, timestamp, passengers</p>
             <input
               type="file" accept=".csv"
               onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-              className="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:bg-blue-50 dark:file:bg-blue-900/30 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/50"
+              className="block w-full text-sm text-michi-body file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-michi-lime/15 file:text-michi-lime-dark hover:file:bg-michi-lime/25"
             />
             <Button onClick={() => uploadMut.mutate()} disabled={!file || uploadMut.isPending} className="w-full">
-              <Upload className="h-4 w-4 mr-2" />
+              <Upload size={16} className="mr-1.5" />
               {uploadMut.isPending ? "Uploading..." : "Upload CSV"}
             </Button>
             {uploadResult && (
-              <p className="text-sm text-green-600 dark:text-green-400">
+              <p className="text-sm text-michi-lime-dark font-semibold">
                 Uploaded {uploadResult.rows_received} rows from {uploadResult.filename}
               </p>
             )}
@@ -122,7 +124,7 @@ export default function TrainingPage() {
       </div>
 
       {status && (
-        <p className="text-xs text-gray-400 dark:text-gray-500">
+        <p className="text-sm text-michi-muted font-medium">
           Last trained: {new Date(status.last_trained).toLocaleString()} · Version: {status.model_version}
         </p>
       )}

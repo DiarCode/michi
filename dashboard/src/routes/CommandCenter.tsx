@@ -13,21 +13,20 @@ import type { Suggestion, Intervention } from "@/types";
 
 function statusIcon(status: string) {
   switch (status) {
-    case "completed": return <CheckCircle className="h-4 w-4 text-green-500" />;
-    case "approved": return <CheckCircle className="h-4 w-4 text-blue-500" />;
-    case "executing": return <Zap className="h-4 w-4 text-amber-500" />;
-    case "cancelled": return <XCircle className="h-4 w-4 text-gray-400" />;
-    default: return <Clock className="h-4 w-4 text-gray-400" />;
+    case "completed": return <CheckCircle className="h-4 w-4 text-michi-lime-dark" />;
+    case "approved": return <CheckCircle className="h-4 w-4 text-michi-teal" />;
+    case "executing": return <Zap className="h-4 w-4 text-michi-amber" />;
+    case "cancelled": return <XCircle className="h-4 w-4 text-michi-muted" />;
+    default: return <Clock className="h-4 w-4 text-michi-muted" />;
   }
 }
 
 function priorityColor(priority: string) {
-  if (priority === "critical" || priority === "high") return "border-l-red-500";
-  if (priority === "medium") return "border-l-amber-500";
-  return "border-l-blue-500";
+  if (priority === "critical" || priority === "high") return "border-l-michi-red";
+  if (priority === "medium") return "border-l-michi-amber";
+  return "border-l-michi-teal";
 }
 
-/** Compact simulation status card for the Command Center */
 function MiniSimulationCard() {
   const { running, tick, metricsHistory } = useSimulationStore();
   const latest = metricsHistory[metricsHistory.length - 1];
@@ -37,44 +36,42 @@ function MiniSimulationCard() {
     : "normal";
 
   const driftBadge = driftStatus === "critical"
-    ? "bg-red-500 text-white"
+    ? "bg-michi-red text-white"
     : driftStatus === "warning"
-    ? "bg-amber-500 text-white"
-    : "bg-green-500 text-white";
+    ? "bg-michi-amber text-white"
+    : "bg-michi-lime text-michi-dark";
 
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-sm flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <Activity className="h-4 w-4 text-blue-500" />
-            Simulation Engine
-          </span>
-          <Link to="/simulation" className="text-xs text-blue-600 hover:underline">
-            View details
-          </Link>
+      <CardHeader className="flex-row items-center justify-between pb-2">
+        <CardTitle className="flex items-center gap-2">
+          <Activity size={18} className="text-michi-lime-dark" />
+          Simulation Engine
         </CardTitle>
+        <Link to="/simulation" className="text-sm text-michi-lime-dark hover:underline font-semibold">
+          View details →
+        </Link>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-4 gap-3 text-center">
+        <div className="grid grid-cols-4 gap-4 text-center">
           <div>
-            <p className="text-[10px] text-gray-500 dark:text-gray-400">Status</p>
-            <Badge className={running ? "bg-green-500 text-white" : "bg-gray-400 text-white"}>
+            <p className="text-sm text-michi-muted mb-1">Status</p>
+            <Badge className={running ? "bg-michi-lime text-michi-dark" : "bg-michi-border text-michi-body"}>
               {running ? "Running" : "Stopped"}
             </Badge>
           </div>
           <div>
-            <p className="text-[10px] text-gray-500 dark:text-gray-400">Tick</p>
-            <p className="text-lg font-bold dark:text-white">{tick}</p>
+            <p className="text-sm text-michi-muted mb-1">Tick</p>
+            <p className="text-2xl font-extrabold text-michi-dark">{tick}</p>
           </div>
           <div>
-            <p className="text-[10px] text-gray-500 dark:text-gray-400">MAPE</p>
-            <p className="text-lg font-bold dark:text-white">
-              {latest?.mape !== undefined ? latest.mape.toFixed(1) : "--"}
+            <p className="text-sm text-michi-muted mb-1">MAPE</p>
+            <p className="text-2xl font-extrabold text-michi-dark">
+              {latest?.mape !== undefined ? latest.mape.toFixed(1) : "—"}
             </p>
           </div>
           <div>
-            <p className="text-[10px] text-gray-500 dark:text-gray-400">Drift</p>
+            <p className="text-sm text-michi-muted mb-1">Drift</p>
             <Badge className={driftBadge}>{driftStatus.toUpperCase()}</Badge>
           </div>
         </div>
@@ -104,41 +101,43 @@ export default function CommandCenter() {
   const interventions = interventionsData?.interventions ?? [];
 
   return (
-    <div className="p-6 space-y-6">
-      <h2 className="text-2xl font-bold dark:text-white">Command Center</h2>
+    <div className="p-8 space-y-8">
+      <div>
+        <h1 className="text-3xl font-extrabold text-michi-dark">Command Center</h1>
+        <p className="text-base text-michi-muted mt-1">Real-time overview of Astana bus network operations</p>
+      </div>
+
       <KPIGrid />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <CongestionHeatmap />
         <AlertTicker />
       </div>
 
-      {/* Mini simulation status card */}
       <MiniSimulationCard />
 
       {suggestions.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Lightbulb className="h-4 w-4 text-amber-500" /> Optimization Suggestions
+            <CardTitle className="flex items-center gap-2">
+              <Lightbulb size={18} className="text-michi-amber" /> Optimization Suggestions
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+            <div className="space-y-3 max-h-72 overflow-y-auto">
               {suggestions.slice(0, 8).map((s: Suggestion, i: number) => (
-                <div key={i} className={`p-3 rounded border-l-4 ${priorityColor(s.priority)} bg-gray-50 dark:bg-gray-800`}>
+                <div key={i} className={`p-4 rounded-xl border-l-4 ${priorityColor(s.priority)} bg-michi-warm`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className={`px-1.5 py-0.5 text-[10px] rounded font-medium ${
-                        s.priority === "high" ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300"
-                          : s.priority === "medium" ? "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300"
-                          : "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
-                      }`}>{s.priority}</span>
-                      <span className="text-sm font-medium dark:text-white">{s.title}</span>
+                      <Badge variant={s.priority === "high" ? "danger" : s.priority === "medium" ? "warning" : "default"}>
+                        {s.priority}
+                      </Badge>
+                      <span className="text-sm font-semibold text-michi-dark">{s.title}</span>
                     </div>
-                    <span className="text-[10px] text-gray-400">{s.type}</span>
+                    <span className="text-xs text-michi-muted font-medium">{s.type}</span>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{s.description}</p>
-                  {s.action && <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">{s.action}</p>}
+                  <p className="text-sm text-michi-body mt-1.5">{s.description}</p>
+                  {s.action && <p className="text-sm text-michi-lime-dark font-semibold mt-1">{s.action}</p>}
                 </div>
               ))}
             </div>
@@ -149,39 +148,39 @@ export default function CommandCenter() {
       {interventions.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Zap className="h-4 w-4 text-blue-500" /> Active Interventions
+            <CardTitle className="flex items-center gap-2">
+              <Zap size={18} className="text-michi-lime-dark" /> Active Interventions
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+            <div className="space-y-2.5 max-h-72 overflow-y-auto">
               {interventions.slice(0, 10).map((intv: Intervention) => (
-                <div key={intv.id} className="flex items-center justify-between p-2 rounded bg-gray-50 dark:bg-gray-800">
-                  <div className="flex items-center gap-2">
+                <div key={intv.id} className="flex items-center justify-between p-3.5 rounded-xl bg-michi-warm">
+                  <div className="flex items-center gap-3">
                     {statusIcon(intv.status)}
                     <div>
-                      <div className="text-sm font-medium dark:text-white">{intv.intervention_type}</div>
-                      <div className="text-[10px] text-gray-400">
+                      <div className="text-sm font-semibold text-michi-dark">{intv.intervention_type}</div>
+                      <div className="text-xs text-michi-muted">
                         {intv.route_id && `Route ${intv.route_id}`}{intv.station_id && ` · Stn ${intv.station_id}`}
                         {" · "}{intv.status}
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-1">
+                  <div className="flex gap-2">
                     {intv.status === "pending" && (
-                      <Button size="sm" variant="outline" className="text-xs h-7"
+                      <Button size="sm" variant="default"
                         onClick={() => updateStatus.mutate({ id: intv.id, status: "approved" })}>
                         Approve
                       </Button>
                     )}
                     {intv.status === "approved" && (
-                      <Button size="sm" variant="outline" className="text-xs h-7"
+                      <Button size="sm" variant="lime"
                         onClick={() => updateStatus.mutate({ id: intv.id, status: "executing" })}>
                         Execute
                       </Button>
                     )}
                     {intv.status === "executing" && (
-                      <Button size="sm" variant="outline" className="text-xs h-7"
+                      <Button size="sm" variant="outline"
                         onClick={() => updateStatus.mutate({ id: intv.id, status: "completed" })}>
                         Complete
                       </Button>

@@ -144,17 +144,7 @@ type MapProps = {
   loading?: boolean;
 } & Omit<MapLibreGL.MapOptions, "container" | "style">;
 
-function DefaultLoader() {
-  return (
-    <div className="bg-background/50 absolute inset-0 z-10 flex items-center justify-center backdrop-blur-xs">
-      <div className="flex gap-1">
-        <span className="bg-muted-foreground/60 size-1.5 animate-pulse rounded-full" />
-        <span className="bg-muted-foreground/60 size-1.5 animate-pulse rounded-full [animation-delay:150ms]" />
-        <span className="bg-muted-foreground/60 size-1.5 animate-pulse rounded-full [animation-delay:300ms]" />
-      </div>
-    </div>
-  );
-}
+// DefaultLoader removed — MapLibre renders tiles progressively without a blocking overlay
 
 function getViewport(map: MapLibreGL.Map): MapViewport {
   const center = map.getCenter();
@@ -308,7 +298,6 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
 
     clearStyleTimeout();
     currentStyleRef.current = newStyle;
-    setIsStyleLoaded(false);
 
     mapInstance.setStyle(newStyle, { diff: true });
   }, [mapInstance, resolvedTheme, mapStyles, clearStyleTimeout]);
@@ -327,8 +316,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
         ref={containerRef}
         className={cn("relative h-full w-full", className)}
       >
-        {(!isLoaded || loading) && <DefaultLoader />}
-        {/* SSR-safe: children render only when map is loaded on client */}
+        {/* Map renders progressively — no blocking loader needed */}
         {mapInstance && children}
       </div>
     </MapContext.Provider>
@@ -765,7 +753,7 @@ function ControlButton({
       className={cn(
         "flex size-8 items-center justify-center transition-all",
         "first:rounded-t-md last:rounded-b-md",
-        "hover:bg-accent dark:hover:bg-accent/40",
+        "hover:bg-michi-warm",
         "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset",
         "disabled:pointer-events-none disabled:opacity-50",
       )}

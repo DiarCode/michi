@@ -6,11 +6,11 @@ import { GridSkeleton } from "@/components/ui/skeleton";
 
 function levelBadge(level: string) {
   const colors: Record<string, string> = {
-    low: "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300",
-    medium: "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300",
-    high: "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300",
-    very_high: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300",
-    unknown: "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400",
+    low: "bg-michi-lime/15 text-michi-lime-dark",
+    medium: "bg-michi-amber/15 text-michi-amber",
+    high: "bg-orange-100 text-orange-700",
+    very_high: "bg-michi-red/10 text-michi-red",
+    unknown: "bg-michi-warm text-michi-muted",
   };
   return colors[level] || colors.unknown;
 }
@@ -36,36 +36,37 @@ export default function PassengerPage() {
   const templates = (templateData?.templates ?? []) as { title: string; body: string }[];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 space-y-8">
       <div>
-        <h1 className="text-xl font-bold dark:text-white">Passenger Information</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">Real-time crowding levels and service updates</p>
+        <h1 className="text-3xl font-extrabold text-michi-dark">Passenger Information</h1>
+        <p className="text-base text-michi-muted mt-1">Real-time crowding levels and service updates</p>
       </div>
 
       <Card>
         <CardHeader className="flex-row items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2">
-            <Users className="h-4 w-4" /> Station Crowding
+          <CardTitle className="flex items-center gap-2">
+            <Users size={18} className="text-michi-lime-dark" />
+            Station Crowding
           </CardTitle>
-          <span className="text-xs text-gray-500 dark:text-gray-400">{stations.length} stations</span>
+          <span className="text-sm text-michi-muted font-medium">{stations.length} stations</span>
         </CardHeader>
         <CardContent>
           {loadingCrowding ? (
             <GridSkeleton count={3} />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 max-h-96 overflow-y-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-h-96 overflow-y-auto">
               {stations.map((s) => (
-                <div key={s.station_id} className="p-2 rounded border dark:border-gray-700 space-y-1">
+                <div key={s.station_id} className="p-3.5 rounded-xl border border-michi-border space-y-1.5 hover:shadow-card-hover transition-shadow">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium dark:text-white truncate">{s.name}</span>
-                    <span className={`px-1.5 py-0.5 text-[10px] rounded font-medium ${levelBadge(s.current_crowding)}`}>
+                    <span className="text-sm font-semibold text-michi-dark truncate">{s.name}</span>
+                    <span className={`px-2.5 py-1 text-xs rounded-full font-semibold ${levelBadge(s.current_crowding)}`}>
                       {s.current_crowding}
                     </span>
                   </div>
-                  {s.district && <div className="text-[10px] text-gray-400 dark:text-gray-500">{s.district}</div>}
+                  {s.district && <div className="text-xs text-michi-muted font-medium">{s.district}</div>}
                   {s.predictions.length > 0 && (
-                    <div className="text-[10px] text-gray-500 dark:text-gray-400">
-                      +{s.predictions[0].horizon_minutes}m: {s.predictions[0].level}
+                    <div className="text-xs text-michi-body font-medium">
+                      +{s.predictions[0].horizon_minutes}m: <span className="capitalize">{s.predictions[0].level}</span>
                     </div>
                   )}
                 </div>
@@ -78,22 +79,21 @@ export default function PassengerPage() {
       {serviceChanges.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-amber-500" /> Service Alerts
+            <CardTitle className="flex items-center gap-2">
+              <AlertTriangle size={18} className="text-michi-amber" /> Service Alerts
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+            <div className="space-y-2.5 max-h-72 overflow-y-auto">
               {serviceChanges.map((sc, i) => (
-                <div key={i} className="p-3 rounded border dark:border-gray-700 bg-amber-50 dark:bg-amber-900/20">
+                <div key={i} className="p-4 rounded-xl border border-michi-border bg-michi-amber/5 border-l-4 border-l-michi-amber">
                   <div className="flex items-center gap-2">
-                    <span className={`px-1.5 py-0.5 text-[10px] rounded font-medium ${
-                      sc.severity === "critical" ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300"
-                        : "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300"
+                    <span className={`px-2.5 py-1 text-xs rounded-full font-semibold ${
+                      sc.severity === "critical" ? "bg-michi-red/10 text-michi-red" : "bg-michi-amber/15 text-michi-amber"
                     }`}>{sc.severity}</span>
-                    <span className="text-sm font-medium dark:text-white">{sc.title}</span>
+                    <span className="text-sm font-semibold text-michi-dark">{sc.title}</span>
                   </div>
-                  {sc.message && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{sc.message}</p>}
+                  {sc.message && <p className="text-sm text-michi-body mt-1.5">{sc.message}</p>}
                 </div>
               ))}
             </div>
@@ -104,16 +104,16 @@ export default function PassengerPage() {
       {templates.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Megaphone className="h-4 w-4 text-blue-500" /> Messaging Templates
+            <CardTitle className="flex items-center gap-2">
+              <Megaphone size={18} className="text-michi-lime-dark" /> Messaging Templates
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {templates.map((t, i) => (
-                <div key={i} className="p-3 rounded border dark:border-gray-700">
-                  <div className="text-sm font-medium dark:text-white">{t.title}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t.body}</div>
+                <div key={i} className="p-4 rounded-xl border border-michi-border hover:shadow-card-hover transition-shadow">
+                  <div className="text-sm font-semibold text-michi-dark">{t.title}</div>
+                  <div className="text-sm text-michi-muted mt-1.5">{t.body}</div>
                 </div>
               ))}
             </div>

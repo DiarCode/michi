@@ -5,9 +5,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 const DISTRICTS = ["All", "Esil", "Almaty", "Saryarka", "Baikonur", "Unknown"];
 
 function loadColor(intensity: number): string {
-  if (intensity > 0.7) return "bg-red-500 dark:bg-red-600";
-  if (intensity > 0.4) return "bg-amber-400 dark:bg-amber-500";
-  return "bg-emerald-400 dark:bg-emerald-500";
+  if (intensity > 0.7) return "bg-michi-red text-white";
+  if (intensity > 0.4) return "bg-michi-amber text-white";
+  return "bg-michi-lime text-michi-dark";
 }
 
 export default function CongestionHeatmap() {
@@ -23,34 +23,38 @@ export default function CongestionHeatmap() {
   }, {});
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm">Congestion Heatmap</CardTitle>
-        <span className="text-xs text-gray-500 dark:text-gray-400">{filtered.length} stations</span>
+        <CardTitle>Congestion Heatmap</CardTitle>
+        <span className="text-sm text-michi-muted font-medium">{filtered.length} stations</span>
       </CardHeader>
       <CardContent>
-        <div className="flex gap-1 mb-3 flex-wrap">
+        <div className="flex gap-2 mb-4 flex-wrap">
           {DISTRICTS.map((d) => (
             <button key={d} onClick={() => setDistrict(d)}
-              className={`px-2 py-1 text-xs rounded-md transition-colors ${district === d ? "bg-blue-600 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"}`}>
+              className={`px-3.5 py-1.5 text-xs rounded-full font-semibold transition-all ${
+                district === d
+                  ? "bg-michi-dark text-white shadow-sm"
+                  : "bg-michi-warm text-michi-body border border-michi-border hover:bg-michi-border"
+              }`}>
               {d}{d !== "All" && districtCounts[d] ? ` (${districtCounts[d]})` : ""}
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5 max-h-64 overflow-y-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 max-h-72 overflow-y-auto">
           {filtered.map((s) => {
             const intensity = (s.ridership_24h ?? 0) / maxRidership;
             return (
-              <div key={s.id} className={`p-1.5 rounded text-[10px] text-center text-white ${loadColor(intensity)} truncate`} title={`${s.name}: ${(s.ridership_24h ?? 0).toLocaleString()}/day`}>
+              <div key={s.id} className={`px-2 py-2 rounded-xl text-xs text-center font-semibold ${loadColor(intensity)} truncate`} title={`${s.name}: ${(s.ridership_24h ?? 0).toLocaleString()}/day`}>
                 {s.name.length > 12 ? s.name.slice(0, 10) + "…" : s.name}
               </div>
             );
           })}
         </div>
-        <div className="flex items-center gap-4 mt-3 text-[10px] text-gray-500 dark:text-gray-400">
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-emerald-400 dark:bg-emerald-500" /> &lt;40%</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-amber-400 dark:bg-amber-500" /> 40–70%</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-red-500 dark:bg-red-600" /> &gt;70%</span>
+        <div className="flex items-center gap-5 mt-4 text-xs text-michi-muted font-medium">
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-michi-lime" /> Low</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-michi-amber" /> Medium</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-michi-red" /> High</span>
         </div>
       </CardContent>
     </Card>
