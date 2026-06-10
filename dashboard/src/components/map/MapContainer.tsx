@@ -1,7 +1,11 @@
-import type { Station, BusPosition, PredictionPoint, TimelineMode, TimelinePoint } from "@/types";
+import type { Station, BusPosition, Route, TimelineMode, TimelinePoint } from "@/types";
 import { Map, MapControls, MapClusterLayer } from "@/components/ui/map";
 import StationMarker from "./StationMarker";
-import BusMarker from "./BusMarker";
+import AnimatedBusLayer from "./AnimatedBusLayer";
+import BusTrail from "./BusTrail";
+import RoutePathLayer from "./RoutePathLayer";
+import ConnectionArcs from "./ConnectionArcs";
+import { useThemeStore } from "@/stores/themeStore";
 import { STATION_CAPACITY, MORNING_PEAK, EVENING_PEAK } from "@/lib/constants";
 
 interface Props {
@@ -10,13 +14,18 @@ interface Props {
   hour?: number;
   onStationClick?: (stationId: string) => void;
   showHeatmap?: boolean;
-  predictions?: PredictionPoint[];
   /** Timeline mode — controls marker styling and data source */
   timelineMode?: TimelineMode;
   /** Get timeline data for a station at the selected time */
   getTimelineStationData?: (stationId: string) => TimelinePoint | undefined;
   /** Route ID → color map for coloring bus markers by route */
   routeColorMap?: Record<string, string>;
+  /** Routes data for drawing path lines (only when layers enabled) */
+  routes?: Route[];
+  /** Route ID → [lon, lat][] polyline coordinates (only when layers enabled) */
+  routePaths?: Record<string, [number, number][]>;
+  /** Whether to show route layers (paths + connection arcs) */
+  showRouteLayers?: boolean;
 }
 
 const ASTANA_CENTER: [number, number] = [71.47, 51.13];
@@ -70,44 +79,47 @@ function buildClusterData(
   };
 }
 
-function buildPredictionLookup(predictions: PredictionPoint[]): Record<string, PredictionPoint> {
-  const map: Record<string, PredictionPoint> = {};
-  for (const p of predictions) {
-    map[p.station_id] = p;
-  }
-  return map;
-}
-
 export default function MapContainer({
   stations,
   buses,
   hour = new Date().getHours(),
   onStationClick,
   showHeatmap = true,
-  predictions = [],
   timelineMode,
   getTimelineStationData,
   routeColorMap = {},
+  routes = [],
+  routePaths = {},
+  showRouteLayers = false,
 }: Props) {
+  const resolvedTheme = useThemeStore((s) => s.resolvedTheme);
   const clusterData = showHeatmap
     ? buildClusterData(stations, hour, timelineMode, getTimelineStationData)
     : null;
-  const predMap = buildPredictionLookup(predictions);
 
   return (
     <div className="relative w-full h-full">
       <Map
         center={ASTANA_CENTER}
         zoom={ASTANA_ZOOM}
-        theme="light"
-        className="w-full h-full rounded-lg overflow-hidden"
+        theme={resolvedTheme === "dark" ? "dark" : "light"}
+        className="w-full h-full rounded-lg overflow-hidden ring-1 ring-foreground/5"
       >
         <MapControls showZoom showCompass />
+
+        {/* Route layers — only rendered when toggle is on */}
+        {showRouteLayers && routes.length > 0 && Object.keys(routePaths).length > 0 && (
+          <RoutePathLayer
+            routes={routes}
+            routePaths={routePaths}
+            routeColorMap={routeColorMap}
+            highlightedRouteId={null}
+          />
+        )}
 
         {clusterData && <MapClusterLayer data={clusterData} clusterRadius={50} clusterMaxZoom={15} />}
 
         {stations.map((s) => {
-          const pred = predMap[s.id];
           const td = getTimelineStationData?.(s.id);
           return (
             <StationMarker
@@ -115,47 +127,45 @@ export default function MapContainer({
               station={s}
               onClick={onStationClick}
               hour={hour}
-              predictedLoad={pred ? Math.round(pred.predicted) : undefined}
               timelineMode={timelineMode}
               timelineData={td}
             />
           );
         })}
 
-        {buses.map((b) => (
-          <BusMarker key={b.bus_id} bus={b} routeColor={routeColorMap[b.route_id]} />
-        ))}
+        {buses.length > 0 && (
+          <>
+            <BusTrail routeColorMap={routeColorMap} />
+            <AnimatedBusLayer buses={buses} routeColorMap={routeColorMap} routePaths={routePaths} />
+            {showRouteLayers && <ConnectionArcs />}
+          </>
+        )}
       </Map>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-md text-xs space-y-1 z-10">
-        <div className="font-semibold text-michi-dark">Capacity Used</div>
-        <div className="flex items-center gap-1.5 text-michi-body"><span className="w-3 h-3 rounded-full bg-green-500" /> Low (&lt;50%)</div>
-        <div className="flex items-center gap-1.5 text-michi-body"><span className="w-3 h-3 rounded-full bg-amber-500" /> Medium (50–80%)</div>
-        <div className="flex items-center gap-1.5 text-michi-body"><span className="w-3 h-3 rounded-full bg-red-500" /> High (&gt;80%)</div>
+      <div className="absolute bottom-4 left-4 bg-card/90 backdrop-blur-sm p-2.5 rounded-lg text-xs space-y-1 z-10 ring-1 ring-foreground/5">
+        <div className="font-semibold text-foreground">Capacity Used</div>
+        <div className="flex items-center gap-1.5 text-muted-foreground"><span className="w-3 h-3 rounded-full bg-chart-2" /> Low (&lt;50%)</div>
+        <div className="flex items-center gap-1.5 text-muted-foreground"><span className="w-3 h-3 rounded-full bg-chart-4" /> Medium (50–80%)</div>
+        <div className="flex items-center gap-1.5 text-muted-foreground"><span className="w-3 h-3 rounded-full bg-destructive" /> High (&gt;80%)</div>
         {timelineMode === "historical" && (
-          <div className="border-t border-michi-border pt-1 mt-1 space-y-1">
-            <div className="flex items-center gap-1.5 text-michi-muted">
-              <span className="w-3 h-3 rounded-full border-2 border-gray-400" /> Past (actual)
+          <div className="border-t border-border pt-1 mt-1 space-y-1">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <span className="w-3 h-3 rounded-full border-2 border-muted-foreground" /> Past (actual)
             </div>
-            <div className="flex items-center gap-1.5 text-michi-muted">
-              <span className="w-3 h-3 rounded-full border-2 border-dashed border-purple-600 bg-purple-400/30" /> Future (predicted)
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <span className="w-3 h-3 rounded-full border-2 border-dashed border-primary bg-primary/30" /> Future (predicted)
             </div>
-          </div>
-        )}
-        {predictions.length > 0 && (
-          <div className="border-t border-michi-border pt-1 mt-1 text-michi-muted">
-            Showing +{predictions[0]?.horizon_minutes ?? 0}m predictions
           </div>
         )}
       </div>
 
       {/* Info overlay */}
-      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-10">
-        <h3 className="font-bold text-sm text-michi-dark">
+      <div className="absolute top-4 left-4 bg-card/90 backdrop-blur-sm p-3 rounded-lg z-10 ring-1 ring-foreground/5">
+        <h3 className="font-bold text-sm text-foreground">
           {timelineMode === "historical" ? "Historical View" : "Live Tracking"}
         </h3>
-        <p className="text-xs text-michi-muted">
+        <p className="text-xs text-muted-foreground">
           {buses.length} buses · {String(hour).padStart(2, "0")}:00
         </p>
       </div>

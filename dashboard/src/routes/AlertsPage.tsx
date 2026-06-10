@@ -5,7 +5,8 @@ import { showToast } from "@/lib/toast";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Alert01Icon, CheckmarkCircle02Icon } from "@/lib/icons";
 import { ListSkeleton } from "@/components/ui/skeleton";
 
 const SEVERITY_OPTIONS = [
@@ -37,33 +38,32 @@ export default function AlertsPage() {
   return (
     <div className="p-8 space-y-8">
       <div>
-        <h1 className="text-3xl font-extrabold text-michi-dark">Alerts</h1>
-        <p className="text-base text-michi-muted mt-1">Network-wide incident monitoring and response</p>
+        <h1 className="text-3xl font-extrabold text-foreground">Alerts</h1>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         <Card>
           <CardContent className="p-5">
-            <span className="text-sm text-michi-muted font-medium">Total Alerts</span>
-            <p className="text-3xl font-extrabold text-michi-dark mt-2">{alerts.length}</p>
+            <span className="text-sm text-muted-foreground font-medium">Total Alerts</span>
+            <p className="text-3xl font-extrabold text-foreground mt-2">{alerts.length}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
-            <span className="text-sm text-michi-muted font-medium">Critical / High</span>
-            <p className="text-3xl font-extrabold text-michi-red mt-2">{criticalCount}</p>
+            <span className="text-sm text-muted-foreground font-medium">Critical / High</span>
+            <p className="text-3xl font-extrabold text-destructive mt-2">{criticalCount}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
-            <span className="text-sm text-michi-muted font-medium">Auto-Generated</span>
-            <p className="text-3xl font-extrabold text-michi-dark mt-2">{alerts.filter(a => a.auto).length}</p>
+            <span className="text-sm text-muted-foreground font-medium">Auto-Generated</span>
+            <p className="text-3xl font-extrabold text-foreground mt-2">{alerts.filter(a => a.auto).length}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
-            <span className="text-sm text-michi-muted font-medium">Severity Filter</span>
-            <p className="text-3xl font-extrabold text-michi-lime-dark mt-2 capitalize">{severity === "all" ? "Showing All" : severity}</p>
+            <span className="text-sm text-muted-foreground font-medium">Severity Filter</span>
+            <p className="text-3xl font-extrabold text-chart-2 mt-2 capitalize">{severity === "all" ? "Showing All" : severity}</p>
           </CardContent>
         </Card>
       </div>
@@ -76,8 +76,8 @@ export default function AlertsPage() {
               onClick={() => setSeverity(opt.value)}
               className={`px-4 py-2 text-sm rounded-full font-semibold transition-all ${
                 severity === opt.value
-                  ? "bg-michi-dark text-white shadow-sm"
-                  : "bg-white border border-michi-border text-michi-body hover:bg-michi-warm"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-card border border-border text-muted-foreground hover:bg-muted"
               }`}
             >
               {opt.label}
@@ -91,23 +91,23 @@ export default function AlertsPage() {
         {filtered.map((a) => {
           const isHigh = a.severity === "high" || a.severity === "critical";
           const isMedium = a.severity === "medium" || a.severity === "warning";
-          const borderColor = isHigh ? "border-l-michi-red" : isMedium ? "border-l-michi-amber" : "border-l-michi-muted";
+          const borderColor = isHigh ? "border-l-destructive" : isMedium ? "border-l-chart-4" : "border-l-muted-foreground";
           return (
             <Card key={a.id}>
               <CardContent className={`flex items-center gap-4 p-5 border-l-4 ${borderColor}`}>
-                <AlertTriangle size={20} className={isHigh ? "text-michi-red shrink-0" : "text-michi-amber shrink-0"} />
+                <HugeiconsIcon icon={Alert01Icon} size={20} className={isHigh ? "text-destructive shrink-0" : "text-chart-4 shrink-0"} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-michi-dark">{a.title}</span>
-                    <Badge variant={isHigh ? "danger" : isMedium ? "warning" : "default"}>{a.severity}</Badge>
+                    <span className="font-semibold text-foreground">{a.title}</span>
+                    <Badge variant={isHigh ? "destructive" : isMedium ? "secondary" : "default"}>{a.severity}</Badge>
                     {a.auto && (
-                      <span className="text-xs bg-michi-warm text-michi-body px-2 py-0.5 rounded-full font-semibold border border-michi-border">AUTO</span>
+                      <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full font-semibold border border-border">AUTO</span>
                     )}
                   </div>
-                  <p className="text-sm text-michi-body mt-1">{a.message}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{a.message}</p>
                 </div>
                 <Button variant="outline" size="sm" onClick={() => ack.mutate(a.id)}>
-                  <CheckCircle2 size={14} className="mr-1" />
+                  <HugeiconsIcon icon={CheckmarkCircle02Icon} size={14} className="mr-1" />
                   Acknowledge
                 </Button>
               </CardContent>
@@ -117,9 +117,9 @@ export default function AlertsPage() {
         {filtered.length === 0 && (
           <Card>
             <CardContent className="text-center py-12">
-              <CheckCircle2 size={32} className="text-michi-lime mx-auto mb-3" />
-              <p className="text-lg font-semibold text-michi-dark">No active alerts</p>
-              <p className="text-sm text-michi-muted mt-1">All systems operating normally</p>
+              <HugeiconsIcon icon={CheckmarkCircle02Icon} size={32} className="text-chart-2 mx-auto mb-3" />
+              <p className="text-lg font-semibold text-foreground">No active alerts</p>
+              <p className="text-sm text-muted-foreground mt-1">All systems operating normally</p>
             </CardContent>
           </Card>
         )}

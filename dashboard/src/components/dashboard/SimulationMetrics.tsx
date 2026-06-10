@@ -5,19 +5,20 @@ import { Badge } from "@/components/ui/badge";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
 } from "recharts";
-import { TrendingUp, TrendingDown, Minus, Activity, AlertTriangle } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowUp01Icon, ArrowDown01Icon, MinusSignIcon, ActivityIcon, Alert01Icon } from "@/lib/icons";
 
 function driftColor(status: string) {
-  if (status === "critical") return "bg-michi-red text-white";
-  if (status === "warning") return "bg-michi-amber text-white";
-  return "bg-michi-lime text-michi-dark";
+  if (status === "critical") return "bg-destructive text-white";
+  if (status === "warning") return "bg-chart-4 text-white";
+  return "bg-chart-2 text-foreground";
 }
 
 function TrendArrow({ current, previous }: { current: number; previous: number | undefined }) {
-  if (previous === undefined) return <Minus className="h-3 w-3 text-michi-muted" />;
-  if (current < previous) return <TrendingDown className="h-3 w-3 text-michi-lime-dark" />;
-  if (current > previous) return <TrendingUp className="h-3 w-3 text-michi-red" />;
-  return <Minus className="h-3 w-3 text-michi-muted" />;
+  if (previous === undefined) return <HugeiconsIcon icon={MinusSignIcon} className="h-3 w-3 text-muted-foreground" />;
+  if (current < previous) return <HugeiconsIcon icon={ArrowDown01Icon} className="h-3 w-3 text-chart-2" />;
+  if (current > previous) return <HugeiconsIcon icon={ArrowUp01Icon} className="h-3 w-3 text-destructive" />;
+  return <HugeiconsIcon icon={MinusSignIcon} className="h-3 w-3 text-muted-foreground" />;
 }
 
 function fmtTime(ts: string | undefined) {
@@ -32,8 +33,8 @@ function fmtTime(ts: string | undefined) {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-michi-dark text-white rounded-xl px-3 py-2 shadow-tooltip text-xs">
-      <p className="text-michi-muted mb-1">{label}</p>
+    <div className="bg-foreground text-background rounded-xl px-3 py-2 shadow-lg text-xs">
+      <p className="text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any, i: number) => (
         <p key={i} className="font-semibold">
           {entry.name}: {entry.value.toFixed(2)}
@@ -67,9 +68,9 @@ export default function SimulationMetrics() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-5">
-            <span className="text-sm text-michi-muted font-medium">MAE</span>
+            <span className="text-sm text-muted-foreground font-medium">MAE</span>
             <div className="flex items-center gap-2 mt-2">
-              <span className="text-3xl font-extrabold text-michi-dark">
+              <span className="text-3xl font-extrabold text-foreground">
                 {latest?.mae !== undefined ? latest.mae.toFixed(2) : "—"}
               </span>
               <TrendArrow current={latest?.mae ?? 0} previous={previous?.mae} />
@@ -79,9 +80,9 @@ export default function SimulationMetrics() {
 
         <Card>
           <CardContent className="p-5">
-            <span className="text-sm text-michi-muted font-medium">MAPE</span>
+            <span className="text-sm text-muted-foreground font-medium">MAPE</span>
             <div className="flex items-center gap-2 mt-2">
-              <span className="text-3xl font-extrabold text-michi-dark">
+              <span className="text-3xl font-extrabold text-foreground">
                 {latest?.mape !== undefined ? latest.mape.toFixed(2) : "—"}
               </span>
               <TrendArrow current={latest?.mape ?? 0} previous={previous?.mape} />
@@ -91,9 +92,9 @@ export default function SimulationMetrics() {
 
         <Card>
           <CardContent className="p-5">
-            <span className="text-sm text-michi-muted font-medium">Accuracy</span>
+            <span className="text-sm text-muted-foreground font-medium">Accuracy</span>
             <div className="flex items-center gap-2 mt-2">
-              <span className="text-3xl font-extrabold text-michi-dark">
+              <span className="text-3xl font-extrabold text-foreground">
                 {latest?.accuracy !== undefined ? latest.accuracy.toFixed(2) : "—"}%
               </span>
               <TrendArrow
@@ -107,16 +108,16 @@ export default function SimulationMetrics() {
         <Card>
           <CardContent className="p-5">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-michi-muted font-medium">Drift Status</span>
-              <Activity size={16} className="text-michi-muted" />
+              <span className="text-sm text-muted-foreground font-medium">Drift Status</span>
+              <HugeiconsIcon icon={ActivityIcon} size={16} className="text-muted-foreground" />
             </div>
             <div className="flex items-center gap-2 mt-2">
               <Badge className={driftColor(driftStatus)}>
                 {driftStatus.toUpperCase()}
               </Badge>
               {driftAlerts.length > 0 && (
-                <span className="text-sm text-michi-amber font-semibold flex items-center gap-1">
-                  <AlertTriangle size={14} />
+                <span className="text-sm text-chart-4 font-semibold flex items-center gap-1">
+                  <HugeiconsIcon icon={Alert01Icon} size={14} />
                   {driftAlerts.length}
                 </span>
               )}
@@ -125,14 +126,14 @@ export default function SimulationMetrics() {
         </Card>
       </div>
 
-      <div className="flex items-center gap-5 text-sm text-michi-muted font-medium">
+      <div className="flex items-center gap-5 text-sm text-muted-foreground font-medium">
         <span className="flex items-center gap-1.5">
-          <span className={`w-2.5 h-2.5 rounded-full ${connected ? "bg-michi-lime" : "bg-michi-red"}`} />
+          <span className={`w-2.5 h-2.5 rounded-full ${connected ? "bg-chart-2" : "bg-destructive"}`} />
           {connected ? "Connected" : "Disconnected"}
         </span>
         <span>Tick #{tick}</span>
         {lastTickAt && <span>Last: {new Date(lastTickAt).toLocaleTimeString()}</span>}
-        {isStale && <span className="text-michi-amber font-semibold">Stale</span>}
+        {isStale && <span className="text-chart-4 font-semibold">Stale</span>}
       </div>
 
       <Card>
@@ -141,18 +142,18 @@ export default function SimulationMetrics() {
         </CardHeader>
         <CardContent>
           {chartData.length < 2 ? (
-            <p className="text-base text-michi-muted text-center py-10">
+            <p className="text-base text-muted-foreground text-center py-10">
               Waiting for simulation data...
             </p>
           ) : (
             <ResponsiveContainer width="100%" height={280}>
               <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E8E8E0" />
-                <XAxis dataKey="time" tick={{ fontSize: 11, fill: '#9C9C95' }} interval="preserveStartEnd" />
-                <YAxis tick={{ fontSize: 11, fill: '#9C9C95' }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }} interval="preserveStartEnd" stroke="var(--border)" />
+                <YAxis tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }} stroke="var(--border)" />
                 <Tooltip content={<CustomTooltip />} />
-                <Line type="monotone" dataKey="mae" stroke="#B1E743" strokeWidth={2.5} dot={false} name="MAE" />
-                <Line type="monotone" dataKey="mape" stroke="#D4D4C8" strokeWidth={2.5} dot={false} name="MAPE" />
+                <Line type="monotone" dataKey="mae" stroke="var(--chart-2)" strokeWidth={2.5} dot={false} name="MAE" />
+                <Line type="monotone" dataKey="mape" stroke="var(--chart-4)" strokeWidth={2.5} dot={false} name="MAPE" />
               </LineChart>
             </ResponsiveContainer>
           )}
