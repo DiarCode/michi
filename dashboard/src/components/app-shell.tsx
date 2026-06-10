@@ -30,7 +30,6 @@ import { Toaster } from "@/components/ui/sonner"
 import { ConnectionIndicator } from "@/components/connection-indicator"
 import { MichiLogo } from "@/components/michi-logo"
 import { RoleSwitcher } from "@/components/role-switcher"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { CommandPalette } from "@/components/command-palette"
 import { Kbd } from "@/components/ui/kbd"
 
@@ -77,7 +76,6 @@ function AppSidebar() {
         <ConnectionIndicator />
         <div className="flex items-center justify-between gap-1">
           <RoleSwitcher />
-          <ThemeToggle />
         </div>
       </SidebarFooter>
     </Sidebar>

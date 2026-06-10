@@ -1,0 +1,7 @@
+[     290ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-CEgyhP-G.js:59
+[     342ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-CEgyhP-G.js:59
+[    1706ms] [ERROR] Error @ http://localhost:3100/assets/index-CEgyhP-G.js:59
+[    1709ms] [ERROR] Error @ http://localhost:3100/assets/index-CEgyhP-G.js:59
+[    4274ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-CEgyhP-G.js:59
+[    9509ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-CEgyhP-G.js:59
+[   17240ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-CEgyhP-G.js:59

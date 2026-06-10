@@ -42,7 +42,7 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": "rm -rf node_modules/.vite dist && npm run build 2>&1 | tail -15",
+    "buildCommand": "npm run build 2>&1 | tail -5",
     "testCommand": null,
     "lintCommand": "npm run lint",
     "devCommand": "npm run dev",
@@ -186,6 +186,12 @@
       "type": "file"
     },
     {
+      "path": "src/routes/live-map.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1781111130431,
+      "type": "file"
+    },
+    {
       "path": "src/lib/api.ts",
       "accessCount": 3,
       "lastAccessed": 1781107808230,
@@ -195,6 +201,18 @@
       "path": "Dockerfile",
       "accessCount": 3,
       "lastAccessed": 1781108014660,
+      "type": "file"
+    },
+    {
+      "path": "src/main.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1781113326567,
+      "type": "file"
+    },
+    {
+      "path": "src/components/app-shell.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1781113337824,
       "type": "file"
     },
     {
@@ -246,18 +264,6 @@
       "type": "file"
     },
     {
-      "path": "src/routes/live-map.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107568049,
-      "type": "file"
-    },
-    {
-      "path": "src/main.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107588307,
-      "type": "file"
-    },
-    {
       "path": "vite.config.ts",
       "accessCount": 2,
       "lastAccessed": 1781107601409,
@@ -273,6 +279,18 @@
       "path": "src/lib/websocket.ts",
       "accessCount": 2,
       "lastAccessed": 1781107695804,
+      "type": "file"
+    },
+    {
+      "path": "src/index.css",
+      "accessCount": 2,
+      "lastAccessed": 1781111111911,
+      "type": "file"
+    },
+    {
+      "path": "src/components/theme-provider.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781113326341,
       "type": "file"
     },
     {
@@ -303,6 +321,18 @@
       "path": "nginx.conf",
       "accessCount": 1,
       "lastAccessed": 1781108865586,
+      "type": "file"
+    },
+    {
+      "path": "src/components/map/TimelineBar.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781111076111,
+      "type": "file"
+    },
+    {
+      "path": "src/components/theme-toggle.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781113299670,
       "type": "file"
     }
   ],

@@ -9,6 +9,16 @@ type ThemeProviderProps = {
   defaultTheme?: Theme
   storageKey?: string
   disableTransitionOnChange?: boolean
+  /**
+   * Lock the app to light mode. When true, the provider will:
+   *   - ignore stored `dark` / `system` preferences and resolve to "light"
+   *   - never apply the `.dark` class to the root element
+   *   - disable the ⌘D keyboard shortcut that toggles themes
+   *   - tell the browser to advertise only the light color scheme
+   *     (so native form controls, scrollbars, and auto-filled inputs
+   *     never invert).
+   */
+  disableDarkMode?: boolean
 }
 
 type ThemeProviderState = {
@@ -49,6 +59,7 @@ function disableTransitionsTemporarily() {
   document.head.appendChild(style)
 
   return () => {
+    document.getElementById(style.id)?.remove()
     window.getComputedStyle(document.body)
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -58,54 +69,69 @@ function disableTransitionsTemporarily() {
   }
 }
 
-function isEditableTarget(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) {
-    return false
+/** Strip any stored `dark` / `system` preference and force `light`. */
+function readStoredTheme(storageKey: string, disableDarkMode: boolean): Theme {
+  if (disableDarkMode) {
+    // Clear any prior dark preference so reloads don't go dark again.
+    try {
+      localStorage.removeItem(storageKey)
+    } catch {
+      /* ignore */
+    }
+    return "light"
   }
+  const stored = localStorage.getItem(storageKey)
+  return isTheme(stored) ? stored : "light"
+}
 
-  if (target.isContentEditable) {
-    return true
+/** Tell the browser to advertise only the light color scheme. */
+function syncColorSchemeMeta(disableDarkMode: boolean) {
+  if (typeof document === "undefined") return
+  let meta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]')
+  if (!meta) {
+    meta = document.createElement("meta")
+    meta.name = "color-scheme"
+    document.head.appendChild(meta)
   }
-
-  const editableParent = target.closest(
-    "input, textarea, select, [contenteditable='true']"
-  )
-  if (editableParent) {
-    return true
-  }
-
-  return false
+  meta.content = disableDarkMode ? "only light" : "light dark"
 }
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
+  defaultTheme = "light",
   storageKey = "theme",
   disableTransitionOnChange = true,
+  disableDarkMode = false,
   ...props
 }: ThemeProviderProps) {
-  const [theme, setThemeState] = React.useState<Theme>(() => {
-    const storedTheme = localStorage.getItem(storageKey)
-    if (isTheme(storedTheme)) {
-      return storedTheme
-    }
-
-    return defaultTheme
-  })
+  const [theme, setThemeState] = React.useState<Theme>(() =>
+    readStoredTheme(storageKey, disableDarkMode)
+  )
 
   const setTheme = React.useCallback(
     (nextTheme: Theme) => {
-      localStorage.setItem(storageKey, nextTheme)
-      setThemeState(nextTheme)
+      // When dark mode is disabled, silently coerce to "light".
+      const resolved = disableDarkMode && nextTheme !== "light" ? "light" : nextTheme
+      try {
+        localStorage.setItem(storageKey, resolved)
+      } catch {
+        /* ignore */
+      }
+      setThemeState(resolved)
     },
-    [storageKey]
+    [storageKey, disableDarkMode]
   )
 
   const applyTheme = React.useCallback(
     (nextTheme: Theme) => {
       const root = document.documentElement
-      const resolvedTheme =
-        nextTheme === "system" ? getSystemTheme() : nextTheme
+      // When dark mode is disabled we always resolve to "light",
+      // regardless of what nextTheme is.
+      const resolvedTheme: ResolvedTheme = disableDarkMode
+        ? "light"
+        : nextTheme === "system"
+          ? getSystemTheme()
+          : nextTheme
       const restoreTransitions = disableTransitionOnChange
         ? disableTransitionsTemporarily()
         : null
@@ -117,13 +143,14 @@ export function ThemeProvider({
         restoreTransitions()
       }
     },
-    [disableTransitionOnChange]
+    [disableTransitionOnChange, disableDarkMode]
   )
 
   React.useEffect(() => {
     applyTheme(theme)
+    syncColorSchemeMeta(disableDarkMode)
 
-    if (theme !== "system") {
+    if (theme !== "system" || disableDarkMode) {
       return undefined
     }
 
@@ -137,25 +164,24 @@ export function ThemeProvider({
     return () => {
       mediaQuery.removeEventListener("change", handleChange)
     }
-  }, [theme, applyTheme])
+  }, [theme, applyTheme, disableDarkMode])
 
+  // ⌘D keyboard shortcut for toggling theme — disabled when dark mode is
+  // disabled so the user can't accidentally flip into a broken state.
   React.useEffect(() => {
+    if (disableDarkMode) return
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.repeat) {
-        return
+      if (event.repeat) return
+      if (event.metaKey || event.ctrlKey || event.altKey) return
+
+      const target = event.target
+      if (target instanceof HTMLElement) {
+        if (target.isContentEditable) return
+        if (target.closest("input, textarea, select, [contenteditable='true']")) return
       }
 
-      if (event.metaKey || event.ctrlKey || event.altKey) {
-        return
-      }
-
-      if (isEditableTarget(event.target)) {
-        return
-      }
-
-      if (event.key.toLowerCase() !== "d") {
-        return
-      }
+      if (event.key.toLowerCase() !== "d") return
 
       setThemeState((currentTheme) => {
         const nextTheme =
@@ -167,25 +193,32 @@ export function ThemeProvider({
                 ? "light"
                 : "dark"
 
-        localStorage.setItem(storageKey, nextTheme)
+        try {
+          localStorage.setItem(storageKey, nextTheme)
+        } catch {
+          /* ignore */
+        }
         return nextTheme
       })
     }
 
     window.addEventListener("keydown", handleKeyDown)
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [storageKey])
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [storageKey, disableDarkMode])
 
   React.useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
-      if (event.storageArea !== localStorage) {
-        return
-      }
+      if (event.storageArea !== localStorage) return
+      if (event.key !== storageKey) return
 
-      if (event.key !== storageKey) {
+      if (disableDarkMode) {
+        // Re-stamp light to clear any dark flip from another tab.
+        try {
+          localStorage.setItem(storageKey, "light")
+        } catch {
+          /* ignore */
+        }
+        setThemeState("light")
         return
       }
 
@@ -193,16 +226,12 @@ export function ThemeProvider({
         setThemeState(event.newValue)
         return
       }
-
       setThemeState(defaultTheme)
     }
 
     window.addEventListener("storage", handleStorageChange)
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange)
-    }
-  }, [defaultTheme, storageKey])
+    return () => window.removeEventListener("storage", handleStorageChange)
+  }, [defaultTheme, storageKey, disableDarkMode])
 
   const value = React.useMemo(
     () => ({

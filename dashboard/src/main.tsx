@@ -28,7 +28,7 @@ useBusStore.getState().subscribe()
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="system" storageKey="michi-theme">
+      <ThemeProvider defaultTheme="light" storageKey="michi-theme" disableDarkMode>
         <BrowserRouter>
           <App />
         </BrowserRouter>

@@ -1,0 +1,120 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e11]: 道
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Transit
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Command Center" [ref=e20] [cursor=pointer]:
+          - /url: /
+          - img [ref=e21]
+          - generic [ref=e26]: Command Center
+      - listitem [ref=e27]:
+        - link "Live Map" [ref=e28] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e29]
+          - generic [ref=e33]: Live Map
+      - listitem [ref=e34]:
+        - link "Alerts" [ref=e35] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e36]
+          - generic [ref=e39]: Alerts
+      - listitem [ref=e40]:
+        - link "Simulation" [ref=e41] [cursor=pointer]:
+          - /url: /simulation
+          - img [ref=e42]
+          - generic [ref=e44]: Simulation
+      - listitem [ref=e45]:
+        - link "Forecast" [ref=e46] [cursor=pointer]:
+          - /url: /forecast
+          - img [ref=e47]
+          - generic [ref=e51]: Forecast
+      - listitem [ref=e52]:
+        - link "Executive" [ref=e53] [cursor=pointer]:
+          - /url: /executive
+          - img [ref=e54]
+          - generic [ref=e56]: Executive
+      - listitem [ref=e57]:
+        - link "Settings" [ref=e58] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e59]
+          - generic [ref=e62]: Settings
+    - generic [ref=e63]:
+      - 'generic "Last tick #0 · 22:40:06" [ref=e64]':
+        - generic [ref=e66]: Offline
+      - generic [ref=e67]:
+        - combobox [ref=e68] [cursor=pointer]:
+          - img
+          - generic:
+            - img
+            - text: Operator
+          - img
+        - button "Toggle theme" [ref=e69] [cursor=pointer]:
+          - img
+  - main [ref=e70]:
+    - generic [ref=e71]:
+      - generic [ref=e72]:
+        - button "Toggle Sidebar" [ref=e73] [cursor=pointer]:
+          - img
+          - generic [ref=e74]: Toggle Sidebar
+        - button "Search Michi ⌘ K" [ref=e75] [cursor=pointer]:
+          - img [ref=e76]
+          - generic [ref=e81]: Search Michi
+          - generic: ⌘
+          - generic: K
+      - generic [ref=e83]: Astana · Live
+    - main [ref=e84]:
+      - generic [ref=e85]:
+        - generic [ref=e87]:
+          - region "Map" [ref=e94]
+          - generic [ref=e95]:
+            - generic [ref=e96]: Load Level
+            - generic [ref=e97]: <50%
+            - generic [ref=e99]: 50–80%
+            - generic [ref=e101]: ">80%"
+          - generic [ref=e103]:
+            - heading "Live Tracking" [level=3] [ref=e104]
+            - paragraph [ref=e105]: 0 buses active · 22:00
+        - generic [ref=e106]:
+          - generic [ref=e107]:
+            - generic [ref=e108]: LIVE
+            - button "Play" [ref=e109] [cursor=pointer]:
+              - img [ref=e110]
+            - generic [ref=e112]:
+              - button "1x" [ref=e113] [cursor=pointer]
+              - button "2x" [ref=e114] [cursor=pointer]
+              - button "5x" [ref=e115] [cursor=pointer]
+            - generic [ref=e116]:
+              - generic [ref=e117]: 10 Jun
+              - generic [ref=e118]: 22:40
+          - generic [ref=e119] [cursor=pointer]:
+            - generic [ref=e125]: 23:00
+            - generic [ref=e128]: 00:00
+            - generic [ref=e131]: 01:00
+            - generic [ref=e134]: 02:00
+            - generic [ref=e137]: 03:00
+            - generic [ref=e140]: 04:00
+            - generic [ref=e143]: 05:00
+            - generic [ref=e146]: 06:00
+            - generic [ref=e149]: 07:00
+            - generic [ref=e152]: 08:00
+            - generic [ref=e155]: 09:00
+            - generic [ref=e158]: 10:00
+            - generic [ref=e161]: 11:00
+            - generic [ref=e164]: 12:00
+            - generic [ref=e167]: 13:00
+            - generic [ref=e170]: 14:00
+            - generic [ref=e173]: 15:00
+            - generic [ref=e176]: 16:00
+            - generic [ref=e179]: 17:00
+            - generic [ref=e182]: 18:00
+            - generic [ref=e185]: 19:00
+            - generic [ref=e188]: 20:00
+            - generic [ref=e191]: 21:00
+            - generic [ref=e194]: 22:00
+  - generic [ref=e199]:
+    - heading "Command Palette" [level=2] [ref=e200]
+    - paragraph [ref=e201]: Search for a command to run...
+  - region "Notifications alt+T"

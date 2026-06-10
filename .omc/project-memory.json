@@ -29,7 +29,7 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": null,
+    "buildCommand": "npm run build 2>&1 | tail -5",
     "testCommand": "pytest",
     "lintCommand": "ruff check",
     "devCommand": null,
