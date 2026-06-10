@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1781005553528,
+  "lastScanned": 1781107174788,
   "projectRoot": "/Users/diarcode/development/michi/dashboard",
   "techStack": {
     "languages": [
@@ -24,44 +24,35 @@
     "frameworks": [
       {
         "name": "react",
-        "version": "19.0.0",
+        "version": "19.2.6",
         "category": "frontend"
       },
       {
         "name": "react-dom",
-        "version": "19.0.0",
+        "version": "19.2.6",
         "category": "frontend"
       },
       {
-        "name": "@playwright/test",
-        "version": "1.60.0",
-        "category": "testing"
-      },
-      {
         "name": "vite",
-        "version": "6.0.0",
+        "version": "8",
         "category": "build"
-      },
-      {
-        "name": "vitest",
-        "version": "4.1.8",
-        "category": "testing"
       }
     ],
     "packageManager": "npm",
     "runtime": null
   },
   "build": {
-    "buildCommand": "echo \"=== Final Verification ===\" && echo \"--- michi-* CSS classes (should be 0, excluding localStorage keys) ---\" && grep -rn \"michi-\" src/ --include=\"*.tsx\" --include=\"*.ts\" --include=\"*.css\" 2>/dev/null | grep -v \"michi-role\\|michi-theme\" | wc -l && echo \"--- lucide-react imports (should be 0) ---\" && grep -rn \"from \\\"lucide-react\\\"\" src/ --include=\"*.tsx\" | wc -l && echo \"--- hardcoded dark: variants (should be 0) ---\" && grep -rn \"dark:bg-gray\\|dark:text-gray\\|dark:bg-\\[#\\|dark:text-white\\|dark:hover:bg-gray\\|dark:border-gray\" src/ --include=\"*.tsx\" | wc -l && echo \"--- shadow-card/shadow-tooltip (should be 0) ---\" && grep -rn \"shadow-card\\|shadow-tooltip\" src/ --include=\"*.tsx\" --include=\"*.css\" | wc -l && echo \"--- geologica references (should be 0) ---\" && grep -rn \"geologica\\|Geologica\" src/ --include=\"*.tsx\" --include=\"*.ts\" --include=\"*.css\" --include=\"*.html\" | wc -l && echo \"=== TypeScript check ===\" && npx tsc --noEmit 2>&1 | wc -l",
-    "testCommand": "npx vitest run 2>&1 | tail -15",
-    "lintCommand": null,
+    "buildCommand": "rm -rf node_modules/.vite dist && npm run build 2>&1 | tail -15",
+    "testCommand": null,
+    "lintCommand": "npm run lint",
     "devCommand": "npm run dev",
     "scripts": {
       "dev": "vite",
-      "build": "tsc && vite build",
-      "preview": "vite preview",
-      "test": "vitest run",
-      "test:watch": "vitest"
+      "build": "tsc -b && vite build",
+      "lint": "eslint .",
+      "format": "prettier --write \"**/*.{ts,tsx}\"",
+      "typecheck": "tsc --noEmit",
+      "preview": "vite preview"
     }
   },
   "conventions": {
@@ -74,91 +65,108 @@
     "isMonorepo": false,
     "workspaces": [],
     "mainDirectories": [
+      "public",
       "src"
     ],
-    "gitBranches": {
-      "defaultBranch": "main",
-      "branchingStrategy": null
-    }
+    "gitBranches": null
   },
   "customNotes": [],
   "directoryMap": {
+    "_archive": {
+      "path": "_archive",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1781107174777,
+      "keyFiles": []
+    },
     "dist": {
       "path": "dist",
       "purpose": "Distribution/build output",
-      "fileCount": 1,
-      "lastAccessed": 1781005553513,
+      "fileCount": 2,
+      "lastAccessed": 1781107174779,
       "keyFiles": [
-        "index.html"
+        "index.html",
+        "vite.svg"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 1,
+      "lastAccessed": 1781107174779,
+      "keyFiles": [
+        "vite.svg"
       ]
     },
     "src": {
       "path": "src",
       "purpose": "Source code",
-      "fileCount": 2,
-      "lastAccessed": 1781005553515,
+      "fileCount": 3,
+      "lastAccessed": 1781107174779,
       "keyFiles": [
         "App.tsx",
+        "index.css",
         "main.tsx"
       ]
     },
     "dist/assets": {
       "path": "dist/assets",
       "purpose": "Static assets",
-      "fileCount": 2,
-      "lastAccessed": 1781005553515,
+      "fileCount": 9,
+      "lastAccessed": 1781107174780,
       "keyFiles": [
-        "index-6eySMvX0.css",
-        "index-QWLpxcTd.js"
+        "index-DUWSyXNe.css",
+        "index-u5NKH-0C.js",
+        "lora-cyrillic-ext-wght-normal-YcVxMP-u.woff2"
+      ]
+    },
+    "src/assets": {
+      "path": "src/assets",
+      "purpose": "Static assets",
+      "fileCount": 1,
+      "lastAccessed": 1781107174780,
+      "keyFiles": [
+        "react.svg"
       ]
     },
     "src/components": {
       "path": "src/components",
       "purpose": "UI components",
-      "fileCount": 3,
-      "lastAccessed": 1781005553516,
+      "fileCount": 9,
+      "lastAccessed": 1781107174780,
       "keyFiles": [
-        "ConnectionIndicator.test.tsx",
-        "ConnectionIndicator.tsx",
-        "ErrorBoundary.tsx"
+        "app-shell.tsx",
+        "command-palette.tsx",
+        "connection-indicator.tsx"
       ]
     },
     "src/lib": {
       "path": "src/lib",
       "purpose": "Library code",
-      "fileCount": 7,
-      "lastAccessed": 1781005553516,
+      "fileCount": 4,
+      "lastAccessed": 1781107174781,
       "keyFiles": [
-        "api.test.ts",
         "api.ts",
-        "constants.ts"
+        "constants.ts",
+        "utils.ts"
       ]
     },
     "src/routes": {
       "path": "src/routes",
       "purpose": "Route handlers",
-      "fileCount": 16,
-      "lastAccessed": 1781005553516,
+      "fileCount": 7,
+      "lastAccessed": 1781107174781,
       "keyFiles": [
-        "AlertsPage.tsx",
-        "AnalyticsPage.tsx",
-        "CommandCenter.tsx"
-      ]
-    },
-    "src/test": {
-      "path": "src/test",
-      "purpose": "Test files",
-      "fileCount": 1,
-      "lastAccessed": 1781005553516,
-      "keyFiles": [
-        "setup.ts"
+        "alerts.tsx",
+        "command-center.tsx",
+        "executive.tsx"
       ]
     },
     "src/types": {
       "path": "src/types",
       "purpose": "Type definitions",
       "fileCount": 1,
-      "lastAccessed": 1781005553517,
+      "lastAccessed": 1781107174781,
       "keyFiles": [
         "index.ts"
       ]
@@ -166,303 +174,135 @@
   },
   "hotPaths": [
     {
-      "path": "src/App.tsx",
-      "accessCount": 49,
-      "lastAccessed": 1781073753513,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/LiveMap.tsx",
-      "accessCount": 42,
-      "lastAccessed": 1781073739503,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/ForecastPage.tsx",
-      "accessCount": 38,
-      "lastAccessed": 1781073901938,
-      "type": "file"
-    },
-    {
-      "path": "src/components/map/MapContainer.tsx",
-      "accessCount": 32,
-      "lastAccessed": 1781020393571,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/ExecutivePage.tsx",
-      "accessCount": 30,
-      "lastAccessed": 1781020454137,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/Settings.tsx",
-      "accessCount": 24,
-      "lastAccessed": 1781020618804,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/CommandCenter.tsx",
-      "accessCount": 24,
-      "lastAccessed": 1781020785114,
+      "path": "src/components/ui/map.tsx",
+      "accessCount": 12,
+      "lastAccessed": 1781107465909,
       "type": "file"
     },
     {
       "path": "src/components/dashboard/SimulationMetrics.tsx",
-      "accessCount": 23,
-      "lastAccessed": 1781020678594,
-      "type": "file"
-    },
-    {
-      "path": "src/components/map/StationDetailPanel.tsx",
-      "accessCount": 21,
-      "lastAccessed": 1781020447635,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/SimulationPage.tsx",
-      "accessCount": 20,
-      "lastAccessed": 1781020211427,
-      "type": "file"
-    },
-    {
-      "path": "src/components/map/StationMarker.tsx",
-      "accessCount": 19,
-      "lastAccessed": 1781020273623,
-      "type": "file"
-    },
-    {
-      "path": "src/components/ui/map.tsx",
-      "accessCount": 16,
-      "lastAccessed": 1781020273835,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/AlertsPage.tsx",
-      "accessCount": 16,
-      "lastAccessed": 1781020783873,
-      "type": "file"
-    },
-    {
-      "path": "src/components/dashboard/ForecastChart.tsx",
-      "accessCount": 15,
-      "lastAccessed": 1781020504363,
-      "type": "file"
-    },
-    {
-      "path": "src/types/index.ts",
-      "accessCount": 14,
-      "lastAccessed": 1781015217647,
-      "type": "file"
-    },
-    {
-      "path": "src/styles/globals.css",
-      "accessCount": 14,
-      "lastAccessed": 1781020853703,
-      "type": "file"
-    },
-    {
-      "path": "src/components/dashboard/CongestionHeatmap.tsx",
-      "accessCount": 13,
-      "lastAccessed": 1781020588569,
-      "type": "file"
-    },
-    {
-      "path": "tailwind.config.js",
-      "accessCount": 11,
-      "lastAccessed": 1781020627991,
-      "type": "file"
-    },
-    {
-      "path": "src/components/map/TimelineBar.tsx",
-      "accessCount": 10,
-      "lastAccessed": 1781020447908,
-      "type": "file"
-    },
-    {
-      "path": "src/stores/themeStore.ts",
-      "accessCount": 9,
-      "lastAccessed": 1781020298058,
-      "type": "file"
-    },
-    {
-      "path": "src/components/dashboard/KPIGrid.tsx",
-      "accessCount": 9,
-      "lastAccessed": 1781020610474,
-      "type": "file"
-    },
-    {
-      "path": "src/components/dashboard/AlertTicker.tsx",
-      "accessCount": 9,
-      "lastAccessed": 1781020769378,
+      "accessCount": 8,
+      "lastAccessed": 1781107483123,
       "type": "file"
     },
     {
       "path": "src/lib/api.ts",
-      "accessCount": 8,
-      "lastAccessed": 1781073981302,
-      "type": "file"
-    },
-    {
-      "path": "src/components/map/RouteFilter.tsx",
-      "accessCount": 7,
-      "lastAccessed": 1781014097842,
-      "type": "file"
-    },
-    {
-      "path": "src/components/map/BusMarker.tsx",
-      "accessCount": 6,
-      "lastAccessed": 1781020277780,
-      "type": "file"
-    },
-    {
-      "path": "src/stores/timelineStore.ts",
-      "accessCount": 5,
-      "lastAccessed": 1781015835715,
-      "type": "file"
-    },
-    {
-      "path": "src/hooks/useTimeline.ts",
-      "accessCount": 5,
-      "lastAccessed": 1781015837557,
-      "type": "file"
-    },
-    {
-      "path": "src/stores/connectionStore.ts",
-      "accessCount": 4,
-      "lastAccessed": 1781014207255,
-      "type": "file"
-    },
-    {
-      "path": "src/stores/themeStore.test.ts",
       "accessCount": 3,
-      "lastAccessed": 1781005748311,
+      "lastAccessed": 1781107808230,
       "type": "file"
     },
     {
-      "path": "src/components/map/HourSlider.tsx",
+      "path": "Dockerfile",
       "accessCount": 3,
-      "lastAccessed": 1781006129897,
+      "lastAccessed": 1781108014660,
       "type": "file"
     },
     {
-      "path": "src/stores/busStore.ts",
-      "accessCount": 3,
-      "lastAccessed": 1781007472198,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/ComparePage.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1781013497678,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/ScenarioPlanner.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1781013497970,
-      "type": "file"
-    },
-    {
-      "path": "src/hooks/useForecasts.ts",
-      "accessCount": 3,
-      "lastAccessed": 1781013643316,
-      "type": "file"
-    },
-    {
-      "path": "src/test/setup.ts",
+      "path": "src/components/dashboard/AlertTicker.tsx",
       "accessCount": 2,
-      "lastAccessed": 1781005739107,
+      "lastAccessed": 1781107406943,
       "type": "file"
     },
     {
-      "path": "src/lib/constants.ts",
+      "path": "src/components/dashboard/CongestionHeatmap.tsx",
       "accessCount": 2,
-      "lastAccessed": 1781006127555,
+      "lastAccessed": 1781107407122,
       "type": "file"
     },
     {
-      "path": "src/lib/websocket.ts",
+      "path": "src/components/dashboard/ForecastChart.tsx",
       "accessCount": 2,
-      "lastAccessed": 1781006132911,
+      "lastAccessed": 1781107416079,
       "type": "file"
     },
     {
-      "path": "src/hooks/useStations.ts",
+      "path": "src/components/dashboard/KPIGrid.tsx",
       "accessCount": 2,
-      "lastAccessed": 1781006138622,
+      "lastAccessed": 1781107416261,
       "type": "file"
     },
     {
-      "path": "src/hooks/useAlerts.ts",
+      "path": "src/components/map/MapContainer.tsx",
       "accessCount": 2,
-      "lastAccessed": 1781006138662,
-      "type": "file"
-    },
-    {
-      "path": "src/stores/simulationStore.ts",
-      "accessCount": 2,
-      "lastAccessed": 1781006138718,
+      "lastAccessed": 1781107466101,
       "type": "file"
     },
     {
       "path": "src/hooks/useWebSocket.ts",
       "accessCount": 2,
-      "lastAccessed": 1781006146874,
+      "lastAccessed": 1781107475758,
+      "type": "file"
+    },
+    {
+      "path": "src/routes/simulation.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781107506312,
+      "type": "file"
+    },
+    {
+      "path": "src/components/connection-indicator.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781107506521,
+      "type": "file"
+    },
+    {
+      "path": "src/routes/live-map.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781107568049,
+      "type": "file"
+    },
+    {
+      "path": "src/main.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781107588307,
+      "type": "file"
+    },
+    {
+      "path": "vite.config.ts",
+      "accessCount": 2,
+      "lastAccessed": 1781107601409,
+      "type": "file"
+    },
+    {
+      "path": ".env",
+      "accessCount": 2,
+      "lastAccessed": 1781107672622,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/websocket.ts",
+      "accessCount": 2,
+      "lastAccessed": 1781107695804,
       "type": "file"
     },
     {
       "path": "src/lib/utils.ts",
-      "accessCount": 2,
-      "lastAccessed": 1781006152475,
+      "accessCount": 1,
+      "lastAccessed": 1781107385749,
       "type": "file"
     },
     {
-      "path": "src/routes/Reports.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781013495355,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/Timetable.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781013495552,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/TrainingPage.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781013496430,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/AnalyticsPage.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781013496660,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/NetworkPage.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781013497406,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/DepotPage.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781013498396,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/PassengerPage.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781013498620,
+      "path": "src/components/ui/badge.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781107385805,
       "type": "file"
     },
     {
       "path": "src/lib/toast.ts",
       "accessCount": 1,
-      "lastAccessed": 1781005912597,
+      "lastAccessed": 1781107543099,
+      "type": "file"
+    },
+    {
+      "path": "src/stores/busStore.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781107573712,
+      "type": "file"
+    },
+    {
+      "path": "nginx.conf",
+      "accessCount": 1,
+      "lastAccessed": 1781108865586,
       "type": "file"
     }
   ],

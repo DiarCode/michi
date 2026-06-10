@@ -1,7 +1,7 @@
 {
-  "tool_name": "mcp__plugin_playwright_playwright__browser_select_option",
-  "tool_input_preview": "{\"element\":\"station select dropdown\",\"target\":\"select\",\"values\":[\"S001\"]}",
-  "error": "### Error\nTimeoutError: browserBackend.callTool: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('select')\u001b[22m\n\u001b[2m    - locator resolved to <select class=\"w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground font-medium focus:ring-2 focus:ring-ring/40 focus:border-primary outline-none transition-colors\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some opti...",
-  "timestamp": "2026-06-10T06:45:19.208Z",
+  "tool_name": "Read",
+  "tool_input_preview": "{\"file_path\":\"/Users/diarcode/development/michi/.playwright-mcp/map-initial.png\"}",
+  "error": "File does not exist. Note: your current working directory is /Users/diarcode/development/michi/dashboard.",
+  "timestamp": "2026-06-10T16:14:40.442Z",
   "retry_count": 1
 }

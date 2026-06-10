@@ -1,0 +1,30 @@
+[      77ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=d64afdd9:20102
+[     116ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/kpis:0
+[     116ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     117ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/trends?days=30:0
+[     117ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     117ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/roi:0
+[     117ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     117ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/financial:0
+[     117ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     117ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     129ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     143ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     159ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    1140ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/kpis:0
+[    1141ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1463ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/roi:0
+[    1463ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1490ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/trends?days=30:0
+[    1490ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1606ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/financial:0
+[    1607ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3151ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/kpis:0
+[    3151ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3623ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/roi:0
+[    3624ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3734ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    3910ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/trends?days=30:0
+[    3910ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    4034ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/executive/financial:0
+[    4034ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17

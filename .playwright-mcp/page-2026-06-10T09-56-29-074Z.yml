@@ -1,0 +1,139 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e6]:
+      - img [ref=e8]
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Astana Transit
+    - navigation [ref=e16]:
+      - generic [ref=e17]: Workspace
+      - link "Command Center" [ref=e18] [cursor=pointer]:
+        - /url: /
+        - img [ref=e20]
+        - generic [ref=e26]: Command Center
+      - link "Live Map" [ref=e27] [cursor=pointer]:
+        - /url: /map
+        - img [ref=e29]
+        - generic [ref=e34]: Live Map
+      - link "Alerts" [ref=e35] [cursor=pointer]:
+        - /url: /alerts
+        - img [ref=e37]
+        - generic [ref=e41]: Alerts
+      - link "Settings" [ref=e42] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e44]
+        - generic [ref=e48]: Settings
+    - generic [ref=e49]:
+      - 'generic "WebSocket: disconnected" [ref=e50]':
+        - generic [ref=e54]: Offline
+      - generic [ref=e55]: v1.0 · Astana Network
+  - generic [ref=e56]:
+    - banner [ref=e57]:
+      - button "Search stations, routes, alerts… ⌘K" [ref=e58] [cursor=pointer]:
+        - img [ref=e59]
+        - generic [ref=e62]: Search stations, routes, alerts…
+        - generic: ⌘K
+      - generic [ref=e63]:
+        - 'generic "WebSocket: disconnected" [ref=e64]':
+          - generic [ref=e68]: Offline
+        - button "Toggle theme" [ref=e69] [cursor=pointer]:
+          - img
+        - button "Dispatch" [ref=e70] [cursor=pointer]:
+          - text: Dispatch
+          - img
+    - main [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - generic [ref=e75]:
+            - img [ref=e76]
+            - text: Dispatch · Live network
+            - generic [ref=e78]: ·
+            - generic [ref=e79]: Wed 10 Jun
+          - heading "Command Center" [level=1] [ref=e80]
+          - paragraph [ref=e81]: Real-time view of the Astana transit network — live operations, model health, and recommended interventions.
+        - generic [ref=e82]:
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - generic [ref=e86]: Stations
+              - img [ref=e88]
+            - generic [ref=e92]: —
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - generic [ref=e96]: Routes
+              - img [ref=e98]
+            - generic [ref=e102]: —
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - generic [ref=e106]: Ridership
+              - img [ref=e108]
+            - generic [ref=e110]: —
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - generic [ref=e114]: On-Time
+              - img [ref=e116]
+            - generic [ref=e119]: —
+          - generic [ref=e121]:
+            - generic [ref=e122]:
+              - generic [ref=e123]: Alerts
+              - img [ref=e125]
+            - generic [ref=e128]: —
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - generic [ref=e132]: Peak Hour
+              - img [ref=e134]
+            - generic [ref=e139]: —
+        - generic [ref=e140]:
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - generic [ref=e145]: Congestion Heatmap
+              - generic [ref=e146]: 0 stations
+            - generic [ref=e147]:
+              - generic [ref=e148]:
+                - button "Now" [ref=e149] [cursor=pointer]
+                - button "+1h" [ref=e150] [cursor=pointer]
+                - button "+2h" [ref=e151] [cursor=pointer]
+                - button "+4h" [ref=e152] [cursor=pointer]
+              - generic [ref=e153]:
+                - button "All" [ref=e154] [cursor=pointer]
+                - button "Esil" [ref=e155] [cursor=pointer]
+                - button "Almaty" [ref=e156] [cursor=pointer]
+                - button "Saryarka" [ref=e157] [cursor=pointer]
+                - button "Baikonur" [ref=e158] [cursor=pointer]
+                - button "Unknown" [ref=e159] [cursor=pointer]
+              - generic [ref=e160]:
+                - generic [ref=e161]: Low
+                - generic [ref=e163]: Medium
+                - generic [ref=e165]: High
+          - button "No anomalies ▼" [ref=e169] [cursor=pointer]:
+            - generic [ref=e171]: No anomalies
+            - generic [ref=e172]: ▼
+        - generic [ref=e173]:
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - img [ref=e177]
+              - generic [ref=e180]:
+                - generic [ref=e181]: Simulation Engine
+                - generic [ref=e182]: Real-time forecaster status
+            - link "View details" [ref=e183] [cursor=pointer]:
+              - /url: /simulation
+              - text: View details
+              - img
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]: Status
+              - generic [ref=e188]: Stopped
+            - generic [ref=e190]:
+              - generic [ref=e191]: Tick
+              - generic [ref=e192]: "0"
+            - generic [ref=e193]:
+              - generic [ref=e194]: MAPE
+              - generic [ref=e195]: —%
+            - generic [ref=e196]:
+              - generic [ref=e197]: Drift
+              - generic [ref=e198]: NORMAL
+        - generic [ref=e199]:
+          - img [ref=e200]
+          - text: Built on DTS-GSSF v1.0 · Synthetic OSM data · Astana bus network
+  - generic [ref=e202]:
+    - heading "Command Palette" [level=2] [ref=e203]
+    - paragraph [ref=e204]: Navigate Michi

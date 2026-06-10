@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { wsClient, type WSEvent } from "@/lib/websocket";
-import { useSimulationStore } from "@/stores/simulationStore";
+import { useSimulationStore } from "@/stores/simulation-store";
 
 export function useWebSocket() {
   const [events, setEvents] = useState<WSEvent[]>([]);

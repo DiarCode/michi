@@ -1,0 +1,22 @@
+[      77ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=d64afdd9:20102
+[     115ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/simulation/state:0
+[     115ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     116ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/simulation/state:0
+[     116ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     120ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     127ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     139ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     195ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     220ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     232ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    1150ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/simulation/state:0
+[    1150ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1547ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/simulation/state:0
+[    1548ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3188ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/simulation/state:0
+[    3189ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3520ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    3589ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/simulation/state:0
+[    3590ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    5116ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/simulation/state:0
+[    5116ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17

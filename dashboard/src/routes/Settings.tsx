@@ -1,103 +1,134 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import type { UserRole } from "@/types";
-import { ROLE_LABELS } from "@/App";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { PaintBrush01Icon, UserIcon, Sun01Icon, Moon02Icon, DashboardCircleIcon } from "@/lib/icons";
-import { useThemeStore, type Theme } from "@/stores/themeStore";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { SectionHeader } from "@/components/section-header"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Mail01Icon, NotificationIcon, Settings01Icon, UserIcon } from "@hugeicons/core-free-icons"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import { Separator } from "@/components/ui/separator"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 
-const THEME_OPTIONS: { value: Theme; label: string; Icon: any }[] = [
-  { value: "light", label: "Light", Icon: Sun01Icon },
-  { value: "dark", label: "Dark", Icon: Moon02Icon },
-  { value: "system", label: "System", Icon: DashboardCircleIcon },
-];
-
-export default function Settings() {
-  const currentRole = (localStorage.getItem("michi-role") || "dispatch") as UserRole;
-  const { theme, resolvedTheme, setTheme } = useThemeStore();
-
+export function SettingsPage() {
   return (
-    <div className="p-8 space-y-8">
-      <div>
-        <h1 className="text-3xl font-extrabold text-foreground">Settings</h1>
-        <p className="text-base text-muted-foreground mt-1">Application preferences and role configuration</p>
-      </div>
+    <div className="space-y-4">
+      <SectionHeader
+        eyebrow="Account"
+        title="Settings"
+        description="Profile, notifications, and display preferences."
+      />
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <HugeiconsIcon icon={PaintBrush01Icon} size={18} className="text-chart-2" />
-            Appearance
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <div className="grid grid-cols-3 gap-3">
-              {THEME_OPTIONS.map(({ value, label, Icon }) => (
-                <button
-                  key={value}
-                  onClick={() => setTheme(value)}
-                  className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
-                    theme === value
-                      ? "border-primary bg-primary/10 shadow-sm"
-                      : "border-border hover:border-muted-foreground bg-card"
-                  }`}
+      <div className="grid gap-4 lg:grid-cols-[1fr_22rem]">
+        <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <HugeiconsIcon icon={UserIcon} strokeWidth={1.5} className="mr-1 inline size-4" />
+                Profile
+              </CardTitle>
+              <CardDescription>How others see you in the operator console.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4">
+                <Avatar className="size-12">
+                  <AvatarFallback className="bg-primary text-primary-foreground">DB</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium">Diar B.</p>
+                  <p className="text-xs text-muted-foreground">Operator · Astana</p>
+                </div>
+                <Button variant="outline" size="sm" className="ml-auto">
+                  Change photo
+                </Button>
+              </div>
+              <Separator className="my-4" />
+              <FieldGroup className="grid gap-4 md:grid-cols-2">
+                <Field>
+                  <FieldLabel htmlFor="first-name">First name</FieldLabel>
+                  <Input id="first-name" defaultValue="Diar" />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="last-name">Last name</FieldLabel>
+                  <Input id="last-name" defaultValue="Begisbayev" />
+                </Field>
+                <Field className="md:col-span-2">
+                  <FieldLabel htmlFor="email">
+                    <HugeiconsIcon icon={Mail01Icon} strokeWidth={1.5} className="mr-1 inline size-3.5" />
+                    Email
+                  </FieldLabel>
+                  <Input id="email" type="email" defaultValue="diar@michi.local" />
+                </Field>
+              </FieldGroup>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <HugeiconsIcon icon={NotificationIcon} strokeWidth={1.5} className="mr-1 inline size-4" />
+                Notifications
+              </CardTitle>
+              <CardDescription>When and how you want to be notified.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {[
+                { id: "high", title: "High-severity alerts", desc: "Push + email.", on: true },
+                { id: "med", title: "Medium-severity alerts", desc: "In-app only.", on: true },
+                { id: "weekly", title: "Weekly executive summary", desc: "Email, Mondays at 09:00.", on: false },
+                { id: "model", title: "Model drift warnings", desc: "Notify on PSI > 0.2.", on: true },
+              ].map((n) => (
+                <div
+                  key={n.id}
+                  className="flex items-center justify-between rounded-2xl bg-muted/40 p-3"
                 >
-                  <HugeiconsIcon icon={Icon} size={22} className={theme === value ? "text-primary" : "text-muted-foreground"} />
-                  <span className={`text-sm font-semibold ${theme === value ? "text-foreground" : "text-muted-foreground"}`}>
-                    {label}
-                  </span>
-                </button>
+                  <div>
+                    <Label htmlFor={n.id}>{n.title}</Label>
+                    <p className="text-xs text-muted-foreground">{n.desc}</p>
+                  </div>
+                  <Switch id={n.id} defaultChecked={n.on} />
+                </div>
               ))}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              {resolvedTheme === "dark"
-                ? "Dark mode is active — map tiles and UI adapt automatically."
-                : "Light mode is active."}
-              {theme === "system" && " (Following your system preference)"}
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <HugeiconsIcon icon={UserIcon} size={18} className="text-chart-2" />
-            Role Selection
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground font-medium">Select your role to customize navigation and available features</p>
-          <div className="flex flex-wrap gap-2">
-            {(Object.entries(ROLE_LABELS) as [UserRole, string][]).map(([k, v]) => (
-              <button
-                key={k}
-                onClick={() => { localStorage.setItem("michi-role", k); window.location.reload(); }}
-                className={`px-4 py-2 text-sm rounded-full font-semibold transition-all ${
-                  currentRole === k
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "bg-muted text-muted-foreground border border-border hover:bg-border"
-                }`}
-              >
-                {v}
-              </button>
-            ))}
-          </div>
-          <p className="text-xs text-muted-foreground font-medium">Changing role will reload the page</p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent className="p-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-foreground">Version</p>
-              <p className="text-sm text-muted-foreground">Michi Dashboard v2.0</p>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <HugeiconsIcon icon={Settings01Icon} strokeWidth={1.5} className="mr-1 inline size-4" />
+              Display
+            </CardTitle>
+            <CardDescription>Theme, density, and time format.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="rounded-2xl bg-muted/40 p-3">
+              <Label>Theme</Label>
+              <p className="mb-2 text-xs text-muted-foreground">
+                Use the theme toggle in the sidebar to switch.
+              </p>
             </div>
-            <span className="text-xs text-muted-foreground font-medium">© {new Date().getFullYear()}</span>
-          </div>
-        </CardContent>
-      </Card>
+            <div className="rounded-2xl bg-muted/40 p-3">
+              <Label htmlFor="tz">Time zone</Label>
+              <Input id="tz" defaultValue="Asia/Almaty (UTC+6)" />
+            </div>
+            <div className="flex items-center justify-between rounded-2xl bg-muted/40 p-3">
+              <div>
+                <Label htmlFor="compact">Compact density</Label>
+                <p className="text-xs text-muted-foreground">Reduce vertical padding.</p>
+              </div>
+              <Switch id="compact" />
+            </div>
+            <Button className="w-full">Save changes</Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
-  );
+  )
 }

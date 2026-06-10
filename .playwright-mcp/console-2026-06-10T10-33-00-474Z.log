@@ -1,0 +1,1021 @@
+[     130ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[     253ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[     253ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[     254ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[     254ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[     254ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[     254ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[     254ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[     254ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[     254ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[     254ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    1068ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    1068ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    1069ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[    1069ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    1096ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[    1096ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    1155ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[    1156ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    1197ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[    1197ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    2714ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    2715ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    2737ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[    2737ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    2792ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[    2792ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    2830ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[    2830ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    2832ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[    2833ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    2915ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[    2915ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    3724ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    3725ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    3725ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[    3725ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    3743ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[    3744ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    3800ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[    3800ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    3923ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[    3924ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    4550ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    4551ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    4640ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[    4640ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    4672ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[    4672ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    4827ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[    4827ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    5461ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[    5461ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    6171ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    6171ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    6391ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[    6391ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    6392ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[    6392ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    6469ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[    6469ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    6601ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[    6601ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    7412ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[    7412ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    9157ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[    9157ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[    9161ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[    9161ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   10012ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   10012ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   10922ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[   10976ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   10976ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   10983ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   10983ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   10983ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   10983ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   10983ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   10984ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   10984ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   10984ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   11809ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   11809ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   11810ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   11810ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   11815ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   11816ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   11847ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   11847ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   11889ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   11889ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   13428ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   13429ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   13460ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   13460ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   13572ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   13573ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   13600ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   13601ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   13605ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   13605ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   13607ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   13607ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   14421ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   14422ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   14435ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   14435ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   14467ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   14467ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   14580ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   14581ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   14609ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   14609ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   15361ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   15362ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   15434ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   15434ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   15447ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   15447ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   15471ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   15471ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   16185ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   16185ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   17075ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   17075ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   17090ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   17090ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   17112ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   17112ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   17191ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   17191ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   17229ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   17229ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   18037ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   18037ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   19783ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   19783ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   19790ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   19791ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   20721ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   20722ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   22353ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   22353ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   29962ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[   30004ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   30004ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30004ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   30005ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30005ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   30005ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30005ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   30005ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30005ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   30005ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30864ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   30865ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30924ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   30924ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30942ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   30942ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30972ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   30972ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   30991ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   30991ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   32544ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   32545ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   32557ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   32557ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   32634ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   32635ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   32680ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   32681ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   32742ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   32743ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   32746ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   32747ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   33551ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   33552ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   33563ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   33563ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   33586ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   33586ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   33643ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   33643ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   33688ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   33688ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   34418ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   34418ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   34499ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   34499ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   34512ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   34513ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   34535ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   34535ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   35270ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   35271ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   36164ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   36164ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   36204ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   36204ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   36241ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   36241ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   36252ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   36252ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   36275ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   36275ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   37119ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   37119ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   38828ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   38829ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   38833ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   38833ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   39756ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   39756ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   41522ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   41523ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   49490ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[   49523ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   49523ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   49523ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   49523ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   49523ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   49523ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   49523ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   49523ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   49523ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   49523ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   50387ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   50387ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   50402ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   50402ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   50455ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   50456ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   50510ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   50510ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   50521ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   50521ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   52021ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   52022ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   52043ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   52043ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   52048ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   52048ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   52173ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   52173ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   52227ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   52227ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   52242ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   52242ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   53031ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   53032ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   53050ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   53050ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   53181ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   53181ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   53235ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   53235ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   53249ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   53249ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   53933ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   53934ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   54098ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   54098ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   54098ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   54098ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   54175ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   54175ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   54779ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   54779ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   55554ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   55554ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   55785ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   55785ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   55804ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   55804ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   55810ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   55810ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   55816ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   55816ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   56699ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   56700ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   58348ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   58348ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   58351ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   58352ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   59166ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   59166ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   60962ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   60962ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   75977ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   75978ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   76823ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   76823ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   78546ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   78547ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   78550ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   78550ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   79513ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   79514ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   81199ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   81200ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   82208ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   82209ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   83020ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   83020ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   84814ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   84814ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   84816ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   84816ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   84946ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[   84980ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   84980ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   84981ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   84981ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   84981ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   84981ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   84981ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   84981ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   84981ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   84981ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   85797ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   85798ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   85878ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   85878ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   85898ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   85899ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   85918ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   85918ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   85957ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   85957ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   87502ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   87502ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   87515ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   87516ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   87530ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   87530ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   87552ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   87552ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   87554ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   87554ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   87754ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   87754ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   88512ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   88512ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   88513ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   88513ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   88522ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   88522ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   88535ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   88535ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   88762ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   88763ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   89320ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   89321ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   89383ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   89383ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   89448ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   89448ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   89740ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   89741ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   90261ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   90261ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   90967ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   90967ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   91063ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[   91064ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   91232ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[   91232ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   91269ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   91269ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   91502ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[   91502ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   92229ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   92229ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   93962ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[   93962ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   93964ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   93964ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   94925ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   94925ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[   96679ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[   96679ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  111696ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  111697ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  112645ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  112646ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  114256ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  114257ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  114260ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  114261ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  115175ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  115176ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  116812ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  116812ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  117820ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  117821ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  118744ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  118745ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  120499ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  120500ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  120504ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  120505ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  121248ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  121249ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  121331ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  121332ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  122134ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  122134ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  122951ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  122952ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  123840ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  123841ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  124849ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  124849ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  125711ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  125711ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  127459ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  127460ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  137969ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  137969ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  138950ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  138950ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  140716ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  140716ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  140720ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  140721ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  141703ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  141703ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  143337ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  143337ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  144342ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  144343ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  145155ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  145156ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  146962ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  146963ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  146967ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  146967ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  147866ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  147866ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  149659ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  149660ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  152325ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[  152358ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  152358ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  152358ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  152358ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  152358ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  152358ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  152358ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  152358ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  152358ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  152358ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  153219ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  153219ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  153280ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  153280ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  153293ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  153293ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  153350ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  153351ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  153357ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  153358ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  154855ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  154855ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  154906ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  154906ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  155018ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  155019ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  155038ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  155038ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  155040ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  155040ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  155066ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  155066ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  155855ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  155856ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  155860ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  155860ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  155913ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  155913ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  156026ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  156026ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  156073ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  156074ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  156730ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  156730ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  156822ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  156822ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  157004ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  157005ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  157078ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  157078ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  157631ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  157631ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  158380ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  158381ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  158514ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  158514ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  158636ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  158636ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  158790ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  158791ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  158853ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  158853ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  159527ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  159527ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  159733ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[  159766ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  159766ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  159767ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  159767ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  159774ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  159774ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  159775ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  159775ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  159775ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  159775ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  160582ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  160583ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  160651ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  160651ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  160696ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  160696ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  160721ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  160721ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  160729ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  160729ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  162215ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  162215ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  162358ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  162358ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  162361ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  162361ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  162467ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  162467ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  162478ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  162479ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  162482ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  162483ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  163221ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  163222ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  163366ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  163366ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  163367ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  163367ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  163445ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  163445ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  163475ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  163475ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  164082ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  164083ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  164208ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  164208ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  164313ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  164314ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  164396ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  164396ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  165085ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  165086ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  165804ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  165805ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  165895ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  165895ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  165988ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  165988ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  166093ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  166093ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  166126ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  166127ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  166938ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  166938ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  168601ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  168601ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  168602ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  168603ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  169567ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  169567ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  171298ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  171298ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  186316ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  186317ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  187193ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  187193ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  188984ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  188984ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  188989ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  188989ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  189929ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  189929ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  191694ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  191695ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  192704ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  192705ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  193674ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  193675ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  195374ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  195375ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  195380ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  195380ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  195910ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  195911ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  196335ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  196335ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  196800ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  196800ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  198124ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  198124ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  198587ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  198587ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  199595ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  199595ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  200552ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  200552ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  202274ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  202275ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  213140ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  213141ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  214109ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  214109ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  215816ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  215817ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  215821ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  215821ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  216767ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  216768ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  218456ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  218457ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  219465ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  219466ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  220393ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  220393ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  222156ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  222156ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  222158ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  222159ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  223089ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  223089ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  224780ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  224781ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  232289ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  232289ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  233219ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  233219ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  235000ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  235000ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  236008ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  236009ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  236980ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  236980ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  238646ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  238646ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  239797ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  239798ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  240654ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  240654ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  242292ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  242292ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  242297ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  242297ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  243124ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  243124ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  244745ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  244746ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  245754ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  245755ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  246648ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  246648ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  248269ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  248269ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  248273ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  248273ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  249157ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  249158ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  250951ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  250952ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  265964ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  265964ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  266937ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[  266975ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  266975ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  266975ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  266975ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  266975ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  266975ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  266975ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  266975ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  266983ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  266983ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  267824ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  267824ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  267913ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  267913ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  267914ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  267914ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  267957ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  267957ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  267974ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  267974ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  269544ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  269544ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  269589ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  269590ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  269592ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  269592ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  269615ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  269615ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  269620ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  269620ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  269645ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  269645ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  270551ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  270551ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  270563ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  270563ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  270623ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  270623ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  270626ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  270626ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  270651ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  270652ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  271432ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  271433ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  271453ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  271454ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  271594ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  271594ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  271603ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  271604ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  272297ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  272298ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  273148ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  273148ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  273174ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  273174ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  273295ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  273295ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  273307ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  273307ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  273307ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  273307ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  274264ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  274264ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  275908ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  275909ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  275913ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  275913ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  276911ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  276912ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  278537ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  278537ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  293552ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  293553ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  294473ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  294473ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  296081ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  296082ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  296088ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  296089ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  296971ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  296971ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  298656ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  298656ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  299663ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  299663ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  300654ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  300654ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  302316ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  302316ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  302320ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  302320ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  303290ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  303291ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  303311ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  303312ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  304241ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  304241ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  304966ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  304967ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  306008ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  306008ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  307016ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  307016ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  307983ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  307983ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  309681ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  309681ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  319984ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  319984ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  320846ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  320846ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  322598ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  322598ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  322602ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  322603ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  323447ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  323447ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  325196ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  325196ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  326205ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  326206ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  327192ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  327192ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  328926ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  328926ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  328929ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  328929ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  329755ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  329755ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  331475ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  331476ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  334720ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[  334755ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  334755ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  334755ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  334755ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  334755ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  334755ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  334755ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  334755ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  334755ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  334755ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  335574ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  335574ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  335611ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  335611ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  335713ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  335714ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  335714ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  335714ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  335725ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  335726ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  337291ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  337292ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  337333ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  337333ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  337346ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  337346ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  337373ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  337373ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  337411ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  337411ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  337415ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  337416ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  338300ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  338300ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  338329ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  338329ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  338338ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  338339ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  338351ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  338351ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  338378ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  338378ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  339248ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  339248ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  339304ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  339304ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  339304ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  339305ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  339361ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  339361ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  340113ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  340113ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  340924ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  340924ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  340969ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  340969ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  340979ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  340979ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  341055ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  341055ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  341116ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  341117ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  342044ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  342044ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  343692ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  343693ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  343698ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  343698ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  344623ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  344624ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  346368ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  346368ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  349811ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[  349844ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  349844ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  349844ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  349844ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  349844ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  349844ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  349844ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  349844ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  349844ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  349844ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  350703ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  350704ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  350730ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  350730ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  350814ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  350814ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  350840ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  350841ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  350847ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  350848ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  352350ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  352350ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  352446ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  352446ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  352451ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  352451ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  352453ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  352453ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  352455ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  352455ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  352597ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  352597ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  353270ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  353270ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  353356ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  353357ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  353452ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  353453ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  353460ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  353460ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  353605ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  353606ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  354325ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  354325ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  354345ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  354346ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  354425ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  354425ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  354465ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  354465ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  354996ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  354996ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  355975ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  355976ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  355977ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  355977ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  356001ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  356001ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  356130ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  356130ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  356197ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  356197ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  356917ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  356918ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  358610ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  358610ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  358611ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  358612ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  359520ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  359521ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  359765ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8b30a122:14337
+[  359796ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  359796ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  359796ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  359796ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  359796ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  359796ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  359796ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  359796ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  359804ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  359804ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  360605ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  360605ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  360627ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  360627ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  360669ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  360670ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  360725ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  360725ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  360763ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  360763ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  362276ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  362277ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  362281ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  362281ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  362312ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  362312ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  362523ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  362523ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  362559ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  362559ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  362563ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  362563ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  363284ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  363284ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  363287ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  363287ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  363319ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  363319ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  363447ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  363447ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  363531ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  363532ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  364144ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  364144ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  364262ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  364262ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  364287ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  364287ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  364398ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  364398ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  365142ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts:0
+[  365143ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  365753ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/routes:0
+[  365753ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  365954ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  365954ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  366048ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/analytics/predictions?horizon_minutes=60:0
+[  366048ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  366078ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/stations:0
+[  366078ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  366149ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  366149ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524
+[  367061ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/alerts/rich:0
+[  367061ms] [ERROR] [API 502] Request failed (502) @ http://localhost:5173/@vite/client:524

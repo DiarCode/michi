@@ -1,0 +1,9 @@
+[      77ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=d64afdd9:20102
+[     116ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     125ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     139ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     160ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    3969ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    9138ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[   16668ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[   27542ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47

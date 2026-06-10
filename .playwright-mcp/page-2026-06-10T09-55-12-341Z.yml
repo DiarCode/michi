@@ -1,0 +1,47 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e6]:
+      - img [ref=e8]
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Astana Transit
+    - navigation [ref=e16]:
+      - generic [ref=e17]: Workspace
+      - link "Command Center" [ref=e18] [cursor=pointer]:
+        - /url: /
+        - img [ref=e20]
+        - generic [ref=e26]: Command Center
+      - link "Live Map" [ref=e27] [cursor=pointer]:
+        - /url: /map
+        - img [ref=e29]
+        - generic [ref=e34]: Live Map
+      - link "Alerts" [ref=e35] [cursor=pointer]:
+        - /url: /alerts
+        - img [ref=e37]
+        - generic [ref=e41]: Alerts
+      - link "Settings" [ref=e42] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e44]
+        - generic [ref=e48]: Settings
+    - generic [ref=e49]:
+      - 'generic "WebSocket: disconnected" [ref=e50]':
+        - generic [ref=e54]: Offline
+      - generic [ref=e55]: v1.0 · Astana Network
+  - generic [ref=e56]:
+    - banner [ref=e57]:
+      - button "Search stations, routes, alerts… ⌘K" [ref=e58] [cursor=pointer]:
+        - img [ref=e59]
+        - generic [ref=e62]: Search stations, routes, alerts…
+        - generic: ⌘K
+      - generic [ref=e63]:
+        - 'generic "WebSocket: disconnected" [ref=e64]':
+          - generic [ref=e68]: Offline
+        - button "Toggle theme" [ref=e69] [cursor=pointer]:
+          - img
+        - button "Dispatch" [ref=e70] [cursor=pointer]:
+          - text: Dispatch
+          - img
+    - main [ref=e72]
+  - generic [ref=e74]:
+    - heading "Command Palette" [level=2] [ref=e75]
+    - paragraph [ref=e76]: Navigate Michi

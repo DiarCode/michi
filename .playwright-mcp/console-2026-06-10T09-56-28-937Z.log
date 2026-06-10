@@ -1,0 +1,213 @@
+[      88ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=d64afdd9:20102
+[     123ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://localhost:5173/src/components/ui/button.tsx:55:26)
+    at MiniSimulationCard (http://localhost:5173/src/routes/CommandCenter.tsx?t=1781085210247:92:23)
+    at CommandCenter (http://localhost:5173/src/routes/CommandCenter.tsx?t=1781085210247:379:21)
+    at AppInner (http://localhost:5173/src/App.tsx?t=1781085210247:484:77)
+    at App (http://localhost:5173/src/App.tsx?t=1781085210247:582:71) @ http://localhost:5173/node_modules/.vite/deps/chunk-OKPQIKMS.js?v=d64afdd9:20
+[     128ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[     128ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     128ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[     128ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     128ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[     128ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     128ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[     128ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     128ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[     128ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     128ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[     128ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[     133ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     138ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     154ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[     170ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    1187ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[    1187ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1330ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[    1331ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1331ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[    1331ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1392ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[    1393ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1471ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    1471ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    1520ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[    1520ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3216ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[    3217ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3455ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[    3455ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3551ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    3551ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3679ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[    3679ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3768ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[    3769ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3896ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[    3896ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    3933ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    7552ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[    7552ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    7708ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    7708ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    7813ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[    7813ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    8043ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[    8043ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    8045ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[    8045ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    8148ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[    8148ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    8151ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[    8151ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    8559ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[    8559ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    8673ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[    8714ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    8714ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    8818ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[    8818ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    9153ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[    9153ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    9154ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[    9154ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    9548ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[    9549ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    9878ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[    9878ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[    9958ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[    9958ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   10061ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   10061ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   10397ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   10397ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   10462ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   10462ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   11726ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[   11726ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   11974ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   11975ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   12357ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   12358ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   12456ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   12456ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   12522ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   12523ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   12546ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   12546ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   16001ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[   16001ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   16093ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[   16379ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   16379ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   16622ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   16622ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   16655ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   16656ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   16740ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   16740ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   16867ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   16867ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   17009ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[   17009ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   18382ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   18382ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   18444ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[   18444ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   18630ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   18631ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   18663ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   18663ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   18746ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   18747ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   18874ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   18874ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   19552ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   19552ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   19762ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   19762ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   19968ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   19968ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   20000ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   20000ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   20077ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   20077ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   20599ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[   20600ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   21954ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   21954ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   22091ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   22091ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   22217ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   22217ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   22230ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   22231ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   22408ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   22409ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   24714ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[   24715ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   24719ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[   24719ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   26109ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   26109ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   26109ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[   26109ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   26232ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   26232ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   26247ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   26247ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   26360ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   26360ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   26861ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   26861ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   27074ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Connection closed before receiving a handshake response @ http://localhost:5173/src/lib/websocket.ts:47
+[   28195ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[   28195ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   30114ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   30114ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   30235ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   30235ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   30250ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   30250ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   30364ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   30364ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   30865ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   30865ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   31164ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   31165ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   31612ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   31612ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   31666ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   31666ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   31696ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   31696ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   31969ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   31969ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   32535ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts:0
+[   32536ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   33310ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   33310ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   33720ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   33721ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   33983ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   33984ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   34048ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   34048ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   34105ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   34105ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   34542ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[   34542ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   35694ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[   35694ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   37650ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/suggestions:0
+[   37650ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   37844ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/stations:0
+[   37844ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   38137ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/analytics/predictions:0
+[   38137ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   38144ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/alerts/rich:0
+[   38145ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   38200ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/interventions:0
+[   38201ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17
+[   38316ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/api/v1/dashboard/kpis:0
+[   38316ms] [ERROR] [API 500] Request failed (500) @ http://localhost:5173/src/lib/api.ts:17

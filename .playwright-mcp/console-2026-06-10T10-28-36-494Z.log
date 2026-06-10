@@ -1,0 +1,3 @@
+[      67ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/src/main.tsx:0
+[      88ms] ReferenceError: __BUNDLED_DEV__ is not defined
+    at http://localhost:5173/@vite/client:861:22

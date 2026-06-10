@@ -44,7 +44,7 @@ export const useTimelineStore = create<TimelineState>((set, get) => ({
     set({
       mode: "live",
       isPlaying: false,
-      range: { start: Date.now() - 24 * 60 * 60 * 1000, end: Date.now() + 12 * 60 * 60 * 1000 },
+      range: { start: Date.now() - 86400000, end: Date.now() },
       currentTime: Date.now(),
     }),
 

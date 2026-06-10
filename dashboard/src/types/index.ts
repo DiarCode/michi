@@ -242,12 +242,6 @@ export interface ExecutiveKPIs {
   prediction_accuracy_mape?: number;
   overcrowding_prevented: number;
   on_time_performance: number;
-  daily_ridership?: number;
-  fleet_size?: number;
-  revenue_today_kzt?: number;
-  operating_cost_today_kzt?: number;
-  operating_ratio?: number;
-  avg_fare_kzt?: number;
 }
 
 export interface DepotStatus {
@@ -279,7 +273,8 @@ export type UserRole =
   | "research"
   | "planning"
   | "executive"
-  | "superadmin";
+  | "depot"
+  | "passenger";
 
 // Timeline types
 export type TimelineMode = "live" | "historical";
@@ -369,5 +364,4 @@ export interface ConnectionStatus {
   lastTickReceived: number;
   reconnectAttempt: number;
   lastConnectedAt: string | null;
-  wsState: "connecting" | "connected" | "disconnected";
 }

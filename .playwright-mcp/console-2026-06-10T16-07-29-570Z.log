@@ -1,0 +1,22 @@
+[     339ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/analytics/predictions:0
+[     341ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[     341ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/routes:0
+[     356ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[     356ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[    1346ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[    1843ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[    1849ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[    3607ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[    8755ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   15691ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   26293ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   30308ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   31449ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   42371ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   60324ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   60331ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   61377ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   62382ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   62527ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   62527ms] [ERROR] Error @ http://localhost:3100/assets/index-oewwjQqS.js:59
+[   65366ms] [ERROR] WebSocket connection to 'ws://localhost:8100/ws/realtime/realtime' failed: Error during WebSocket handshake: Unexpected response code: 403 @ http://localhost:3100/assets/index-oewwjQqS.js:59

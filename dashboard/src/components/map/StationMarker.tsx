@@ -7,6 +7,7 @@ interface Props {
   station: Station;
   onClick?: (stationId: string) => void;
   hour?: number;
+  predictedLoad?: number;
   /** Timeline mode determines marker appearance */
   timelineMode?: TimelineMode;
   /** Timeline data for this station at the selected time */
@@ -24,25 +25,25 @@ function getLoadPercent(station: Station, hour: number): number {
 /** Determine marker style based on timeline mode */
 function getMarkerStyle(timelineMode?: TimelineMode, timelineData?: TimelinePoint) {
   if (!timelineMode || timelineMode === "live") {
-    return { borderStyle: "solid", borderColor: "var(--background)", opacity: 1, badge: null };
+    return { borderStyle: "solid", borderColor: "white", opacity: 1, badge: null };
   }
 
   // Historical mode: check if we have past actual data or future prediction
   if (timelineData) {
     if (timelineData.actual !== null) {
-      // Past data — muted outline, solid fill
+      // Past data — grey outline, solid fill
       return {
         borderStyle: "solid",
-        borderColor: "var(--muted-foreground)",
+        borderColor: "#9ca3af",
         opacity: 0.8,
         badge: null as string | null,
       };
     }
     if (timelineData.predicted !== null) {
-      // Future prediction — primary dashed outline
+      // Future prediction — purple dashed outline
       return {
         borderStyle: "dashed",
-        borderColor: "var(--primary)",
+        borderColor: "#9333ea",
         opacity: 1,
         badge: timelineData.confidence_upper !== null
           ? `${Math.round((1 - Math.abs(timelineData.confidence_upper - timelineData.predicted) / timelineData.predicted) * 100)}%`
@@ -52,20 +53,20 @@ function getMarkerStyle(timelineMode?: TimelineMode, timelineData?: TimelinePoin
   }
 
   // Default fallback for historical mode without data
-  return { borderStyle: "solid", borderColor: "var(--muted-foreground)", opacity: 0.5, badge: null };
+  return { borderStyle: "solid", borderColor: "#9ca3af", opacity: 0.5, badge: null };
 }
 
-export default function StationMarker({ station, onClick, hour = new Date().getHours(), timelineMode, timelineData }: Props) {
+export default function StationMarker({ station, onClick, hour = new Date().getHours(), predictedLoad, timelineMode, timelineData }: Props) {
   const load = getLoadPercent(station, hour);
-  const color = load > LOAD_HIGH ? "var(--destructive)" : load > LOAD_MID ? "var(--chart-4)" : "var(--chart-2)";
+  const color = load > LOAD_HIGH ? "#ef4444" : load > LOAD_MID ? "#f59e0b" : "#22c55e";
   const size = load > LOAD_HIGH ? 14 : load > LOAD_MID ? 11 : 8;
   const style = getMarkerStyle(timelineMode, timelineData);
 
   // Override color for historical modes
   const fillColor = timelineMode === "historical" && timelineData?.actual !== null && timelineData?.actual !== undefined
-    ? "var(--muted-foreground)" // grey for past actual
+    ? "#9ca3af" // grey for past actual
     : timelineMode === "historical" && timelineData?.predicted !== null && timelineData?.predicted !== undefined
-      ? "var(--primary)" // primary for future prediction
+      ? "#9333ea" // purple for future prediction
       : color;
 
   return (
@@ -87,7 +88,7 @@ export default function StationMarker({ station, onClick, hour = new Date().getH
         />
         {/* Confidence badge for future predictions */}
         {style.badge && (
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-card text-foreground text-[7px] font-bold px-1 rounded ring-1 ring-foreground/10">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 text-[7px] font-bold px-1 rounded">
             {style.badge}
           </div>
         )}
@@ -96,56 +97,64 @@ export default function StationMarker({ station, onClick, hour = new Date().getH
         <div className="text-xs">
           <div className="font-semibold">{station.name}</div>
           {timelineMode === "historical" && timelineData ? (
-            <div className="text-muted-foreground">
+            <div className="text-gray-500">
               {timelineData.actual !== null ? (
-                <span>Actual: {Math.round(timelineData.actual)} passengers</span>
+                <span>Actual: {Math.round(timelineData.actual)} pax</span>
               ) : timelineData.predicted !== null ? (
-                <span>Forecast: {Math.round(timelineData.predicted)} passengers (range: {Math.round(timelineData.confidence_lower ?? timelineData.predicted)}–{Math.round(timelineData.confidence_upper ?? timelineData.predicted)})</span>
+                <span>Predicted: {Math.round(timelineData.predicted)} pax ({Math.round(timelineData.confidence_upper ?? timelineData.predicted)}-{Math.round(timelineData.confidence_lower ?? timelineData.predicted)})</span>
               ) : (
-                <span>{station.ridership_24h?.toLocaleString() ?? "—"} passengers/day · {load}% capacity</span>
+                <span>{station.ridership_24h ?? "—"} pax/24h · {load}% load</span>
               )}
             </div>
           ) : (
-            <div className="text-muted-foreground">{station.ridership_24h?.toLocaleString() ?? "—"} passengers/day · {load}% load</div>
+            <div className="text-gray-500">{station.ridership_24h ?? "—"} pax/24h · {load}% load</div>
           )}
         </div>
       </MarkerTooltip>
       <MarkerPopup>
         <div className="p-2 min-w-[180px]">
           <div className="font-bold text-sm">{station.name}</div>
-          {station.district && <div className="text-xs text-muted-foreground">{station.district}</div>}
+          {station.district && <div className="text-xs text-gray-500">{station.district}</div>}
 
           {timelineMode === "historical" && timelineData ? (
             <>
               {timelineData.actual !== null && (
                 <div className="mt-1 text-xs">
-                  <span>Actual Passengers: </span>
-                  <span className="font-mono font-bold text-muted-foreground">{Math.round(timelineData.actual)}</span>
+                  <span>Actual Ridership: </span>
+                  <span className="font-mono font-bold text-gray-600">{Math.round(timelineData.actual)} pax</span>
                 </div>
               )}
               {timelineData.predicted !== null && (
                 <div className="mt-1 text-xs">
-                  <span>Forecast: </span>
-                  <span className="font-mono font-bold text-primary">{Math.round(timelineData.predicted)} passengers</span>
+                  <span>Predicted: </span>
+                  <span className="font-mono font-bold text-purple-600">{Math.round(timelineData.predicted)} pax</span>
                 </div>
               )}
               {timelineData.confidence_upper !== null && timelineData.confidence_lower !== null && (
-                <div className="text-xs text-muted-foreground">
-                  Range: {Math.round(timelineData.confidence_lower)} – {Math.round(timelineData.confidence_upper)} passengers
+                <div className="text-xs text-gray-400">
+                  Range: {Math.round(timelineData.confidence_lower)} – {Math.round(timelineData.confidence_upper)} pax
                 </div>
               )}
             </>
           ) : (
             <>
               <div className="mt-1 text-xs">
-                <span>Daily Passengers: </span>
-                <span className="font-mono">{station.ridership_24h?.toLocaleString() ?? "—"}</span>
+                <span>Ridership: </span>
+                <span className="font-mono">{station.ridership_24h ?? "—"}</span>
+                <span> pax/24h</span>
               </div>
               <div className="text-xs">
-                <span>Capacity Used: </span>
+                <span>Load: </span>
                 <span className="font-mono font-bold" style={{ color }}>{load}%</span>
               </div>
             </>
+          )}
+
+          {predictedLoad !== undefined && (
+            <div className="text-xs mt-1 pt-1 border-t border-gray-200">
+              <span>Predicted: </span>
+              <span className="font-mono font-bold text-blue-600">{predictedLoad} pax</span>
+            </div>
           )}
         </div>
       </MarkerPopup>

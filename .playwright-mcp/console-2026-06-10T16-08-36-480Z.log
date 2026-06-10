@@ -1,0 +1,116 @@
+[     114ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[     114ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/routes:0
+[     114ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/analytics/predictions:0
+[    1122ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[    1270ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[    1270ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[    5122ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[    6128ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[    6285ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[    6285ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   10119ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   11124ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   11268ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   11268ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   15130ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   16135ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   16290ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   16290ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   20129ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   21133ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   21266ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   21266ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   25136ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   26143ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   26286ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   26286ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   30112ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   30113ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   30138ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   31144ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   31296ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   31296ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   35152ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   36159ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   36305ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   36306ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   40155ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   41160ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   41298ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   41298ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   45173ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   46179ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   46340ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   46340ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   50163ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   51169ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   51317ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   51317ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   55169ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   56173ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   56304ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   56304ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   60113ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   60175ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   61183ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   61335ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   61335ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   65183ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   66188ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   66341ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   66341ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   70190ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   71198ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   71355ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   71355ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   75204ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   76210ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   76360ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   76360ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   80214ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   81218ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   81367ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   81367ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   85219ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   86224ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   86372ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   86373ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   90113ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   90114ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   90228ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   91236ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   91383ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   91384ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   95228ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   96232ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[   96369ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[   96369ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  100243ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  101248ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  101391ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  101391ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  105237ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  106242ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  106385ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  106385ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  110254ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  111259ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  111401ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  111402ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  115263ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  116266ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  116407ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  116407ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  120115ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  120259ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  121262ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  121436ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  121436ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  125278ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  126285ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  126464ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  126464ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  130275ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  131282ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8100/stations:0
+[  131442ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59
+[  131442ms] [ERROR] Error @ http://localhost:3100/assets/index-bcZRkdsi.js:59

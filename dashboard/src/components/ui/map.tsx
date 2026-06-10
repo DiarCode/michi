@@ -2,6 +2,7 @@
 
 import MapLibreGL, { type PopupOptions, type MarkerOptions } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import type * as GeoJSON from "geojson";
 import {
   createContext,
   forwardRef,
@@ -17,7 +18,14 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Cancel01Icon, MinusSignIcon, Add01Icon, GpsIcon, Maximize01Icon, Loading03Icon } from "@/lib/icons";
+import {
+  Cancel01Icon,
+  MinusSignIcon,
+  PlusSignIcon,
+  Location01Icon,
+  FullScreenIcon,
+  Loading02Icon,
+} from "@hugeicons/core-free-icons";
 
 import { cn } from "@/lib/utils";
 
@@ -145,7 +153,17 @@ type MapProps = {
   loading?: boolean;
 } & Omit<MapLibreGL.MapOptions, "container" | "style">;
 
-// DefaultLoader removed — MapLibre renders tiles progressively without a blocking overlay
+function DefaultLoader() {
+  return (
+    <div className="bg-background/50 absolute inset-0 z-10 flex items-center justify-center backdrop-blur-xs">
+      <div className="flex gap-1">
+        <span className="bg-muted-foreground/60 size-1.5 animate-pulse rounded-full" />
+        <span className="bg-muted-foreground/60 size-1.5 animate-pulse rounded-full [animation-delay:150ms]" />
+        <span className="bg-muted-foreground/60 size-1.5 animate-pulse rounded-full [animation-delay:300ms]" />
+      </div>
+    </div>
+  );
+}
 
 function getViewport(map: MapLibreGL.Map): MapViewport {
   const center = map.getCenter();
@@ -299,6 +317,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
 
     clearStyleTimeout();
     currentStyleRef.current = newStyle;
+    setIsStyleLoaded(false);
 
     mapInstance.setStyle(newStyle, { diff: true });
   }, [mapInstance, resolvedTheme, mapStyles, clearStyleTimeout]);
@@ -317,7 +336,8 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
         ref={containerRef}
         className={cn("relative h-full w-full", className)}
       >
-        {/* Map renders progressively — no blocking loader needed */}
+        {(!isLoaded || loading) && <DefaultLoader />}
+        {/* SSR-safe: children render only when map is loaded on client */}
         {mapInstance && children}
       </div>
     </MapContext.Provider>
@@ -515,7 +535,7 @@ function PopupCloseButton({ onClick }: { onClick: () => void }) {
       aria-label="Close popup"
       className="focus-visible:ring-ring hover:bg-muted text-foreground absolute top-0.5 right-0.5 z-10 inline-flex size-5 cursor-pointer items-center justify-center rounded-sm transition-colors focus:outline-none focus-visible:ring-2"
     >
-      <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
+      <HugeiconsIcon icon={Cancel01Icon} strokeWidth={1.5} className="size-3.5" />
     </button>
   );
 }
@@ -754,7 +774,7 @@ function ControlButton({
       className={cn(
         "flex size-8 items-center justify-center transition-all",
         "first:rounded-t-md last:rounded-b-md",
-        "hover:bg-muted",
+        "hover:bg-accent dark:hover:bg-accent/40",
         "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset",
         "disabled:pointer-events-none disabled:opacity-50",
       )}
@@ -835,10 +855,10 @@ function MapControls({
       {showZoom && (
         <ControlGroup>
           <ControlButton onClick={handleZoomIn} label="Zoom in">
-            <HugeiconsIcon icon={Add01Icon} className="size-4" />
+            <HugeiconsIcon icon={PlusSignIcon} strokeWidth={1.5} className="size-4" />
           </ControlButton>
           <ControlButton onClick={handleZoomOut} label="Zoom out">
-            <HugeiconsIcon icon={MinusSignIcon} className="size-4" />
+            <HugeiconsIcon icon={MinusSignIcon} strokeWidth={1.5} className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}
@@ -855,9 +875,9 @@ function MapControls({
             disabled={waitingForLocation}
           >
             {waitingForLocation ? (
-              <HugeiconsIcon icon={Loading03Icon} className="size-4 animate-spin" />
+              <HugeiconsIcon icon={Loading02Icon} strokeWidth={1.5} className="size-4 animate-spin" />
             ) : (
-              <HugeiconsIcon icon={GpsIcon} className="size-4" />
+              <HugeiconsIcon icon={Location01Icon} strokeWidth={1.5} className="size-4" />
             )}
           </ControlButton>
         </ControlGroup>
@@ -865,7 +885,7 @@ function MapControls({
       {showFullscreen && (
         <ControlGroup>
           <ControlButton onClick={handleFullscreen} label="Toggle fullscreen">
-            <HugeiconsIcon icon={Maximize01Icon} className="size-4" />
+            <HugeiconsIcon icon={FullScreenIcon} strokeWidth={1.5} className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}
