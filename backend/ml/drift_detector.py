@@ -1,6 +1,5 @@
 """Page-Hinkley drift detection for DTS-GSSF predictions."""
 from collections import deque
-from typing import List, Optional
 
 
 class PageHinkleyDetector:
@@ -72,7 +71,7 @@ class DriftManager:
     def check_drift(self, key: str, residual: float) -> bool:
         return self.get_detector(key).update(residual)
 
-    def get_drifted_keys(self) -> List[str]:
+    def get_drifted_keys(self) -> list[str]:
         return [k for k, d in self.detectors.items() if d.drift_detected]
 
     def reset_all(self):

@@ -1,7 +1,7 @@
 """Pydantic response models aligned with ORM schema."""
+from typing import Any
+
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
-from datetime import datetime
 
 
 class StationResponse(BaseModel):
@@ -9,34 +9,34 @@ class StationResponse(BaseModel):
     name: str
     lat: float
     lon: float
-    district: Optional[str] = None
-    ridership_24h: Optional[int] = None
-    load_percent: Optional[int] = None
+    district: str | None = None
+    ridership_24h: int | None = None
+    load_percent: int | None = None
 
 
 class StationListResponse(BaseModel):
-    stations: List[StationResponse]
-    hour: Optional[int] = None
+    stations: list[StationResponse]
+    hour: int | None = None
 
 
 class StationDetailResponse(BaseModel):
     station: StationResponse
-    connected_routes: List[Dict[str, Any]]
-    forecast: List[Dict[str, Any]]
-    alerts: List[Dict[str, Any]]
-    hourly_ridership: List[Dict[str, Any]]
+    connected_routes: list[dict[str, Any]]
+    forecast: list[dict[str, Any]]
+    alerts: list[dict[str, Any]]
+    hourly_ridership: list[dict[str, Any]]
 
 
 class RouteResponse(BaseModel):
     id: str
     name: str
-    color: Optional[str] = None
-    stop_count: Optional[int] = None
-    avg_ridership: Optional[float] = None
+    color: str | None = None
+    stop_count: int | None = None
+    avg_ridership: float | None = None
 
 
 class RouteListResponse(BaseModel):
-    routes: List[RouteResponse]
+    routes: list[RouteResponse]
 
 
 class RouteStopResponse(BaseModel):
@@ -46,14 +46,14 @@ class RouteStopResponse(BaseModel):
 
 class RouteStopsResponse(BaseModel):
     route_id: str
-    stops: List[RouteStopResponse]
+    stops: list[RouteStopResponse]
 
 
 class RouteForecastResponse(BaseModel):
     route_id: str
-    route: Optional[RouteResponse] = None
+    route: RouteResponse | None = None
     stop_count: int
-    forecast: List[Dict[str, Any]]
+    forecast: list[dict[str, Any]]
     avg_ridership: int
 
 
@@ -68,8 +68,8 @@ class ScheduleEntry(BaseModel):
 class RouteScheduleResponse(BaseModel):
     route_id: str
     route_name: str
-    stops: List[RouteStopResponse]
-    schedule: List[ScheduleEntry]
+    stops: list[RouteStopResponse]
+    schedule: list[ScheduleEntry]
     first_bus: str
     last_bus: str
     headway_min: int
@@ -84,7 +84,7 @@ class ForecastPoint(BaseModel):
 
 class ForecastResponse(BaseModel):
     station_id: str
-    forecast: List[ForecastPoint]
+    forecast: list[ForecastPoint]
 
 
 class AlertResponse(BaseModel):
@@ -92,16 +92,16 @@ class AlertResponse(BaseModel):
     severity: str
     title: str
     message: str
-    station_id: Optional[str] = None
-    route_id: Optional[str] = None
+    station_id: str | None = None
+    route_id: str | None = None
     created_at: str
     acknowledged: bool = False
-    auto: Optional[bool] = None
-    rule_id: Optional[str] = None
+    auto: bool | None = None
+    rule_id: str | None = None
 
 
 class AlertListResponse(BaseModel):
-    alerts: List[AlertResponse]
+    alerts: list[AlertResponse]
 
 
 class KPIResponse(BaseModel):
@@ -109,21 +109,21 @@ class KPIResponse(BaseModel):
     active_routes: int
     avg_ridership: float
     alerts_today: int
-    on_time_performance: Optional[float] = None
-    peak_hour: Optional[str] = None
+    on_time_performance: float | None = None
+    peak_hour: str | None = None
 
 
 class OperationsReportResponse(BaseModel):
     date: str
     kpis: KPIResponse
-    district_summary: Dict[str, Dict[str, int]]
-    peak_hours: List[str]
-    over_capacity_stations: List[Dict[str, Any]]
+    district_summary: dict[str, dict[str, int]]
+    peak_hours: list[str]
+    over_capacity_stations: list[dict[str, Any]]
     total_stations: int
 
 
 class ScenarioResult(BaseModel):
     scenario_id: str
-    base_metrics: Dict[str, float]
-    scenario_metrics: Dict[str, float]
-    changes: Dict[str, float]
+    base_metrics: dict[str, float]
+    scenario_metrics: dict[str, float]
+    changes: dict[str, float]

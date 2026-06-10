@@ -1,16 +1,19 @@
 """Data loader — builds feature tensors from database for DTS-GSSF training/prediction."""
-from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional, Tuple
+from datetime import UTC, datetime, timedelta
 
 import numpy as np
 from sqlalchemy.orm import Session
 
 from backend.models_orm import (
-    HistoricalRidershipORM, WeatherReadingORM, EventORM, StationORM, RouteORM, RouteStopORM,
+    EventORM,
+    HistoricalRidershipORM,
+    RouteStopORM,
+    StationORM,
+    WeatherReadingORM,
 )
 
 
-def build_adjacency(session: Session) -> Tuple[np.ndarray, List[str], Dict[str, int]]:
+def build_adjacency(session: Session) -> tuple[np.ndarray, list[str], dict[str, int]]:
     """Build physical adjacency matrix from route-station topology."""
     stations = session.query(StationORM).all()
     route_stops = session.query(RouteStopORM).all()
@@ -35,12 +38,12 @@ def build_adjacency(session: Session) -> Tuple[np.ndarray, List[str], Dict[str, 
 
 def build_feature_tensor(
     session: Session,
-    station_idx: Dict[str, int],
-    stop_ids: List[str],
+    station_idx: dict[str, int],
+    stop_ids: list[str],
     start_time: datetime,
     window_hours: int = 168,
     horizon_hours: int = 24,
-) -> Tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray]:
     """Build feature tensor (N_stations, T_window + T_horizon, F_features) from DB.
 
     Returns:
@@ -62,7 +65,7 @@ def build_feature_tensor(
     weather_rows = (session.query(WeatherReadingORM)
                    .filter(WeatherReadingORM.timestamp >= begin_time)
                    .filter(WeatherReadingORM.timestamp < target_end).all())
-    weather_map = {w.timestamp.replace(tzinfo=timezone.utc): w for w in weather_rows}
+    weather_map = {w.timestamp.replace(tzinfo=UTC): w for w in weather_rows}
 
     # Query events
     events = session.query(EventORM).all()
@@ -80,7 +83,7 @@ def build_feature_tensor(
     # Index data by (timestamp, station_id)
     data_index = {}
     for row in rows:
-        ts = row.timestamp.replace(tzinfo=timezone.utc) if row.timestamp.tzinfo is None else row.timestamp
+        ts = row.timestamp.replace(tzinfo=UTC) if row.timestamp.tzinfo is None else row.timestamp
         data_index[(ts, row.station_id)] = row
 
     for t in range(T_window):
@@ -117,9 +120,9 @@ def build_feature_tensor(
     return x_tensor, y_tensor
 
 
-def get_latest_data_snapshot(session: Session, hours: int = 168) -> Dict:
+def get_latest_data_snapshot(session: Session, hours: int = 168) -> dict:
     """Get latest data snapshot for prediction generation."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     begin = now - timedelta(hours=hours)
 
     ridership = (session.query(HistoricalRidershipORM)

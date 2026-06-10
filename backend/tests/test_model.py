@@ -1,9 +1,8 @@
 """Unit tests for DTS-GSSF model, data loader, and artifact store."""
-import pytest
 import numpy as np
 import torch
 
-from backend.ml.model import DTSGSSF, LoRALinear, GatedSSMBlock, GraphPropagation, TemporalAttention, nb_nll, softplus
+from backend.ml.model import DTSGSSF, GatedSSMBlock, GraphPropagation, LoRALinear, nb_nll, softplus
 
 
 class TestLoRALinear:

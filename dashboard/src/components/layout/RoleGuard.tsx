@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { UserRole } from "../../types";
 
-const ROLES: UserRole[] = ["dispatch", "research", "planning", "executive", "depot", "passenger"];
+const ROLES: UserRole[] = ["dispatch", "research", "planning", "executive", "superadmin"];
 
 interface Props { children: (role: UserRole) => ReactNode; fallback?: ReactNode }
 

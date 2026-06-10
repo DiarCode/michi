@@ -279,8 +279,6 @@ export type UserRole =
   | "research"
   | "planning"
   | "executive"
-  | "depot"
-  | "passenger"
   | "superadmin";
 
 // Timeline types
@@ -371,4 +369,5 @@ export interface ConnectionStatus {
   lastTickReceived: number;
   reconnectAttempt: number;
   lastConnectedAt: string | null;
+  wsState: "connecting" | "connected" | "disconnected";
 }

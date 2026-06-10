@@ -95,8 +95,8 @@ export function useTimeline() {
   const handleScrubStart = useCallback(
     (timestampMs: number) => {
       const now = Date.now();
-      const rangeStart = now - 24 * 60 * 60 * 1000; // -24h
-      const rangeEnd = now + 12 * 60 * 60 * 1000; // +12h
+      const rangeStart = now - 24 * 60 * 60 * 1000; // -24h past
+      const rangeEnd = now + 12 * 60 * 60 * 1000; // +12h future
       enterHistoricalMode(rangeStart, rangeEnd);
       scrubTo(timestampMs);
     },

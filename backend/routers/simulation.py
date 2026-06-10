@@ -1,7 +1,7 @@
 """Simulation API — start/stop simulation, query state and metrics."""
 import json
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -155,7 +155,7 @@ def get_simulation_metrics(hours_back: int = 24, db: Session = Depends(get_db_se
         pass
 
     # DB-stored prediction accuracy records
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     cutoff = now - timedelta(hours=hours_back)
     records = (
         db.query(PredictionAccuracyORM)
@@ -198,7 +198,7 @@ def get_station_data():
     try:
         raw = _redis().get(STATION_DATA_KEY)
         if raw:
-            return {"stations": json.loads(raw), "updated_at": datetime.now(timezone.utc).isoformat()}
+            return {"stations": json.loads(raw), "updated_at": datetime.now(UTC).isoformat()}
     except Exception:
         pass
     return {"stations": {}, "updated_at": None}

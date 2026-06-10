@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1780274443779,
+  "lastScanned": 1781001848297,
   "projectRoot": "/Users/diarcode/development/michi",
   "techStack": {
     "languages": [
@@ -29,8 +29,8 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": null,
-    "testCommand": "find /Users/diarcode/development/michi -type f -not -path '*/.git/*' -not -path '*/__pycache__/*' -not -path '*/.venv/*' -not -path '*/node_modules/*' -not -path '*/.mypy_cache/*' -not -path '*/.pytest_cache/*' | sort",
+    "buildCommand": "npx tsc --noEmit 2>&1 | head -5",
+    "testCommand": ".venv/bin/python -m pytest tests/test_ml_pipeline.py --tb=short -q 2>&1; echo \"---\"; npx vitest run 2>&1 | tail -8",
     "lintCommand": "ruff check",
     "devCommand": null,
     "scripts": {}
@@ -55,11 +55,20 @@
     }
   },
   "directoryMap": {
+    "__pycache__": {
+      "path": "__pycache__",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1781001848285,
+      "keyFiles": [
+        "main.cpython-313.pyc"
+      ]
+    },
     "alembic": {
       "path": "alembic",
       "purpose": null,
       "fileCount": 2,
-      "lastAccessed": 1780274443765,
+      "lastAccessed": 1781001848285,
       "keyFiles": [
         "env.py",
         "script.py.mako"
@@ -69,7 +78,7 @@
       "path": "artifacts",
       "purpose": null,
       "fileCount": 14,
-      "lastAccessed": 1780274443767,
+      "lastAccessed": 1781001848285,
       "keyFiles": [
         "dts-gssf-v20260526120936.pt",
         "dts-gssf-v20260526124654.pt",
@@ -82,7 +91,7 @@
       "path": "backend",
       "purpose": null,
       "fileCount": 13,
-      "lastAccessed": 1780274443767,
+      "lastAccessed": 1781001848286,
       "keyFiles": [
         "Dockerfile",
         "__init__.py",
@@ -95,7 +104,7 @@
       "path": "cache",
       "purpose": null,
       "fileCount": 2,
-      "lastAccessed": 1780274443768,
+      "lastAccessed": 1781001848286,
       "keyFiles": [
         "63a86a77b305ee2eccba1fa19dc55494d6d36d50.json",
         "fed2b4085544dcfb0a60dc3824105a63d2518f1d.json"
@@ -105,14 +114,14 @@
       "path": "chapters",
       "purpose": null,
       "fileCount": 0,
-      "lastAccessed": 1780274443768,
+      "lastAccessed": 1781001848287,
       "keyFiles": []
     },
     "checkpoints": {
       "path": "checkpoints",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1780274443768,
+      "lastAccessed": 1781001848287,
       "keyFiles": [
         "model_best.pt"
       ]
@@ -121,7 +130,7 @@
       "path": "configs",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1780274443768,
+      "lastAccessed": 1781001848288,
       "keyFiles": [
         "paper_config.yaml"
       ]
@@ -130,7 +139,7 @@
       "path": "dashboard",
       "purpose": null,
       "fileCount": 13,
-      "lastAccessed": 1780274443768,
+      "lastAccessed": 1781001848289,
       "keyFiles": [
         "Dockerfile",
         "components.json",
@@ -143,7 +152,7 @@
       "path": "data",
       "purpose": "Data files",
       "fileCount": 18,
-      "lastAccessed": 1780274443770,
+      "lastAccessed": 1781001848289,
       "keyFiles": [
         "__init__.py",
         "astana_seed7_35d_15m_all.csv",
@@ -156,7 +165,7 @@
       "path": "docs",
       "purpose": "Documentation",
       "fileCount": 3,
-      "lastAccessed": 1780274443770,
+      "lastAccessed": 1781001848289,
       "keyFiles": [
         "THESIS_REPORT.md",
         "transit-improvement-plan.md"
@@ -166,7 +175,7 @@
       "path": "experiments",
       "purpose": null,
       "fileCount": 10,
-      "lastAccessed": 1780274443771,
+      "lastAccessed": 1781001848290,
       "keyFiles": [
         "__init__.py",
         "compute_calibration.py",
@@ -179,14 +188,14 @@
       "path": "model_eval_q1_full",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1780274443771,
+      "lastAccessed": 1781001848290,
       "keyFiles": []
     },
     "paper": {
       "path": "paper",
       "purpose": null,
       "fileCount": 21,
-      "lastAccessed": 1780274443771,
+      "lastAccessed": 1781001848290,
       "keyFiles": [
         "Appendix 23 Methodological Guidelines for Preparing Master’s Theses of «Astana IT University» LLP.md",
         "defense_presentation.pdf",
@@ -199,7 +208,7 @@
       "path": "research_output",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1780274443771,
+      "lastAccessed": 1781001848290,
       "keyFiles": [
         "training_log.txt"
       ]
@@ -208,7 +217,7 @@
       "path": "scripts",
       "purpose": "Build/utility scripts",
       "fileCount": 1,
-      "lastAccessed": 1780274443771,
+      "lastAccessed": 1781001848291,
       "keyFiles": [
         "smoke_test.sh"
       ]
@@ -217,7 +226,7 @@
       "path": "tests",
       "purpose": "Test files",
       "fileCount": 8,
-      "lastAccessed": 1780274443772,
+      "lastAccessed": 1781001848292,
       "keyFiles": [
         "__init__.py",
         "conftest.py",
@@ -225,6 +234,22 @@
         "test_models_orm.py",
         "test_osm_parser.py"
       ]
+    },
+    "dashboard/dist": {
+      "path": "dashboard/dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 1,
+      "lastAccessed": 1781001848294,
+      "keyFiles": [
+        "index.html"
+      ]
+    },
+    "dashboard/node_modules": {
+      "path": "dashboard/node_modules",
+      "purpose": "Dependencies",
+      "fileCount": 1,
+      "lastAccessed": 1781001848295,
+      "keyFiles": []
     }
   },
   "lint": "ruff check .",

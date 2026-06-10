@@ -38,6 +38,58 @@ export const api = axios.create({
   baseURL: getAPIBaseURL(),
 });
 
+// Response interceptor: handle 5xx errors with structured error messages
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      const { status, data } = error.response;
+      // Structured error from our backend
+      const message = data?.detail || data?.message || `Request failed (${status})`;
+      console.error(`[API ${status}]`, message);
+    } else if (error.request) {
+      // Network error — no response received
+      console.error("[API] Network error: no response received");
+    } else {
+      console.error("[API] Request setup error:", error.message);
+    }
+    return Promise.reject(error);
+  },
+);
+
+// Retry interceptor: retry transient failures (5xx, network errors) with exponential backoff
+const MAX_RETRIES = 3;
+const BASE_RETRY_DELAY = 1000; // 1s
+
+api.interceptors.response.use(undefined, async (error) => {
+  const config = error.config;
+  if (!config) return Promise.reject(error);
+
+  // Only retry GET requests (safe to retry)
+  if (config.method && config.method !== "get") return Promise.reject(error);
+
+  // Only retry on 5xx or network errors (no response)
+  const status = error.response?.status;
+  const isRetryable = !error.response || (status >= 500 && status < 600);
+  if (!isRetryable) return Promise.reject(error);
+
+  const retryCount = config.__retryCount || 0;
+  if (retryCount >= MAX_RETRIES) return Promise.reject(error);
+
+  config.__retryCount = retryCount + 1;
+  const delay = BASE_RETRY_DELAY * Math.pow(2, retryCount) + Math.random() * 500;
+
+  await new Promise((resolve) => setTimeout(resolve, delay));
+  return api(config);
+});
+
+// Type augmentation for retry count on config
+declare module "axios" {
+  interface InternalAxiosRequestConfig {
+    __retryCount?: number;
+  }
+}
+
 // Stations
 export const fetchStations = (hour?: number): Promise<{ stations: Station[] }> =>
   api.get("/stations", { params: hour !== undefined ? { hour } : {} }).then((r) => r.data);

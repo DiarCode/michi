@@ -1,9 +1,7 @@
 """Model artifact store — save/load/checkpoint PyTorch model versions."""
 import json
-import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Dict, Optional
 
 import torch
 from sqlalchemy.orm import Session
@@ -17,15 +15,15 @@ ARTIFACTS_DIR.mkdir(exist_ok=True)
 def save_artifact(
     db: Session,
     model_state: dict,
-    metrics: Dict[str, float],
-    config: Dict,
+    metrics: dict[str, float],
+    config: dict,
     dataset_hash: str,
     feature_version: int = 1,
     is_production: bool = False,
     is_shadow: bool = False,
 ) -> ModelArtifactORM:
     """Save a model artifact to disk and register in DB."""
-    version = f"dts-gssf-v{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
+    version = f"dts-gssf-v{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}"
     path = ARTIFACTS_DIR / f"{version}.pt"
     torch.save({"model_state_dict": model_state, "version": version, "config": config}, str(path))
 
@@ -36,7 +34,7 @@ def save_artifact(
         training_config_json=json.dumps(config),
         dataset_hash=dataset_hash,
         feature_version=feature_version,
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
         is_production=is_production,
         is_shadow=is_shadow,
     )
@@ -46,7 +44,7 @@ def save_artifact(
     return artifact
 
 
-def get_production_artifact(db: Session) -> Optional[ModelArtifactORM]:
+def get_production_artifact(db: Session) -> ModelArtifactORM | None:
     """Get the current production model artifact."""
     return (db.query(ModelArtifactORM)
             .filter(ModelArtifactORM.is_production == True)
@@ -54,7 +52,7 @@ def get_production_artifact(db: Session) -> Optional[ModelArtifactORM]:
             .first())
 
 
-def get_shadow_artifact(db: Session) -> Optional[ModelArtifactORM]:
+def get_shadow_artifact(db: Session) -> ModelArtifactORM | None:
     """Get the current shadow (challenger) model artifact."""
     return (db.query(ModelArtifactORM)
             .filter(ModelArtifactORM.is_shadow == True)
@@ -62,7 +60,7 @@ def get_shadow_artifact(db: Session) -> Optional[ModelArtifactORM]:
             .first())
 
 
-def promote_shadow_to_production(db: Session, shadow_version: str) -> Optional[ModelArtifactORM]:
+def promote_shadow_to_production(db: Session, shadow_version: str) -> ModelArtifactORM | None:
     """Promote a shadow model to production, demoting current production."""
     # Demote current production
     current_prod = (db.query(ModelArtifactORM)

@@ -1,0 +1,107 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]: M
+      - generic [ref=e9]: Michi
+    - navigation [ref=e10]:
+      - link "Command Center" [ref=e11] [cursor=pointer]:
+        - /url: /
+        - img [ref=e12]
+        - text: Command Center
+      - link "Live Map" [ref=e16] [cursor=pointer]:
+        - /url: /map
+        - img [ref=e17]
+        - text: Live Map
+      - link "Alerts" [ref=e22] [cursor=pointer]:
+        - /url: /alerts
+        - img [ref=e23]
+        - text: Alerts
+      - link "Settings" [ref=e26] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e27]
+        - text: Settings
+    - generic [ref=e30]:
+      - 'generic "WebSocket: disconnected" [ref=e31]':
+        - generic [ref=e35]: Offline
+      - button "Dispatch" [ref=e37] [cursor=pointer]:
+        - text: Dispatch
+        - img [ref=e39]
+  - main [ref=e41]:
+    - generic [ref=e42]:
+      - heading "Command Center" [level=1] [ref=e44]
+      - generic [ref=e45]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - generic [ref=e49]: Stations
+            - img [ref=e51]
+          - generic [ref=e55]: —
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - generic [ref=e59]: Routes
+            - img [ref=e61]
+          - generic [ref=e65]: —
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - generic [ref=e69]: Ridership
+            - img [ref=e71]
+          - generic [ref=e73]: —
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]: On-Time
+            - img [ref=e79]
+          - generic [ref=e82]: —
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - generic [ref=e86]: Alerts
+            - img [ref=e88]
+          - generic [ref=e91]: —
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - generic [ref=e95]: Peak Hour
+            - img [ref=e97]
+          - generic [ref=e102]: —
+      - generic [ref=e103]:
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - generic [ref=e107]: Congestion Heatmap
+            - generic [ref=e108]: 0 stations
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - button "Now" [ref=e111] [cursor=pointer]
+              - button "+1h" [ref=e112] [cursor=pointer]
+              - button "+2h" [ref=e113] [cursor=pointer]
+              - button "+4h" [ref=e114] [cursor=pointer]
+            - generic [ref=e115]:
+              - button "All" [ref=e116] [cursor=pointer]
+              - button "Esil" [ref=e117] [cursor=pointer]
+              - button "Almaty" [ref=e118] [cursor=pointer]
+              - button "Saryarka" [ref=e119] [cursor=pointer]
+              - button "Baikonur" [ref=e120] [cursor=pointer]
+              - button "Unknown" [ref=e121] [cursor=pointer]
+            - generic [ref=e122]:
+              - generic [ref=e123]: Low
+              - generic [ref=e125]: Medium
+              - generic [ref=e127]: High
+        - button "No anomalies ▼" [ref=e131] [cursor=pointer]:
+          - generic [ref=e133]: No anomalies
+          - generic [ref=e134]: ▼
+      - generic [ref=e135]:
+        - generic [ref=e136]:
+          - generic [ref=e137]:
+            - img [ref=e138]
+            - text: Simulation Engine
+          - link "View details →" [ref=e141] [cursor=pointer]:
+            - /url: /simulation
+        - generic [ref=e143]:
+          - generic [ref=e144]:
+            - paragraph [ref=e145]: Status
+            - generic [ref=e146]: Stopped
+          - generic [ref=e147]:
+            - paragraph [ref=e148]: Tick
+            - paragraph [ref=e149]: "0"
+          - generic [ref=e150]:
+            - paragraph [ref=e151]: MAPE
+            - paragraph [ref=e152]: —
+          - generic [ref=e153]:
+            - paragraph [ref=e154]: Drift
+            - generic [ref=e155]: NORMAL

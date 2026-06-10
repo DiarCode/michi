@@ -1,0 +1,84 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]: M
+      - generic [ref=e9]: Michi
+    - navigation [ref=e10]:
+      - link "Command Center" [ref=e11] [cursor=pointer]:
+        - /url: /
+        - img [ref=e12]
+        - text: Command Center
+      - link "Live Map" [ref=e16] [cursor=pointer]:
+        - /url: /map
+        - img [ref=e17]
+        - text: Live Map
+      - link "Alerts" [ref=e22] [cursor=pointer]:
+        - /url: /alerts
+        - img [ref=e23]
+        - text: Alerts
+      - link "Settings" [ref=e26] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e27]
+        - text: Settings
+    - generic [ref=e30]:
+      - 'generic "WebSocket: connected" [ref=e100]':
+        - generic [ref=e35]: Live
+      - button "Dispatch" [ref=e37] [cursor=pointer]:
+        - text: Dispatch
+        - img [ref=e39]
+  - main [ref=e41]:
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - heading "Simulation" [level=1] [ref=e45]
+        - generic [ref=e47]: Live
+      - generic [ref=e49]:
+        - generic [ref=e51]: Engine Control
+        - generic [ref=e53]:
+          - button "Start Engine" [ref=e54] [cursor=pointer]:
+            - img
+            - text: Start Engine
+          - button "Stop Engine" [disabled]:
+            - img
+            - text: Stop Engine
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - img [ref=e103]
+              - text: —
+            - generic [ref=e106]:
+              - img [ref=e107]
+              - text: 0 stations
+            - generic [ref=e112]: "Drift: NORMAL"
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e58]:
+            - text: MAE
+            - generic [ref=e59]:
+              - generic [ref=e60]: —
+              - img [ref=e61]
+          - generic [ref=e63]:
+            - text: MAPE
+            - generic [ref=e64]:
+              - generic [ref=e65]: —
+              - img [ref=e66]
+          - generic [ref=e68]:
+            - text: Accuracy
+            - generic [ref=e69]:
+              - generic [ref=e70]: —%
+              - img [ref=e71]
+          - generic [ref=e73]:
+            - generic [ref=e74]:
+              - generic [ref=e75]: Drift Status
+              - img [ref=e76]
+            - generic [ref=e80]: NORMAL
+        - generic [ref=e81]:
+          - generic [ref=e82]: Connected
+          - generic [ref=e84]: "Tick #0"
+        - generic [ref=e85]:
+          - generic [ref=e87]: MAE / MAPE Time Series
+          - paragraph [ref=e89]: Waiting for simulation data...
+      - generic [ref=e90]:
+        - generic [ref=e92]: Station-Level Simulation Data
+        - generic [ref=e94]:
+          - img [ref=e95]
+          - paragraph [ref=e98]: Start the simulation engine
+          - paragraph [ref=e99]: Data refreshes every 5 seconds with predicted vs actual passenger counts

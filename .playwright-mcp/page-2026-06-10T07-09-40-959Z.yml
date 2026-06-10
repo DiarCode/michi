@@ -1,0 +1,184 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e7]: M
+        - generic [ref=e9]: Michi
+      - navigation [ref=e10]:
+        - link "Command Center" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Command Center
+        - link "Live Map" [ref=e16] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e17]
+          - text: Live Map
+        - link "Alerts" [ref=e22] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e23]
+          - text: Alerts
+        - link "Settings" [ref=e26] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e27]
+          - text: Settings
+      - generic [ref=e30]:
+        - 'generic "WebSocket: connected" [ref=e86]':
+          - generic [ref=e35]: Live
+        - button "Dispatch" [ref=e37] [cursor=pointer]:
+          - text: Dispatch
+          - img [ref=e39]
+    - main [ref=e41]:
+      - generic [ref=e42]:
+        - heading "Executive Dashboard" [level=1] [ref=e44]
+        - generic [ref=e87]:
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - img [ref=e91]
+              - text: Daily Ridership
+            - paragraph [ref=e96]: 1,036,611
+            - generic [ref=e97]:
+              - img [ref=e98]
+              - text: "-12.3%"
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - img [ref=e103]
+              - text: Revenue Today
+            - paragraph [ref=e106]: ₸93.3M
+            - paragraph [ref=e107]: "Avg fare: ₸90"
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - img [ref=e111]
+              - text: On-Time Performance
+            - paragraph [ref=e114]: 92.8%
+            - paragraph [ref=e115]: "MAPE: 7.2%"
+          - generic [ref=e117]:
+            - generic [ref=e118]:
+              - img [ref=e119]
+              - text: Critical Alerts
+            - paragraph [ref=e122]: "1"
+            - paragraph [ref=e123]: 1 total today
+        - generic [ref=e124]:
+          - generic [ref=e126]:
+            - generic [ref=e127]:
+              - img [ref=e128]
+              - text: Interventions
+            - paragraph [ref=e132]: "2"
+            - paragraph [ref=e133]: 1 completed
+          - generic [ref=e135]:
+            - generic [ref=e136]:
+              - img [ref=e137]
+              - text: Fleet Size
+            - paragraph [ref=e140]: "420"
+            - paragraph [ref=e141]: 10 routes
+          - generic [ref=e143]:
+            - generic [ref=e144]:
+              - img [ref=e145]
+              - text: Operating Ratio
+            - paragraph [ref=e149]: "3.95"
+            - paragraph [ref=e150]: Profitable
+          - generic [ref=e152]:
+            - generic [ref=e153]:
+              - img [ref=e154]
+              - text: Overcrowding Prevented
+            - paragraph [ref=e157]: "750"
+            - paragraph [ref=e158]: incidents this period
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - generic [ref=e65]:
+              - img [ref=e66]
+              - text: 30-Day Ridership Trend
+            - generic [ref=e68]:
+              - img [ref=e161]:
+                - generic [ref=e166]:
+                  - generic [ref=e168]: 05-12
+                  - generic [ref=e170]: 05-14
+                  - generic [ref=e172]: 05-16
+                  - generic [ref=e174]: 05-18
+                  - generic [ref=e176]: 05-20
+                  - generic [ref=e178]: 05-22
+                  - generic [ref=e180]: 05-24
+                  - generic [ref=e182]: 05-26
+                  - generic [ref=e184]: 05-28
+                  - generic [ref=e186]: 05-30
+                  - generic [ref=e188]: 06-01
+                  - generic [ref=e190]: 06-03
+                  - generic [ref=e192]: 06-05
+                  - generic [ref=e194]: 06-07
+                  - generic [ref=e196]: 06-10
+                - generic [ref=e198]:
+                  - generic [ref=e200]: "0"
+                  - generic [ref=e202]: "350"
+                  - generic [ref=e204]: "700"
+                  - generic [ref=e206]: 1K
+              - generic [ref=e213]:
+                - generic [ref=e214]: "Avg: 1,145 passengers/day"
+                - generic [ref=e215]:
+                  - text: "Trend: down"
+                  - generic [ref=e216]:
+                    - img [ref=e217]
+                    - text: "-12.3%"
+          - generic [ref=e70]:
+            - generic [ref=e72]:
+              - img [ref=e73]
+              - text: Financial Summary
+            - generic [ref=e219]:
+              - generic [ref=e220]:
+                - generic [ref=e221]:
+                  - paragraph [ref=e222]: Revenue
+                  - paragraph [ref=e223]: ₸93.3M
+                - generic [ref=e224]:
+                  - paragraph [ref=e225]: Cost
+                  - paragraph [ref=e226]: ₸23.6M
+                - generic [ref=e227]:
+                  - paragraph [ref=e228]: Net
+                  - paragraph [ref=e229]: ₸69.7M
+              - generic [ref=e230]:
+                - paragraph [ref=e231]: Cost Breakdown
+                - generic [ref=e232]:
+                  - generic [ref=e233]:
+                    - img [ref=e234]
+                    - generic [ref=e237]: Fleet
+                    - generic [ref=e240]: ₸12.5M
+                  - generic [ref=e241]:
+                    - img [ref=e242]
+                    - generic [ref=e247]: Fuel
+                    - generic [ref=e250]: ₸3.2M
+                  - generic [ref=e251]:
+                    - img [ref=e252]
+                    - generic [ref=e256]: Staff
+                    - generic [ref=e259]: ₸5.8M
+                  - generic [ref=e260]:
+                    - img [ref=e261]
+                    - generic [ref=e264]: Maintenance
+                    - generic [ref=e267]: ₸2.1M
+              - generic [ref=e268]:
+                - paragraph [ref=e269]: Monthly Projection
+                - generic [ref=e270]:
+                  - generic [ref=e271]: "Revenue: ₸2798.8M"
+                  - generic [ref=e272]: "Cost: ₸708.0M"
+                  - generic [ref=e273]: "Net: ₸2090.8M"
+                  - generic [ref=e274]: "Cost/Pax: ₸22.8"
+        - generic [ref=e77]:
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - text: Intervention ROI
+          - generic [ref=e275]:
+            - generic [ref=e276]:
+              - paragraph [ref=e277]: Total
+              - paragraph [ref=e278]: "2"
+            - generic [ref=e279]:
+              - paragraph [ref=e280]: Completed
+              - paragraph [ref=e281]: "1"
+            - generic [ref=e282]:
+              - paragraph [ref=e283]: Benefit
+              - paragraph [ref=e284]: $500
+            - generic [ref=e285]:
+              - paragraph [ref=e286]: Net ROI
+              - paragraph [ref=e287]: 66.7%
+            - generic [ref=e288]:
+              - paragraph [ref=e289]: Ridership Saved
+              - paragraph [ref=e290]: "200"
+            - generic [ref=e291]:
+              - paragraph [ref=e292]: Fuel Saved
+              - paragraph [ref=e293]: 5 L
+  - generic [ref=e294]: "0"

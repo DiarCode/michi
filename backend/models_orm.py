@@ -1,5 +1,6 @@
 """SQLAlchemy ORM models for Michi database."""
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Text, Boolean
+from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String, Text
+
 from backend.database import Base
 
 

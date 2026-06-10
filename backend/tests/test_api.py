@@ -1,6 +1,4 @@
 """Integration tests for all backend API endpoints."""
-import pytest
-from datetime import datetime, timezone
 from backend.models_orm import AlertORM
 
 

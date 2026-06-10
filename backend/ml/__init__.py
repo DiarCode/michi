@@ -3,6 +3,7 @@
 Modules:
 - model: GraphSSM architecture
 - predictor: Inference engine
+- normalizer: Z-score feature normalization
 - data_loader: DB to feature tensors
 - artifact_store: Model versioning
 - drift_detector: Page-Hinkley drift detection

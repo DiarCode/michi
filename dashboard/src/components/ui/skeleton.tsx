@@ -1,64 +1,53 @@
-/** Reusable skeleton component for loading states. */
+import { cn } from "@/lib/utils"
 
-export function Skeleton({ className = "" }: { className?: string }) {
+function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div className={`animate-pulse bg-michi-warm rounded-lg ${className}`} />
-  );
+    <div
+      data-slot="skeleton"
+      className={cn("animate-pulse rounded-xl bg-muted", className)}
+      {...props}
+    />
+  )
 }
 
-/** Common skeleton layouts */
-
-export function CardSkeleton() {
+function ListSkeleton({ count = 3 }: { count?: number }) {
   return (
-    <div className="rounded-2xl border border-michi-border p-6 space-y-3">
-      <Skeleton className="h-4 w-1/3" />
-      <Skeleton className="h-8 w-2/3" />
-    </div>
-  );
-}
-
-export function TableSkeleton({ rows = 5 }: { rows?: number }) {
-  return (
-    <div className="space-y-2">
-      <Skeleton className="h-8 w-full" />
-      {Array.from({ length: rows }).map((_, i) => (
-        <Skeleton key={i} className="h-8 w-full" />
-      ))}
-    </div>
-  );
-}
-
-export function GridSkeleton({ count = 4 }: { count?: number }) {
-  return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="space-y-4">
       {Array.from({ length: count }).map((_, i) => (
-        <CardSkeleton key={i} />
-      ))}
-    </div>
-  );
-}
-
-export function ChartSkeleton() {
-  return (
-    <div className="rounded-2xl border border-michi-border p-6 space-y-3">
-      <Skeleton className="h-4 w-1/4" />
-      <Skeleton className="h-48 w-full" />
-    </div>
-  );
-}
-
-export function ListSkeleton({ count = 4 }: { count?: number }) {
-  return (
-    <div className="space-y-3">
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl border border-michi-border">
-          <Skeleton className="h-8 w-8 rounded-full" />
+        <div key={i} className="flex items-center gap-4">
+          <Skeleton className="h-12 w-12 rounded-full" />
           <div className="flex-1 space-y-2">
-            <Skeleton className="h-3 w-1/3" />
-            <Skeleton className="h-3 w-2/3" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
           </div>
         </div>
       ))}
     </div>
-  );
+  )
 }
+
+function GridSkeleton() {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="space-y-3">
+          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-8 w-3/4" />
+          <Skeleton className="h-3 w-1/3" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function CardSkeleton() {
+  return (
+    <div className="space-y-4 p-6">
+      <Skeleton className="h-5 w-1/3" />
+      <Skeleton className="h-40 w-full" />
+      <Skeleton className="h-4 w-2/3" />
+    </div>
+  )
+}
+
+export { Skeleton, ListSkeleton, GridSkeleton, CardSkeleton }

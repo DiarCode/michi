@@ -1,0 +1,11 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - img [ref=e5]
+    - heading "Something went wrong" [level=3] [ref=e7]
+    - paragraph [ref=e8]: Rendered more hooks than during the previous render.
+    - button "Try Again" [ref=e9] [cursor=pointer]
+  - generic [ref=e11]:
+    - img [ref=e12]
+    - paragraph [ref=e15]: "Render error: Rendered more hooks than during the previous render."
+    - button [ref=e16] [cursor=pointer]:
+      - img [ref=e17]

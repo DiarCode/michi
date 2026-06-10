@@ -1,18 +1,19 @@
 import { useToasts } from "@/lib/toast";
-import { X, CheckCircle, AlertTriangle, Info, AlertCircle } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Cancel01Icon, CheckmarkCircle01Icon, Alert01Icon, InformationCircleIcon, AlertCircleIcon } from "@/lib/icons";
 
 const VARIANT_STYLES = {
-  success: "bg-michi-lime/10 border-michi-lime/30 text-michi-lime-dark",
-  error: "bg-michi-red/8 border-michi-red/30 text-michi-red",
-  warning: "bg-michi-amber/10 border-michi-amber/30 text-michi-amber",
-  info: "bg-michi-warm border-michi-border text-michi-body",
+  success: "bg-chart-2/10 border-chart-2/30 text-chart-2",
+  error: "bg-destructive/10 border-destructive/30 text-destructive",
+  warning: "bg-chart-4/10 border-chart-4/30 text-chart-4",
+  info: "bg-muted border-border text-muted-foreground",
 } as const;
 
 const VARIANT_ICONS = {
-  success: CheckCircle,
-  error: AlertCircle,
-  warning: AlertTriangle,
-  info: Info,
+  success: CheckmarkCircle01Icon,
+  error: AlertCircleIcon,
+  warning: Alert01Icon,
+  info: InformationCircleIcon,
 } as const;
 
 export function ToastContainer() {
@@ -27,15 +28,15 @@ export function ToastContainer() {
         return (
           <div
             key={t.id}
-            className={`flex items-start gap-2.5 px-4 py-3.5 rounded-xl border shadow-tooltip animate-in slide-in-from-bottom-2 font-medium ${VARIANT_STYLES[t.variant]}`}
+            className={`flex items-start gap-2.5 px-4 py-3.5 rounded-xl border shadow-lg animate-in slide-in-from-bottom-2 font-medium ${VARIANT_STYLES[t.variant]}`}
           >
-            <Icon className="h-4 w-4 mt-0.5 flex-shrink-0" />
+            <HugeiconsIcon icon={Icon} className="h-4 w-4 mt-0.5 flex-shrink-0" />
             <p className="text-sm flex-1">{t.message}</p>
             <button
               onClick={() => dismiss(t.id)}
               className="text-current opacity-50 hover:opacity-100 flex-shrink-0"
             >
-              <X className="h-4 w-4" />
+              <HugeiconsIcon icon={Cancel01Icon} className="h-4 w-4" />
             </button>
           </div>
         );

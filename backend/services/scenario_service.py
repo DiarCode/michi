@@ -1,9 +1,9 @@
 """Scenario service - runs what-if simulations."""
 import hashlib
-from typing import Dict, List, Any
+from typing import Any
 
 
-def run_scenario(config: Dict[str, Any]) -> Dict[str, Any]:
+def run_scenario(config: dict[str, Any]) -> dict[str, Any]:
     """Run a what-if scenario and return comparison metrics."""
     name = config.get("name", "Unnamed")
     modifications = config.get("modifications", [])

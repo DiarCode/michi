@@ -1,16 +1,15 @@
 """Optimization suggestions engine — generates actionable recommendations from predictions and alerts."""
-from datetime import datetime, timezone
-from typing import Dict, List, Optional
+from datetime import UTC, datetime
 
 
 def generate_suggestions(
-    predictions: List[Dict],
-    alerts: List[Dict],
-    stations: List[Dict],
-    routes: List[Dict],
-    current_weather: Optional[Dict] = None,
-    active_events: Optional[List[Dict]] = None,
-) -> List[Dict]:
+    predictions: list[dict],
+    alerts: list[dict],
+    stations: list[dict],
+    routes: list[dict],
+    current_weather: dict | None = None,
+    active_events: list[dict] | None = None,
+) -> list[dict]:
     """Generate optimization suggestions based on current predictions and alerts."""
     suggestions = []
     station_map = {s["stop_id"]: s for s in stations}
@@ -36,7 +35,7 @@ def generate_suggestions(
                 "route_ids": route_ids,
                 "predicted_impact": {"ridership_change": round((predicted/base - 1)*100, 1), "wait_time_change": -15},
                 "action": "dispatch_reserve",
-                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_at": datetime.now(UTC).isoformat(),
             })
 
     # 2. Bunching detection → hold/release suggestion
@@ -51,7 +50,7 @@ def generate_suggestions(
                 "route_id": route_id,
                 "predicted_impact": {"ridership_change": -5, "wait_time_change": -8},
                 "action": "hold_release",
-                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_at": datetime.now(UTC).isoformat(),
             })
 
     # 3. Event dispersal → pre-position suggestion
@@ -61,7 +60,7 @@ def generate_suggestions(
             if end_time:
                 try:
                     et = datetime.fromisoformat(end_time)
-                    now = datetime.now(timezone.utc)
+                    now = datetime.now(UTC)
                     if 0 < (et - now).total_seconds() < 3600:
                         affected = event.get("affected_routes", [])
                         if isinstance(affected, str):
@@ -76,7 +75,7 @@ def generate_suggestions(
                             "route_ids": affected,
                             "predicted_impact": {"ridership_change": 200, "wait_time_change": -25},
                             "action": "preposition",
-                            "created_at": datetime.now(timezone.utc).isoformat(),
+                            "created_at": datetime.now(UTC).isoformat(),
                         })
                 except (ValueError, TypeError):
                     pass
@@ -92,7 +91,7 @@ def generate_suggestions(
             "route_ids": affected_routes,
             "predicted_impact": {"ridership_change": 20, "wait_time_change": -12},
             "action": "adjust_frequency",
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
         })
 
     # 5. Low demand → reallocation suggestion
@@ -124,7 +123,7 @@ def generate_suggestions(
             "description": f"Move 1 bus from underutilized routes to serve high-demand areas near {len(high_demand_stations)} stations.",
             "predicted_impact": {"ridership_change": 10, "wait_time_change": -8},
             "action": "reallocate",
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
         })
 
     # Sort by priority
@@ -133,7 +132,7 @@ def generate_suggestions(
     return suggestions[:10]
 
 
-def _get_station_routes(station_id: str, routes: List[Dict]) -> List[str]:
+def _get_station_routes(station_id: str, routes: list[dict]) -> list[str]:
     """Get route IDs that serve a station."""
     result = []
     for r in routes:

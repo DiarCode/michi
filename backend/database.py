@@ -1,7 +1,8 @@
 """Database configuration — defaults to local SQLite for development."""
 import os
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Default to local SQLite file; override with DATABASE_URL for production (e.g. PostgreSQL)
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./michi.db")
@@ -32,9 +33,18 @@ def init_db():
     """Seed initial data. Alembic handles all table creation/migration."""
     # Import all ORM models so they register with Base.metadata
     from backend.models_orm import (  # noqa: F401
-        StationORM, RouteORM, RouteStopORM, AlertORM, RidershipORM, ForecastORM,
-        HistoricalRidershipORM, WeatherReadingORM, EventORM, InterventionORM,
-        ModelArtifactORM, PredictionAccuracyORM,
+        AlertORM,
+        EventORM,
+        ForecastORM,
+        HistoricalRidershipORM,
+        InterventionORM,
+        ModelArtifactORM,
+        PredictionAccuracyORM,
+        RidershipORM,
+        RouteORM,
+        RouteStopORM,
+        StationORM,
+        WeatherReadingORM,
     )
     from backend.seed import seed
     seed()

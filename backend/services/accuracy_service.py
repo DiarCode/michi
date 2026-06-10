@@ -1,15 +1,15 @@
 """Prediction accuracy tracking — compares forecasts with actuals and stores metrics."""
-from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional
+from datetime import UTC, datetime, timedelta
 
 import numpy as np
 from sqlalchemy.orm import Session
-from backend.models_orm import ForecastORM, HistoricalRidershipORM, PredictionAccuracyORM, ModelArtifactORM
+
+from backend.models_orm import ForecastORM, HistoricalRidershipORM, PredictionAccuracyORM
 
 
-def evaluate_accuracy(db: Session, model_version: Optional[str] = None, hours_back: int = 24) -> Dict:
+def evaluate_accuracy(db: Session, model_version: str | None = None, hours_back: int = 24) -> dict:
     """Compare past predictions with actual ridership and compute accuracy metrics."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     cutoff = now - timedelta(hours=hours_back)
 
     forecasts = (db.query(ForecastORM)
@@ -24,8 +24,8 @@ def evaluate_accuracy(db: Session, model_version: Optional[str] = None, hours_ba
     for fc in forecasts:
         actual = (db.query(HistoricalRidershipORM)
                  .filter(HistoricalRidershipORM.station_id == fc.station_id)
-                 .filter(HistoricalRidershipORM.timestamp >= fc.timestamp.replace(tzinfo=timezone.utc) - timedelta(minutes=30))
-                 .filter(HistoricalRidershipORM.timestamp <= fc.timestamp.replace(tzinfo=timezone.utc) + timedelta(minutes=30))
+                 .filter(HistoricalRidershipORM.timestamp >= fc.timestamp.replace(tzinfo=UTC) - timedelta(minutes=30))
+                 .filter(HistoricalRidershipORM.timestamp <= fc.timestamp.replace(tzinfo=UTC) + timedelta(minutes=30))
                  .first())
         if actual:
             pred = fc.predicted
@@ -47,7 +47,7 @@ def evaluate_accuracy(db: Session, model_version: Optional[str] = None, hours_ba
                 model_version=fc.model_version or model_version or "unknown",
                 station_id=fc.station_id,
                 route_id=fc.route_id or "",
-                forecast_timestamp=fc.timestamp.replace(tzinfo=timezone.utc) if fc.timestamp else now,
+                forecast_timestamp=fc.timestamp.replace(tzinfo=UTC) if fc.timestamp else now,
                 horizon_minutes=fc.horizon_minutes or 60,
                 predicted=pred,
                 actual=act,
@@ -75,7 +75,7 @@ def evaluate_accuracy(db: Session, model_version: Optional[str] = None, hours_ba
     }
 
 
-def _group_by_horizon(errors: List[Dict]) -> Dict:
+def _group_by_horizon(errors: list[dict]) -> dict:
     """Group accuracy metrics by prediction horizon."""
     by_horizon = {}
     for e in errors:
@@ -93,9 +93,9 @@ def _group_by_horizon(errors: List[Dict]) -> Dict:
     }
 
 
-def get_accuracy_trend(db: Session, days: int = 30) -> List[Dict]:
+def get_accuracy_trend(db: Session, days: int = 30) -> list[dict]:
     """Get daily accuracy trend for the dashboard."""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    cutoff = datetime.now(UTC) - timedelta(days=days)
     records = (db.query(PredictionAccuracyORM)
                .filter(PredictionAccuracyORM.evaluated_at >= cutoff)
                .order_by(PredictionAccuracyORM.evaluated_at).all())

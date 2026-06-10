@@ -1,9 +1,6 @@
 """Simulation engine for generating realistic passenger flow data and running model validation."""
 
-import json
-import time
 from datetime import datetime, timedelta
-from typing import Optional
 
 import numpy as np
 from sqlalchemy.orm import Session

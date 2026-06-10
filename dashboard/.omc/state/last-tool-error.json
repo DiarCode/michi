@@ -1,7 +1,7 @@
 {
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"npm run build 2>&1\",\"timeout\":60000,\"description\":\"Build verification after map changes\"}",
-  "error": "Exit code 2\n\n> michi-dashboard@1.0.0 build\n> tsc && vite build\n\nsrc/components/ui/map.tsx(147,10): error TS6133: 'DefaultLoader' is declared but its value is never read.",
-  "timestamp": "2026-06-01T07:14:10.202Z",
+  "tool_name": "mcp__plugin_playwright_playwright__browser_select_option",
+  "tool_input_preview": "{\"element\":\"station select dropdown\",\"target\":\"select\",\"values\":[\"S001\"]}",
+  "error": "### Error\nTimeoutError: browserBackend.callTool: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('select')\u001b[22m\n\u001b[2m    - locator resolved to <select class=\"w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground font-medium focus:ring-2 focus:ring-ring/40 focus:border-primary outline-none transition-colors\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some opti...",
+  "timestamp": "2026-06-10T06:45:19.208Z",
   "retry_count": 1
 }

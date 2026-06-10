@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import type { ConnectionStatus } from "@/types";
-import { wsClient, type WSEvent } from "@/lib/websocket";
+import { wsClient, type WSEvent, type WSConnectionState } from "@/lib/websocket";
 
 interface ConnectionStoreState extends ConnectionStatus {
+  wsState: WSConnectionState;
   init: () => () => void;
 }
 
@@ -11,11 +12,24 @@ export const useConnectionStore = create<ConnectionStoreState>((set, get) => ({
   lastTickReceived: 0,
   reconnectAttempt: 0,
   lastConnectedAt: null,
+  wsState: "disconnected",
 
-  // Subscribe to WS events to track connection status.
+  // Subscribe to WS events and state changes.
   // Call from a top-level component once.
   init: () => {
     wsClient.connect();
+
+    // Listen for connection state changes from WSClient
+    const unsubState = wsClient.onStateChange((state: WSConnectionState) => {
+      set({
+        wsState: state,
+        connected: state === "connected",
+        reconnectAttempt: state === "connecting" ? get().reconnectAttempt + 1 : 0,
+        lastConnectedAt: state === "connected" ? new Date().toISOString() : get().lastConnectedAt,
+      });
+    });
+
+    // Listen for events to track simulation ticks
     const unsub = wsClient.subscribe((event: WSEvent) => {
       if (event.type === "simulation_tick" && typeof event.data?.tick === "number") {
         set({
@@ -40,6 +54,7 @@ export const useConnectionStore = create<ConnectionStoreState>((set, get) => ({
     }, 10000);
 
     return () => {
+      unsubState();
       unsub();
       clearInterval(staleInterval);
     };

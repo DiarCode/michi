@@ -1,10 +1,12 @@
-from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, Query
+
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
+
 from backend.database import get_db_session
-from backend.models_orm import StationORM, RouteORM, RouteStopORM, AlertORM
+from backend.exceptions import NotFoundException
+from backend.models import ForecastResponse, StationDetailResponse, StationListResponse
+from backend.models_orm import AlertORM, RouteORM, RouteStopORM, StationORM
 from backend.services.forecast_service import get_forecast
-from backend.models import StationListResponse, StationDetailResponse, ForecastResponse
 
 router = APIRouter()
 
@@ -34,7 +36,7 @@ def _calc_load_pct(ridership_24h: int, hour: int) -> int:
 
 
 @router.get("", response_model=StationListResponse)
-def list_stations(hour: Optional[int] = Query(None, ge=0, le=23), db: Session = Depends(get_db_session)):
+def list_stations(hour: int | None = Query(None, ge=0, le=23), db: Session = Depends(get_db_session)):
     """List stations, optionally with heatmap load data for a specific hour."""
     stations = _get_stations(db)
 
@@ -62,7 +64,7 @@ def get_station_detail(station_id: str, db: Session = Depends(get_db_session)):
         station_info = {"id": station.stop_id, "name": station.name, "lat": station.lat,
                         "lon": station.lon, "district": station.district, "ridership_24h": station.ridership_24h}
     if not station_info:
-        raise HTTPException(status_code=404, detail=f"Station {station_id} not found")
+        raise NotFoundException("Station", station_id)
 
     # Connected routes
     connected_routes = []

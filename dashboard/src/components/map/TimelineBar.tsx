@@ -15,9 +15,10 @@ function formatDate(ms: number): string {
   return d.toLocaleDateString([], { month: "short", day: "numeric" });
 }
 
-function formatHourLabel(ms: number): string {
-  const d = new Date(ms);
-  return `${String(d.getHours()).padStart(2, "0")}:00`;
+function formatRelativeLabel(offsetHours: number): string {
+  if (offsetHours === 0) return "NOW";
+  if (offsetHours > 0) return `+${offsetHours}h`;
+  return `${offsetHours}h`;
 }
 
 export default function TimelineBar() {
@@ -26,7 +27,6 @@ export default function TimelineBar() {
     currentTime,
     isPlaying,
     playSpeed,
-    data,
     range,
     handleScrubStart,
     enterLiveMode,
@@ -46,36 +46,14 @@ export default function TimelineBar() {
   const position = Math.max(0, Math.min(1, (currentTime - rangeStart) / rangeDuration));
   const nowPosition = Math.max(0, Math.min(1, (now - rangeStart) / rangeDuration));
 
-  const hourMarkers: { ms: number; label: string; isMajor: boolean }[] = [];
+  // Generate hour markers labeled relative to NOW
+  const hourMarkers: { ms: number; offsetHours: number; isMajor: boolean }[] = [];
   const firstHour = Math.ceil(rangeStart / (60 * 60 * 1000)) * (60 * 60 * 1000);
   for (let ms = firstHour; ms < rangeEnd; ms += 60 * 60 * 1000) {
-    const h = new Date(ms).getHours();
-    const isMajor = h % 6 === 0;
-    hourMarkers.push({ ms, label: formatHourLabel(ms), isMajor });
+    const offsetHours = Math.round((ms - now) / (60 * 60 * 1000));
+    const isMajor = offsetHours % 3 === 0;
+    hourMarkers.push({ ms, offsetHours, isMajor });
   }
-
-  const confidenceBand = (() => {
-    if (mode !== "historical" || currentTime >= now) return null;
-    const futurePoints = data.filter(
-      (p) =>
-        new Date(p.timestamp).getTime() > currentTime &&
-        new Date(p.timestamp).getTime() <= currentTime + 2 * 60 * 60 * 1000 &&
-        p.predicted !== null &&
-        p.confidence_upper !== null &&
-        p.confidence_lower !== null
-    );
-    if (futurePoints.length === 0) return null;
-    let totalWidthPct = 0;
-    let count = 0;
-    for (const p of futurePoints) {
-      if (p.predicted && p.predicted > 0) {
-        const width = ((p.confidence_upper! - p.confidence_lower!) / p.predicted) * 100;
-        totalWidthPct += width;
-        count++;
-      }
-    }
-    return count > 0 ? totalWidthPct / count : null;
-  })();
 
   const pixelToTime = useCallback(
     (clientX: number): number => {
@@ -113,7 +91,7 @@ export default function TimelineBar() {
   }, [isDragging, pixelToTime, scrubTo]);
 
   return (
-    <div className="bg-white border-t border-michi-border px-4 pt-3 pb-3 select-none">
+    <div className="bg-background border-t border-transparent px-4 pt-3 pb-3 select-none">
       {/* Controls row */}
       <div className="flex items-center gap-3 mb-3">
         {/* Mode badge */}
@@ -121,8 +99,8 @@ export default function TimelineBar() {
           className={cn(
             "px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide",
             mode === "live"
-              ? "bg-michi-lime/15 text-michi-lime-dark"
-              : "bg-michi-amber/15 text-michi-amber"
+              ? "bg-chart-2/15 text-chart-2"
+              : "bg-chart-4/15 text-chart-4"
           )}
         >
           {mode === "live" ? "● LIVE" : "◉ HISTORICAL"}
@@ -131,16 +109,16 @@ export default function TimelineBar() {
         {/* Play/Pause */}
         <button
           onClick={togglePlay}
-          className="w-9 h-9 flex items-center justify-center rounded-full bg-michi-warm hover:bg-michi-border transition-colors"
+          className="w-9 h-9 flex items-center justify-center rounded-full bg-muted hover:bg-muted/80 transition-colors"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? (
-            <svg width="16" height="16" viewBox="0 0 14 14" fill="currentColor" className="text-michi-dark">
+            <svg width="16" height="16" viewBox="0 0 14 14" fill="currentColor" className="text-foreground">
               <rect x="2" y="1" width="3.5" height="12" rx="1" />
               <rect x="8.5" y="1" width="3.5" height="12" rx="1" />
             </svg>
           ) : (
-            <svg width="16" height="16" viewBox="0 0 14 14" fill="currentColor" className="text-michi-dark">
+            <svg width="16" height="16" viewBox="0 0 14 14" fill="currentColor" className="text-foreground">
               <path d="M3 1.5L12 7L3 12.5Z" />
             </svg>
           )}
@@ -155,8 +133,8 @@ export default function TimelineBar() {
               className={cn(
                 "px-3 py-1 text-xs rounded-full font-mono font-semibold transition-all",
                 playSpeed === s
-                  ? "bg-michi-dark text-white shadow-sm"
-                  : "bg-michi-warm text-michi-muted border border-michi-border hover:bg-michi-border"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
               )}
             >
               {s}×
@@ -166,54 +144,37 @@ export default function TimelineBar() {
 
         {/* Time display */}
         <div className="ml-auto flex items-center gap-2">
-          <span className="text-michi-muted text-sm font-medium">{formatDate(currentTime)}</span>
-          <span className="font-mono text-lg font-bold text-michi-dark tabular-nums">{formatTime(currentTime)}</span>
+          <span className="text-muted-foreground text-sm font-medium">{formatDate(currentTime)}</span>
+          <span className="font-mono text-lg font-bold text-foreground tabular-nums">{formatTime(currentTime)}</span>
         </div>
-
-        {/* Return to Live button */}
-        {mode === "historical" && (
-          <button
-            onClick={enterLiveMode}
-            className="px-3.5 py-1.5 text-xs rounded-full font-semibold bg-michi-lime/15 text-michi-lime-dark hover:bg-michi-lime/25 transition-colors"
-          >
-            Return to Live
-          </button>
-        )}
       </div>
 
       {/* Timeline bar */}
       <div
         ref={barRef}
-        className="relative h-12 rounded-lg cursor-pointer overflow-hidden shadow-inner"
+        className="relative h-12 rounded-lg cursor-pointer overflow-hidden bg-muted"
         onMouseDown={handleMouseDown}
       >
-        {/* Background segments */}
-        <div className="absolute inset-0 flex">
-          <div className="h-full bg-michi-border" style={{ width: `${nowPosition * 100}%` }} />
-          <div
-            className="h-full border-l border-michi-muted"
-            style={{
-              width: `${(1 - nowPosition) * 100}%`,
-              background: "repeating-linear-gradient(90deg, rgba(139,92,246,0.15) 0px, rgba(139,92,246,0.15) 6px, transparent 6px, transparent 12px)",
-            }}
-          />
-        </div>
+        {/* Past segment background (left of NOW) */}
+        <div className="absolute inset-0 bg-muted/50" />
 
-        {/* Confidence band on future segment */}
-        {confidenceBand !== null && nowPosition < 1 && (
+        {/* Future segment (right of NOW) — subtle pattern */}
+        {nowPosition > 0 && nowPosition < 1 && (
           <div
-            className="absolute top-1 bottom-1 bg-michi-purple/15 rounded"
+            className="absolute top-0 bottom-0"
             style={{
-              left: `${Math.max(position, nowPosition) * 100}%`,
-              width: `${Math.max(0, (1 - Math.max(position, nowPosition))) * 100}%`,
+              left: `${nowPosition * 100}%`,
+              width: `${(1 - nowPosition) * 100}%`,
+              background: "repeating-linear-gradient(90deg, rgba(139,92,246,0.08) 0px, rgba(139,92,246,0.08) 6px, transparent 6px, transparent 12px)",
             }}
           />
         )}
 
-        {/* Hour markers with labels */}
-        {hourMarkers.map(({ ms, label, isMajor }) => {
+        {/* Hour markers with relative labels */}
+        {hourMarkers.map(({ ms, offsetHours, isMajor }) => {
           const frac = (ms - rangeStart) / rangeDuration;
           if (frac < 0 || frac > 1) return null;
+          const isNow = offsetHours === 0;
           return (
             <div
               key={ms}
@@ -222,27 +183,33 @@ export default function TimelineBar() {
             >
               <div className={cn(
                 "w-px h-full",
-                isMajor ? "bg-michi-muted/50" : "bg-michi-border"
+                isNow ? "" : isMajor ? "bg-border" : "bg-border/30"
               )} />
-              <span className={cn(
-                "absolute bottom-1 transform -translate-x-1/2 whitespace-nowrap",
-                isMajor
-                  ? "text-[10px] font-semibold text-michi-body"
-                  : "text-[8px] text-michi-muted"
-              )}>
-                {label}
-              </span>
+              {isMajor && (
+                <span className={cn(
+                  "absolute bottom-1 transform -translate-x-1/2 whitespace-nowrap text-[10px]",
+                  offsetHours < 0
+                    ? "font-medium text-muted-foreground"
+                    : offsetHours === 0
+                      ? "font-bold text-primary"
+                      : "font-medium text-chart-5"
+                )}>
+                  {formatRelativeLabel(offsetHours)}
+                </span>
+              )}
             </div>
           );
         })}
 
-        {/* Now marker */}
+        {/* NOW marker — prominent blue vertical line, clickable to return to live */}
         {nowPosition > 0 && nowPosition < 1 && (
           <div
-            className="absolute top-0 h-full w-0.5 bg-michi-lime z-10"
+            className="absolute top-0 h-full w-0.5 bg-primary z-10"
             style={{ left: `${nowPosition * 100}%` }}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); enterLiveMode(); }}
           >
-            <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-michi-dark whitespace-nowrap bg-michi-lime/15 px-2 py-0.5 rounded-full">
+            <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary-foreground bg-primary px-2 py-0.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-primary/90 transition-colors">
               NOW
             </span>
           </div>
@@ -257,11 +224,11 @@ export default function TimelineBar() {
           style={{ left: `${position * 100}%`, transform: "translateX(-50%)" }}
         >
           {/* Vertical line */}
-          <div className="w-full h-full bg-michi-dark rounded-sm" />
+          <div className="w-full h-full bg-foreground rounded-sm" />
           {/* Handle grip */}
           <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2">
             <div className={cn(
-              "w-5 h-8 rounded border-2 border-michi-dark bg-white shadow-lg transition-transform",
+              "w-5 h-8 rounded border-2 border-foreground bg-background shadow-lg transition-transform",
               isDragging && "scale-110"
             )} />
           </div>

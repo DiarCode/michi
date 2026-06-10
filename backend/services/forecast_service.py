@@ -1,12 +1,15 @@
 """Forecast service — generates ridership forecasts using DTS-GSSF model with mock fallback."""
-from datetime import datetime, timezone
-from typing import Dict, List, Optional
+import logging
+from datetime import UTC, datetime
 
 from sqlalchemy.orm import Session
-from backend.ml.predictor import generate_predictions_from_cache, generate_mock_predictions
+
+from backend.ml.predictor import generate_mock_predictions, generate_predictions_from_cache
+
+logger = logging.getLogger(__name__)
 
 
-def generate_24h_forecast(station_id: str, db: Session, base_ridership: int = 1000) -> List[dict]:
+def generate_24h_forecast(station_id: str, db: Session, base_ridership: int = 1000) -> list[dict]:
     """Generate a 24-hour forecast for a station using the real model if available."""
     predictions = generate_predictions_from_cache(db)
     if predictions:
@@ -21,7 +24,7 @@ def generate_24h_forecast(station_id: str, db: Session, base_ridership: int = 10
     return generate_mock_predictions(stations)
 
 
-def generate_all_forecasts(db: Session) -> List[dict]:
+def generate_all_forecasts(db: Session) -> list[dict]:
     """Generate forecasts for all stations using the real model if available."""
     predictions = generate_predictions_from_cache(db)
     if predictions:
@@ -34,12 +37,12 @@ def generate_all_forecasts(db: Session) -> List[dict]:
     return generate_mock_predictions(station_dicts)
 
 
-def get_forecast(station_id: str, db: Session) -> List[dict]:
+def get_forecast(station_id: str, db: Session) -> list[dict]:
     """Get cached or generate forecast for a station."""
     return generate_24h_forecast(station_id, db=db)
 
 
-def get_kpi_metrics(db=None) -> dict:
+def get_kpi_metrics(db: Session | None = None) -> dict:
     """Return KPI metrics. Queries DB when available, falls back to zero defaults."""
     defaults = {
         "total_stations": 0,
@@ -53,8 +56,9 @@ def get_kpi_metrics(db=None) -> dict:
         return defaults
 
     try:
-        from backend.models_orm import StationORM, RouteORM, AlertORM, RidershipORM, PredictionAccuracyORM
         from sqlalchemy import func
+
+        from backend.models_orm import AlertORM, PredictionAccuracyORM, RidershipORM, RouteORM, StationORM
 
         total_stations = db.query(StationORM).count()
         active_routes = db.query(RouteORM).count()
@@ -62,13 +66,15 @@ def get_kpi_metrics(db=None) -> dict:
         avg_result = db.query(func.avg(StationORM.ridership_24h)).scalar()
         avg_ridership = round(float(avg_result), 1) if avg_result else 0.0
 
-        today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        today_start = datetime.now(UTC).replace(hour=0, minute=0, second=0, microsecond=0)
         alerts_today = db.query(AlertORM).filter(AlertORM.created_at >= today_start).count()
 
-        peak_hour_result = (db.query(RidershipORM.timestamp, func.sum(RidershipORM.passengers).label("total"))
-                           .group_by(RidershipORM.timestamp)
-                           .order_by(func.sum(RidershipORM.passengers).desc())
-                           .first())
+        peak_hour_result = (
+            db.query(RidershipORM.timestamp, func.sum(RidershipORM.passengers).label("total"))
+            .group_by(RidershipORM.timestamp)
+            .order_by(func.sum(RidershipORM.passengers).desc())
+            .first()
+        )
         peak_hour = peak_hour_result[0].strftime("%H:00") if peak_hour_result else "08:00"
 
         # Compute on-time performance from prediction accuracy data if available
@@ -88,5 +94,6 @@ def get_kpi_metrics(db=None) -> dict:
             "on_time_performance": on_time_performance,
             "peak_hour": peak_hour,
         }
-    except Exception:
+    except Exception as e:
+        logger.warning("KPI metrics query failed: %s", e)
         return defaults

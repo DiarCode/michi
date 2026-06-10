@@ -1,5 +1,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "@fontsource-variable/ibm-plex-sans";
+@import "@fontsource-variable/inter";
 
 @tailwind base;
 @tailwind components;
@@ -7,67 +9,93 @@
 
 @layer base {
   :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #FBFCF7;
-    --text-primary: #22201F;
-    --text-secondary: #555550;
-    --text-muted: #9C9C95;
-    --border: #E8E8E0;
-    --accent: #B1E743;
-    --accent-light: #D4F080;
-    --accent-dark: #8BC02A;
-    --destructive: #E54D4D;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.141 0.005 285.823);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.141 0.005 285.823);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.141 0.005 285.823);
+    --primary: oklch(0.488 0.243 264.376);
+    --primary-foreground: oklch(0.97 0.014 254.604);
+    --secondary: oklch(0.967 0.001 286.375);
+    --secondary-foreground: oklch(0.21 0.006 285.885);
+    --muted: oklch(0.967 0.001 286.375);
+    --muted-foreground: oklch(0.552 0.016 285.938);
+    --accent: oklch(0.967 0.001 286.375);
+    --accent-foreground: oklch(0.21 0.006 285.885);
+    --destructive: oklch(0.577 0.245 27.325);
+    --input: oklch(0.92 0.004 286.32);
+    --ring: oklch(0.705 0.015 286.067);
+    --chart-1: oklch(0.837 0.128 66.29);
+    --chart-2: oklch(0.705 0.213 47.604);
+    --chart-3: oklch(0.646 0.222 41.116);
+    --chart-4: oklch(0.553 0.195 38.402);
+    --chart-5: oklch(0.47 0.157 37.304);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.141 0.005 285.823);
+    --sidebar-primary: oklch(0.546 0.245 262.881);
+    --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
+    --sidebar-accent: oklch(0.967 0.001 286.375);
+    --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+    --sidebar-border: oklch(0.92 0.004 286.32);
+    --sidebar-ring: oklch(0.705 0.015 286.067);
+  }
 
-    --background: #F0F4E8;
-    --foreground: #22201F;
-    --card: #FFFFFF;
-    --card-foreground: #22201F;
-    --popover: #FFFFFF;
-    --popover-foreground: #22201F;
-    --primary: #22201F;
-    --primary-foreground: #FFFFFF;
-    --secondary: #FBFCF7;
-    --secondary-foreground: #22201F;
-    --muted: #FBFCF7;
-    --muted-foreground: #9C9C95;
-    --accent-foreground: #22201F;
-    --input: #E8E8E0;
-    --ring: #B1E743;
-    --chart-1: #B1E743;
-    --chart-2: #D4D4C8;
-    --chart-3: #9C9C95;
-    --chart-4: #555550;
-    --chart-5: #22201F;
+  .dark {
+    --background: oklch(0.141 0.005 285.823);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.21 0.006 285.885);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.21 0.006 285.885);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.424 0.199 265.638);
+    --primary-foreground: oklch(0.97 0.014 254.604);
+    --secondary: oklch(0.274 0.006 286.033);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.274 0.006 286.033);
+    --muted-foreground: oklch(0.705 0.015 286.067);
+    --accent: oklch(0.274 0.006 286.033);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.552 0.016 285.938);
+    --chart-1: oklch(0.837 0.128 66.29);
+    --chart-2: oklch(0.705 0.213 47.604);
+    --chart-3: oklch(0.646 0.222 41.116);
+    --chart-4: oklch(0.553 0.195 38.402);
+    --chart-5: oklch(0.47 0.157 37.304);
     --radius: 1rem;
-    --sidebar: #FFFFFF;
-    --sidebar-foreground: #22201F;
-    --sidebar-primary: #22201F;
-    --sidebar-primary-foreground: #FFFFFF;
-    --sidebar-accent: #F0F4E8;
-    --sidebar-accent-foreground: #22201F;
-    --sidebar-border: #E8E8E0;
-    --sidebar-ring: #B1E743;
+    --sidebar: oklch(0.21 0.006 285.885);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.623 0.214 259.815);
+    --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
+    --sidebar-accent: oklch(0.274 0.006 286.033);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.552 0.016 285.938);
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: 'Geologica', system-ui, -apple-system, sans-serif;
+    font-family: 'IBM Plex Sans Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   .theme {
-    --font-sans: 'Geologica', sans-serif;
+    --font-sans: 'IBM Plex Sans Variable', 'Inter Variable', sans-serif;
+    --font-heading: 'Inter Variable', sans-serif;
   }
 
   * {
     border-color: var(--border);
-    outline-color: rgba(177, 231, 67, 0.5);
+    outline-color: oklch(50% 0.015 286.067 / 50%);
   }
 
   html {
-    font-family: 'Geologica', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-sans, 'IBM Plex Sans Variable', 'Inter Variable', system-ui, sans-serif);
   }
 
   /* MapLibre popup overrides */
@@ -83,22 +111,22 @@
 
   /* Custom tooltip style for Recharts */
   .recharts-tooltip-wrapper .recharts-default-tooltip {
-    background: #22201F !important;
+    background: var(--card) !important;
     border: none !important;
     border-radius: 0.75rem !important;
-    color: #fff !important;
+    color: var(--card-foreground) !important;
     box-shadow: 0 4px 14px rgba(0,0,0,0.15) !important;
     padding: 0.5rem 0.75rem !important;
   }
   .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-label {
-    color: #9C9C95 !important;
+    color: var(--muted-foreground) !important;
     font-size: 0.75rem !important;
   }
   .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-item-list {
-    color: #fff !important;
+    color: var(--card-foreground) !important;
   }
   .recharts-tooltip-wrapper .recharts-default-tooltip .recharts-tooltip-item {
-    color: #fff !important;
+    color: var(--card-foreground) !important;
   }
 
   /* Scrollbar styling */
@@ -107,18 +135,18 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #F0F4E8;
+    background: var(--background);
   }
   ::-webkit-scrollbar-thumb {
-    background: #D4D4C8;
+    background: var(--border);
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #9C9C95;
+    background: var(--muted-foreground);
   }
 
   /* Select styling */
   select {
-    font-family: 'Geologica', system-ui, -apple-system, sans-serif;
+    font-family: 'IBM Plex Sans Variable', system-ui, -apple-system, sans-serif;
   }
 }

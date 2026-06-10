@@ -1,5 +1,4 @@
 """Depot operations API — fleet availability, dispatch recommendations."""
-from datetime import datetime, timezone
 from fastapi import APIRouter
 
 router = APIRouter()

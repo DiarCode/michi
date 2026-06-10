@@ -1,0 +1,72 @@
+[      38ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:20102
+[      64ms] [ERROR] React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ ForecastPage 1. useContext                 useContext
+2. useContext                 useContext
+3. useContext                 useContext
+4. useEffect                  useEffect
+5. useState                   useState
+6. useCallback                useCallback
+7. useSyncExternalStore       useSyncExternalStore
+8. useEffect                  useEffect
+9. useState                   useState
+10. useState                  useState
+11. useContext                useContext
+12. useContext                useContext
+13. useContext                useContext
+14. useEffect                 useEffect
+15. useState                  useState
+16. useCallback               useCallback
+17. useSyncExternalStore      useSyncExternalStore
+18. useEffect                 useEffect
+19. useContext                useContext
+20. useContext                useContext
+21. useContext                useContext
+22. useEffect                 useEffect
+23. useState                  useState
+24. useCallback               useCallback
+25. useSyncExternalStore      useSyncExternalStore
+26. useEffect                 useEffect
+27. undefined                 useMemo
+ @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:5593
+[      66ms] [ERROR] %o
+
+%s
+
+%s
+ Error: Rendered more hooks than during the previous render.
+    at updateWorkInProgressHook (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:5792:19)
+    at updateMemo (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:6540:20)
+    at Object.useMemo (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:18969:20)
+    at exports.useMemo (http://localhost:5173/node_modules/.vite/deps/chunk-3DZVR6PG.js?v=e0f3c9b7:947:36)
+    at ForecastPage (http://localhost:5173/src/routes/ForecastPage.tsx?t=1781073602305:116:53)
+    at Object.react_stack_bottom_frame (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:18509:20)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:5654:24)
+    at updateFunctionComponent (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:7475:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:8525:20)
+    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:997:72) The above error occurred in the <ForecastPage> component. React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary. @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:7000
+[      66ms] [ERROR] ErrorBoundary caught: Error: Rendered more hooks than during the previous render.
+    at updateWorkInProgressHook (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:5792:19)
+    at updateMemo (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:6540:20)
+    at Object.useMemo (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:18969:20)
+    at exports.useMemo (http://localhost:5173/node_modules/.vite/deps/chunk-3DZVR6PG.js?v=e0f3c9b7:947:36)
+    at ForecastPage (http://localhost:5173/src/routes/ForecastPage.tsx?t=1781073602305:116:53)
+    at Object.react_stack_bottom_frame (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:18509:20)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:5654:24)
+    at updateFunctionComponent (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:7475:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:8525:20)
+    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=b963006d:997:72) 
+    at ForecastPage (http://localhost:5173/src/routes/ForecastPage.tsx?t=1781073602305:81:48)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b146a9de:6626:26)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b146a9de:7561:3)
+    at main (<anonymous>)
+    at div (<anonymous>)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b146a9de:7500:13)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b146a9de:10787:3)
+    at AppInner (http://localhost:5173/src/App.tsx?t=1781073753572:83:27)
+    at ErrorBoundary (http://localhost:5173/src/components/ErrorBoundary.tsx:8:5)
+    at QueryClientProvider (http://localhost:5173/node_modules/.vite/deps/@tanstack_react-query.js?v=c7cc58e5:3235:3)
+    at App (<anonymous>) @ http://localhost:5173/src/components/ErrorBoundary.tsx:14

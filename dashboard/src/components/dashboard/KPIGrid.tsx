@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchKPIs } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Route, Users, Clock, AlertTriangle, TrendingUp } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { MapPinIcon, RouteIcon, UserMultipleIcon, Clock01Icon, Alert01Icon, ArrowUp01Icon } from "@/lib/icons";
 
-const ICONS: Record<string, React.ElementType> = {
-  Stations: MapPin, Routes: Route, Ridership: TrendingUp,
-  "On-Time": Clock, Alerts: AlertTriangle, "Peak Hour": Users,
+const ICONS: Record<string, any> = {
+  Stations: MapPinIcon, Routes: RouteIcon, Ridership: ArrowUp01Icon,
+  "On-Time": Clock01Icon, Alerts: Alert01Icon, "Peak Hour": UserMultipleIcon,
 };
 
 export default function KPIGrid() {
@@ -22,17 +23,17 @@ export default function KPIGrid() {
   return (
     <div className="grid grid-cols-3 lg:grid-cols-6 gap-5">
       {items.map((item) => {
-        const Icon = ICONS[item.icon] ?? MapPin;
+        const icon = ICONS[item.icon] ?? MapPinIcon;
         return (
-          <Card key={item.label} className="hover:shadow-card-hover transition-shadow">
+          <Card key={item.label} className="hover:shadow-md transition-shadow">
             <CardContent className="p-5">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-medium text-michi-muted">{item.label}</span>
-                <div className="w-8 h-8 rounded-full bg-michi-lime/15 flex items-center justify-center">
-                  <Icon size={16} className="text-michi-lime-dark" />
+                <span className="text-sm font-medium text-muted-foreground">{item.label}</span>
+                <div className="w-8 h-8 rounded-full bg-chart-2/15 flex items-center justify-center">
+                  <HugeiconsIcon icon={icon} size={16} className="text-chart-2" />
                 </div>
               </div>
-              <div className="text-3xl font-extrabold text-michi-dark tracking-tight">{item.value}</div>
+              <div className="text-3xl font-extrabold text-foreground tracking-tight">{item.value}</div>
             </CardContent>
           </Card>
         );

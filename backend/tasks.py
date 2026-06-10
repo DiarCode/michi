@@ -1,9 +1,14 @@
 """Celery background tasks."""
 
 import json
+import logging
 import os
 import time
+from datetime import UTC
+
 from celery import Celery
+
+logger = logging.getLogger(__name__)
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
@@ -33,9 +38,10 @@ def _get_db_session():
 @celery_app.task
 def generate_forecasts():
     """Generate forecasts for all stations using DTS-GSSF model and persist to DB."""
+    from datetime import datetime
+
     from backend.models_orm import ForecastORM
     from backend.services.forecast_service import generate_all_forecasts
-    from datetime import datetime, timezone
 
     db = _get_db_session()
     try:
@@ -44,7 +50,7 @@ def generate_forecasts():
             return {"status": "skipped", "reason": "no predictions generated"}
 
         count = 0
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         for entry in predictions:
             from datetime import datetime as _dt
             ts = _dt.fromisoformat(entry["timestamp"])
@@ -86,6 +92,7 @@ def retrain_model():
 def run_simulation(self):
     """Run the simulation engine as a Celery task, publishing ticks to Redis."""
     import redis as _redis
+
     from backend.database import SessionLocal
     from backend.services.simulation_service import SimulationEngine
 
@@ -94,7 +101,7 @@ def run_simulation(self):
 
     try:
         engine = SimulationEngine(db)
-        print(f"Simulation engine started with {len(engine.stations)} stations.")
+        logger.info("Simulation engine started with %d stations", len(engine.stations))
 
         while True:
             tick_data = engine.tick()
@@ -123,7 +130,7 @@ def run_simulation(self):
             time.sleep(1)  # 1 tick per second
 
     except Exception as e:
-        print(f"Simulation error: {e}")
+        logger.error("Simulation error: %s", e, exc_info=True)
         r.publish("michi:simulation", json.dumps({"type": "simulation_error", "error": str(e)}))
         raise
     finally:

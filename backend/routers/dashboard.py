@@ -1,13 +1,16 @@
+import csv
+import io
+from datetime import UTC, datetime
+
 from fastapi import APIRouter, Depends, Query
 from fastapi.responses import StreamingResponse
-from backend.services.forecast_service import get_kpi_metrics
-from backend.services.suggestion_service import generate_suggestions
-from backend.routers.stations import _get_stations
+from sqlalchemy.orm import Session
+
 from backend.database import get_db_session
 from backend.models import KPIResponse, OperationsReportResponse
-from sqlalchemy.orm import Session
-import io, csv
-from datetime import datetime, timezone
+from backend.routers.stations import _get_stations
+from backend.services.forecast_service import get_kpi_metrics
+from backend.services.suggestion_service import generate_suggestions
 
 router = APIRouter()
 
@@ -32,7 +35,7 @@ def get_operations_report(report_format: str = Query("json", alias="format"), db
 
     exceptions = [s for s in stations if (s.get("ridership_24h", 0) or 0) > 3000]
     report = {
-        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "date": datetime.now(UTC).strftime("%Y-%m-%d"),
         "kpis": kpis,
         "district_summary": district_summary,
         "peak_hours": peak_hours,
@@ -62,7 +65,7 @@ def get_operations_report(report_format: str = Query("json", alias="format"), db
 @router.get("/suggestions")
 def get_suggestions(db: Session = Depends(get_db_session)):
     """Get optimization suggestions based on current predictions and alerts."""
-    from backend.models_orm import StationORM, RouteORM, AlertORM, ForecastORM
+    from backend.models_orm import AlertORM, ForecastORM, RouteORM, StationORM
     stations = [{"stop_id": s.stop_id, "name": s.name, "ridership_24h": s.ridership_24h, "district": s.district}
                 for s in db.query(StationORM).all()]
     routes = [{"route_id": r.route_id, "name": r.name, "color": r.color, "avg_ridership": r.avg_ridership}

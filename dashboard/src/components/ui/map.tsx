@@ -16,7 +16,8 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Cancel01Icon, MinusSignIcon, Add01Icon, GpsIcon, Maximize01Icon, Loading03Icon } from "@/lib/icons";
 
 import { cn } from "@/lib/utils";
 
@@ -514,7 +515,7 @@ function PopupCloseButton({ onClick }: { onClick: () => void }) {
       aria-label="Close popup"
       className="focus-visible:ring-ring hover:bg-muted text-foreground absolute top-0.5 right-0.5 z-10 inline-flex size-5 cursor-pointer items-center justify-center rounded-sm transition-colors focus:outline-none focus-visible:ring-2"
     >
-      <X className="size-3.5" />
+      <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
     </button>
   );
 }
@@ -753,7 +754,7 @@ function ControlButton({
       className={cn(
         "flex size-8 items-center justify-center transition-all",
         "first:rounded-t-md last:rounded-b-md",
-        "hover:bg-michi-warm",
+        "hover:bg-muted",
         "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset",
         "disabled:pointer-events-none disabled:opacity-50",
       )}
@@ -834,10 +835,10 @@ function MapControls({
       {showZoom && (
         <ControlGroup>
           <ControlButton onClick={handleZoomIn} label="Zoom in">
-            <Plus className="size-4" />
+            <HugeiconsIcon icon={Add01Icon} className="size-4" />
           </ControlButton>
           <ControlButton onClick={handleZoomOut} label="Zoom out">
-            <Minus className="size-4" />
+            <HugeiconsIcon icon={MinusSignIcon} className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}
@@ -854,9 +855,9 @@ function MapControls({
             disabled={waitingForLocation}
           >
             {waitingForLocation ? (
-              <Loader2 className="size-4 animate-spin" />
+              <HugeiconsIcon icon={Loading03Icon} className="size-4 animate-spin" />
             ) : (
-              <Locate className="size-4" />
+              <HugeiconsIcon icon={GpsIcon} className="size-4" />
             )}
           </ControlButton>
         </ControlGroup>
@@ -864,7 +865,7 @@ function MapControls({
       {showFullscreen && (
         <ControlGroup>
           <ControlButton onClick={handleFullscreen} label="Toggle fullscreen">
-            <Maximize className="size-4" />
+            <HugeiconsIcon icon={Maximize01Icon} className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}

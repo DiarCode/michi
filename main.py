@@ -1670,13 +1670,6 @@ def iterative_forecast(bundle: DataBundle, model: DTSGSSF, wcfg: WindowConfig,
 
     return np.stack(preds, axis=0).astype(np.float32), np.stack(confs, axis=0).astype(np.float32)
 
-def load_dataset_csv(data_dir: str) -> Optional[DataBundle]:
-    """Load dataset from CSVs if they exist."""
-    path_bottom = os.path.join(data_dir, "dataset_bottom.csv")
-    path_all = os.path.join(data_dir, "dataset_all.csv")
-    if not (os.path.exists(path_bottom) and os.path.exists(path_all)):
-        return None
-    return None
 
 def save_dataset_csv(bundle: DataBundle, data_dir: str) -> Dict[str, str]:
     os.makedirs(data_dir, exist_ok=True)
@@ -1687,10 +1680,6 @@ def save_dataset_csv(bundle: DataBundle, data_dir: str) -> Dict[str, str]:
     bundle_to_frame(bundle, level="all").to_csv(path_all, index=False)
     return {"bottom": path_bottom, "all": path_all}
 
-def list_csv_files(data_dir: str) -> List[str]:
-    if not os.path.isdir(data_dir):
-        return []
-    return sorted([f for f in os.listdir(data_dir) if f.endswith(".csv")])
 
 def plot_network_interactive(net: NetworkSpec, volume: Optional[np.ndarray] = None):
     """
@@ -2802,73 +2791,6 @@ def ui_app() -> None:
             elif uploaded and not st.session_state.model:
                 st.warning("Load a model first to run batch forecasts.")
 
-def train_offline_streamlit(bundle: DataBundle, wcfg: WindowConfig, split: SplitConfig,
-                            mcfg: Dict[str, object], tcfg: TrainConfig, device: torch.device, prog):
-    T, N, F_in = bundle.X.shape
-    n_series = bundle.y_all.shape[1]
-    n_agg = n_series - N
-    train_rng, val_rng, test_rng = make_splits(T, split)
-
-    # Z-score normalization fitted on training data only
-    norm = FeatureNormalizer()
-    norm.fit(bundle.X[:train_rng[1]])
-    X_normed = norm.transform(bundle.X)
-
-    ds_train = WindowDataset(X_normed, bundle.y_all, wcfg, train_rng[0], train_rng[1])
-    ds_val = WindowDataset(X_normed, bundle.y_all, wcfg, val_rng[0], val_rng[1])
-    dl_train = torch.utils.data.DataLoader(ds_train, batch_size=tcfg.batch_size, shuffle=True, drop_last=True)
-    dl_val = torch.utils.data.DataLoader(ds_val, batch_size=tcfg.batch_size, shuffle=False, drop_last=False)
-
-    model = DTSGSSF(N=N, F_in=F_in, n_series=n_series, n_agg=n_agg, A_phys=bundle.net.A_phys,
-                    d_model=int(mcfg.get("d_model", 192)), horizon=wcfg.horizon, K=int(mcfg.get("K", 3)),
-                    lora_r=int(mcfg.get("lora_r", 16)), dropout=float(mcfg.get("dropout", 0.1)),
-                    n_heads=int(mcfg.get("n_heads", 6))).to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=tcfg.lr, weight_decay=tcfg.weight_decay)
-
-    best_val = float("inf")
-    best_state = None
-
-    def batch_loss(batch: Dict[str, torch.Tensor]) -> torch.Tensor:
-        x = batch["x"].to(device)
-        y = batch["y"].to(device)
-        mu, kappa = model(x)
-        loss = nb_nll(y, mu, kappa).mean(dim=(0, 1))
-        w = torch.ones((n_series,), device=device)
-        w[:N] *= tcfg.loss_bottom_weight
-        w[N:] *= tcfg.loss_agg_weight
-        return (loss * w).mean()
-
-    for ep in range(tcfg.epochs):
-        model.train()
-        tr = 0.0; nb = 0
-        for batch in dl_train:
-            opt.zero_grad(set_to_none=True)
-            L = batch_loss(batch)
-            L.backward()
-            nn.utils.clip_grad_norm_(model.parameters(), tcfg.grad_clip)
-            opt.step()
-            tr += float(L.detach().cpu()); nb += 1
-
-        model.eval()
-        with torch.no_grad():
-            vl = 0.0; vn = 0
-            for batch in dl_val:
-                vl += float(batch_loss(batch).detach().cpu()); vn += 1
-            vl = vl / max(1, vn)
-
-        if vl < best_val:
-            best_val = vl
-            best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
-
-        prog.progress(int(100 * (ep + 1) / tcfg.epochs),
-                      text=f"Epoch {ep+1}/{tcfg.epochs} | train {tr/max(1,nb):.4f} | val {vl:.4f}")
-
-    if best_state is not None:
-        model.load_state_dict(best_state)
-
-    model.eval()
-    metrics = evaluate_offline(bundle, model, wcfg, split, device, norm=norm)
-    return model, metrics, norm
 
 # ----------------------------
 # CLI

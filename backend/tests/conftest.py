@@ -1,11 +1,13 @@
 """Shared test fixtures for Michi backend tests."""
+from datetime import UTC, datetime, timedelta
+
 import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker
-from backend.database import Base
+
 from backend.app import app
-from fastapi.testclient import TestClient
-from datetime import datetime, timedelta, timezone
+from backend.database import Base
 
 TEST_DB_URL = "sqlite:///./test_michi.db"
 
@@ -42,10 +44,9 @@ def db(engine):
 
 @pytest.fixture(scope="session")
 def client(engine):
-    from backend.database import SessionLocal as _SL, engine as _eng
-    from backend.routers.stations import _get_stations
-    from backend.routers import alerts as alerts_mod
     import backend.database as db_mod
+    from backend.database import SessionLocal as _SL
+    from backend.database import engine as _eng
 
     SessionLocal = sessionmaker(bind=engine)
     db_mod.engine = engine
@@ -101,20 +102,20 @@ def seed_alerts(db, seed_stations):
                   when_hint="Peak hours", where_hint="TST000",
                   why="Ridership exceeds capacity", confidence=0.92,
                   consequence_if_ignored="Passenger safety risk",
-                  sla_timer_minutes=15, created_at=datetime.now(timezone.utc)),
+                  sla_timer_minutes=15, created_at=datetime.now(UTC)),
         AlertORM(severity="high", title="Delay on Test Route 1",
                   message="Bus delayed by 15 min",
                   route_id="TR01", family="delay", what="Service delay",
                   when_hint="Current", where_hint="Route TR01",
                   why="Traffic congestion", confidence=0.85,
                   consequence_if_ignored="Passenger wait times increase",
-                  sla_timer_minutes=30, created_at=datetime.now(timezone.utc)),
+                  sla_timer_minutes=30, created_at=datetime.now(UTC)),
         AlertORM(severity="medium", title="Weather advisory",
                   message="Snow expected", family="weather",
                   what="Severe weather", when_hint="Tonight",
                   where_hint="All routes", why="Blizzard forecast",
                   confidence=0.78, consequence_if_ignored="Service disruption",
-                  sla_timer_minutes=60, created_at=datetime.now(timezone.utc)),
+                  sla_timer_minutes=60, created_at=datetime.now(UTC)),
     ]
     db.add_all(alerts)
     db.flush()
@@ -125,7 +126,7 @@ def seed_alerts(db, seed_stations):
 def seed_forecasts(db, seed_stations):
     from backend.models_orm import ForecastORM
     forecasts = []
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     for s in seed_stations:
         for h in [15, 30, 60, 120]:
             forecasts.append(ForecastORM(

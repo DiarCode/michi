@@ -11,7 +11,7 @@ Hyperparameter defaults align with Table 8 of the paper:
   d_model=192, horizon=4, K=3, lora_r=16, n_heads=6, dropout=0.1
 """
 import math
-from typing import Iterable, Tuple
+from collections.abc import Iterable
 
 import numpy as np
 import torch
@@ -208,7 +208,7 @@ class DTSGSSF(nn.Module):
         self.n_series = n_series
         self.n_agg = n_agg
 
-    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         B, L, N, _ = x.shape
         # SSM: process each station's temporal sequence
         h_ssm = self.ssm(x)                                     # (B, N, d_model)

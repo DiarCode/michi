@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"/Users/diarcode/development/michi/.venv/bin/python -c \\\"\\nimport os\\nfrom backend.websocket import _validate_token\\nprint('WS_AUTH_SECRET:', repr(os.getenv('WS_AUTH_SECRET')))\\nprint('vali...",
+  "error": "Exit code 1\nTraceback (most recent call last):\n  File \"<string>\", line 3, in <module>\n    from backend.websocket import _validate_token\nModuleNotFoundError: No module named 'backend'",
+  "timestamp": "2026-06-10T06:51:09.667Z",
+  "retry_count": 1
+}

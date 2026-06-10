@@ -1,12 +1,11 @@
 """Passenger info API — crowding predictions, service changes, public messaging."""
-from datetime import datetime, timedelta, timezone
-from typing import List, Optional
-from fastapi import APIRouter, Depends, Query
+from datetime import UTC, datetime
+
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from backend.database import get_db_session
-from backend.models_orm import StationORM, RouteORM, AlertORM, ForecastORM
-from backend.services.forecast_service import get_kpi_metrics
+from backend.models_orm import AlertORM, ForecastORM, StationORM
 
 router = APIRouter()
 
@@ -16,7 +15,7 @@ def get_crowding_predictions(db: Session = Depends(get_db_session)):
     """Get current and predicted crowding levels for all stations."""
     stations = db.query(StationORM).all()
     result = []
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     for station in stations:
         forecasts = (db.query(ForecastORM)

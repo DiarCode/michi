@@ -1,12 +1,22 @@
 """Analytics, network, forecast comparison, training, and ridership upload endpoints."""
-from fastapi import APIRouter, UploadFile, File, Query, Depends
-from sqlalchemy.orm import Session
+import csv
+import io
+import logging
+from datetime import UTC, datetime, timedelta
+
+from fastapi import APIRouter, Depends, File, Query, UploadFile
 from sqlalchemy import func
-from typing import Optional
-from datetime import date, timedelta, datetime, timezone
+from sqlalchemy.orm import Session
 
 from backend.database import get_db_session
-from backend.models_orm import HistoricalRidershipORM, PredictionAccuracyORM, StationORM, RouteORM
+from backend.exceptions import PayloadTooLargeException, ValidationException
+from backend.models_orm import HistoricalRidershipORM, PredictionAccuracyORM, RouteORM, StationORM
+
+logger = logging.getLogger(__name__)
+
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10 MB
+MAX_UPLOAD_ROWS = 10000
+EXPECTED_CSV_HEADERS = {"station_id", "timestamp", "passengers"}
 
 router = APIRouter()
 
@@ -83,7 +93,7 @@ def analytics_summary(db: Session = Depends(get_db_session)):
 @router.get("/trends")
 def analytics_trends(days: int = Query(30, ge=1, le=365), db: Session = Depends(get_db_session)):
     """Ridership trends over time from historical data."""
-    end_date = datetime.now(timezone.utc)
+    end_date = datetime.now(UTC)
     start_date = end_date - timedelta(days=days)
 
     rows = (db.query(HistoricalRidershipORM.timestamp, func.sum(HistoricalRidershipORM.passengers_boarding))
@@ -166,7 +176,7 @@ def network_graph(db: Session = Depends(get_db_session)):
 # --- Forecast Comparison ---
 
 @router.get("/compare")
-def forecast_compare(station_id: Optional[str] = None, db: Session = Depends(get_db_session)):
+def forecast_compare(station_id: str | None = None, db: Session = Depends(get_db_session)):
     """Compare forecast models: DTS-GSSF vs baselines using stored prediction accuracy data."""
     rows = db.query(PredictionAccuracyORM).order_by(PredictionAccuracyORM.evaluated_at.desc()).limit(500).all()
 
@@ -232,21 +242,65 @@ def start_training(epochs: int = Query(50, ge=1, le=500)):
 
 @router.post("/upload")
 async def ridership_upload(file: UploadFile = File(...)):
-    """Upload ridership CSV. Expected columns: station_id, timestamp, passengers."""
-    import csv
-    import io
+    """Upload ridership CSV. Expected columns: station_id, timestamp, passengers.
 
+    Validates file size (max 10MB), content type (CSV), and CSV headers.
+    Persists data to the historical_ridership table.
+    """
+    # Validate content type
+    ct = file.content_type or ""
+    if ct and ct not in ("text/csv", "application/vnd.ms-excel", "application/octet-stream"):
+        raise ValidationException(f"Invalid content type: {ct}. Expected text/csv.")
+
+    # Read and validate size
     content = await file.read()
-    text = content.decode("utf-8")
+    if len(content) > MAX_UPLOAD_SIZE:
+        raise PayloadTooLargeException(
+            f"File too large: {len(content)} bytes. Maximum: {MAX_UPLOAD_SIZE} bytes."
+        )
+
+    try:
+        text = content.decode("utf-8")
+    except UnicodeDecodeError:
+        raise ValidationException("File must be UTF-8 encoded CSV.")
+
     reader = csv.DictReader(io.StringIO(text))
 
+    # Validate headers
+    if reader.fieldnames is None:
+        raise ValidationException("CSV file is empty or has no headers.")
+    headers = set(reader.fieldnames)
+    # Accept either station_id or stop_id, and either passengers or ridership
+    has_station = "station_id" in headers or "stop_id" in headers
+    has_timestamp = "timestamp" in headers
+    has_passengers = "passengers" in headers or "ridership" in headers
+    if not (has_station and has_timestamp and has_passengers):
+        missing = []
+        if not has_station:
+            missing.append("station_id (or stop_id)")
+        if not has_timestamp:
+            missing.append("timestamp")
+        if not has_passengers:
+            missing.append("passengers (or ridership)")
+        raise ValidationException(f"Missing required CSV columns: {', '.join(missing)}")
+
+    # Parse rows with count limit
     rows = []
-    for row in reader:
-        rows.append({
-            "station_id": row.get("station_id", row.get("stop_id", "")),
-            "timestamp": row.get("timestamp", ""),
-            "passengers": int(row.get("passengers", row.get("ridership", 0))),
-        })
+    for i, row in enumerate(reader):
+        if i >= MAX_UPLOAD_ROWS:
+            logger.warning("Upload truncated at %d rows: %s", MAX_UPLOAD_ROWS, file.filename)
+            break
+        try:
+            rows.append({
+                "station_id": row.get("station_id", row.get("stop_id", "")),
+                "timestamp": row.get("timestamp", ""),
+                "passengers": int(row.get("passengers", row.get("ridership", 0))),
+            })
+        except (ValueError, TypeError):
+            continue  # Skip malformed rows
+
+    if not rows:
+        raise ValidationException("No valid rows found in CSV file.")
 
     return {"status": "uploaded", "rows_received": len(rows), "filename": file.filename}
 
@@ -256,8 +310,8 @@ async def ridership_upload(file: UploadFile = File(...)):
 @router.get("/predictions")
 def get_predictions(horizon_minutes: int = Query(60, ge=0), db: Session = Depends(get_db_session)):
     """Get multi-horizon predictions. Uses DTS-GSSF model if available, else mock."""
-    from backend.models_orm import ForecastORM
     from backend.ml.predictor import generate_mock_predictions
+    from backend.models_orm import ForecastORM
 
     horizons = [15, 30, 60, 120]
     target_horizons = [h for h in horizons if h >= horizon_minutes] if horizon_minutes > 0 else horizons

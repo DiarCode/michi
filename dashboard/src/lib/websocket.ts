@@ -9,12 +9,15 @@ const WS_BASE = getWSBase();
 
 export type WSEventType = "bus_position" | "alert" | "forecast_update" | "simulation_tick" | "validation_metric" | "drift_alert";
 
+export type WSConnectionState = "connecting" | "connected" | "disconnected";
+
 export type WSEvent = {
   type: WSEventType;
   data: Record<string, unknown>;
 };
 
 type Listener = (event: WSEvent) => void;
+type StateListener = (state: WSConnectionState) => void;
 
 const BASE_DELAY_MS = 3000;
 const MAX_DELAY_MS = 30000;
@@ -23,11 +26,32 @@ const MULTIPLIER = 1.5;
 export class WSClient {
   private ws: WebSocket | null = null;
   private listeners: Listener[] = [];
+  private stateListeners: StateListener[] = [];
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private reconnectAttempts = 0;
   private currentDelayMs = BASE_DELAY_MS;
   private lastTickReceived = 0;
   private subscriptions: WSEventType[] | null = null;
+  private _state: WSConnectionState = "disconnected";
+
+  /** Current connection state. */
+  get state(): WSConnectionState {
+    return this._state;
+  }
+
+  private setState(state: WSConnectionState) {
+    if (this._state === state) return;
+    this._state = state;
+    this.stateListeners.forEach((fn) => fn(state));
+  }
+
+  /** Subscribe to connection state changes. Returns unsubscribe function. */
+  onStateChange(fn: StateListener): () => void {
+    this.stateListeners.push(fn);
+    return () => {
+      this.stateListeners = this.stateListeners.filter((l) => l !== fn);
+    };
+  }
 
   /** Set event type subscriptions. Call before connect or to update after. */
   subscribeTo(types: WSEventType[]) {
@@ -39,11 +63,20 @@ export class WSClient {
   }
 
   connect() {
-    this.ws = new WebSocket(WS_BASE + "/realtime");
+    // Include auth token in query params if configured
+    const token = import.meta.env.VITE_WS_TOKEN as string | undefined;
+    const url = token
+      ? `${WS_BASE}/realtime?token=${encodeURIComponent(token)}`
+      : `${WS_BASE}/realtime`;
+
+    this.setState("connecting");
+
+    this.ws = new WebSocket(url);
     this.ws.onopen = () => {
       // Reset backoff on successful connection
       this.reconnectAttempts = 0;
       this.currentDelayMs = BASE_DELAY_MS;
+      this.setState("connected");
 
       // State catch-up: send last tick received so server can resend missed events
       if (this.lastTickReceived > 0) {
@@ -68,6 +101,7 @@ export class WSClient {
       }
     };
     this.ws.onclose = () => {
+      this.setState("disconnected");
       this.scheduleReconnect();
     };
     this.ws.onerror = () => {
@@ -90,7 +124,7 @@ export class WSClient {
     }, delay);
   }
 
-  subscribe(fn: Listener) {
+  subscribe(fn: Listener): () => void {
     this.listeners.push(fn);
     return () => {
       this.listeners = this.listeners.filter((l) => l !== fn);
@@ -101,6 +135,7 @@ export class WSClient {
     if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
     this.reconnectTimer = null;
     this.ws?.close();
+    this.setState("disconnected");
   }
 }
 

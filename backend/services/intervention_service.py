@@ -1,17 +1,16 @@
 """Intervention workflow service — CRUD + status tracking for intervention actions."""
-from datetime import datetime, timezone
-from typing import Dict, List, Optional
+from datetime import UTC, datetime
 
 from sqlalchemy.orm import Session
-from backend.models_orm import InterventionORM, AlertORM
 
+from backend.models_orm import InterventionORM
 
 INTERVENTION_TYPES = ["dispatch", "short_turn", "hold", "deadhead", "passenger_info", "route_reinforcement"]
 VALID_STATUSES = ["pending", "approved", "executing", "completed", "cancelled"]
 
 
-def create_intervention(db: Session, alert_id: Optional[int], intervention_type: str, route_id: Optional[str],
-                        station_id: Optional[str], predicted_impact: Optional[Dict] = None) -> InterventionORM:
+def create_intervention(db: Session, alert_id: int | None, intervention_type: str, route_id: str | None,
+                        station_id: str | None, predicted_impact: dict | None = None) -> InterventionORM:
     if intervention_type not in INTERVENTION_TYPES:
         raise ValueError(f"Invalid intervention type: {intervention_type}")
     intervention = InterventionORM(
@@ -19,7 +18,7 @@ def create_intervention(db: Session, alert_id: Optional[int], intervention_type:
         intervention_type=intervention_type,
         route_id=route_id,
         station_id=station_id,
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
         status="pending",
         predicted_impact=str(predicted_impact) if predicted_impact else None,
     )
@@ -29,19 +28,19 @@ def create_intervention(db: Session, alert_id: Optional[int], intervention_type:
     return intervention
 
 
-def list_interventions(db: Session, status: Optional[str] = None, limit: int = 50) -> List[InterventionORM]:
+def list_interventions(db: Session, status: str | None = None, limit: int = 50) -> list[InterventionORM]:
     q = db.query(InterventionORM)
     if status:
         q = q.filter(InterventionORM.status == status)
     return q.order_by(InterventionORM.created_at.desc()).limit(limit).all()
 
 
-def get_intervention(db: Session, intervention_id: int) -> Optional[InterventionORM]:
+def get_intervention(db: Session, intervention_id: int) -> InterventionORM | None:
     return db.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
 
 
-def update_intervention_status(db: Session, intervention_id: int, status: str, approved_by: Optional[str] = None,
-                                operator_note: Optional[str] = None, actual_impact: Optional[Dict] = None) -> Optional[InterventionORM]:
+def update_intervention_status(db: Session, intervention_id: int, status: str, approved_by: str | None = None,
+                                operator_note: str | None = None, actual_impact: dict | None = None) -> InterventionORM | None:
     if status not in VALID_STATUSES:
         raise ValueError(f"Invalid status: {status}")
     intervention = db.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
@@ -59,8 +58,8 @@ def update_intervention_status(db: Session, intervention_id: int, status: str, a
     return intervention
 
 
-def simulate_intervention_impact(intervention_type: str, route_id: Optional[str],
-                                  station_id: Optional[str]) -> Dict:
+def simulate_intervention_impact(intervention_type: str, route_id: str | None,
+                                  station_id: str | None) -> dict:
     """Simulate the predicted impact of an intervention (what-if analysis)."""
     base_impacts = {
         "dispatch": {"ridership_change": 15, "wait_time_change": -20, "cost": "1 reserve bus for 2-4 hours"},

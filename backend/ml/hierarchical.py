@@ -1,12 +1,12 @@
 """Hierarchical forecast reconciliation (MinT/OLS) for station→route→district→city aggregation."""
+
 import numpy as np
-from typing import Dict, List, Tuple
 
 
 def build_summing_matrix(
-    station_district: Dict[str, str],
-    station_routes: Dict[str, List[str]],
-) -> Tuple[np.ndarray, List[str]]:
+    station_district: dict[str, str],
+    station_routes: dict[str, list[str]],
+) -> tuple[np.ndarray, list[str]]:
     """Build the summing matrix S for hierarchical reconciliation.
 
     Bottom level: individual stations

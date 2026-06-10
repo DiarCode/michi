@@ -2,19 +2,18 @@
 import json
 import random
 from pathlib import Path
-from typing import Dict, List
 
 # Load real station data for bus simulation
 _SEED_PATH = Path(__file__).parent.parent / "data" / "cache" / "astana_network_seed.json"
-_REAL_STOPS: List[Dict] = []
-_ROUTE_IDS: List[str] = []
+_REAL_STOPS: list[dict] = []
+_ROUTE_IDS: list[str] = []
 
 try:
     if not _SEED_PATH.exists():
         # Try the root-relative path as well
         _SEED_PATH = Path(__file__).parent.parent.parent / "data" / "cache" / "astana_network_seed.json"
 
-    with open(_SEED_PATH, "r", encoding="utf-8") as f:
+    with open(_SEED_PATH, encoding="utf-8") as f:
         _seed = json.load(f)
         _REAL_STOPS = _seed["stations"]
         _ROUTE_IDS = [r["route_id"] for r in _seed["routes"]]
@@ -47,7 +46,7 @@ BUS_POOL = [
 _STOP_NAMES = [s["name"] for s in _STOPS]
 
 
-def get_current_positions() -> List[Dict]:
+def get_current_positions() -> list[dict]:
     for bus in BUS_POOL:
         bus["lat"] += random.uniform(-0.001, 0.001)
         bus["lon"] += random.uniform(-0.001, 0.001)

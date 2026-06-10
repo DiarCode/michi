@@ -1,12 +1,13 @@
 """Executive dashboard API — KPIs, trends, ROI, and financial metrics."""
 import random
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
+
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy.orm import Session
 from sqlalchemy import func
+from sqlalchemy.orm import Session
 
 from backend.database import get_db_session
-from backend.models_orm import StationORM, RouteORM, AlertORM, RidershipORM, InterventionORM, PredictionAccuracyORM
+from backend.models_orm import AlertORM, InterventionORM, PredictionAccuracyORM, RidershipORM, RouteORM, StationORM
 
 router = APIRouter()
 
@@ -24,7 +25,7 @@ def _generate_default_trends(days: int = 30):
     """Generate realistic daily ridership trends when no DB data exists."""
     trends = []
     base = AVG_DAILY_RIDERSHIP
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     for i in range(days):
         d = now - timedelta(days=days - i)
         # Weekly pattern: weekday higher, weekend lower
@@ -59,7 +60,7 @@ def get_executive_kpis(db: Session = Depends(get_db_session)):
     """High-level KPIs for executive dashboard with realistic fallbacks."""
     total_stations = db.query(StationORM).count() or 12
     active_routes = db.query(RouteORM).count() or 5
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
     alerts_today = db.query(AlertORM).filter(AlertORM.created_at >= today_start).count()
@@ -115,7 +116,7 @@ def get_executive_kpis(db: Session = Depends(get_db_session)):
 @router.get("/trends")
 def get_executive_trends(days: int = Query(30, le=90), db: Session = Depends(get_db_session)):
     """Daily trends for executive dashboard."""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    cutoff = datetime.now(UTC) - timedelta(days=days)
     ridership = db.query(RidershipORM).filter(RidershipORM.timestamp >= cutoff).all()
 
     if ridership:

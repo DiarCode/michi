@@ -1,12 +1,11 @@
 """Timeline API — continuous actual vs predicted ridership time series."""
-from datetime import datetime, timedelta, timezone
-from typing import List, Optional
+from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from backend.database import get_db_session
-from backend.models_orm import HistoricalRidershipORM, ForecastORM
+from backend.models_orm import ForecastORM, HistoricalRidershipORM
 
 router = APIRouter()
 
@@ -19,7 +18,7 @@ RESOLUTION_DELTAS = {
 
 @router.get("")
 def get_timeline(
-    station_id: Optional[str] = Query(None, description="Filter to a single station"),
+    station_id: str | None = Query(None, description="Filter to a single station"),
     start_time: datetime = Query(..., description="Start of the time window (ISO 8601)"),
     end_time: datetime = Query(..., description="End of the time window (ISO 8601)"),
     resolution: str = Query("15m", description="Time bucket size: 5m, 15m, or 1h"),
@@ -34,13 +33,13 @@ def get_timeline(
     if delta is None:
         return {"error": f"Invalid resolution '{resolution}'. Use 5m, 15m, or 1h."}
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     # Ensure datetimes are timezone-aware (treat naive as UTC)
     if start_time.tzinfo is None:
-        start_time = start_time.replace(tzinfo=timezone.utc)
+        start_time = start_time.replace(tzinfo=UTC)
     if end_time.tzinfo is None:
-        end_time = end_time.replace(tzinfo=timezone.utc)
+        end_time = end_time.replace(tzinfo=UTC)
 
     # Build the list of bucket timestamps
     buckets = []

@@ -1,0 +1,523 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e7]: M
+        - generic [ref=e9]: Michi
+      - navigation [ref=e10]:
+        - link "Command Center" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Command Center
+        - link "Live Map" [ref=e16] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e17]
+          - text: Live Map
+        - link "Alerts" [ref=e22] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e23]
+          - text: Alerts
+        - link "Settings" [ref=e26] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e27]
+          - text: Settings
+      - generic [ref=e30]:
+        - 'generic "WebSocket: connected" [ref=e51]':
+          - generic [ref=e35]: Live
+        - button "Dispatch" [ref=e37] [cursor=pointer]:
+          - text: Dispatch
+          - img [ref=e39]
+    - main [ref=e41]:
+      - generic [ref=e42]:
+        - heading "Station Forecast" [level=1] [ref=e53]
+        - generic [ref=e54]:
+          - generic [ref=e56]: Select Station & Forecast Horizon
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - generic [ref=e60]: Station
+              - combobox [ref=e61]:
+                - option "— Choose a station —"
+                - option "ТД Меридиан (Saryarka)" [selected]
+                - option "ТД Мередиан (Saryarka)"
+                - option "Евразия (Saryarka)"
+                - option "магазин Сымбат (Esil)"
+                - option "Железнодорожный колледж (Esil)"
+                - option "Парк Ж. Жабаева (Saryarka)"
+                - option "Микрорайон Жастар (Saryarka)"
+                - option "Встреча (Saryarka)"
+                - option "Встреча (Saryarka)"
+                - option "Бараева (Esil)"
+                - option "Бараева (Esil)"
+                - option "№15 мектеп-лицей (Esil)"
+                - option "Дулатова (Esil)"
+                - option "Герцена (Esil)"
+                - option "Назарбаев Университет (Esil)"
+                - option "Назарбаев Университет (Esil)"
+                - option "Канал \"Нура-Есиль\" (Esil)"
+                - option "Цирк (Esil)"
+                - option "Парк Ж.Жабаева (Saryarka)"
+                - option "ЖК Номад (Esil)"
+                - option "Думан (Esil)"
+                - option "Проспект Республики (Esil)"
+                - option "АО \"Народный Банк\" (Esil)"
+                - option "Шокана Уалиханова (Esil)"
+                - option "Жаннур (Esil)"
+                - option "Дворец Жастар (Esil)"
+                - option "ЦОН района «Сарыарка» (Esil)"
+                - option "Дом Министерств (Esil)"
+                - 'option "Байтерек: 10 (Esil)"'
+                - option "Ильяса Есенберлина (Esil)"
+                - option "Канал \"Нура-Есиль\" (Esil)"
+                - option "Е 319 (Esil)"
+                - option "Детский сад Карлыгаш-2 (Esil)"
+                - option "Детский сад Карлыгаш-2 (Esil)"
+                - option "БЦ Асыл-тау (Esil)"
+                - option "Бизнес-центр Асыл-Тау (Esil)"
+                - option "Астана Арена (Esil)"
+                - option "Астана Арена (Esil)"
+                - option "Ледовый дворец Алау (Esil)"
+                - option "Ледовый дворец Алау (Esil)"
+                - option "7-ой километр (Esil)"
+                - option "7-ой километр (Esil)"
+                - option "Акбулак (Esil)"
+                - option "Акбулак (Esil)"
+                - option "трасса Каркаралы (Esil)"
+                - option "трасса Каркаралы (Esil)"
+                - option "дачный масив \"Авиатор\" (Esil)"
+                - option "дачный масив \"Авиатор\" (Esil)"
+                - option "улица Сарытогай (Esil)"
+                - option "улица Сарытогай (Esil)"
+                - option "Жилой массив \"Пригородный\" (Esil)"
+                - option "Центр нейрохирургии (Esil)"
+                - option "Центр нейрохирургии (Esil)"
+                - option "Национальный кардиологический центр (Esil)"
+                - option "Национальный кардиологический центр (Esil)"
+                - option "улица Конаева (Esil)"
+                - option "улица Конаева (Esil)"
+                - option "НК \"КТЖ\" (Esil)"
+                - option "НК \"КТЖ\" (Esil)"
+                - option "Дом Министерств (Saryarka)"
+                - option "«Атарүрік» саябағы (Esil)"
+                - option "микрорайон Самал (Esil)"
+                - option "микрорайон Самал (Esil)"
+                - option "Улица Ж. Тархана (Esil)"
+                - option "улица А. Иманова (Esil)"
+                - option "улица А. Иманова (Esil)"
+                - option "АО \"Народный Банк\" (Esil)"
+                - option "Банк КазКом (Esil)"
+                - option "Банк КазКом (Esil)"
+                - option "улица А. Жангельдина (Esil)"
+                - option "улица Бейбитшилик (Esil)"
+                - option "Политехнический колледж (Esil)"
+                - option "Национальный научно-медицинский центр (Saryarka)"
+                - option "Средняя школа №38 (Saryarka)"
+                - option "Торговый дом \"Айтолкын\" (Saryarka)"
+                - option "Средняя школа №38 (Saryarka)"
+                - option "Школа \"Мирас\" (Saryarka)"
+                - option "Манаса (Saryarka)"
+                - option "Микрорайон Аль-Фараби (Saryarka)"
+                - option "7-я поликлиника (Saryarka)"
+                - option "Дастан (Saryarka)"
+                - option "Микрорайон №9 (Saryarka)"
+                - option "улица Силети (Saryarka)"
+                - option "Г. Мустафина (Saryarka)"
+                - option "Силети (Saryarka)"
+                - option "Ә. Молдағұлова көшесі (Esil)"
+                - option "Железнодорожный вокзал (Esil)"
+                - option "Проспект Абылайхана (Saryarka)"
+                - option "МЦ \"Астана-Эколайф\" (Saryarka)"
+                - option "Агротехнический университет (Esil)"
+                - option "Шапагат (Esil)"
+                - option "Театр Жастар (Esil)"
+                - option "Театр Жастар (Esil)"
+                - option "Дәулет сауда үйі (Esil)"
+                - option "Музыкальная академия (Esil)"
+                - option "Улица А. Молдагуловой (Esil)"
+                - option "Карбышева (Esil)"
+                - option "Карбышева (Esil)"
+                - option "Средняя школа №20 (Esil)"
+                - option "Коктерек (Esil)"
+                - option "улица Медеу (Esil)"
+                - option "Кладбище (Esil)"
+                - option "Акан Серы (Esil)"
+                - option "Бейбитшилик (Esil)"
+                - option "Казахский Агротехнический университет имени С. Сейфулина (Esil)"
+                - option "Астанинский медицинский университет (Esil)"
+                - option "Астанинский медицинский университет (Esil)"
+                - option "Казахский Агротехнический университет имени С. Сейфулина (Esil)"
+                - option "Улица А. Молдагуловой (Esil)"
+                - option "Улица А. Молдагуловой (Esil)"
+                - option "Театр Жастар (Esil)"
+                - option "Музыкальная Академия (Esil)"
+                - option "Музыкальная Академия (Esil)"
+                - option "ТД Орбита (Saryarka)"
+                - option "Микрорайон Жастар (Saryarka)"
+                - option "Микрорайон Жастар (Saryarka)"
+                - option "Мехколонна-56 (Saryarka)"
+                - option "Мехколонна-56 (Saryarka)"
+                - option "Бахус (Esil)"
+                - option "Железнодорожный колледж (Esil)"
+                - option "Проспект Республики (Esil)"
+                - option "Дворец Жастар (Esil)"
+                - option "Рынок \"Артем\" (Esil)"
+                - option "Рынок \"Артем\" (Esil)"
+                - option "Городская поликлиника № 1 (Esil)"
+                - option "Городская поликлиника № 1 (Esil)"
+                - option "Лицей № 9 (Esil)"
+                - option "Лицей № 9 (Esil)"
+                - option "Парк \"Астаналык\" (Esil)"
+                - option "Парк Астана (Esil)"
+                - option "Думан (Esil)"
+                - option "ТЦ Keruen City (Esil)"
+                - option "ТЦ Keruen City (Esil)"
+                - option "ТРЦ Сарыарка (Esil)"
+                - option "ТРЦ Сарыарка (Esil)"
+                - option "Жағалау-3 (Esil)"
+                - option "Астана Опера (Esil)"
+                - option "Астана Опера (Esil)"
+                - option "Хан Шатыр (Esil)"
+                - option "Хан Шатыр (Esil)"
+                - option "Хабар (Esil)"
+                - option "Азат (Esil)"
+                - option "Азат (Esil)"
+                - option "Музыкальная академия (Esil)"
+                - option "Коктем (Esil)"
+                - option "Коктем (Esil)"
+                - option "ТД Жаннур (Esil)"
+                - option "ТД Жаннур (Esil)"
+                - option "Номад (Esil)"
+                - option "Номад (Esil)"
+                - option "Чехова (Esil)"
+                - option "Средняя школа №20 (Esil)"
+                - option "ТД Арман (Esil)"
+                - option "Улица Куляш Байсеитовой (Esil)"
+                - option "ТД Арман (Esil)"
+                - option "Талапкер (Esil)"
+                - option "Ақан Серi (Esil)"
+                - option "Муса Жалел (Esil)"
+                - option "Муса Жалел (Esil)"
+                - option "Талапкер (Esil)"
+                - option "Герцена (Esil)"
+                - option "Дулатова (Esil)"
+                - option "Аламан (Saryarka)"
+                - option "«Ақжайық» сауда үйі (Esil)"
+                - option "Мөлдiр (Esil)"
+                - option "Окжетпес (Esil)"
+                - option "Окжетпес (Esil)"
+                - option "Мөлдiр (Esil)"
+                - option "Школа №26 (Esil)"
+                - option "Травматология (Saryarka)"
+                - option "ЖК \"Барыс\" (Saryarka)"
+                - option "Улица Берен (Saryarka)"
+                - option "ЖК \"Барыс\" (Saryarka)"
+                - option "ЖК \"Барыс\" (Saryarka)"
+                - option "Улица Кумкент (Saryarka)"
+                - option "Улица Кеген (Saryarka)"
+                - option "Улица Берен (Saryarka)"
+                - option "Улица Кеген (Saryarka)"
+                - option "Улица Сарыкол (Saryarka)"
+                - option "Улица Сарыкол (Saryarka)"
+                - option "ТРЦ \"Astana Mall\" (Saryarka)"
+                - option "ТРЦ \"Astana Mall\" (Saryarka)"
+                - option "5 Поликлиника (Esil)"
+                - option "Магазин Айдана (Esil)"
+                - option "5 Поликлиника (Esil)"
+                - option "Шакпак (Esil)"
+                - option "Шакпак (Esil)"
+                - option "Агрогородок (Esil)"
+                - option "Коктерек (Esil)"
+                - option "Акан Серы (Esil)"
+                - option "Департамент Юстиции (Esil)"
+                - option "АТФ Банк (Esil)"
+                - option "Шапагат (Esil)"
+                - option "Ресторан Туран (Saryarka)"
+                - option "Ресторан Туран (Saryarka)"
+                - option "Баимбета Майлина (Saryarka)"
+                - option "Монумент защитников Отечества (Saryarka)"
+                - option "Монумент защитников Отечества (Saryarka)"
+                - option "Школа-лицей №53 (Saryarka)"
+                - option "ТД Орбита (Saryarka)"
+                - option "мкр. Целинный (Saryarka)"
+                - option "Каныша Сатпаева (Saryarka)"
+                - option "ТЦ Тулпар (Esil)"
+                - option "Мечта (Saryarka)"
+                - option "мкр. Целинный (Saryarka)"
+                - option "Вокзал Нурлы Жол (Almaty)"
+                - option "Сауда-экономикалық колледжі (Saryarka)"
+                - option "Алаш тасжолы (Saryarka)"
+                - option "Алаш тасжолы (Saryarka)"
+                - option "Алем (Esil)"
+                - option "Думан (Esil)"
+                - option "Ильяса Есенберлина (Esil)"
+                - option "Московская (Esil)"
+                - option "проспект Шaкaрим Кудайбердыулы (Saryarka)"
+                - option "проспект Тауелсиздик (Saryarka)"
+                - option "Турар Рыскулова (Esil)"
+                - option "Национальный научный кардиохирургтческий центр (Esil)"
+                - option "Образовательный центр Сана (Esil)"
+                - option "Центр материнства и детства (Esil)"
+                - option "Казахконцерт им. Розы Баглановой (Esil)"
+                - option "Министерство обороны (Esil)"
+                - option "Бейбитшилик (Esil)"
+                - option "ЖК Акжайык (Esil)"
+                - option "Қарлығаш балабақшасы (Esil)"
+                - option "Қарлығаш балабақшасы (Esil)"
+                - option "Бухар жырау (Esil)"
+                - option "«12 месяцев» дүкені (Saryarka)"
+                - option "Сервис-центр Toyota (Saryarka)"
+                - option "Сервис-центр Toyota (Saryarka)"
+                - option "Гостиница Уйгентас (Esil)"
+                - option "Кафе Самурык (Esil)"
+                - option "Кафе Самурык (Esil)"
+                - option "Кожахметова (Esil)"
+                - option "ТЦ Астыкжан-2 (Esil)"
+                - option "Ресторан Толеп (Esil)"
+                - option "Городская поликлиника №5 (Esil)"
+                - option "Городская поликлиника №5 (Esil)"
+                - option "Ресторан Толеп (Esil)"
+                - option "Карасай батыра (Esil)"
+                - option "Школа №36 (Esil)"
+                - option "Московская (Esil)"
+                - option "Школа №14 (Esil)"
+                - option "Окжетпес (Esil)"
+                - option "Хабар (Esil)"
+                - option "Жағалау-3 (Esil)"
+                - option "Ильяса Омарова (Esil)"
+                - option "Дворец школьников (Saryarka)"
+                - option "БЦ Саад (Esil)"
+                - option "Центр материнства и детства (Esil)"
+                - option "Образовательный центр Сана (Esil)"
+                - 'option "Перинатальной центр #1 (Esil)"'
+                - option "Конституции (Esil)"
+                - option "RC Promenade Expo (Lines 12, 27, 43, 46, 70) (Esil)"
+                - option "RC Promenade Expo (Lines 12, 27, 43, 46, 70) (Esil)"
+                - option "Орынбор Тауерс (Esil)"
+                - option "УДП (Esil)"
+                - option "ЖК Акжайык (Esil)"
+                - option "Казахконцерт им. Розы Баглановой (Esil)"
+                - option "Дом Министерств (Esil)"
+                - option "ЖК Уют (Esil)"
+                - option "ЖК Уют (Esil)"
+                - option "Национальный научный кардиохирургтческий центр (Esil)"
+                - option "улица Аккум (Esil)"
+                - option "Royal city Park town (Esil)"
+                - option "улица Енбекшилер (Esil)"
+                - option "ЖК Кулагер (Esil)"
+                - option "ЖК Кулагер (Esil)"
+                - option "№16 орта мектеп (Saryarka)"
+                - option "Кордай (Saryarka)"
+                - option "Айнаколь (Saryarka)"
+                - option "Айнаколь (Saryarka)"
+                - option "Кошкарбаева (Saryarka)"
+                - option "Кошкарбаева (Saryarka)"
+                - option "Нажимеденова (Saryarka)"
+                - option "Нажимеденова (Saryarka)"
+                - option "Ботанический сад (Esil)"
+                - option "Ботанический сад (Esil)"
+                - option "Детский сад Айару (Esil)"
+                - option "Детский сад Айару (Esil)"
+                - option "Времена года.Весна (Esil)"
+                - option "Времена года.Весна (Esil)"
+                - option "Школа-лицей №84 (Esil)"
+                - option "Улица Бухар Жырау (Esil)"
+                - option "Улица Курмангазы (Esil)"
+                - option "Завод по строительству локомотивов (Saryarka)"
+                - option "Завод по строительству локомотивов (Saryarka)"
+                - option "Трубопроводный завод (Saryarka)"
+                - option "Трубопроводный завод (Saryarka)"
+                - option "Единый консолидирующий центр (Saryarka)"
+                - option "Центр обучения технологиям транспорта (Saryarka)"
+                - option "По требованию (Saryarka)"
+                - option "Интеллектуальная школа (Esil)"
+                - option "ЖК Family Village (Esil)"
+                - option "ЖК Family Village (Esil)"
+                - option "Международный детский сад (Esil)"
+                - option "Международный детский сад (Esil)"
+                - option "Улица A-82 (Almaty)"
+                - option "ЖК Урбан (Almaty)"
+                - option "Улица A-427 (Almaty)"
+                - option "Автозаправочная станция (Esil)"
+                - option "Барыс арена (Esil)"
+                - option "ЖК Алтын кулек (Esil)"
+                - option "ЖК Sauran Towers (Esil)"
+                - option "Улица Алматы (Esil)"
+                - option "Министерство иностранных дел (Esil)"
+                - option "Royal city Park town (Esil)"
+                - option "Национальный научный кардиохирургтческий центр (Esil)"
+                - option "Центр крови (Esil)"
+                - option "Парк имени Момышулы (Saryarka)"
+                - option "Туран (Saryarka)"
+                - option "проспект Тауелсиздик (Saryarka)"
+                - option "Туран (Saryarka)"
+                - option "Каныша Сатпаева (Saryarka)"
+                - option "Еуразия (Saryarka)"
+                - option "Супермаркет Спутник (Saryarka)"
+                - option "Средняя школа №50 (Saryarka)"
+                - option "Сауран (Esil)"
+                - option "Центр крови (Esil)"
+                - option "проспект Тлендиева (Esil)"
+                - option "Триумфальная арка Мангилик Ел (Esil)"
+                - option "Триумфальная арка Мангилик Ел (Esil)"
+                - option "Рио-Де-Жанейро (Esil)"
+                - option "Рио-Де-Жанейро (Esil)"
+                - option "SVOY DOM (Esil)"
+                - option "Ресторан Алтын-адам (Saryarka)"
+                - option "Городская поликлиника №6 (Saryarka)"
+                - option "Городская поликлиника №6 (Saryarka)"
+                - option "Алтын-адам (Saryarka)"
+                - option "Алтын-адам (Saryarka)"
+                - option "Ақмешіт (Esil)"
+                - option "Кенесары көшесі (Esil)"
+                - option "Binom school De Luxe (Esil)"
+                - option "Сембинов Әлмуқан (Saryarka)"
+                - option "ТЦ Тулпар (Esil)"
+                - option "Супермаркет Спутник (Saryarka)"
+                - option "Республиканский диагностический центр (Esil)"
+                - option "Дворец единоборств имени Жаксылыка Ушкемпирова (Esil)"
+                - option "Бизнес-центр Асылтау (Esil)"
+                - option "ЖК Айсанам (Esil)"
+                - option "Улица Алматы (Esil)"
+                - option "ЖК Айсанам (Esil)"
+                - option "Saranda Residential Complex (Esil)"
+                - option "улица Аккум (Esil)"
+                - option "улица Енбекшилер (Esil)"
+                - option "ЖК Акжайык (Esil)"
+                - option "ЖК Асыл Парк (Esil)"
+                - option "ЖК Асыл Парк (Esil)"
+                - option "Барыс арена (Esil)"
+                - option "ЖК Акжайык (Esil)"
+                - option "Школа-лицей №76 (Esil)"
+                - option "Дворец Тилеп кобыз (Esil)"
+                - option "Дворец Тилеп кобыз (Esil)"
+                - option "улица Сауран (Esil)"
+                - option "улица Сауран (Esil)"
+                - option "Военная Полиция (Esil)"
+                - option "Военная Полиция (Esil)"
+                - option "ЖК Арман Делюкс2 (Esil)"
+                - option "Білім-инновация Астана, лицей (Esil)"
+                - option "Білім-инновация Астана, лицей (Esil)"
+                - option "ЖК Aiqyn (Esil)"
+                - option "Бактыораз Бейсекбаев (Saryarka)"
+                - option "Бактыораз Бейсекбаев (Saryarka)"
+                - option "АЗС Аурика (Baikonur)"
+                - option "Центральный госпиталь МВД (Esil)"
+                - option "улица Илияса Жансугурова (Saryarka)"
+                - option "улица Илияса Жансугурова (Saryarka)"
+                - option "Кафе Салауат (Saryarka)"
+                - option "Сауран (Esil)"
+                - option "ЖК Sauran Towers (Esil)"
+                - option "Сыганак (Esil)"
+                - option "Остановка 371 (Saryarka)"
+                - option "Остановка 372 (Saryarka)"
+                - option "Остановка 373 (Saryarka)"
+                - option "Остановка 374 (Saryarka)"
+            - generic [ref=e62]:
+              - generic [ref=e63]: Forecast Horizon
+              - generic [ref=e64]:
+                - button "15 min" [ref=e65] [cursor=pointer]
+                - button "30 min" [ref=e66] [cursor=pointer]
+                - button "1 hour" [ref=e67] [cursor=pointer]
+                - button "2 hours" [ref=e68] [cursor=pointer]
+                - button "6 hours" [ref=e69] [cursor=pointer]
+                - button "12 hours" [ref=e70] [cursor=pointer]
+                - button "24 hours" [ref=e71] [cursor=pointer]
+        - generic [ref=e77]:
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - img [ref=e81]
+              - text: Station
+            - paragraph [ref=e86]: ТД Меридиан
+            - paragraph [ref=e87]: Saryarka · 1,783 passengers/24h
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - img [ref=e91]
+              - text: Model Accuracy
+            - paragraph [ref=e95]: —
+            - paragraph [ref=e96]: "MAPE: N/A"
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - img [ref=e100]
+              - text: Forecast Points
+            - paragraph [ref=e104]: "3"
+            - paragraph [ref=e105]: 2 multi-horizon
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - img [ref=e109]
+              - text: Connected Routes
+            - paragraph [ref=e111]: "0"
+        - generic [ref=e112]:
+          - generic [ref=e114]:
+            - img [ref=e115]
+            - text: Model Validation
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]:
+                - paragraph [ref=e121]: MAE
+                - paragraph [ref=e122]: —
+                - paragraph [ref=e123]: passengers
+              - generic [ref=e124]:
+                - paragraph [ref=e125]: MAPE
+                - paragraph [ref=e126]: —
+                - paragraph [ref=e127]: error rate
+              - generic [ref=e128]:
+                - paragraph [ref=e129]: RMSE
+                - paragraph [ref=e130]: —
+                - paragraph [ref=e131]: root sq. error
+              - generic [ref=e132]:
+                - paragraph [ref=e133]: Accuracy
+                - paragraph [ref=e134]: —
+                - paragraph [ref=e135]: overall
+            - paragraph [ref=e136]: Select a station with historical data to see validation metrics
+        - generic [ref=e137]:
+          - generic [ref=e139]: Predicted vs Actual Passenger Flow
+          - generic [ref=e142]:
+            - img [ref=e143]:
+              - generic [ref=e148]:
+                - generic [ref=e150]: 12:00
+                - generic [ref=e152]: 12:00
+                - generic [ref=e154]: 13:00
+              - generic [ref=e156]:
+                - generic [ref=e158]: "0"
+                - generic [ref=e160]: "20"
+                - generic [ref=e162]: "40"
+                - generic [ref=e164]: "68"
+            - list [ref=e176]:
+              - listitem [ref=e177]:
+                - img [ref=e178]
+                - text: Upper Bound
+              - listitem [ref=e180]:
+                - img [ref=e181]
+                - text: Lower Bound
+        - generic [ref=e183]:
+          - generic [ref=e185]: Detailed Forecast Table
+          - table [ref=e188]:
+            - rowgroup [ref=e189]:
+              - row "Time Predicted Confidence Range Actual" [ref=e190]:
+                - columnheader "Time" [ref=e191]
+                - columnheader "Predicted" [ref=e192]
+                - columnheader "Confidence" [ref=e193]
+                - columnheader "Range" [ref=e194]
+                - columnheader "Actual" [ref=e195]
+            - rowgroup [ref=e196]:
+              - row "12:24 47 passengers 93% 43–51 —" [ref=e197]:
+                - cell "12:24" [ref=e198]
+                - cell "47 passengers" [ref=e199]
+                - cell "93%" [ref=e200]:
+                  - generic [ref=e204]: 93%
+                - cell "43–51" [ref=e205]
+                - cell "—" [ref=e206]
+              - row "12:39 25 passengers 90% 23–28 —" [ref=e207]:
+                - cell "12:39" [ref=e208]
+                - cell "25 passengers" [ref=e209]
+                - cell "90%" [ref=e210]:
+                  - generic [ref=e214]: 90%
+                - cell "23–28" [ref=e215]
+                - cell "—" [ref=e216]
+              - row "13:09 47 passengers 85% 40–54 —" [ref=e217]:
+                - cell "13:09" [ref=e218]
+                - cell "47 passengers" [ref=e219]
+                - cell "85%" [ref=e220]:
+                  - generic [ref=e224]: 85%
+                - cell "40–54" [ref=e225]
+                - cell "—" [ref=e226]
+  - generic [ref=e227]: "0"
