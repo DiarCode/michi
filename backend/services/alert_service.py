@@ -1,4 +1,5 @@
 """Alert service - manages transit alerts with DB-backed storage and auto-generation from thresholds."""
+
 import logging
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -10,18 +11,38 @@ from backend.models_orm import AlertORM
 logger = logging.getLogger(__name__)
 
 ALERT_RULES: list[dict[str, Any]] = [
-    {"id": "rule_capacity_85", "metric": "station_capacity", "threshold": 85, "severity": "warning",
-     "title_template": "Station {station} over capacity",
-     "message_template": "Load at {station} is {value}% — above 85% threshold."},
-    {"id": "rule_capacity_95", "metric": "station_capacity", "threshold": 95, "severity": "critical",
-     "title_template": "Station {station} critically overloaded",
-     "message_template": "Load at {station} is {value}% — critical capacity breach."},
-    {"id": "route_overload", "metric": "route_avg_load", "threshold": 90, "severity": "warning",
-     "title_template": "Route {route} overloaded",
-     "message_template": "Average load on {route} is {value}% during rush hour."},
-    {"id": "forecast_spike", "metric": "forecast_spike", "threshold": 200, "severity": "info",
-     "title_template": "Forecast spike at {station}",
-     "message_template": "Predicted ridership at {station} is {value}% above normal within 2h."},
+    {
+        "id": "rule_capacity_85",
+        "metric": "station_capacity",
+        "threshold": 85,
+        "severity": "warning",
+        "title_template": "Station {station} over capacity",
+        "message_template": "Load at {station} is {value}% — above 85% threshold.",
+    },
+    {
+        "id": "rule_capacity_95",
+        "metric": "station_capacity",
+        "threshold": 95,
+        "severity": "critical",
+        "title_template": "Station {station} critically overloaded",
+        "message_template": "Load at {station} is {value}% — critical capacity breach.",
+    },
+    {
+        "id": "route_overload",
+        "metric": "route_avg_load",
+        "threshold": 90,
+        "severity": "warning",
+        "title_template": "Route {route} overloaded",
+        "message_template": "Average load on {route} is {value}% during rush hour.",
+    },
+    {
+        "id": "forecast_spike",
+        "metric": "forecast_spike",
+        "threshold": 200,
+        "severity": "info",
+        "title_template": "Forecast spike at {station}",
+        "message_template": "Predicted ridership at {station} is {value}% above normal within 2h.",
+    },
 ]
 
 
@@ -31,7 +52,8 @@ def list_alerts(db: Session, severity: str | None = None, active_only: bool = Tr
     if severity:
         query = query.filter(AlertORM.severity == severity)
     if active_only:
-        query = query.filter(AlertORM.acknowledged == False)
+        # Show alerts that are not yet acknowledged (active = pending operator action)
+        query = query.filter(AlertORM.acknowledged.is_(False))
 
     alerts = query.all()
     return [
@@ -89,7 +111,9 @@ def _has_recent_alert(db: Session, rule_id: str, entity_id: str | None = None, c
     return query.first() is not None
 
 
-def generate_auto_alerts(db: Session, stations: list[dict], forecasts: dict[str, list[dict]] | None = None, routes: list[dict] | None = None) -> list[dict]:
+def generate_auto_alerts(
+    db: Session, stations: list[dict], forecasts: dict[str, list[dict]] | None = None, routes: list[dict] | None = None
+) -> list[dict]:
     """Auto-generate alerts from threshold rules based on current station and route data.
 
     Uses a 60-minute cooldown per rule/entity to avoid alert spam.
@@ -101,7 +125,9 @@ def generate_auto_alerts(db: Session, stations: list[dict], forecasts: dict[str,
         rid = station.get("ridership_24h", 0) or 0
         load_pct = station.get("load_percent", 0) or 0
         if load_pct == 0 and rid > 0:
-            load_pct = min(95, int(rid * 0.08 / 30)) if 6 <= datetime.now().hour <= 22 else min(30, int(rid * 0.01 / 30))
+            load_pct = (
+                min(95, int(rid * 0.08 / 30)) if 6 <= datetime.now().hour <= 22 else min(30, int(rid * 0.01 / 30))
+            )
         station_id = station.get("id", station.get("stop_id", ""))
         station_name = station.get("name", station_id)
 
@@ -123,11 +149,18 @@ def generate_auto_alerts(db: Session, stations: list[dict], forecasts: dict[str,
             )
             db.add(alert)
             db.flush()
-            new_alerts.append({
-                "id": alert.id, "severity": alert.severity, "title": alert.title,
-                "message": alert.message, "station_id": alert.station_id,
-                "created_at": alert.created_at.isoformat(), "auto": True, "rule_id": rule["id"],
-            })
+            new_alerts.append(
+                {
+                    "id": alert.id,
+                    "severity": alert.severity,
+                    "title": alert.title,
+                    "message": alert.message,
+                    "station_id": alert.station_id,
+                    "created_at": alert.created_at.isoformat(),
+                    "auto": True,
+                    "rule_id": rule["id"],
+                }
+            )
 
     # --- Route overload rules ---
     if routes:
@@ -155,11 +188,18 @@ def generate_auto_alerts(db: Session, stations: list[dict], forecasts: dict[str,
                 )
                 db.add(alert)
                 db.flush()
-                new_alerts.append({
-                    "id": alert.id, "severity": alert.severity, "title": alert.title,
-                    "message": alert.message, "route_id": alert.route_id,
-                    "created_at": alert.created_at.isoformat(), "auto": True, "rule_id": rule["id"],
-                })
+                new_alerts.append(
+                    {
+                        "id": alert.id,
+                        "severity": alert.severity,
+                        "title": alert.title,
+                        "message": alert.message,
+                        "route_id": alert.route_id,
+                        "created_at": alert.created_at.isoformat(),
+                        "auto": True,
+                        "rule_id": rule["id"],
+                    }
+                )
 
     # --- Forecast spike rules ---
     if forecasts:
@@ -169,7 +209,7 @@ def generate_auto_alerts(db: Session, stations: list[dict], forecasts: dict[str,
             baseline = fc[0].get("predicted", 0)
             if baseline <= 0:
                 continue
-            for f in fc[1:min(12, len(fc))]:
+            for f in fc[1 : min(12, len(fc))]:
                 pct = (f.get("predicted", 0) / baseline) * 100
                 if pct >= 200:
                     if _has_recent_alert(db, "forecast_spike", sid):
@@ -185,11 +225,18 @@ def generate_auto_alerts(db: Session, stations: list[dict], forecasts: dict[str,
                     )
                     db.add(alert)
                     db.flush()
-                    new_alerts.append({
-                        "id": alert.id, "severity": alert.severity, "title": alert.title,
-                        "message": alert.message, "station_id": alert.station_id,
-                        "created_at": alert.created_at.isoformat(), "auto": True, "rule_id": "forecast_spike",
-                    })
+                    new_alerts.append(
+                        {
+                            "id": alert.id,
+                            "severity": alert.severity,
+                            "title": alert.title,
+                            "message": alert.message,
+                            "station_id": alert.station_id,
+                            "created_at": alert.created_at.isoformat(),
+                            "auto": True,
+                            "rule_id": "forecast_spike",
+                        }
+                    )
                     break
 
     if new_alerts:
