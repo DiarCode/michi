@@ -25,7 +25,9 @@ Kyunghyun Cho, Bart van Merri{\"e}nboer, Caglar Gulcehre, Dzmitry Bahdanau,
   Fethi Bougares, Holger Schwenk, and Yoshua Bengio.
 \newblock Learning phrase representations using {RNN} encoder-decoder for
   statistical machine translation.
-\newblock {\em arXiv preprint arXiv:1406.1078}, 2014.
+\newblock In {\em Proceedings of the 2014 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, pages 1724--1734. Association for
+  Computational Linguistics, 2014.
 
 \bibitem{wei2018generalized}
 Ran Wei, Shuyan Zheng, Sami Ayhan, Wael Fateen, and Liding Pu.
@@ -178,7 +180,8 @@ Albert Gu, Karan Goel, and Christopher R{\'e}.
 \bibitem{gu2023mamba}
 Albert Gu and Tri Dao.
 \newblock Mamba: Linear-time sequence modeling with selective state spaces.
-\newblock {\em arXiv preprint arXiv:2312.00752}, 2023.
+\newblock In {\em Proceedings of the First Conference on Language Modeling
+  (COLM)}, 2024.
 
 \bibitem{vaswani2017attention}
 Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
@@ -244,11 +247,11 @@ Jimmy~Lei Ba, Jamie~Ryan Kiros, and Geoffrey~E. Hinton.
 \newblock Layer normalization.
 \newblock {\em arXiv preprint arXiv:1607.06450}, 2016.
 
-\bibitem{kingma2015adam}
-Diederik~P. Kingma and Jimmy Ba.
-\newblock Adam: A method for stochastic optimization.
+\bibitem{loshchilov2019decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock Decoupled weight decay regularization.
 \newblock In {\em Proceedings of the International Conference on Learning
-  Representations (ICLR)}, 2015.
+  Representations (ICLR)}, 2019.
 
 \bibitem{paszke2019pytorch}
 Adam Paszke, Sam Gross, Francisco Massa, Adam Lerer, James Bradbury, Gregory
@@ -257,13 +260,6 @@ Adam Paszke, Sam Gross, Francisco Massa, Adam Lerer, James Bradbury, Gregory
   library.
 \newblock In {\em Proceedings of the Advances in Neural Information Processing
   Systems}, volume~32, pages 8024--8035, 2019.
-
-\bibitem{li2018diffusion}
-Yaguang Li, Rose Yu, Cyrus Shahabi, and Yan Liu.
-\newblock Diffusion convolutional recurrent neural network: Data-driven traffic
-  forecasting.
-\newblock In {\em Proceedings of the International Conference on Learning
-  Representations (ICLR)}, 2018.
 
 \bibitem{fan2020urban}
 Chuan Fan, Yan Zhang, Yue Pan, Xiang Li, Chenguang Zhang, Xingang Yu, Jian Lu,

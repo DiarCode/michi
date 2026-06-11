@@ -1,0 +1,16 @@
+{
+  "active": false,
+  "phase": "complete",
+  "current_phase": "complete",
+  "status": "completed",
+  "session_id": "24f1ffeb-29e9-431f-a216-374856675810",
+  "started_at": "2026-06-11T12:37:45Z",
+  "updated_at": "2026-06-11T12:37:45Z",
+  "last_checked_at": "2026-06-11T12:37:45Z",
+  "completed_at": "2026-06-11T12:37:45Z",
+  "iteration": 1,
+  "max_iterations": 1,
+  "project_path": "/Users/diarcode/development/michi",
+  "currentPhase": "complete",
+  "phase_complete": true
+}

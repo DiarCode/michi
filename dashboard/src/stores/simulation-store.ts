@@ -1,24 +1,31 @@
-import { create } from "zustand";
-import type { SimulationState, SimulationTick, ValidationMetric, DriftAlert } from "@/types";
-import { wsClient, type WSEvent } from "@/lib/websocket";
+import { create } from "zustand"
+import type {
+  SimulationState,
+  SimulationTick,
+  SimulationTickData,
+  ValidationMetric,
+  DriftAlert,
+} from "@/types"
+import { wsClient, type WSEvent } from "@/lib/websocket"
+import { startSimulation as apiStartSimulation, stopSimulation as apiStopSimulation } from "@/lib/api"
 
 interface SimulationStoreState extends SimulationState {
   /** Handle a simulation_tick WS event */
-  handleTick: (data: Record<string, unknown>) => void;
+  handleTick: (data: SimulationTickData) => void
   /** Handle a validation_metric WS event */
-  handleValidationMetric: (data: Record<string, unknown>) => void;
+  handleValidationMetric: (data: Record<string, unknown>) => void
   /** Handle a drift_alert WS event */
-  handleDriftAlert: (data: Record<string, unknown>) => void;
+  handleDriftAlert: (data: Record<string, unknown>) => void
   /** Handle a combined SimulationTick (legacy path) */
-  updateFromTick: (tick: SimulationTick) => void;
+  updateFromTick: (tick: SimulationTick) => void
   /** Mark data as stale */
-  markStale: () => void;
+  markStale: () => void
   /** Subscribe to WS simulation events. Call once from a React component. */
-  subscribe: () => () => void;
-  /** Start the simulation */
-  startSimulation: () => void;
-  /** Stop the simulation */
-  stopSimulation: () => void;
+  subscribe: () => () => void
+  /** Start the simulation (calls API + sets local state) */
+  startSimulation: () => Promise<void>
+  /** Stop the simulation (calls API + sets local state) */
+  stopSimulation: () => void
 }
 
 export const useSimulationStore = create<SimulationStoreState>((set, get) => ({
@@ -30,7 +37,12 @@ export const useSimulationStore = create<SimulationStoreState>((set, get) => ({
   isStale: false,
   lastTickAt: null,
 
-  startSimulation: () =>
+  startSimulation: async () => {
+    try {
+      await apiStartSimulation()
+    } catch {
+      // Backend may be unreachable; still set local state for UI
+    }
     set({
       running: true,
       tick: 0,
@@ -39,9 +51,17 @@ export const useSimulationStore = create<SimulationStoreState>((set, get) => ({
       driftAlerts: [],
       isStale: false,
       lastTickAt: new Date().toISOString(),
-    }),
+    })
+  },
 
-  stopSimulation: () => set({ running: false }),
+  stopSimulation: async () => {
+    try {
+      await apiStopSimulation()
+    } catch {
+      // Backend may be unreachable; still update local state
+    }
+    set({ running: false })
+  },
 
   updateFromTick: (simTick: SimulationTick) =>
     set((state) => ({
@@ -68,13 +88,12 @@ export const useSimulationStore = create<SimulationStoreState>((set, get) => ({
 
   /** Handle simulation_tick WS event data */
   handleTick: (data) => {
-    const tickValue = data.tick as number | undefined;
     set((state) => ({
-      tick: typeof tickValue === "number" ? tickValue : state.tick,
+      tick: typeof data.tick === "number" ? data.tick : state.tick,
       lastTickAt: new Date().toISOString(),
       running: true,
       isStale: false,
-    }));
+    }))
   },
 
   /** Handle validation_metric WS event data */
@@ -86,12 +105,12 @@ export const useSimulationStore = create<SimulationStoreState>((set, get) => ({
       drift_status: data.drift_status as ValidationMetric["drift_status"],
       tick: data.tick as number | undefined,
       timestamp: data.timestamp as string | undefined,
-    };
+    }
     set((state) => ({
       metricsHistory: [...state.metricsHistory.slice(-299), metric],
       isStale: false,
       lastTickAt: new Date().toISOString(),
-    }));
+    }))
   },
 
   /** Handle drift_alert WS event data */
@@ -103,31 +122,31 @@ export const useSimulationStore = create<SimulationStoreState>((set, get) => ({
       deviation_pct: (data.deviation_pct as number) ?? 0,
       severity: (data.severity as DriftAlert["severity"]) ?? "medium",
       timestamp: (data.timestamp as string) ?? new Date().toISOString(),
-    };
+    }
     set((state) => ({
       driftAlerts: [...state.driftAlerts.slice(-49), alert],
-    }));
+    }))
   },
 
   markStale: () => set({ isStale: true }),
 
   /** Subscribe to WS simulation-related events */
   subscribe: () => {
-    wsClient.connect();
+    wsClient.connect()
     const unsub = wsClient.subscribe((event: WSEvent) => {
-      const { handleTick, handleValidationMetric, handleDriftAlert } = get();
+      const { handleTick, handleValidationMetric, handleDriftAlert } = get()
       switch (event.type) {
         case "simulation_tick":
-          handleTick(event.data);
-          break;
+          handleTick(event.data as unknown as SimulationTickData)
+          break
         case "validation_metric":
-          handleValidationMetric(event.data);
-          break;
+          handleValidationMetric(event.data)
+          break
         case "drift_alert":
-          handleDriftAlert(event.data);
-          break;
+          handleDriftAlert(event.data)
+          break
       }
-    });
-    return unsub;
+    })
+    return unsub
   },
-}));
+}))

@@ -87,7 +87,9 @@ function readStoredTheme(storageKey: string, disableDarkMode: boolean): Theme {
 /** Tell the browser to advertise only the light color scheme. */
 function syncColorSchemeMeta(disableDarkMode: boolean) {
   if (typeof document === "undefined") return
-  let meta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]')
+  let meta = document.querySelector<HTMLMetaElement>(
+    'meta[name="color-scheme"]'
+  )
   if (!meta) {
     meta = document.createElement("meta")
     meta.name = "color-scheme"
@@ -111,7 +113,8 @@ export function ThemeProvider({
   const setTheme = React.useCallback(
     (nextTheme: Theme) => {
       // When dark mode is disabled, silently coerce to "light".
-      const resolved = disableDarkMode && nextTheme !== "light" ? "light" : nextTheme
+      const resolved =
+        disableDarkMode && nextTheme !== "light" ? "light" : nextTheme
       try {
         localStorage.setItem(storageKey, resolved)
       } catch {
@@ -178,7 +181,8 @@ export function ThemeProvider({
       const target = event.target
       if (target instanceof HTMLElement) {
         if (target.isContentEditable) return
-        if (target.closest("input, textarea, select, [contenteditable='true']")) return
+        if (target.closest("input, textarea, select, [contenteditable='true']"))
+          return
       }
 
       if (event.key.toLowerCase() !== "d") return

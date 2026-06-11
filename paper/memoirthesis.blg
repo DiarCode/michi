@@ -1,51 +1,49 @@
-This is BibTeX, Version 0.99e
+This is BibTeX, Version 0.99d (TeX Live 2025/Homebrew)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: memoirthesis.aux
-Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: unsrt.bst
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 Database file #1: thesisbiblio.bib
 Warning--can't use both volume and number fields in guo2019astgcn
 Warning--can't use both volume and number fields in zhou2021informer
-You've used 43 entries,
+You've used 42 entries,
             1791 wiz_defined-function locations,
-            688 strings with 12611 characters,
-and the built_in function-call counts, 12733 in all, are:
-= -- 1097
-> -- 661
-< -- 21
-+ -- 235
-- -- 192
-* -- 906
-:= -- 1920
-add.period$ -- 131
-call.type$ -- 43
-change.case$ -- 43
+            686 strings with 12607 characters,
+and the built_in function-call counts, 12823 in all, are:
+= -- 1119
+> -- 647
+< -- 22
++ -- 230
+- -- 188
+* -- 911
+:= -- 1909
+add.period$ -- 129
+call.type$ -- 42
+change.case$ -- 42
 chr.to.int$ -- 0
-cite$ -- 45
-duplicate$ -- 570
-empty$ -- 1183
-format.name$ -- 192
-if$ -- 2867
+cite$ -- 44
+duplicate$ -- 577
+empty$ -- 1196
+format.name$ -- 188
+if$ -- 2904
 int.to.chr$ -- 0
-int.to.str$ -- 43
-missing$ -- 43
-newline$ -- 219
-num.names$ -- 43
-pop$ -- 142
+int.to.str$ -- 42
+missing$ -- 42
+newline$ -- 214
+num.names$ -- 42
+pop$ -- 141
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 333
+skip$ -- 345
 stack$ -- 0
-substring$ -- 939
-swap$ -- 203
-text.length$ -- 21
+substring$ -- 979
+swap$ -- 214
+text.length$ -- 22
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 118
-width$ -- 45
-write$ -- 475
+while$ -- 120
+width$ -- 44
+write$ -- 467
 (There were 2 warnings)

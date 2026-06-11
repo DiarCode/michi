@@ -8,19 +8,19 @@
 
 Urban public transit systems are the backbone of sustainable mobility in rapidly growing cities. In Astana, the capital of Kazakhstan, the bus network serves as the primary mode of public transportation for over one million residents, with demand patterns that fluctuate dramatically across space, time, and weather conditions. Accurate real-time prediction of passenger flows at individual bus stops is critical for operational planning, dynamic vehicle dispatching, and proactive crowd management. Yet accurate prediction is hindered by three compounding factors: the intricate spatio-temporal dependencies among stops, the multi-timescale nature of ridership dynamics, and the inherent uncertainty of human mobility behaviour.
 
-We address the problem of multi-horizon passenger flow prediction on the Astana bus network. Formally, given a historical context window of $T$ hours across $N$ bus stations, we seek to predict the expected number of boarding passengers at each station for the next $H_{\text{pred}}$ hours. The input tensor is $\mathbf{x} \in \mathbb{R}^{B \times T \times N \times F}$, where $B$ is the batch size, $T = 72$ hours (a three-day context), $N = 374$ stations, and $F = 16$ engineered features including raw ridership counts, weather variables, calendar indicators, and cyclical encodings. The output comprises negative-binomial parameters $(\mu, \kappa)$ for each station and horizon, enabling both point estimates and uncertainty quantification.
+Multi-horizon passenger flow prediction on the Astana bus network is addressed in this thesis. Formally, given a historical context window of $T$ hours across $N$ bus stations, the expected number of boarding passengers at each station for the next $H_{\text{pred}}$ hours is the target quantity. The input tensor is $\mathbf{x} \in \mathbb{R}^{B \times T \times N \times F}$, where $B$ is the batch size, $T = 72$ hours (a three-day context), $N = 374$ stations, and $F = 16$ engineered features including raw ridership counts, weather variables, calendar indicators, and cyclical encodings. The output comprises negative-binomial parameters $(\mu, \kappa)$ for each station and horizon, enabling both point estimates and uncertainty quantification.
 
 Existing approaches to spatio-temporal forecasting fall into three broad categories. First, classical statistical methods such as ARIMA and Historical Average are computationally efficient but fail to capture non-linear spatial correlations \cite{jeong2014supervised,toque2017short}. Second, deep learning models including LSTM \cite{hochreiter1997long} and GRU networks \cite{cho2014rnnencoder} excel at temporal modelling but treat each station independently, ignoring the network topology \cite{wei2018generalized,liu2018revealing}. Third, graph neural networks such as STGCN \cite{yu2018stgcn}, Graph WaveNet \cite{wu2019graphwavenet}, AGCRN \cite{bai2020adaptive}, and ASTGCN \cite{guo2019astgcn} jointly model spatial and temporal dependencies, yet they typically rely on either pure convolutional or recurrent architectures that struggle with very long sequences or require pre-defined adjacency matrices that may not reflect true ridership correlations \cite{zhang2021deep,ke2017short}.
 
-Three specific limitations motivate our work. \textbf{(L1)} Existing graph-based methods predominantly use convolutional message passing, which limits their ability to model fine-grained temporal state transitions within each station. \textbf{(L2)} Most approaches require a fixed physical graph (e.g., road distance or route topology), overlooking latent spatial dependencies that emerge from passenger transfer behaviour. \textbf{(L3)} Prior work either produces deterministic point forecasts or uses Gaussian likelihoods, neither of which is appropriate for overdispersed count data such as passenger boardings.
+Three specific limitations motivate the work. \textbf{(L1)} Existing graph-based methods predominantly use convolutional message passing, which limits their ability to model fine-grained temporal state transitions within each station. \textbf{(L2)} Most approaches require a fixed physical graph (e.g., road distance or route topology), overlooking latent spatial dependencies that emerge from passenger transfer behaviour. \textbf{(L3)} Prior work either produces deterministic point forecasts or uses Gaussian likelihoods, neither of which is appropriate for overdispersed count data such as passenger boardings.
 
 We make the following contributions:
 \begin{itemize}
-    \item We present DTS-GSSF (Dual-Timescale Graph Gated Forecasting), a hybrid architecture that unifies a gated recurrent temporal encoder, adaptive graph propagation, and multi-head temporal attention for passenger flow prediction.
+    \item We present DTS-GSSF (Dual-Timescale Graph Gated Forecasting), a compact hybrid architecture that unifies a gated recurrent temporal encoder, adaptive graph propagation, and multi-head temporal attention for passenger flow prediction. The "dual-timescale" property refers to the integration of (i) per-step input-dependent gating in the Gated Recurrent Encoder, which provides local, sub-hourly temporal resolution, and (ii) multi-head self-attention over the full 72-hour context, which captures day-scale and week-scale periodicity. Together, these two mechanisms operate at complementary temporal resolutions, distinguishing the architecture from single-timescale hybrids.
     \item We introduce a learnable adaptive adjacency matrix that complements the physical route topology, enabling the model to discover latent spatial dependencies without manual graph construction.
     \item We employ a Negative Binomial likelihood with an MSE auxiliary loss, providing both appropriate count-data modelling and stable gradient propagation during training.
     \item We demonstrate that LoRA-based parameter-efficient adaptation enables rapid specialization to individual routes without full model retraining.
-    \item We evaluate DTS-GSSF on a synthetic but realistic dataset of 1.3 million ridership records across 374 Astana bus stations, achieving $R^2 = 0.978 \pm 0.001$ and MAE $= 11.65 \pm 0.14$ passengers per station-hour (all 42 series), outperforming all baseline methods.
+    \item We evaluate DTS-GSSF on a synthetic but realistic dataset of 1.3 million ridership records across 374 Astana bus stations, achieving $R^2 = 0.978 \pm 0.001$ and MAE $= 11.65 \pm 0.14$ passengers per station-hour on the full hierarchical evaluation (28 bottom-level stations plus 14 aggregates, 42 series total). On bottom-level stations alone, the model attains $R^2 = 0.692$, comparable to LSTM, GRU, and TCN baselines; this honest disclosure is essential because the 0.978 headline is largely attributable to the easier-to-predict aggregate series. We further validate the architecture on a publicly available real-world LACMTA open dataset (180 stops, 9 routes), where DTS-GSSF achieves $R^2 = 0.862$ and MAE = 7.1, outperforming all evaluated baselines.
 \end{itemize}
 
 \section{Purpose of the Thesis}
@@ -38,7 +38,7 @@ The purpose of this thesis is to develop and validate a hybrid deep learning met
 \section{Research Hypotheses}
 \label{sec:hypotheses}
 
-Based on the limitations identified above and the proposed architectural design, we formulate the following hypotheses:
+Based on the limitations identified above and the proposed architectural design, the following hypotheses are formulated:
 
 \begin{enumerate}
     \item[\textbf{H1:}] A gated recurrent temporal encoder with input-dependent forget gating provides more stable gradient propagation and higher predictive accuracy than LSTM, GRU, or purely convolutional temporal backbones for 72-hour ridership context windows.
@@ -50,7 +50,7 @@ Based on the limitations identified above and the proposed architectural design,
 \section{Research Questions}
 \label{sec:rqs}
 
-To guide the design and evaluation of DTS-GSSF, we formulate five research questions that address the key architectural and operational challenges identified above.
+To guide the design and evaluation of DTS-GSSF, five research questions are formulated that address the key architectural and operational challenges identified above.
 
 \begin{enumerate}
     \item[\textbf{RQ1:}] \textit{Temporal Modelling}: How does a gated recurrent temporal backbone compare to recurrent (LSTM, GRU) and convolutional (TCN) alternatives in terms of predictive accuracy and training stability for long-context ridership forecasting?
@@ -63,8 +63,3 @@ To guide the design and evaluation of DTS-GSSF, we formulate five research quest
 These questions motivate the ablation studies, per-horizon analysis, and computational benchmarks presented in Chapter~\ref{chap:results}.
 
 A detailed account of the author's peer-reviewed publications during the Master's programme and their relationship to this thesis is provided in Chapter~\ref{chap:publications}.
-
-\section{Paper Organisation}
-\label{sec:organisation}
-
-The remainder of this thesis is organised as follows. Chapter~\ref{chap:litreview} reviews related work in spatiotemporal forecasting, graph neural networks, state-space models, and attention mechanisms. Chapter~\ref{chap:method} formulates the prediction problem, describes the synthetic Astana bus network dataset, and presents the complete DTS-GSSF architecture, training strategy, and system workflow. Chapter~\ref{chap:results} reports the main experimental results, ablation studies, per-horizon accuracy, computational cost, per-district analysis, robustness evaluation, and statistical analysis. Chapter~\ref{chap:discussion} discusses the implications of our findings, acknowledges limitations, addresses ethical considerations, and outlines directions for future research. Chapter~\ref{chap:conclusion} summarises the key findings and provides detailed answers to each research question.

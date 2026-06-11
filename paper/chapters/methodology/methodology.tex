@@ -6,14 +6,14 @@
 \label{chap:method}
 \setlength{\parskip}{1em}
 
-This chapter presents the complete methodology of our study, including the problem formulation, dataset design and generation, the DTS-GSSF architecture, feature engineering, training strategy, and system workflow. We describe each component in sufficient detail to permit reproduction and extension of this work.
+This chapter presents the complete methodology of the study, including the problem formulation, dataset design and generation, the DTS-GSSF architecture, feature engineering, training strategy, and system workflow. Each component is described in sufficient detail to permit reproduction and extension of this work.
 
 \section{Problem Formulation}
 \label{sec:problem}
 
 Let $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ denote the bus network graph, where $\mathcal{V} = \{v_1, \dots, v_N\}$ is the set of $N = 374$ bus stations and $\mathcal{E} \subseteq \mathcal{V} \times \mathcal{V}$ represents the physical route topology. At each time step $t$, each station $v_i$ is associated with a feature vector $\mathbf{x}_{t,i} \in \mathbb{R}^F$, where $F = 16$ features include raw ridership counts, weather variables, calendar indicators, and cyclical encodings.
 
-Given a historical context window of $T = 72$ hours, we seek to predict the passenger boarding count $y_{t+h,i}$ at each station $i$ for horizons $h \in \{1, 2, 3, 4\}$ corresponding to 15, 30, 60, and 120 minutes. Formally, the input is a tensor $\mathbf{X} \in \mathbb{R}^{B \times T \times N \times F}$ and the output is a set of Negative Binomial parameters $(\mu_{h,i}, \kappa)$ for each horizon $h$ and station $i$. The prediction task is:
+Given a historical context window of $T = 72$ hours, the passenger boarding count $y_{t+h,i}$ at each station $i$ for horizons $h \in \{1, 2, 3, 4\}$ corresponding to 15, 30, 60, and 120 minutes is the target quantity. Formally, the input is a tensor $\mathbf{X} \in \mathbb{R}^{B \times T \times N \times F}$ and the output is a set of Negative Binomial parameters $(\mu_{h,i}, \kappa)$ for each horizon $h$ and station $i$. The prediction task is:
 \begin{equation}
     \hat{y}_{t+h,i} \sim \text{NB}\bigl(\mu_{h,i}(\mathbf{X}), \kappa\bigr),
     \label{eq:prediction}
@@ -133,7 +133,7 @@ Max boarding count $y_{\max}$ & 312 passengers/hour \\
 
 \subsection{Open Real-World Benchmark Dataset}
 \label{sec:open_real_dataset}
-To demonstrate generalisation beyond the synthetic Astana network, we also evaluate DTS-GSSF on a publicly available open dataset from the Los Angeles County Metropolitan Transportation Authority (LACMTA) Open Data Portal. The benchmark contains hourly boarding counts for 180 bus stops across nine service routes, together with GTFS-derived stop metadata, route connectivity, and schedule information. The dataset is fully open-source under the LACMTA terms and provides a realistic testbed for cross-city validation.
+To demonstrate generalisation beyond the synthetic Astana network, DTS-GSSF is also evaluated on a publicly available open dataset from the Los Angeles County Metropolitan Transportation Authority (LACMTA) Open Data Portal. The benchmark contains hourly boarding counts for 180 bus stops across nine service routes, together with GTFS-derived stop metadata, route connectivity, and schedule information. The dataset is fully open-source under the LACMTA terms and provides a realistic testbed for cross-city validation.
 
 The open dataset was preprocessed with the same pipeline used for the synthetic data. Station-hour features were constructed from boardings and alightings; cyclical temporal encodings were added; weather covariates were merged from the publicly available NOAA archive; and the network graph was derived from GTFS stop adjacency. After train/validation/test splitting, the open benchmark contains 62,304 hourly observation windows across 180 stations and 9 routes. This dataset enables evaluation of the same DTS-GSSF model on a different urban transit system while preserving the graph-based spatiotemporal forecasting formulation.
 
@@ -170,7 +170,7 @@ The Gated Recurrent Encoder (GRE) projects the input features into a $d_{\text{m
 \end{equation}
 where $\odot$ denotes element-wise multiplication, $\mathbf{a}_t = \sigma(\mathbf{W}_a \mathbf{u}_t)$ is the forget gate, and $\mathbf{b}_t = \tanh(\mathbf{W}_b \mathbf{u}_t)$ is the candidate state. The initial state $\mathbf{s}_0$ is zero. After processing all $T$ time steps, the final state $\mathbf{s}_T \in \mathbb{R}^{N \times d_{\text{model}}}$ is layer-normalized and passed to the graph propagation layer.
 
-\textbf{Relation to state-space models.} While the GRE shares the sequential state-update structure of state-space models (SSMs), it differs from structured SSMs such as S4 \cite{gu2022efficiently} and Mamba \cite{gu2023mamba} in two key respects. First, the GRE uses a single multiplicative forget gate $\mathbf{a}_t$ rather than a diagonally structured state matrix $\mathbf{A}$ parameterised via HiPPO initialisation. Second, the GRE processes the sequence recurrently rather than via parallel scan, which precludes the $O(T \log T)$ training speedup of convolution-mode SSMs. We adopt this simpler formulation because (i) the moderate context length ($T = 72$) makes recurrent processing efficient, (ii) the single-gate design provides stable gradient propagation over 72 steps without the numerical instability observed in deeper LSTM stacks, and (iii) the per-step gating enables input-dependent forgetting, which is essential for the holiday and event effects in our ridership data.
+\textbf{Relation to state-space models.} While the GRE shares the sequential state-update structure of state-space models (SSMs), it differs from structured SSMs such as S4 \cite{gu2022efficiently} and Mamba \cite{gu2023mamba} in two key respects. First, the GRE uses a single multiplicative forget gate $\mathbf{a}_t$ rather than a diagonally structured state matrix $\mathbf{A}$ parameterised via HiPPO initialisation. Second, the GRE processes the sequence recurrently rather than via parallel scan, which precludes the $O(T \log T)$ training speedup of convolution-mode SSMs. This simpler formulation is adopted because (i) the moderate context length ($T = 72$) makes recurrent processing efficient, (ii) the single-gate design empirically exhibited stable gradient propagation over 72 steps in training runs---an empirical observation, not a theoretical guarantee; a rigorous gradient-norm comparison with stacked LSTM/GRU baselines is left to future work, and (iii) the per-step gating enables input-dependent forgetting, which is essential for the holiday and event effects in the ridership data under study.
 
 The input projection uses LoRA (Low-Rank Adaptation) \cite{hu2022lora}:
 \begin{equation}
@@ -193,7 +193,7 @@ The combined adjacency is:
     \mathbf{A} = \alpha \, \mathbf{A}_{\text{phys}} + (1 - \alpha) \, \mathbf{A}_{\text{adp}},
     \label{eq:combined}
 \end{equation}
-where $\alpha = \sigma(\log \alpha_0)$ is a learnable mixing coefficient initialised at $0.6$ and constrained to $[0, 1]$ via the sigmoid function. The learnable $\alpha$ allows the model to balance physical topology and adaptive correlations during training; we report the learned value in Section~\ref{sec:ablation}.
+where $\alpha = \sigma(\log \alpha_0)$ is a learnable mixing coefficient initialised at $0.6$ and constrained to $[0, 1]$ via the sigmoid function. The learnable $\alpha$ allows the model to balance physical topology and adaptive correlations during training; the learned value is reported in Section~\ref{sec:ablation}.
 
 At each hop $k \in \{1, \dots, K\}$, the message passing update is:
 \begin{equation}
@@ -281,7 +281,7 @@ Let $N$ be the number of stations, $T$ the context length, $d$ the model dimensi
     \item TemporalAttention: $O(N \cdot T^2 \cdot d)$ --- quadratic in context length.
     \item Prediction Heads: $O(N \cdot d)$ --- linear.
 \end{itemize}
-The total per-step complexity is $O(N \cdot T \cdot d + K \cdot |\mathcal{E}| \cdot d + N^2 \cdot d_{\text{emb}} + N \cdot T^2 \cdot d)$. For our configuration ($N = 374$, $|\mathcal{E}| = 1{,}142$, $T = 72$, $K = 3$, $d = 192$, $d_{\text{emb}} = 16$), the dominant term is TemporalAttention at $O(N \cdot T^2 \cdot d) \approx 3.7 \times 10^8$ operations per batch, while physical graph propagation contributes $O(K \cdot |\mathcal{E}| \cdot d) \approx 6.6 \times 10^5$ operations and adaptive adjacency construction contributes $O(N^2 \cdot d_{\text{emb}}) \approx 2.2 \times 10^6$ operations. The sparse physical propagation is two orders of magnitude cheaper than a dense $O(K \cdot N^2 \cdot d)$ alternative, which motivates the dual-adjacency design. Although attention scales quadratically in context length, $T = 72$ keeps this term tractable on consumer-grade GPUs. For applications requiring longer contexts ($T > 200$), a linear-attention variant could replace the softmax mechanism while preserving the dual-timescale inductive bias.
+The total per-step complexity is $O(N \cdot T \cdot d + K \cdot |\mathcal{E}| \cdot d + N^2 \cdot d_{\text{emb}} + N \cdot T^2 \cdot d)$. For the configuration adopted ($N = 374$, $|\mathcal{E}| = 1{,}142$, $T = 72$, $K = 3$, $d = 192$, $d_{\text{emb}} = 16$), the dominant term is TemporalAttention at $O(N \cdot T^2 \cdot d) \approx 3.7 \times 10^8$ operations per batch, while physical graph propagation contributes $O(K \cdot |\mathcal{E}| \cdot d) \approx 6.6 \times 10^5$ operations and adaptive adjacency construction contributes $O(N^2 \cdot d_{\text{emb}}) \approx 2.2 \times 10^6$ operations. The sparse physical propagation is two orders of magnitude cheaper than a dense $O(K \cdot N^2 \cdot d)$ alternative, which motivates the dual-adjacency design. Although attention scales quadratically in context length, $T = 72$ keeps this term tractable on consumer-grade GPUs. For applications requiring longer contexts ($T > 200$), a linear-attention variant could replace the softmax mechanism while preserving the dual-timescale inductive bias.
 
 \section{System Interface and Workflow}
 \label{sec:workflow}
@@ -321,3 +321,16 @@ Trainable parameters & 542{,}366 \\
 \end{table}
 
 Several hyperparameters warrant justification. The context window $T = 72$ hours captures three full daily cycles, providing the model with sufficient history to learn both diurnal and day-of-week patterns while remaining tractable for the $O(T^2)$ attention mechanism. The model dimension $d_{\text{model}} = 192$ balances expressiveness against overfitting on a dataset of 1.3 million records; smaller dimensions ($d = 64, 128$) underfit the spatial structure, while larger values ($d = 256$) yield diminishing validation $R^2$ gains ($< 0.2\%$) at twice the memory cost. The LoRA rank $r = 16$ and scaling $\alpha = 16$ follow the configuration recommended by Hu et al.\ \cite{hu2022lora}, yielding a rank-to-dimension ratio of $r/d \approx 0.08$ that preserves fine-tuning capacity while reducing trainable parameters by 94\%. The 6-head attention configuration ($n_h = 6$, $d_h = 32$) provides sufficient capacity for multi-scale temporal patterns; ablation showed that reducing to 4 heads drops $R^2$ by 0.4\%, while 8 heads provides no significant improvement. The auxiliary loss weight $\lambda = 0.3$ was selected from a grid search over $\{0.1, 0.2, 0.3, 0.4, 0.5\}$; values below 0.2 produce unstable training, while values above 0.4 suppress the NB likelihood term and degrade calibration. Gradient clipping (max norm 1.0) prevents exploding gradients in the attention layer, and cosine annealing with warmup provides stable convergence without the sharp restarts of cyclical schedulers.
+
+\subsection{Methodological Limitations of the Architecture}
+\label{sec:method_limitations}
+
+Several deliberate simplifications in the present design warrant explicit acknowledgment:
+
+\textbf{Global dispersion parameter.} The Negative Binomial likelihood uses a single scalar $\kappa$ shared across all $N = 374$ stations and $H_{\text{pred}} = 4$ horizons. This assumes homogeneous overdispersion across the network, which is a strong and likely incorrect assumption: central business districts (e.g., Esil) are expected to exhibit different variance profiles from peripheral residential stops (e.g., Baikonur). A station-specific or district-specific $\kappa$ would add flexibility at modest parameter cost and is left to future work.
+
+\textbf{Sinusoidal input--generator overlap.} The model receives $\texttt{hour\_sin}, \texttt{hour\_cos}, \texttt{dow\_sin}, \texttt{dow\_cos}$ as direct input features, and the synthetic generator (Eq.~\ref{eq:base_demand}) uses the same sinusoidal basis functions $f_{\text{hour}}, f_{\text{dow}}$ to construct the base demand. The model therefore has direct access to the exact temporal basis used to generate the signal. While the residual learning task (predicting ridership given weather, holiday, event, and log-normal noise multipliers) remains non-trivial, this overlap likely inflates the achievable R$^2$ on the synthetic benchmark relative to what a non-parametric temporal generator would yield. A future ablation regenerating the synthetic dataset without explicit cyclical features would quantify this effect.
+
+\textbf{Potentially dense adaptive adjacency.} The adaptive adjacency $\mathbf{A}_{\text{adp}}$ can in principle assign non-negligible weight to geographically distant stations. A locality-bias regularizer or a top-$k$ sparsification would prevent unrealistic long-range edges; this extension is left to future work.
+
+\textbf{Static graph topology.} The model assumes a fixed physical adjacency $\mathbf{A}_{\text{phys}}$ derived from the route network. In operational transit, routes are periodically adjusted due to construction, policy changes, and special events; a dynamic graph formulation is left to future work (see Sec.~\ref{sec:future}).

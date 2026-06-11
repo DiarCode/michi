@@ -18,24 +18,3 @@ The research presented in this thesis builds upon a series of peer-reviewed publ
 \textbf{Intelligent Assistant for Data Preparation Automation} \cite{yedilkhan2025intelligent}. Published in the \textit{Bulletin of the Kazakh Academy of Transport and Communications} (2025), this work presented an intelligent assistant that automates data cleaning, imputation, and feature engineering pipelines for urban transportation datasets. The system reduced manual preprocessing time by 75\% while improving downstream model accuracy by 4--6\% through automated outlier detection and missing-value interpolation. The data-preparation methodology described in this paper underpins the synthetic dataset generation and feature engineering pipeline used in the present thesis (Section~\ref{sec:dataset}).
 
 \textbf{Investigation of Hybrid Models and Architectures for Real-Time Adaptive Passenger Flow Prediction} \cite{begisbayev2024investigation}. Published at the 2024 IEEE International Conference on Data Science and Information Technology (DSIT), this was the first work to systematically compare LSTM, GRU, TCN, and early graph-neural approaches for passenger flow prediction on the Astana bus network. The study identified that hybrid architectures combining recurrent temporal encoders with graph-based spatial modules consistently outperformed pure sequence or pure graph models. These findings directly motivated the design of DTS-GSSF as a \textit{hybrid} architecture that unifies gated recurrent temporal encoding, graph propagation, and attention mechanisms within a single framework.
-
-Table~\ref{Tab.publications} summarises the five publications and their relationship to the present thesis.
-
-\begin{table}[H]
-\centering
-\caption{Peer-reviewed publications during Master's studies and their relationship to this thesis.}
-\label{Tab.publications}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}llcc@{}}
-\toprule
-Publication \& Venue \& Year \& Thesis Connection \\
-\midrule
-Adaptive ML for Transportation \cite{mektepbayeva2025adaptive} \& IEEE SIST \& 2025 \& LoRA adaptation, online learning \\
-Deep Heterogeneity Learning \cite{sakhipov2026deep} \& Frontiers Future Transp. \& 2026 \& Seasonal decomposition, MoE \\
-Federated Drift-Aware GNN \cite{sakhipov2025federated} \& Procedia Comp. Sci. \& 2025 \& Adaptive graphs, real-time latency \\
-Intelligent Data-Prep Assistant \cite{yedilkhan2025intelligent} \& Vestnik KazATC \& 2025 \& Feature engineering pipeline \\
-Hybrid Model Investigation \cite{begisbayev2024investigation} \& IEEE DSIT \& 2024 \& Motivation for hybrid architecture \\
-\bottomrule
-\end{tabular}%
-}
-\end{table}

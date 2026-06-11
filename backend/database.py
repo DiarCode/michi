@@ -1,17 +1,35 @@
 """Database configuration — defaults to local SQLite for development."""
-import os
 
-from sqlalchemy import create_engine
+import logging
+
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-# Default to local SQLite file; override with DATABASE_URL for production (e.g. PostgreSQL)
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./michi.db")
+from backend.config import DATABASE_URL
+
+logger = logging.getLogger(__name__)
+
+_is_sqlite = DATABASE_URL.startswith("sqlite")
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {},
+    connect_args={"check_same_thread": False} if _is_sqlite else {},
     echo=False,
+    pool_pre_ping=True,
 )
+
+# Enable WAL mode for SQLite to allow concurrent reads from multiple processes
+# (backend, celery worker, celery beat). WAL prevents "database is locked" errors.
+if _is_sqlite:
+
+    @event.listens_for(engine, "connect")
+    def _set_sqlite_pragma(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA busy_timeout=5000")
+        cursor.close()
+
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -47,4 +65,5 @@ def init_db():
         WeatherReadingORM,
     )
     from backend.seed import seed
+
     seed()

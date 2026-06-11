@@ -1,0 +1,197 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e11]: M
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Transit
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Command Center" [ref=e20] [cursor=pointer]:
+          - /url: /
+          - img [ref=e21]
+          - generic [ref=e26]: Command Center
+      - listitem [ref=e27]:
+        - link "Live Map" [ref=e28] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e29]
+          - generic [ref=e33]: Live Map
+      - listitem [ref=e34]:
+        - link "Alerts" [ref=e35] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e36]
+          - generic [ref=e39]: Alerts
+      - listitem [ref=e40]:
+        - link "Simulation" [ref=e41] [cursor=pointer]:
+          - /url: /simulation
+          - img [ref=e42]
+          - generic [ref=e44]: Simulation
+      - listitem [ref=e45]:
+        - link "Forecast" [ref=e46] [cursor=pointer]:
+          - /url: /forecast
+          - img [ref=e47]
+          - generic [ref=e51]: Forecast
+      - listitem [ref=e52]:
+        - link "Crowding" [ref=e53] [cursor=pointer]:
+          - /url: /crowding
+          - img [ref=e54]
+          - generic [ref=e61]: Crowding
+      - listitem [ref=e62]:
+        - link "Executive" [ref=e63] [cursor=pointer]:
+          - /url: /executive
+          - img [ref=e64]
+          - generic [ref=e66]: Executive
+      - listitem [ref=e67]:
+        - link "Settings" [ref=e68] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e69]
+          - generic [ref=e72]: Settings
+    - 'generic "Last tick #1518 · 14:20:43" [ref=e158]':
+      - generic [ref=e76]: Live
+  - main [ref=e77]:
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - button "Toggle Sidebar" [ref=e80] [cursor=pointer]:
+          - img
+          - generic [ref=e81]: Toggle Sidebar
+        - button "Search Michi ⌘ K" [ref=e82] [cursor=pointer]:
+          - img [ref=e83]
+          - generic [ref=e88]: Search Michi
+          - generic: ⌘
+          - generic: K
+      - generic [ref=e90]: Astana · Live
+    - main [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - paragraph [ref=e96]: Operations
+            - heading "Command Center" [level=1] [ref=e97]
+            - paragraph [ref=e98]: Live view of the Astana bus network. Track KPIs, respond to alerts, and review recent operator activity.
+          - generic [ref=e99]:
+            - button "Simulation" [ref=e100] [cursor=pointer]:
+              - img
+              - text: Simulation
+            - button "Forecast" [ref=e101] [cursor=pointer]:
+              - img
+              - text: Forecast
+        - generic [ref=e102]:
+          - generic [ref=e161]:
+            - generic [ref=e162]:
+              - img [ref=e163]
+              - generic [ref=e166]: Active routes
+            - generic [ref=e167]:
+              - generic [ref=e168]: "10"
+              - generic [ref=e169]: +3.2%
+          - generic [ref=e172]:
+            - generic [ref=e173]:
+              - img [ref=e174]
+              - generic [ref=e177]: On-time
+            - generic [ref=e178]:
+              - generic [ref=e179]: 93.6%
+              - generic [ref=e180]: +0.6%
+          - generic [ref=e183]:
+            - generic [ref=e184]:
+              - img [ref=e185]
+              - generic [ref=e188]: Open alerts
+            - generic [ref=e189]:
+              - generic [ref=e190]: "00"
+              - generic [ref=e191]: "-12%"
+          - generic [ref=e194]:
+            - generic [ref=e195]:
+              - img [ref=e196]
+              - generic [ref=e203]: Riders · today
+            - generic [ref=e204]:
+              - generic [ref=e205]: 2.8k
+              - generic [ref=e206]: +5.1%
+        - generic [ref=e115]:
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - generic [ref=e118]: Network health
+              - generic [ref=e119]: Real-time network performance metrics
+              - tablist [ref=e122]:
+                - tab "Now" [selected] [ref=e123] [cursor=pointer]
+                - tab "6h" [ref=e124] [cursor=pointer]
+                - tab "24h" [ref=e125] [cursor=pointer]
+            - generic [ref=e126]:
+              - generic [ref=e127]:
+                - generic [ref=e128]:
+                  - paragraph [ref=e129]: Punctuality
+                  - paragraph [ref=e130]: 93.6%
+                  - progressbar [ref=e131]
+                - generic [ref=e133]:
+                  - paragraph [ref=e134]: Headway adherence
+                  - paragraph [ref=e135]: 88.1%
+                  - progressbar [ref=e136]
+                - generic [ref=e138]:
+                  - paragraph [ref=e139]: Crowding index
+                  - paragraph [ref=e140]: "0.34"
+                  - progressbar [ref=e141]
+              - generic [ref=e143]:
+                - paragraph [ref=e207]: Ridership · past 24 hours
+                - generic [ref=e208]:
+                  - generic [ref=e209]:
+                    - generic: 21,277 pax
+                  - generic [ref=e210]:
+                    - generic: 21,395 pax
+                  - generic [ref=e211]:
+                    - generic: 21,236 pax
+                  - generic [ref=e212]:
+                    - generic: 21,281 pax
+                  - generic [ref=e213]:
+                    - generic: 21,314 pax
+                  - generic [ref=e214]:
+                    - generic: 21,271 pax
+                  - generic [ref=e215]:
+                    - generic: 69,758 pax
+                  - generic [ref=e216]:
+                    - generic: 227,691 pax
+                  - generic [ref=e217]:
+                    - generic: 245,442 pax
+                  - generic [ref=e218]:
+                    - generic: 200,296 pax
+                  - generic [ref=e219]:
+                    - generic: 99,757 pax
+                  - generic [ref=e220]:
+                    - generic: 99,358 pax
+                  - generic [ref=e221]:
+                    - generic: 143,756 pax
+                  - generic [ref=e222]:
+                    - generic: 143,278 pax
+                  - generic [ref=e223]:
+                    - generic: 99,147 pax
+                  - generic [ref=e224]:
+                    - generic: 86,294 pax
+                  - generic [ref=e225]:
+                    - generic: 86,358 pax
+                  - generic [ref=e226]:
+                    - generic: 227,900 pax
+                  - generic [ref=e227]:
+                    - generic: 226,868 pax
+                  - generic [ref=e228]:
+                    - generic: 183,784 pax
+                  - generic [ref=e229]:
+                    - generic: 86,281 pax
+                  - generic [ref=e230]:
+                    - generic: 21,214 pax
+                  - generic [ref=e231]:
+                    - generic: 21,220 pax
+                  - generic [ref=e232]:
+                    - generic: 21,334 pax
+                - generic [ref=e233]:
+                  - generic [ref=e234]: "0"
+                  - generic [ref=e235]: "6"
+                  - generic [ref=e236]: "12"
+                  - generic [ref=e237]: "18"
+                  - generic [ref=e238]: "23"
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]: Active alerts
+              - generic [ref=e150]: 0 open
+              - button "View all" [ref=e152] [cursor=pointer]:
+                - text: View all
+                - img
+            - paragraph [ref=e154]: No active alerts
+  - generic [ref=e155]:
+    - heading "Command Palette" [level=2] [ref=e156]
+    - paragraph [ref=e157]: Search for a command to run...
+  - region "Notifications alt+T"

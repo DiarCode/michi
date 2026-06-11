@@ -24,8 +24,8 @@ def build_summing_matrix(
     all_routes = sorted(set(r for rs in station_routes.values() for r in rs))
     all_districts = sorted(set(station_district.values()))
 
-    route_idx = {r: i for i, r in enumerate(all_routes)}
-    district_idx = {d: i for i, d in enumerate(all_districts)}
+    _route_idx = {r: i for i, r in enumerate(all_routes)}
+    _district_idx = {d: i for i, d in enumerate(all_districts)}
 
     n_agg = len(all_routes) + len(all_districts) + 1  # routes + districts + total
     n_total = n_bottom + n_agg

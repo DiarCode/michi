@@ -1,0 +1,7 @@
+{
+  "tool_name": "mcp__plugin_playwright_playwright__browser_click",
+  "tool_input_preview": "{\"element\":\"Start simulation button\",\"target\":\"button:has-text(\\\\\\\"Start\\\\\\\")\"}",
+  "error": "### Error\nError: browserBackend.callTool: Error: \"has-text\" engine expects a single string\n    at Object.matches (<anonymous>:5571:13)\n    at <anonymous>:5433:21\n    at SelectorEvaluatorImpl._cached (<anonymous>:5235:20)\n    at SelectorEvaluatorImpl._callMatches (<anonymous>:5432:17)\n    at SelectorEvaluatorImpl._matchesEngine (<anonymous>:5419:19)\n    at <anonymous>:5346:50\n    at Array.filter (<anonymous>)\n    at <anonymous>:5346:31\n    at SelectorEvaluatorImpl._cached (<anonymous>:5235:20)\n  ...",
+  "timestamp": "2026-06-11T09:22:06.395Z",
+  "retry_count": 1
+}

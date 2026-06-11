@@ -6,12 +6,12 @@
 \label{chap:discussion}
 \setlength{\parskip}{1em}
 
-This chapter discusses the implications of our findings, identifies the limitations of the current study, addresses ethical considerations, and outlines directions for future research.
+This chapter discusses the implications of the findings, identifies the limitations of the study, addresses ethical considerations, and outlines directions for future research.
 
 \section{Summary of Findings}
 \label{sec:findings}
 
-Our experiments demonstrate that DTS-GSSF achieves the best performance among all evaluated methods on our benchmark for the synthetic Astana bus network dataset, with an $R^2$ of $0.978 \pm 0.001$ and MAE of $11.65 \pm 0.14$ passengers per station-hour (all 42 series). On bottom-level stations alone, DTS-GSSF achieves $R^2 = 0.692$, comparable to neural baselines, confirming that the model's primary advantage lies in its coherent hierarchical forecast structure. Three architectural choices emerged as particularly important:
+Experiments demonstrate that DTS-GSSF achieves the best performance among all evaluated methods on the synthetic Astana bus network dataset, with an $R^2$ of $0.978 \pm 0.001$ and MAE of $11.65 \pm 0.14$ passengers per station-hour (all 42 series). On bottom-level stations alone, DTS-GSSF achieves $R^2 = 0.692$, comparable to neural baselines, confirming that the model's primary advantage lies in its coherent hierarchical forecast structure. On the real-world LACMTA open benchmark, the model achieves $R^2 = 0.862$ and MAE = 7.1, the best result among all evaluated methods and a more realistic indicator of operational performance than the synthetic headline number. Three architectural choices emerged as particularly important:
 
 \begin{enumerate}
     \item \textbf{Gated Recurrent Temporal Modelling}: The gated recurrent encoder provides stable gradient propagation across the 72-hour context window, avoiding the vanishing-gradient problems that plague deep LSTMs and the quadratic complexity of full self-attention.
@@ -26,13 +26,17 @@ These findings are consistent with the broader literature on spatiotemporal fore
 
 Several limitations of this study must be acknowledged:
 
-\textbf{Synthetic Data}: The primary evaluation was conducted on synthetic data generated from OpenStreetMap topology and heuristic demand simulation. While the simulation incorporates realistic factors (weather, holidays, events, cyclical patterns), performance on real-world ridership logs from the Astana transit operator may differ. Real ridership data may contain unmodelled noise sources such as fare evasion, GPS drift, and irregular vehicle dispatching. Cross-dataset evaluation on real-world benchmarks and collaboration with the Astana municipal transit authority to obtain Automatic Passenger Counting (APC) data remain priorities for future validation.
+\textbf{Synthetic Data}: The primary evaluation was conducted on synthetic data generated from OpenStreetMap topology and heuristic demand simulation. While the simulation incorporates realistic factors (weather, holidays, events, cyclical patterns), performance on real-world ridership logs from the Astana transit operator may differ. Real ridership data may contain unmodelled noise sources such as fare evasion, GPS drift, and irregular vehicle dispatching. We further note that the synthetic generator uses the same sinusoidal basis functions ($f_{\text{hour}}, f_{\text{dow}}$) that the model receives as direct input features ($\texttt{hour\_sin}, \texttt{hour\_cos}, \texttt{dow\_sin}, \texttt{dow\_cos}$), which likely inflates the achievable R$^2$ on this benchmark relative to a non-parametric generator. Cross-dataset evaluation on real-world benchmarks and collaboration with the Astana municipal transit authority to obtain Automatic Passenger Counting (APC) data remain priorities for future validation.
 
 \textbf{Performance Ceiling}: The $R^2$ of 0.978 on the full hierarchy (0.69 on bottom-level stations) suggests that a substantial portion of bottom-level variance is irreducible given the current feature set. This residual variance likely reflects unobserved special events, service disruptions, and stochastic individual behaviour.
 
-\textbf{Scalability}: The temporal attention complexity of $O(N T^2 d)$ dominates at our configuration, and the graph propagation term $O(K N^2 d)$ may become a bottleneck for networks with thousands of stations. For the Astana network ($N = 374$, $T = 72$), both terms are tractable, but megacity networks with $N > 2{,}000$ or contexts exceeding $T = 200$ hours may require linear-attention approximations and graph clustering or sparse adaptive matrices.
+\textbf{Scalability}: The temporal attention complexity of $O(N T^2 d)$ dominates at the configuration adopted, and the graph propagation term $O(K N^2 d)$ may become a bottleneck for networks with thousands of stations. For the Astana network ($N = 374$, $T = 72$), both terms are tractable, but megacity networks with $N > 2{,}000$ or contexts exceeding $T = 200$ hours may require linear-attention approximations and graph clustering or sparse adaptive matrices.
 
 \textbf{Static Graph}: The current model assumes a fixed network topology. In reality, bus routes are periodically adjusted due to construction, policy changes, or special events. A dynamic graph formulation that evolves the adjacency matrix over time would be more robust to such changes.
+
+\textbf{Evaluation Set Mismatch}: Table~\ref{Tab.main_results} reports the proposed model on the full 42-series hierarchical evaluation (28 stations + 14 aggregates), while neural and GNN baselines are evaluated only on the 28 bottom-level stations. This is a deliberate choice to enable like-for-like comparison with station-level baselines, but it also means the headline $R^2 = 0.978$ is not directly comparable to the neural baseline numbers in the same table. To address this, Table~\ref{Tab.main_results} additionally reports DTS-GSSF on the bottom-28-only evaluation ($R^2 = 0.692$), which is the appropriate point of comparison with the station-level baselines. A future revision of this work will re-run all baselines on the full 42 series with matched seed counts; the current submission's compute budget did not permit this.
+
+\textbf{Single-Seed Baselines}: The neural and GNN baselines in Table~\ref{Tab.main_results} are reported at a single random seed due to the project's compute budget, while the proposed model uses three seeds. A rigorous revision will report mean $\pm$ standard deviation across matched seeds for all methods.
 
 \section{Ethics and Data Privacy}
 \label{sec:ethics}
@@ -64,4 +68,4 @@ Promising directions for future work include:
     \item \textbf{Extreme Weather Resilience}: Investigate the model's robustness to climate-change-driven extreme weather events (prolonged heatwaves, flash floods) that may not be represented in historical data.
 \end{enumerate}
 
-We will release the training code, model weights, and synthetic dataset upon acceptance to facilitate reproducibility and community benchmarking.
+Reproducibility is supported through detailed hyperparameter reporting, an explicit synthetic data generation pipeline, and a fully itemised LACMTA benchmark specification.

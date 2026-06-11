@@ -1,8 +1,7 @@
-import json
 import tempfile
 from pathlib import Path
 
-from data.osm_parser import assign_district, save_parsed_network, load_parsed_network
+from data.osm_parser import assign_district, load_parsed_network, save_parsed_network
 
 
 def test_assign_district():

@@ -1,0 +1,20 @@
+[     277ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/weather/current:0
+[     278ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/dashboard/kpis:0
+[     278ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/alerts/rich:0
+[     279ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/dashboard/operations:0
+[     279ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/analytics/summary:0
+[     285ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/alerts:0
+[    1282ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/dashboard/kpis:0
+[    1283ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/dashboard/operations:0
+[    1283ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/analytics/summary:0
+[    1283ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/weather/current:0
+[    1289ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/alerts/rich:0
+[    1293ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/alerts:0
+[    2760ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59
+[    2760ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59
+[    4924ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59
+[    4924ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59
+[    9796ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59
+[    9796ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59
+[   19050ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59
+[   19050ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-eQ7eOV_Z.js:59

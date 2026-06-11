@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from backend.database import get_db_session
@@ -9,25 +9,35 @@ router = APIRouter()
 
 
 @router.get("", response_model=RouteListResponse)
-def list_routes(db: Session = Depends(get_db_session)):
+def list_routes(
+    limit: int = Query(100, le=1000),
+    offset: int = Query(0, ge=0),
+    db: Session = Depends(get_db_session),
+):
     """List all routes from the database."""
-    db_routes = db.query(RouteORM).all()
-    return {"routes": [
-        {"id": r.route_id, "name": r.name, "color": r.color,
-         "stop_count": r.stop_count, "avg_ridership": r.avg_ridership}
-        for r in db_routes
-    ]}
+    db_routes = db.query(RouteORM).offset(offset).limit(limit).all()
+    return {
+        "routes": [
+            {
+                "id": r.route_id,
+                "name": r.name,
+                "color": r.color,
+                "stop_count": r.stop_count,
+                "avg_ridership": r.avg_ridership,
+            }
+            for r in db_routes
+        ]
+    }
 
 
 @router.get("/{route_id}/stops", response_model=RouteStopsResponse)
 def get_route_stops(route_id: str, db: Session = Depends(get_db_session)):
-    """Get stops for a route from the database."""
-    db_stops = (db.query(RouteStopORM).filter(RouteStopORM.route_id == route_id)
-                .order_by(RouteStopORM.stop_order).all())
-    result = []
-    for rs in db_stops:
-        station = db.query(StationORM).filter(StationORM.stop_id == rs.station_id).first()
-        result.append({"id": rs.station_id, "name": station.name if station else rs.station_id})
+    """Get stops for a route from the database. Uses joinedload to avoid N+1 queries."""
+    db_stops = db.query(RouteStopORM).filter(RouteStopORM.route_id == route_id).order_by(RouteStopORM.stop_order).all()
+    # Batch-load all station names in a single query instead of N+1
+    station_ids = [rs.station_id for rs in db_stops]
+    station_map = {s.stop_id: s.name for s in db.query(StationORM).filter(StationORM.stop_id.in_(station_ids)).all()}
+    result = [{"id": rs.station_id, "name": station_map.get(rs.station_id, rs.station_id)} for rs in db_stops]
     return {"route_id": route_id, "stops": result}
 
 
@@ -35,6 +45,7 @@ def get_route_stops(route_id: str, db: Session = Depends(get_db_session)):
 def get_route_forecast(route_id: str, db: Session = Depends(get_db_session)):
     """Aggregated route-level forecast averaging across all stops on the route."""
     from backend.services.forecast_service import get_forecast
+
     stops_data = get_route_stops(route_id, db)
     stops = stops_data.get("stops", [])
 
@@ -51,11 +62,13 @@ def get_route_forecast(route_id: str, db: Session = Depends(get_db_session)):
         preds = [f[h]["predicted"] for f in all_forecasts if len(f) > h]
         confs = [f[h]["confidence"] for f in all_forecasts if len(f) > h]
         if preds:
-            hourly.append({
-                "hour": h,
-                "predicted": int(sum(preds) / len(preds)),
-                "confidence": round(sum(confs) / len(confs), 3),
-            })
+            hourly.append(
+                {
+                    "hour": h,
+                    "predicted": int(sum(preds) / len(preds)),
+                    "confidence": round(sum(confs) / len(confs), 3),
+                }
+            )
 
     route_info = None
     r = db.query(RouteORM).filter(RouteORM.route_id == route_id).first()
@@ -94,13 +107,15 @@ def get_route_schedule(route_id: str, db: Session = Depends(get_db_session)):
             if t_hour > 23:
                 continue
             direction = "outbound" if t_hour < 14 else "inbound"
-            schedule.append({
-                "stop_id": stop["id"],
-                "stop_name": stop["name"],
-                "time": f"{t_hour:02d}:{t_min:02d}",
-                "headway_min": HEADWAY,
-                "direction": direction,
-            })
+            schedule.append(
+                {
+                    "stop_id": stop["id"],
+                    "stop_name": stop["name"],
+                    "time": f"{t_hour:02d}:{t_min:02d}",
+                    "headway_min": HEADWAY,
+                    "direction": direction,
+                }
+            )
 
     return {
         "route_id": route_id,

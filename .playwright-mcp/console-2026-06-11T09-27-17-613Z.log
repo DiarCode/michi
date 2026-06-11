@@ -1,0 +1,221 @@
+[     143ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=259a1f62:14337
+[    1574ms] [ERROR] Access to fetch at 'https://tiles.basemaps.cartocdn.com/fonts/Open%20Sans/0-255.pbf' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:5173/map:0
+[    1574ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://tiles.basemaps.cartocdn.com/fonts/Open%20Sans/0-255.pbf:0
+[    1584ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0030 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1585ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0031 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1586ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0032 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1586ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0033 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1587ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0034 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1588ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0035 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1588ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0036 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1588ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0037 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1589ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0038 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1589ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0039 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   31419ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=259a1f62:14337
+[   32187ms] [ERROR] Access to fetch at 'https://tiles.basemaps.cartocdn.com/fonts/Open%20Sans/0-255.pbf' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:5173/map:0
+[   32187ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://tiles.basemaps.cartocdn.com/fonts/Open%20Sans/0-255.pbf:0
+[   32189ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0030 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32189ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0031 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32189ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0032 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32189ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0033 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32190ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0034 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32190ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0035 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32190ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0036 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32190ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0037 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32190ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0038 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   32190ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0039 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   49518ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:992
+[   52916ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   52916ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[   58301ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   58301ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[   65094ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   65094ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[   75473ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   75476ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[   90882ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   90883ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  107271ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  108276ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  113730ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  113731ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  143847ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  143847ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  168283ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  169288ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  177713ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  177714ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  212544ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  212544ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  229292ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  230296ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  246954ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  246955ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  280329ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  280329ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  290365ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  291370ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  312247ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  312248ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  347167ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  347167ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  351377ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  352381ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  381171ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  381171ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  411678ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  411678ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  412384ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  413387ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  445854ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  445854ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  473396ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  474399ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  480761ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  480761ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  513836ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  513840ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  534422ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  535427ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  545395ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  545395ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  576686ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  576686ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  595433ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  596437ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  610677ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  610678ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  640682ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  640682ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  656443ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  657447ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  673111ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  673111ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  707989ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  707989ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  717452ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  718457ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  742019ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  742019ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  773352ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  773352ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  778461ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  779467ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  806331ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  806332ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  838397ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  838397ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  839470ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  840472ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/stations?limit=2000:0
+[  863108ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  863108ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  863108ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[  863108ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[  863109ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  864114ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  864129ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[  864129ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[  864130ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  864131ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  869443ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  869443ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  894137ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  894138ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  895142ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  895144ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  902808ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  902808ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  924134ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  925138ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  925153ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  925153ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  926158ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  926160ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  936274ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  936274ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  956165ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  956166ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  957171ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  957173ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  968708ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[  968708ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[  984137ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[  984138ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[  985153ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[  985154ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[  985154ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  986157ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[  987178ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  987179ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[  988183ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[  988185ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1003137ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1003137ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1018190ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1018191ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1019195ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1019196ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1036675ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1036675ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1046222ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1047223ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1049199ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1049200ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1050204ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1050205ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1069756ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1069758ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1080225ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1080226ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1081232ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1081233ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1104001ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1104001ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1105159ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[ 1105159ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[ 1106163ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[ 1106163ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[ 1107249ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1108253ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1111238ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1111239ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1112244ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1112245ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1138438ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1138438ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1142250ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1142251ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1143257ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1143258ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1168267ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1169271ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1173079ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1173079ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1173264ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1173265ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1174269ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1174270ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1204281ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1204282ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1205289ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1205290ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1205636ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1205637ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1226181ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[ 1226181ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[ 1227187ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/operations:0
+[ 1227187ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/analytics/summary:0
+[ 1229303ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1230308ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/dashboard/kpis:0
+[ 1235304ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1235305ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1236309ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1236309ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1238547ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1238547ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[ 1266316ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1266316ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1267320ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts/rich:0
+[ 1267321ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/api/v1/alerts:0
+[ 1271289ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[ 1271289ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524

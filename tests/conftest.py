@@ -1,9 +1,11 @@
 """Shared test fixtures — SQLite in-memory DB for all backend tests."""
+
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from backend.database import Base
-from backend.models_orm import StationORM, RouteORM, RouteStopORM, AlertORM
+from backend.models_orm import RouteORM, RouteStopORM, StationORM
 
 
 @pytest.fixture(scope="function")

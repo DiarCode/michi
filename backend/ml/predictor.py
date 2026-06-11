@@ -3,6 +3,7 @@
 Applies z-score normalization before inference when a FeatureNormalizer is
 available in the checkpoint, ensuring predictions match training-time behavior.
 """
+
 import logging
 import threading
 from datetime import UTC, datetime, timedelta
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 _model_cache: dict[str, DTSGSSF] = {}
 _normalizer_cache: dict[str, FeatureNormalizer] = {}
 _cache_lock = threading.Lock()
+_NOT_LOADED_SENTINEL = "NOT_LOADED"  # Marks versions whose artifact file is missing
 
 
 def load_model(
@@ -106,10 +108,14 @@ def get_cached_model(
             return None, None
 
         version = artifact.version
+
+        # Fast path: return cached model or sentinel for previously-failed loads
         if version in _model_cache:
-            model = _model_cache[version]
+            cached = _model_cache[version]
+            if cached is _NOT_LOADED_SENTINEL:
+                return None, None  # Previously failed — skip retry
             normalizer = _normalizer_cache.get(version)
-            return model, normalizer
+            return cached, normalizer
 
         with _cache_lock:
             if version in _model_cache:
@@ -117,10 +123,43 @@ def get_cached_model(
                 normalizer = _normalizer_cache.get(version)
                 return model, normalizer
 
-            A_phys, stop_ids, station_idx = build_adjacency(db_session)
+            A_phys, stop_ids, _station_idx = build_adjacency(db_session)
             N = len(stop_ids)
-            n_series = N
-            n_agg = 3
+
+            # Read n_series/n_agg from checkpoint config, fallback to DB topology
+            artifact_path = artifact.artifact_path
+            try:
+                ckpt = torch.load(artifact_path, map_location="cpu", weights_only=False)
+                ckpt_config = ckpt.get("config", {})
+            except Exception:
+                ckpt_config = {}
+
+            n_series = ckpt_config.get("n_series", 0)
+            n_agg = ckpt_config.get("n_agg", 0)
+
+            if n_series <= 0 or n_agg <= 0:
+                # Fallback: compute from DB topology matching training hierarchy
+                from backend.models_orm import RouteORM, StationORM
+
+                n_routes = db_session.query(RouteORM).count()
+                districts = {
+                    s.district
+                    for s in db_session.query(StationORM).all()
+                    if s.district
+                }
+                n_districts = len(districts)
+                n_series = N + n_routes + n_districts + 1  # +1 for network total
+                n_agg = n_series - N
+                logger.info(
+                    "Checkpoint n_series/n_agg not found; computed from DB topology: "
+                    "N=%d, n_routes=%d, n_districts=%d → n_series=%d, n_agg=%d",
+                    N, n_routes, n_districts, n_series, n_agg,
+                )
+            else:
+                logger.info(
+                    "Using checkpoint n_series=%d, n_agg=%d (N=%d)",
+                    n_series, n_agg, N,
+                )
             model, normalizer = load_model(
                 artifact_path=artifact.artifact_path,
                 N=N,
@@ -141,6 +180,11 @@ def get_cached_model(
             return model, normalizer
     except Exception as e:
         logger.error("Failed to load production model: %s", e)
+        # Cache the failure so we don't retry on every call (e.g., every simulation tick)
+        if artifact and version:
+            with _cache_lock:
+                if version not in _model_cache:
+                    _model_cache[version] = _NOT_LOADED_SENTINEL
         return None, None
     finally:
         if own_session:
@@ -152,7 +196,7 @@ def generate_predictions(
     session,
     station_idx: dict[str, int],
     stop_ids: list[str],
-    horizons: list[int] = [15, 30, 60, 120],
+    horizons: list[int] | None = None,
     normalizer: FeatureNormalizer | None = None,
 ) -> list[dict]:
     """Generate multi-horizon predictions using the loaded model.
@@ -166,6 +210,8 @@ def generate_predictions(
         normalizer: Feature normalizer fitted on training data. If provided,
                     features are z-score normalized before inference.
     """
+    if horizons is None:
+        horizons = [15, 30, 60, 120]
     now = datetime.now(UTC)
     predictions = []
 
@@ -192,7 +238,7 @@ def generate_predictions(
         mu_np = mu.cpu().numpy().squeeze()
         kappa_val = float(torch.clamp(kappa, min=0.01).cpu())
 
-        N = len(stop_ids)
+        len(stop_ids)
         for h_idx, horizon_min in enumerate(horizons):
             h_hours = horizon_min / 60.0
             step = min(h_idx + 1, mu_np.shape[0] - 1)
@@ -223,33 +269,46 @@ def generate_predictions_from_cache(session) -> list[dict]:
     if model is None:
         return []
 
-    A_phys, stop_ids, station_idx = build_adjacency(session)
+    _A_phys, stop_ids, station_idx = build_adjacency(session)
     return generate_predictions(model, session, station_idx, stop_ids, normalizer=normalizer)
 
 
 def generate_mock_predictions(
     stations: list[dict],
-    horizons: list[int] = [15, 30, 60, 120],
+    horizons: list[int] | None = None,
 ) -> list[dict]:
-    """Generate mock predictions when no trained model is available."""
+    """Generate mock predictions when no trained model is available.
+
+    Uses a rush-hour-aware Gaussian profile matching typical transit patterns
+    instead of a flat sinusoidal baseline.
+    """
+    if horizons is None:
+        horizons = [15, 30, 60, 120]
     now = datetime.now(UTC)
     predictions = []
     for station in stations:
-        base_ridership = station.get("ridership_24h", 1500) / 24.0
+        base = station.get("ridership_24h", 1500) / 24.0
         for horizon_min in horizons:
             h = now.hour + horizon_min / 60.0
-            hour_factor = (
-                max(0.1, 0.3 + 0.7 * max(0, np.sin(np.pi * (h - 6) / 12)))
-                if 6 <= h <= 22
-                else 0.1
-            )
-            predicted = int(base_ridership * hour_factor + np.random.randint(-30, 30))
+            # Gaussian rush-hour profile matching training data patterns
+            if 6 <= h <= 9:
+                factor = 1.4 + 0.3 * np.cos(np.pi * (h - 7.5) / 2.5)
+            elif 17 <= h <= 20:
+                factor = 1.3 + 0.25 * np.cos(np.pi * (h - 18.5) / 2.5)
+            elif 11 <= h <= 13:
+                factor = 0.9 + 0.15 * np.cos(np.pi * (h - 12) / 1.5)
+            elif 0 <= h < 6 or h > 22:
+                factor = 0.15
+            else:
+                factor = 0.55
+            noise = np.random.normal(0, base * 0.08)
+            predicted = max(1, int(base * factor + noise))
             confidence = max(0.5, 0.95 - horizon_min / 600.0)
             predictions.append(
                 {
                     "station_id": station["stop_id"],
                     "timestamp": (now + timedelta(minutes=horizon_min)).isoformat(),
-                    "predicted": max(0, predicted),
+                    "predicted": predicted,
                     "confidence": round(confidence, 3),
                     "horizon_minutes": horizon_min,
                     "model_version": "mock",

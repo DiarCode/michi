@@ -1,4 +1,5 @@
 """Integration tests for all backend API endpoints."""
+
 from backend.models_orm import AlertORM
 
 
@@ -7,8 +8,9 @@ class TestHealthEndpoint:
         resp = client.get("/health")
         assert resp.status_code == 200
         data = resp.json()
-        assert data["status"] == "ok"
+        assert data["status"] in ("ok", "degraded")
         assert "version" in data
+        assert "checks" in data
 
 
 class TestStationEndpoints:
@@ -134,10 +136,13 @@ class TestAnalyticsEndpoints:
 
 class TestScenarioEndpoints:
     def test_run_scenario(self, client):
-        resp = client.post("/api/v1/scenarios/run", json={
-            "scenario_type": "what_if",
-            "params": {"route_id": "TR01", "buses_added": 2},
-        })
+        resp = client.post(
+            "/api/v1/scenarios/run",
+            json={
+                "scenario_type": "what_if",
+                "params": {"route_id": "TR01", "buses_added": 2},
+            },
+        )
         assert resp.status_code in (200, 201, 422)
 
 

@@ -1,4 +1,6 @@
 """Executive dashboard API — KPIs, trends, ROI, and financial metrics."""
+
+import logging
 import random
 from datetime import UTC, datetime, timedelta
 
@@ -9,16 +11,18 @@ from sqlalchemy.orm import Session
 from backend.database import get_db_session
 from backend.models_orm import AlertORM, InterventionORM, PredictionAccuracyORM, RidershipORM, RouteORM, StationORM
 
+logger = logging.getLogger(__name__)
+
 router = APIRouter()
 
 # Astana transit operational constants for realistic estimates
-AVG_FARE_KZT = 90          # Average fare in KZT
-AVG_DAILY_RIDERSHIP = 85000 # Estimated daily ridership across network
+AVG_FARE_KZT = 90  # Average fare in KZT
+AVG_DAILY_RIDERSHIP = 85000  # Estimated daily ridership across network
 FLEET_SIZE = 420
 FLEET_COST_DAILY_KZT = 12_500_000  # Daily fleet operating cost
-FUEL_COST_DAILY_KZT = 3_200_000   # Daily fuel cost
+FUEL_COST_DAILY_KZT = 3_200_000  # Daily fuel cost
 STAFF_COST_DAILY_KZT = 5_800_000  # Daily staff cost
-MAINTENANCE_DAILY_KZT = 2_100_000 # Daily maintenance cost
+MAINTENANCE_DAILY_KZT = 2_100_000  # Daily maintenance cost
 
 
 def _generate_default_trends(days: int = 30):
@@ -36,11 +40,13 @@ def _generate_default_trends(days: int = 30):
         seasonal = 1.1 if d.month in [11, 12, 1, 2] else 1.0
         noise = random.uniform(0.92, 1.08)
         ridership = int(base * weekday_factor * trend_factor * seasonal * noise)
-        trends.append({
-            "date": d.strftime("%Y-%m-%d"),
-            "ridership": ridership,
-            "revenue_kzt": int(ridership * AVG_FARE_KZT),
-        })
+        trends.append(
+            {
+                "date": d.strftime("%Y-%m-%d"),
+                "ridership": ridership,
+                "revenue_kzt": int(ridership * AVG_FARE_KZT),
+            }
+        )
     return trends
 
 
@@ -51,7 +57,7 @@ def _get_ridership_from_simulation_or_seed(db: Session):
         if total and total > 0:
             return int(total)
     except Exception:
-        pass
+        logger.warning("Failed to query total ridership from DB, using default")
     return AVG_DAILY_RIDERSHIP
 
 
@@ -64,19 +70,19 @@ def get_executive_kpis(db: Session = Depends(get_db_session)):
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
     alerts_today = db.query(AlertORM).filter(AlertORM.created_at >= today_start).count()
-    critical_alerts = db.query(AlertORM).filter(
-        AlertORM.created_at >= today_start, AlertORM.severity == "critical"
-    ).count()
+    critical_alerts = (
+        db.query(AlertORM).filter(AlertORM.created_at >= today_start, AlertORM.severity == "critical").count()
+    )
 
     interventions_today = db.query(InterventionORM).filter(InterventionORM.created_at >= today_start).count()
-    completed_interventions = db.query(InterventionORM).filter(
-        InterventionORM.created_at >= today_start, InterventionORM.status == "completed"
-    ).count()
+    completed_interventions = (
+        db.query(InterventionORM)
+        .filter(InterventionORM.created_at >= today_start, InterventionORM.status == "completed")
+        .count()
+    )
 
     # Prediction accuracy
-    accuracy_records = db.query(PredictionAccuracyORM).filter(
-        PredictionAccuracyORM.evaluated_at >= today_start
-    ).all()
+    accuracy_records = db.query(PredictionAccuracyORM).filter(PredictionAccuracyORM.evaluated_at >= today_start).all()
     avg_mape = None
     if accuracy_records:
         mape_vals = [r.mape for r in accuracy_records if r.mape is not None]
@@ -136,8 +142,8 @@ def get_executive_trends(days: int = Query(30, le=90), db: Session = Depends(get
 
     total = sum(t["ridership"] for t in trends)
     avg_daily = total // max(len(trends), 1)
-    first_half = sum(t["ridership"] for t in trends[:len(trends)//2]) if len(trends) > 1 else 1
-    second_half = sum(t["ridership"] for t in trends[len(trends)//2:]) if len(trends) > 1 else 1
+    first_half = sum(t["ridership"] for t in trends[: len(trends) // 2]) if len(trends) > 1 else 1
+    second_half = sum(t["ridership"] for t in trends[len(trends) // 2 :]) if len(trends) > 1 else 1
     change_pct = round((second_half - first_half) / max(first_half, 1) * 100, 1)
     trend_dir = "up" if change_pct > 0 else "down" if change_pct < 0 else "stable"
 

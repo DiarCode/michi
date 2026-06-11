@@ -1,0 +1,149 @@
+- generic [active]:
+  - generic [ref=e2]:
+    - generic [ref=e7]:
+      - heading "⚙️ Global Settings" [level=2] [ref=e11]
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - paragraph [ref=e17]: System Seed
+          - button "Help for System Seed" [ref=e21] [cursor=pointer]:
+            - img [ref=e22]
+        - spinbutton "System Seed" [ref=e28]: "7"
+      - generic [ref=e31] [cursor=pointer]:
+        - checkbox "Use Real OSM Data"
+        - generic [ref=e35]:
+          - paragraph [ref=e37]: Use Real OSM Data
+          - button "Help for Use Real OSM Data" [ref=e41]:
+            - img [ref=e42]
+      - paragraph [ref=e49]: Changing settings requires regenerating data.
+      - group [ref=e52]:
+        - generic "keyboard_arrow_right ℹ️ Quick Guide" [ref=e53] [cursor=pointer]:
+          - generic:
+            - generic [ref=e55]: keyboard_arrow_right
+            - generic:
+              - generic:
+                - paragraph: ℹ️ Quick Guide
+    - generic [ref=e3]:
+      - banner [ref=e58]:
+        - generic [ref=e60]:
+          - button "keyboard_double_arrow_right" [ref=e63] [cursor=pointer]:
+            - generic [ref=e65]: keyboard_double_arrow_right
+          - generic [ref=e66]:
+            - button "Deploy" [ref=e68] [cursor=pointer]:
+              - generic [ref=e70]: Deploy
+            - button "Main menu" [ref=e72] [cursor=pointer]:
+              - img [ref=e73]
+      - generic [ref=e76]:
+        - heading "🚏 DTS‑GSSF Intelligence Platform" [level=1] [ref=e81]:
+          - text: 🚏 DTS‑GSSF Intelligence Platform
+          - generic [ref=e82]:
+            - link "Link to heading":
+              - /url: "#dts-gssf-intelligence-platform"
+              - img
+        - paragraph [ref=e87]: Dual-Timescale Graph State-Space Forecasting · Astana Bus Network
+        - generic [ref=e89]:
+          - tablist [ref=e91]:
+            - tab "🎛️ Setup & Training" [selected] [ref=e92] [cursor=pointer]:
+              - paragraph [ref=e94]: 🎛️ Setup & Training
+            - tab "📊 Analytics Dashboard" [ref=e95] [cursor=pointer]:
+              - paragraph [ref=e97]: 📊 Analytics Dashboard
+            - tab "🧪 Live Simulation" [ref=e98] [cursor=pointer]:
+              - paragraph [ref=e100]: 🧪 Live Simulation
+            - tab "🗺️ Network Graph" [ref=e101] [cursor=pointer]:
+              - paragraph [ref=e103]: 🗺️ Network Graph
+            - tab "🔮 Operational Forecast" [ref=e104] [cursor=pointer]:
+              - paragraph [ref=e106]: 🔮 Operational Forecast
+            - tab "⚖️ Model Comparison" [ref=e107] [cursor=pointer]:
+              - paragraph [ref=e109]: ⚖️ Model Comparison
+            - tab "📦 Export & Batch" [ref=e110] [cursor=pointer]:
+              - paragraph [ref=e112]: 📦 Export & Batch
+          - tabpanel "🎛️ Setup & Training" [ref=e115]:
+            - generic [ref=e118]:
+              - generic [ref=e120]:
+                - heading "1. Data Management" [level=3] [ref=e125]:
+                  - text: 1. Data Management
+                  - generic [ref=e126]:
+                    - link "Link to heading":
+                      - /url: "#1-data-management"
+                      - img
+                - generic [ref=e128]:
+                  - paragraph [ref=e133]: Load a saved dataset or generate a new one. Data is persisted on disk.
+                  - button "Reload Saved Dataset" [ref=e136] [cursor=pointer]:
+                    - paragraph [ref=e140]: Reload Saved Dataset
+                  - generic [ref=e142]:
+                    - generic [ref=e146]:
+                      - paragraph [ref=e150]: Duration (Days)
+                      - generic [ref=e151]:
+                        - spinbutton "Duration (Days)" [ref=e154]: "365"
+                        - generic [ref=e155]:
+                          - button [ref=e156] [cursor=pointer]:
+                            - img [ref=e157]
+                          - button [ref=e159] [cursor=pointer]:
+                            - img [ref=e160]
+                    - generic [ref=e165]:
+                      - paragraph [ref=e169]: Sampling Interval (min)
+                      - generic [ref=e171]:
+                        - generic [ref=e172]:
+                          - generic [ref=e173]: "10"
+                          - combobox "Selected 10. Sampling Interval (min)" [ref=e175]
+                        - img "open" [ref=e177]
+                    - generic [ref=e182]:
+                      - paragraph [ref=e186]: Stations
+                      - generic [ref=e187]:
+                        - spinbutton "Stations" [ref=e190]: "32"
+                        - generic [ref=e191]:
+                          - button [ref=e192] [cursor=pointer]:
+                            - img [ref=e193]
+                          - button [ref=e195] [cursor=pointer]:
+                            - img [ref=e196]
+                  - paragraph [ref=e202]: "Estimated records: 52,560 (min required: 50,000)."
+                  - button "Generate New Dataset" [ref=e205] [cursor=pointer]:
+                    - paragraph [ref=e209]: Generate New Dataset
+                  - status [ref=e212]:
+                    - generic [ref=e214]:
+                      - generic [ref=e217]: ✅
+                      - paragraph [ref=e219]: "Active Dataset: 8,760 records"
+                  - paragraph [ref=e224]: "Range: 2025-10-01 05:00:00 → 2026-10-01 04:00:00"
+                  - paragraph [ref=e229]: "Frequency: 60 min | Stations: 374"
+                  - separator [ref=e234]
+                  - heading "📥 Upload Real Ridership" [level=3] [ref=e239]:
+                    - text: 📥 Upload Real Ridership
+                    - generic [ref=e240]:
+                      - link "Link to heading":
+                        - /url: "#upload-real-ridership"
+                        - img
+                  - paragraph [ref=e245]:
+                    - text: Upload a CSV with columns
+                    - code [ref=e246]: station
+                    - text: (name or ID) and ridership values to compare against predictions. Calculates MAE/RMSE.
+                  - generic [ref=e248]:
+                    - paragraph [ref=e252]: Upload ridership CSV
+                    - region "Upload ridership CSV" [ref=e253] [cursor=pointer]:
+                      - button "Choose File" [ref=e254]
+                      - button "upload Upload" [ref=e256]:
+                        - generic [ref=e258]:
+                          - generic [ref=e260]: upload
+                          - paragraph [ref=e262]: Upload
+                      - generic [ref=e265]: 200MB per file • CSV
+              - generic [ref=e267]:
+                - heading "2. Model Training" [level=3] [ref=e272]:
+                  - text: 2. Model Training
+                  - generic [ref=e273]:
+                    - link "Link to heading":
+                      - /url: "#2-model-training"
+                      - img
+                - generic [ref=e275]:
+                  - paragraph [ref=e280]: Train and persist the Graph State-Space model. Checkpoints auto-load on restart.
+                  - status [ref=e283]:
+                    - paragraph [ref=e287]: Checkpoint found. Load it to reuse existing training.
+                  - alert [ref=e290]:
+                    - paragraph [ref=e294]: "Loaded 30/37 weights. Skipped: 3 size-mismatched, 10 missing. Retrain for full compatibility."
+                  - button "Reload Checkpoint" [ref=e297] [cursor=pointer]:
+                    - paragraph [ref=e301]: Reload Checkpoint
+                  - group [ref=e304]:
+                    - generic "keyboard_arrow_right Training Settings" [ref=e305] [cursor=pointer]:
+                      - generic [ref=e306]:
+                        - generic [ref=e308]: keyboard_arrow_right
+                        - paragraph [ref=e311]: Training Settings
+                  - button "Start Training" [ref=e314] [cursor=pointer]:
+                    - paragraph [ref=e318]: Start Training
+  - img [ref=e319]

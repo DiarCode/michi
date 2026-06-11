@@ -1,4 +1,5 @@
 """Pydantic response models aligned with ORM schema."""
+
 from typing import Any
 
 from pydantic import BaseModel
@@ -122,8 +123,49 @@ class OperationsReportResponse(BaseModel):
     total_stations: int
 
 
+class ScenarioDeltaPoint(BaseModel):
+    station_id: str
+    station_name: str
+    baseline: float
+    perturbed: float
+    delta: float
+    delta_pct: float
+
+
+class ScenarioSummary(BaseModel):
+    total_ridership_change: float
+    most_affected_station: str
+    least_affected_station: str
+
+
 class ScenarioResult(BaseModel):
     scenario_id: str
-    base_metrics: dict[str, float]
-    scenario_metrics: dict[str, float]
-    changes: dict[str, float]
+    baseline_forecasts: list[dict[str, Any]]
+    perturbed_forecasts: list[dict[str, Any]]
+    deltas: list[ScenarioDeltaPoint]
+    summary: ScenarioSummary
+
+
+class WeatherReadingResponse(BaseModel):
+    id: int | None = None
+    timestamp: str | None = None
+    temperature_c: float | None = None
+    humidity_pct: float | None = None
+    wind_speed_kmh: float | None = None
+    precipitation_mm: float | None = None
+    weather_code: int | None = None
+    description: str | None = None
+    is_forecast: bool = False
+    source: str = "open-meteo"
+
+
+class WeatherImpactResponse(BaseModel):
+    weather_code: int
+    temperature_c: float | None = None
+    description: str = ""
+    impact_factor: float = 1.0
+
+
+class ReportRequest(BaseModel):
+    format: str = "pdf"  # "pdf" or "csv"
+    period: int = 30  # days: 7, 30, 90

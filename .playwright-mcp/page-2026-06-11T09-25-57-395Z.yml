@@ -1,0 +1,139 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e11]: M
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Transit
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Command Center" [ref=e20] [cursor=pointer]:
+          - /url: /
+          - img [ref=e21]
+          - generic [ref=e26]: Command Center
+      - listitem [ref=e27]:
+        - link "Live Map" [ref=e28] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e29]
+          - generic [ref=e33]: Live Map
+      - listitem [ref=e34]:
+        - link "Alerts" [ref=e35] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e36]
+          - generic [ref=e39]: Alerts
+      - listitem [ref=e40]:
+        - link "Simulation" [ref=e41] [cursor=pointer]:
+          - /url: /simulation
+          - img [ref=e42]
+          - generic [ref=e44]: Simulation
+      - listitem [ref=e45]:
+        - link "Forecast" [ref=e46] [cursor=pointer]:
+          - /url: /forecast
+          - img [ref=e47]
+          - generic [ref=e51]: Forecast
+      - listitem [ref=e52]:
+        - link "Crowding" [ref=e53] [cursor=pointer]:
+          - /url: /crowding
+          - img [ref=e54]
+          - generic [ref=e61]: Crowding
+      - listitem [ref=e62]:
+        - link "Executive" [ref=e63] [cursor=pointer]:
+          - /url: /executive
+          - img [ref=e64]
+          - generic [ref=e66]: Executive
+      - listitem [ref=e67]:
+        - link "Settings" [ref=e68] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e69]
+          - generic [ref=e72]: Settings
+    - 'generic "Last tick #0 · 14:25:57" [ref=e74]':
+      - generic [ref=e76]: Offline
+  - main [ref=e77]:
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - button "Toggle Sidebar" [ref=e80] [cursor=pointer]:
+          - img
+          - generic [ref=e81]: Toggle Sidebar
+        - button "Search Michi ⌘ K" [ref=e82] [cursor=pointer]:
+          - img [ref=e83]
+          - generic [ref=e88]: Search Michi
+          - generic: ⌘
+          - generic: K
+      - generic [ref=e90]: Astana · Live
+    - main [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - region "Map" [ref=e101]
+              - generic [ref=e102]:
+                - generic [ref=e103]:
+                  - button "Zoom in" [ref=e104] [cursor=pointer]:
+                    - img [ref=e105]
+                  - button "Zoom out" [ref=e107] [cursor=pointer]:
+                    - img [ref=e108]
+                - button "Reset bearing to north" [ref=e110] [cursor=pointer]:
+                  - img [ref=e111]
+            - generic [ref=e116]:
+              - generic [ref=e117]: Load Level
+              - generic [ref=e118]: <50%
+              - generic [ref=e120]: 50–80%
+              - generic [ref=e122]: ">80%"
+            - generic [ref=e124]:
+              - heading "Live Tracking" [level=3] [ref=e125]
+              - paragraph [ref=e126]: 0 buses active · 14:00
+          - generic [ref=e127]:
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - img [ref=e130]
+                - generic [ref=e133] [cursor=pointer]: Buses
+              - switch "Buses" [checked] [ref=e134] [cursor=pointer]
+            - generic [ref=e135]:
+              - generic [ref=e136]:
+                - img [ref=e137]
+                - generic [ref=e141] [cursor=pointer]: Stations
+              - switch "Stations" [checked] [ref=e142] [cursor=pointer]
+            - generic [ref=e143]:
+              - generic [ref=e144] [cursor=pointer]: Confidence
+              - switch [ref=e145] [cursor=pointer]
+        - generic [ref=e146]:
+          - generic [ref=e147]:
+            - generic [ref=e148]: LIVE
+            - button "Play" [ref=e149] [cursor=pointer]:
+              - img [ref=e150]
+            - generic [ref=e152]:
+              - button "1x" [ref=e153] [cursor=pointer]
+              - button "2x" [ref=e154] [cursor=pointer]
+              - button "5x" [ref=e155] [cursor=pointer]
+            - generic [ref=e156]:
+              - generic [ref=e157]: 11 Jun
+              - generic [ref=e158]: 14:25
+          - generic [ref=e159] [cursor=pointer]:
+            - generic [ref=e165]: 15:00
+            - generic [ref=e168]: 16:00
+            - generic [ref=e171]: 17:00
+            - generic [ref=e174]: 18:00
+            - generic [ref=e177]: 19:00
+            - generic [ref=e180]: 20:00
+            - generic [ref=e183]: 21:00
+            - generic [ref=e186]: 22:00
+            - generic [ref=e189]: 23:00
+            - generic [ref=e192]: 00:00
+            - generic [ref=e195]: 01:00
+            - generic [ref=e198]: 02:00
+            - generic [ref=e201]: 03:00
+            - generic [ref=e204]: 04:00
+            - generic [ref=e207]: 05:00
+            - generic [ref=e210]: 06:00
+            - generic [ref=e213]: 07:00
+            - generic [ref=e216]: 08:00
+            - generic [ref=e219]: 09:00
+            - generic [ref=e222]: 10:00
+            - generic [ref=e225]: 11:00
+            - generic [ref=e228]: 12:00
+            - generic [ref=e231]: 13:00
+            - generic [ref=e234]: 14:00
+  - generic [ref=e239]:
+    - heading "Command Palette" [level=2] [ref=e240]
+    - paragraph [ref=e241]: Search for a command to run...
+  - region "Notifications alt+T"

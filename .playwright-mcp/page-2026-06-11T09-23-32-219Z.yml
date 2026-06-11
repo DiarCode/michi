@@ -1,0 +1,118 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e11]: M
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Transit
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Command Center" [ref=e20] [cursor=pointer]:
+          - /url: /
+          - img [ref=e21]
+          - generic [ref=e26]: Command Center
+      - listitem [ref=e27]:
+        - link "Live Map" [ref=e28] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e29]
+          - generic [ref=e33]: Live Map
+      - listitem [ref=e34]:
+        - link "Alerts" [ref=e35] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e36]
+          - generic [ref=e39]: Alerts
+      - listitem [ref=e40]:
+        - link "Simulation" [ref=e41] [cursor=pointer]:
+          - /url: /simulation
+          - img [ref=e42]
+          - generic [ref=e44]: Simulation
+      - listitem [ref=e45]:
+        - link "Forecast" [ref=e46] [cursor=pointer]:
+          - /url: /forecast
+          - img [ref=e47]
+          - generic [ref=e51]: Forecast
+      - listitem [ref=e52]:
+        - link "Crowding" [ref=e53] [cursor=pointer]:
+          - /url: /crowding
+          - img [ref=e54]
+          - generic [ref=e61]: Crowding
+      - listitem [ref=e62]:
+        - link "Executive" [ref=e63] [cursor=pointer]:
+          - /url: /executive
+          - img [ref=e64]
+          - generic [ref=e66]: Executive
+      - listitem [ref=e67]:
+        - link "Settings" [ref=e68] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e69]
+          - generic [ref=e72]: Settings
+    - 'generic "Last tick #0 · 14:23:32" [ref=e74]':
+      - generic [ref=e76]: Offline
+  - main [ref=e77]:
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - button "Toggle Sidebar" [ref=e80] [cursor=pointer]:
+          - img
+          - generic [ref=e81]: Toggle Sidebar
+        - button "Search Michi ⌘ K" [ref=e82] [cursor=pointer]:
+          - img [ref=e83]
+          - generic [ref=e88]: Search Michi
+          - generic: ⌘
+          - generic: K
+      - generic [ref=e90]: Astana · Live
+    - main [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - paragraph [ref=e96]: Executive
+            - heading "Executive Overview" [level=1] [ref=e97]
+            - paragraph [ref=e98]: Weekly service health, financial snapshot, and the routes that need attention.
+          - generic [ref=e99]:
+            - button "Export CSV" [ref=e100] [cursor=pointer]:
+              - img
+              - text: Export CSV
+            - button "Export PDF" [ref=e101] [cursor=pointer]:
+              - img
+              - text: Export PDF
+        - generic [ref=e115]:
+          - generic [ref=e117]:
+            - generic [ref=e118]: Route performance
+            - generic [ref=e119]: Top routes sorted by ridership
+            - tablist [ref=e122]:
+              - tab "Week" [selected] [ref=e123] [cursor=pointer]
+              - tab "Month" [ref=e124] [cursor=pointer]
+              - tab "Quarter" [ref=e125] [cursor=pointer]
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - generic [ref=e135]: Top insights
+              - generic [ref=e136]: Auto-generated from network signals
+            - generic [ref=e137]:
+              - generic [ref=e138]:
+                - paragraph [ref=e139]: Route 5 trending down
+                - paragraph [ref=e140]: On-time performance dropped 6pp week-over-week. Recommend a 4-week plan review.
+                - button "Read more" [ref=e141] [cursor=pointer]:
+                  - text: Read more
+                  - img
+              - generic [ref=e142]:
+                - paragraph [ref=e143]: Bayterek corridor congestion
+                - paragraph [ref=e144]: Average dwell time up 28% during 17:00–18:30. Consider a turnback short-line.
+                - button "Read more" [ref=e145] [cursor=pointer]:
+                  - text: Read more
+                  - img
+              - generic [ref=e146]:
+                - paragraph [ref=e147]: Energy efficiency up
+                - paragraph [ref=e148]: Regenerative braking usage improved 4.2% across the electric fleet.
+                - button "Read more" [ref=e149] [cursor=pointer]:
+                  - text: Read more
+                  - img
+              - tablist [ref=e151]:
+                - tab "All" [selected] [ref=e152] [cursor=pointer]
+                - tab "Finance" [ref=e153] [cursor=pointer]
+                - tab "Ops" [ref=e154] [cursor=pointer]
+              - generic [ref=e155]:
+                - img [ref=e156]
+                - text: Generated from last 7 days of network data.
+  - generic [ref=e158]:
+    - heading "Command Palette" [level=2] [ref=e159]
+    - paragraph [ref=e160]: Search for a command to run...
+  - region "Notifications alt+T"

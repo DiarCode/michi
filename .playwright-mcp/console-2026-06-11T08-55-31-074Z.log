@@ -1,0 +1,70 @@
+[      93ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/weather/current:0
+[      93ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[      93ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[      97ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[      97ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[     108ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[     108ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[     117ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[     117ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[    1180ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/weather/current:0
+[    1180ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[    1186ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[    3491ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[    3491ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[    8455ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[    8455ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   11200ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   12205ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   16220ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   16220ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   22217ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   23225ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   27940ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   27940ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   31195ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[   32199ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[   33234ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   34241ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   44260ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   45267ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   46351ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   46351ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   55271ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   56276ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   62204ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[   63208ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[   66283ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   67288ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   69533ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   69533ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   77294ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   78299ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   88306ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   89311ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   93213ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[   94219ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[   99333ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[   99539ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[   99539ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[  100339ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  110347ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  111354ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  121361ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  122366ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  124226ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[  125232ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[  129543ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[  129543ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-Dko1t5gX.js:59
+[  132371ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  133377ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  143383ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  144386ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  154391ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  155237ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[  155396ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/state:0
+[  156241ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/simulation/metrics?hours_back=1:0
+[  160588ms] [WARNING] The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://localhost:3100/assets/index-Dko1t5gX.js:817

@@ -1,6 +1,7 @@
 """Intervention workflow API endpoints."""
 
 from fastapi import APIRouter, Depends, Query
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from backend.database import get_db_session
@@ -17,15 +18,27 @@ from backend.services.intervention_service import (
 router = APIRouter()
 
 
+class CreateInterventionRequest(BaseModel):
+    alert_id: int | None = None
+    intervention_type: str
+    route_id: str | None = None
+    station_id: str | None = None
+
+
 @router.get("/")
-def list_interventions_api(status: str | None = None, limit: int = Query(50, le=200), db: Session = Depends(get_db_session)):
+def list_interventions_api(
+    status: str | None = None, limit: int = Query(50, le=200), db: Session = Depends(get_db_session)
+):
     interventions = list_interventions(db, status=status, limit=limit)
     return {"interventions": [_to_dict(i) for i in interventions]}
 
 
 @router.post("/")
-def create_intervention_api(alert_id: int | None = None, intervention_type: str = ..., route_id: str | None = None, station_id: str | None = None, db: Session = Depends(get_db_session)):
-    intervention = create_intervention(db, alert_id, intervention_type, route_id, station_id)
+def create_intervention_api(
+    body: CreateInterventionRequest,
+    db: Session = Depends(get_db_session),
+):
+    intervention = create_intervention(db, body.alert_id, body.intervention_type, body.route_id, body.station_id)
     return _to_dict(intervention)
 
 
@@ -48,7 +61,13 @@ def get_intervention_api(intervention_id: int, db: Session = Depends(get_db_sess
 
 
 @router.patch("/{intervention_id}")
-def update_status_api(intervention_id: int, status: str, approved_by: str | None = None, operator_note: str | None = None, db: Session = Depends(get_db_session)):
+def update_status_api(
+    intervention_id: int,
+    status: str,
+    approved_by: str | None = None,
+    operator_note: str | None = None,
+    db: Session = Depends(get_db_session),
+):
     intervention = update_intervention_status(db, intervention_id, status, approved_by, operator_note)
     if not intervention:
         return {"error": "Not found"}

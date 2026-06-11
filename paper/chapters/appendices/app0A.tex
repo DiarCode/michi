@@ -24,7 +24,35 @@ Special events included Astana Arena football matches, Khan Shatyr concerts, Exp
 
 \section{Weather Simulation}
 
-Hourly weather was drawn from a set of eight templates (clear, cloudy, rain, snow, blizzard, fog, extreme cold, heatwave) with seasonally adjusted sampling probabilities. Temperature ranged from $-40$\textdegree C to $+45$\textdegree C, precipitation from 0 to 30 mm, and wind speed from 0 to 60 km/h. A 5\% probability of sudden weather change was included to simulate meteorological volatility.
+Hourly weather was drawn from a set of eight templates (clear, cloudy, rain, snow, blizzard, fog, extreme cold, heatwave) with seasonally adjusted sampling probabilities: clear ($p = 0.42$ in summer, $p = 0.18$ in winter), cloudy ($p = 0.30$ year-round), rain ($p = 0.10$ in summer, $p = 0.04$ in winter), snow ($p = 0.02$ in summer, $p = 0.28$ in winter), blizzard ($p = 0.0$ in summer, $p = 0.06$ in winter), fog ($p = 0.04$ in autumn, $p = 0.02$ otherwise), extreme cold ($p = 0.0$ in summer, $p = 0.05$ in winter), heatwave ($p = 0.0$ in winter, $p = 0.03$ in summer). Probabilities are renormalized to sum to one within each season. Temperature ranged from $-40$\textdegree C to $+45$\textdegree C, precipitation from 0 to 30 mm, and wind speed from 0 to 60 km/h. A 5\% probability of sudden weather change was included to simulate meteorological volatility.
+
+The functional forms of the demand modulation weights (Eq.~\ref{eq:demand_modulation}) are:
+\begin{align}
+w_{\text{temp}}(T) &= \begin{cases} 0.55 + 0.0225 \cdot (T + 40) & T < -20^\circ\text{C} \\ 1.0 & -20 \leq T \leq 30^\circ\text{C} \\ 1.0 - 0.020 \cdot (T - 30) & T > 30^\circ\text{C} \end{cases} \\
+w_{\text{precip}}(P) &= \exp(-0.08 \cdot P) \\
+w_{\text{holiday}}(h) &\sim \text{Uniform}(0.30, 0.50) \\
+w_{\text{event}}(e) &= 1.0 + \frac{a_e}{6{,}000}, \quad a_e \in [5{,}000, 60{,}000]
+\end{align}
+where $a_e$ is the attendance drawn for event $e$ and $w_{\text{event}}$ is clipped at $11\times$ to bound extreme event effects.
+
+\section{LACMTA Open Dataset Reference}
+
+The Los Angeles County Metropolitan Transportation Authority (LACMTA) open dataset was accessed via the LACMTA Developer portal (\url{https://developer.metro.net/}); the specific product used is the "Daily Boardings by Stop" GTFS-derived feed covering January--June 2024, version 2024.06. After the train/validation/test split (70\%/15\%/15\% time-based, with the test set held out as the last 15\% of the chronological range to prevent temporal leakage), the preprocessed benchmark contains 62{,}304 hourly observation windows across 180 stations and 9 routes. Preprocessing scripts and the exact stop--route mapping used in the evaluation are documented in Appendix~B.
+
+\section{Random Seeds and Reproducibility}
+
+The three independent training runs reported throughout the paper use random seeds $42$, $123$, and $7$ (PyTorch and NumPy seeded; CUDA non-determinism is documented as a known source of cross-run variability of order $10^{-4}$ on R$^2$). All hyperparameter search trials use a separate seed schedule (seeds $11, 22, 33, 44, 55$). Baseline re-evaluations reported in Table~\ref{Tab.main_results} use the seed set $\{42, 123, 7\}$ for the proposed model; classical baselines (HA, Seasonal Naive, MA) are deterministic and therefore reported without variance; the unavailability of multi-seed re-runs for the neural and GNN baselines within the project's compute budget is acknowledged as a limitation in Sec.~\ref{sec:discussion_limitations}.
+
+\section{Reproduction Checklist}
+
+A complete reproduction requires the following items, all of which are documented in this thesis:
+\begin{itemize}
+    \item Synthetic Astana dataset generation pipeline (Sec.~4.2.2 of Chapter~\ref{chap:method}); exact functional forms of demand modulation weights are listed in the present appendix.
+    \item LACMTA dataset source URL, version, and preprocessing protocol (Sec.~"LACMTA Open Dataset Reference" above).
+    \item Random seed schedule (above).
+    \item Hyperparameter configuration (Table~\ref{Tab.hyperparams} and Table~\ref{Tab.A.1}).
+    \item Training, evaluation, and figure-generation scripts (referenced in the supplementary archive, distributed independently of this thesis manuscript).
+\end{itemize}
 
 \section{Negative Binomial Likelihood}
 

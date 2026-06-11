@@ -1,4 +1,5 @@
 """SQLAlchemy ORM models for Michi database."""
+
 from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String, Text
 
 from backend.database import Base
@@ -28,8 +29,8 @@ class RouteORM(Base):
 class RouteStopORM(Base):
     __tablename__ = "route_stops"
     id = Column(Integer, primary_key=True, index=True)
-    route_id = Column(String(20), ForeignKey("routes.route_id"), nullable=False)
-    station_id = Column(String(20), ForeignKey("stations.stop_id"), nullable=False)
+    route_id = Column(String(20), ForeignKey("routes.route_id"), nullable=False, index=True)
+    station_id = Column(String(20), ForeignKey("stations.stop_id"), nullable=False, index=True)
     stop_order = Column(Integer, nullable=False)
 
 
@@ -39,8 +40,8 @@ class AlertORM(Base):
     severity = Column(String(20), nullable=False)
     title = Column(String(300), nullable=False)
     message = Column(Text)
-    station_id = Column(String(20), ForeignKey("stations.stop_id"))
-    route_id = Column(String(20), ForeignKey("routes.route_id"))
+    station_id = Column(String(20), ForeignKey("stations.stop_id"), index=True)
+    route_id = Column(String(20), ForeignKey("routes.route_id"), index=True)
     created_at = Column(DateTime, nullable=False)
     # Rich alert fields
     family = Column(String(50))
@@ -66,14 +67,14 @@ class RidershipORM(Base):
 class ForecastORM(Base):
     __tablename__ = "forecasts"
     id = Column(Integer, primary_key=True, index=True)
-    station_id = Column(String(20), ForeignKey("stations.stop_id"), nullable=False)
+    station_id = Column(String(20), ForeignKey("stations.stop_id"), nullable=False, index=True)
     timestamp = Column(DateTime, nullable=False, index=True)
     predicted = Column(Float, nullable=False)
     confidence = Column(Float, default=0.0)
     model_version = Column(String(50))
     created_at = Column(DateTime)
     horizon_minutes = Column(Integer, default=60)
-    route_id = Column(String(20))
+    route_id = Column(String(20), index=True)
 
 
 class HistoricalRidershipORM(Base):
@@ -97,12 +98,14 @@ class WeatherReadingORM(Base):
     __tablename__ = "weather_readings"
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, nullable=False, index=True)
-    temperature = Column(Float)
-    precipitation = Column(Float)
-    wind_speed = Column(Float)
-    visibility = Column(Float)
-    weather_code = Column(String(10))
-    sudden_change = Column(Boolean, default=False)
+    temperature_c = Column(Float)
+    humidity_pct = Column(Float)
+    wind_speed_kmh = Column(Float)
+    precipitation_mm = Column(Float, default=0.0)
+    weather_code = Column(Integer)
+    description = Column(String(200))
+    is_forecast = Column(Boolean, default=False)
+    source = Column(String(50), default="open-meteo")
 
 
 class EventORM(Base):
@@ -121,10 +124,10 @@ class EventORM(Base):
 class InterventionORM(Base):
     __tablename__ = "interventions"
     id = Column(Integer, primary_key=True, index=True)
-    alert_id = Column(Integer, ForeignKey("alerts.id"))
+    alert_id = Column(Integer, ForeignKey("alerts.id"), index=True)
     intervention_type = Column(String(50), nullable=False)
-    route_id = Column(String(20), ForeignKey("routes.route_id"))
-    station_id = Column(String(20), ForeignKey("stations.stop_id"))
+    route_id = Column(String(20), ForeignKey("routes.route_id"), index=True)
+    station_id = Column(String(20), ForeignKey("stations.stop_id"), index=True)
     created_at = Column(DateTime, nullable=False)
     status = Column(String(20), default="pending")  # pending, approved, executing, completed, cancelled
     operator_note = Column(Text)
@@ -151,7 +154,7 @@ class PredictionAccuracyORM(Base):
     __tablename__ = "prediction_accuracy"
     id = Column(Integer, primary_key=True, index=True)
     model_version = Column(String(50), ForeignKey("model_artifacts.version"))
-    station_id = Column(String(20), ForeignKey("stations.stop_id"))
+    station_id = Column(String(20), ForeignKey("stations.stop_id"), index=True)
     route_id = Column(String(20), ForeignKey("routes.route_id"))
     forecast_timestamp = Column(DateTime, nullable=False)
     horizon_minutes = Column(Integer, nullable=False)
@@ -159,4 +162,4 @@ class PredictionAccuracyORM(Base):
     actual = Column(Float)
     absolute_error = Column(Float)
     mape = Column(Float)
-    evaluated_at = Column(DateTime)
+    evaluated_at = Column(DateTime, index=True)

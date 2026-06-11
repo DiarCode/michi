@@ -1,4 +1,5 @@
 """Unit tests for DTS-GSSF model, data loader, and artifact store."""
+
 import numpy as np
 import torch
 
@@ -66,8 +67,7 @@ class TestDTSGSSF:
     def test_forward_shape(self):
         N = 5
         A = np.eye(N, dtype=np.float32)
-        model = DTSGSSF(N=N, F_in=7, n_series=N, n_agg=3, A_phys=A,
-                        d_model=32, horizon=4, K=2, lora_r=4, dropout=0.0)
+        model = DTSGSSF(N=N, F_in=7, n_series=N, n_agg=3, A_phys=A, d_model=32, horizon=4, K=2, lora_r=4, dropout=0.0)
         x = torch.randn(1, 24, N, 7)
         mu, kappa = model(x)
         assert mu.shape[0] == 1
@@ -77,8 +77,7 @@ class TestDTSGSSF:
     def test_output_positive(self):
         N = 3
         A = np.eye(N, dtype=np.float32)
-        model = DTSGSSF(N=N, F_in=7, n_series=N, n_agg=2, A_phys=A,
-                        d_model=16, horizon=4, dropout=0.0)
+        model = DTSGSSF(N=N, F_in=7, n_series=N, n_agg=2, A_phys=A, d_model=16, horizon=4, dropout=0.0)
         x = torch.randn(1, 12, N, 7)
         mu, kappa = model(x)
         assert (mu > 0).all()
@@ -87,8 +86,7 @@ class TestDTSGSSF:
     def test_freeze_unfreeze(self):
         N = 3
         A = np.eye(N, dtype=np.float32)
-        model = DTSGSSF(N=N, F_in=7, n_series=N, n_agg=2, A_phys=A,
-                        d_model=16, horizon=4, dropout=0.0)
+        model = DTSGSSF(N=N, F_in=7, n_series=N, n_agg=2, A_phys=A, d_model=16, horizon=4, dropout=0.0)
         model.freeze_base_for_adaptation()
         trainable = sum(1 for p in model.parameters() if p.requires_grad)
         total = sum(1 for p in model.parameters())

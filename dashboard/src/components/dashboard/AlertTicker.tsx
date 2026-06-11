@@ -1,28 +1,38 @@
-import { useAlerts } from "@/hooks/useAlerts";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { useAlerts } from "@/hooks/useAlerts"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
 export default function AlertTicker() {
-  const { data } = useAlerts();
-  const alerts = data?.alerts ?? [];
+  const { data } = useAlerts()
+  const alerts = data?.alerts ?? []
 
   return (
     <Card>
-      <CardHeader><CardTitle className="text-sm">Active Alerts</CardTitle></CardHeader>
+      <CardHeader>
+        <CardTitle className="text-sm">Active Alerts</CardTitle>
+      </CardHeader>
       <CardContent>
-        <div className="space-y-2 max-h-48 overflow-y-auto">
+        <div className="max-h-48 space-y-2 overflow-y-auto">
           {alerts.map((a) => (
             <div
               key={a.id}
-              className={`flex items-start gap-2 p-2 rounded text-xs ${
+              className={`flex items-start gap-2 rounded p-2 text-xs ${
                 a.severity === "high"
                   ? "bg-destructive/10 text-destructive"
                   : a.severity === "medium"
-                  ? "bg-amber-500/10 text-amber-700 dark:text-amber-400"
-                  : "bg-muted text-muted-foreground"
+                    ? "bg-amber-500/10 text-amber-700 dark:text-amber-400"
+                    : "bg-muted text-muted-foreground"
               }`}
             >
-              <Badge variant={a.severity === "high" ? "destructive" : a.severity === "medium" ? "secondary" : "outline"}>
+              <Badge
+                variant={
+                  a.severity === "high"
+                    ? "destructive"
+                    : a.severity === "medium"
+                      ? "secondary"
+                      : "outline"
+                }
+              >
                 {a.severity}
               </Badge>
               <div>
@@ -31,9 +41,11 @@ export default function AlertTicker() {
               </div>
             </div>
           ))}
-          {alerts.length === 0 && <p className="text-muted-foreground text-sm">No active alerts.</p>}
+          {alerts.length === 0 && (
+            <p className="text-sm text-muted-foreground">No active alerts.</p>
+          )}
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

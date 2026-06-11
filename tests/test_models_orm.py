@@ -1,7 +1,8 @@
 """Unit tests for SQLAlchemy ORM models."""
-import pytest
-from datetime import datetime, timezone
-from backend.models_orm import StationORM, RouteORM, RouteStopORM, AlertORM, RidershipORM, ForecastORM
+
+from datetime import UTC, datetime
+
+from backend.models_orm import AlertORM, ForecastORM, RidershipORM, RouteORM, RouteStopORM, StationORM
 
 
 class TestStationORM:
@@ -42,7 +43,9 @@ class TestRouteStopORM:
 
 class TestAlertORM:
     def test_create_alert(self, db_session):
-        a = AlertORM(severity="high", title="Test Alert", message="msg", station_id="S001", created_at=datetime.now(timezone.utc))
+        a = AlertORM(
+            severity="high", title="Test Alert", message="msg", station_id="S001", created_at=datetime.now(UTC)
+        )
         db_session.add(a)
         db_session.commit()
         assert db_session.query(AlertORM).count() == 1
@@ -50,7 +53,7 @@ class TestAlertORM:
 
 class TestRidershipORM:
     def test_create_ridership(self, db_session):
-        r = RidershipORM(station_id="S001", timestamp=datetime.now(timezone.utc), passengers=150)
+        r = RidershipORM(station_id="S001", timestamp=datetime.now(UTC), passengers=150)
         db_session.add(r)
         db_session.commit()
         assert db_session.query(RidershipORM).count() == 1
@@ -58,7 +61,13 @@ class TestRidershipORM:
 
 class TestForecastORM:
     def test_create_forecast(self, db_session):
-        f = ForecastORM(station_id="S001", timestamp=datetime.now(timezone.utc), predicted=1200.5, confidence=0.92, model_version="v1")
+        f = ForecastORM(
+            station_id="S001",
+            timestamp=datetime.now(UTC),
+            predicted=1200.5,
+            confidence=0.92,
+            model_version="v1",
+        )
         db_session.add(f)
         db_session.commit()
         result = db_session.query(ForecastORM).first()

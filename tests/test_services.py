@@ -1,8 +1,7 @@
 """Unit tests for backend service layer."""
+
+from backend.services.alert_service import ack_alert, list_alerts
 from backend.services.forecast_service import generate_24h_forecast, get_forecast, get_kpi_metrics
-from backend.services.alert_service import list_alerts, ack_alert
-from backend.services.scenario_service import run_scenario
-from backend.services.realtime_service import get_current_positions
 
 
 class TestForecastService:

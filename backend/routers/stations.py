@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
@@ -14,12 +13,18 @@ STATION_CAPACITY = 3000  # Estimated max capacity per station
 
 
 def _get_stations(db: Session):
-    """Shared helper: return stations list from the database."""
-    db_stations = db.query(StationORM).all()
+    """Shared helper: return stations list from the database (all stations)."""
+    db_stations = db.query(StationORM).order_by(StationORM.stop_id).all()
     if db_stations:
         return [
-            {"id": s.stop_id, "name": s.name, "lat": s.lat, "lon": s.lon,
-             "district": s.district, "ridership_24h": s.ridership_24h}
+            {
+                "id": s.stop_id,
+                "name": s.name,
+                "lat": s.lat,
+                "lon": s.lon,
+                "district": s.district,
+                "ridership_24h": s.ridership_24h,
+            }
             for s in db_stations
         ]
     return []
@@ -36,7 +41,12 @@ def _calc_load_pct(ridership_24h: int, hour: int) -> int:
 
 
 @router.get("", response_model=StationListResponse)
-def list_stations(hour: int | None = Query(None, ge=0, le=23), db: Session = Depends(get_db_session)):
+def list_stations(
+    hour: int | None = Query(None, ge=0, le=23),
+    limit: int = Query(500, le=2000),
+    offset: int = Query(0, ge=0),
+    db: Session = Depends(get_db_session),
+):
     """List stations, optionally with heatmap load data for a specific hour."""
     stations = _get_stations(db)
 
@@ -45,7 +55,7 @@ def list_stations(hour: int | None = Query(None, ge=0, le=23), db: Session = Dep
             ridership = s.get("ridership_24h", 0) or 0
             s["load_percent"] = _calc_load_pct(ridership, hour)
 
-    return {"stations": stations}
+    return {"stations": stations[offset : offset + limit]}
 
 
 @router.get("/{station_id}/forecast", response_model=ForecastResponse)
@@ -61,18 +71,27 @@ def get_station_detail(station_id: str, db: Session = Depends(get_db_session)):
 
     station_info = None
     if station:
-        station_info = {"id": station.stop_id, "name": station.name, "lat": station.lat,
-                        "lon": station.lon, "district": station.district, "ridership_24h": station.ridership_24h}
+        station_info = {
+            "id": station.stop_id,
+            "name": station.name,
+            "lat": station.lat,
+            "lon": station.lon,
+            "district": station.district,
+            "ridership_24h": station.ridership_24h,
+        }
     if not station_info:
         raise NotFoundException("Station", station_id)
 
-    # Connected routes
+    # Connected routes — batch query to avoid N+1
     connected_routes = []
     route_stops = db.query(RouteStopORM).filter(RouteStopORM.station_id == station_id).all()
-    for rs in route_stops:
-        route = db.query(RouteORM).filter(RouteORM.route_id == rs.route_id).first()
-        if route:
-            connected_routes.append({"id": route.route_id, "name": route.name, "color": route.color})
+    if route_stops:
+        route_ids = [rs.route_id for rs in route_stops]
+        route_map = {r.route_id: r for r in db.query(RouteORM).filter(RouteORM.route_id.in_(route_ids)).all()}
+        for rs in route_stops:
+            route = route_map.get(rs.route_id)
+            if route:
+                connected_routes.append({"id": route.route_id, "name": route.name, "color": route.color})
 
     # Forecast
     forecast = get_forecast(station_id, db=db)

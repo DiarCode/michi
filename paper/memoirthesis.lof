@@ -2,23 +2,27 @@
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\addvspace {10pt}
 \par \nobreak \textbf {{\scshape Figure} \hfill Page}\par \nobreak 
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces DTS-GSSF architecture. The input tensor $\mathbf {X} \in \mathbb {R}^{B \times T \times N \times F}$ flows through the Gated Recurrent Encoder (temporal encoding), GraphPropagation (spatial diffusion), TemporalAttention (long-range dependencies), and Prediction Heads (per-station and aggregate forecasts).}}{19}{figure.caption.15}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces React-based command centre dashboard providing an overview of network-wide ridership predictions, station status, and anomaly alerts.}}{25}{figure.caption.16}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Live station map displaying real-time passenger flow predictions across the Astana bus network, with colour-coded confidence intervals.}}{25}{figure.caption.17}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Depot operations interface for monitoring vehicle dispatch schedules, capacity utilisation, and route-level demand forecasts.}}{26}{figure.caption.18}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Operational forecast view for a single station, showing predicted boarding counts with confidence intervals across multiple horizons.}}{26}{figure.caption.19}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Streamlit interface for live simulation of real-time data ingestion and model validation. The panel displays incoming ridership observations alongside predicted values and confidence intervals.}}{26}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces DTS-GSSF architecture. The input tensor $\mathbf {X} \in \mathbb {R}^{B \times T \times N \times F}$ flows through the Gated Recurrent Encoder (temporal encoding), GraphPropagation (spatial diffusion), TemporalAttention (long-range dependencies), and Prediction Heads (per-station and aggregate forecasts).}}{17}{figure.caption.10}%
 \addvspace {10pt}
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Per-horizon test-set accuracy: $R^2$ and MAE across 15, 30, 60, and 120 minute prediction horizons.}}{33}{figure.caption.24}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Training and validation loss curves. The vertical dashed line marks the best validation epoch (epoch 40).}}{34}{figure.caption.26}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Calibration analysis. Left: Expected Calibration Error (ECE) across distributional output heads (lower is better). Right: Quantile coverage at 50\% and 90\% credible intervals. Dashed lines indicate nominal coverage levels.}}{36}{figure.caption.28}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Normalized feature importance from gradient-based attribution.}}{37}{figure.caption.29}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Open data benchmark overview. Monthly boardings and active stop counts for the LACMTA evaluation dataset.}}{29}{figure.caption.14}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Performance comparison on the LACMTA open dataset. DTS-GSSF achieves the highest $R^2$ and the lowest MAE compared to baselines.}}{29}{figure.caption.15}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Average ridership by city sub-region in the Los Angeles open dataset. The central and mid-city districts show the highest demand, while the peripheral South Bay region has lower average boardings.}}{30}{figure.caption.16}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Ablation study results. Bars show test $R^2$ for each architectural variant; the dashed line indicates the full model (v3). Removing GraphPropagation (v1) causes the largest performance drop, while the TemporalAttention module (v2$\to $v3) provides the second-largest improvement.}}{31}{figure.caption.18}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Per-horizon test-set accuracy: $R^2$ and MAE across 15, 30, 60, and 120 minute prediction horizons.}}{32}{figure.caption.19}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Training and validation loss curves across 3 independent seeds. Shaded regions indicate $\pm 1$ standard deviation.}}{33}{figure.caption.21}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Calibration analysis. Left: Expected Calibration Error (ECE) across distributional output heads (lower is better). Right: Quantile coverage at 50\% and 90\% credible intervals. Dashed lines indicate nominal coverage levels.}}{35}{figure.caption.23}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Normalized feature importance from Integrated Gradients attribution (20 reference points, zero-feature baseline, $n = 20$ test windows).}}{36}{figure.caption.24}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Per-district test-set performance. Left: $R^2$ by district. Right: MAE by district. The central Esil district achieves the highest accuracy, while the peripheral Baikonur district shows the largest errors.}}{37}{figure.caption.26}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
+\contentsline {figure}{\numberline {A.1}{\ignorespaces React-based command centre dashboard providing an overview of network-wide ridership predictions, station status, and anomaly alerts.}}{52}{figure.caption.33}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Live station map displaying real-time passenger flow predictions across the Astana bus network, with colour-coded confidence intervals.}}{53}{figure.caption.34}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Depot operations interface for monitoring vehicle dispatch schedules, capacity utilisation, and route-level demand forecasts.}}{53}{figure.caption.35}%
+\contentsline {figure}{\numberline {A.4}{\ignorespaces Operational forecast view for a single station, showing predicted boarding counts with confidence intervals across multiple horizons.}}{54}{figure.caption.36}%
+\contentsline {figure}{\numberline {A.5}{\ignorespaces Streamlit interface for live simulation of real-time data ingestion and model validation. The panel displays incoming ridership observations alongside predicted values and confidence intervals.}}{54}{figure.caption.37}%

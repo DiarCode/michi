@@ -1,4 +1,5 @@
 """Intervention workflow service — CRUD + status tracking for intervention actions."""
+
 from datetime import UTC, datetime
 
 from sqlalchemy.orm import Session
@@ -9,8 +10,14 @@ INTERVENTION_TYPES = ["dispatch", "short_turn", "hold", "deadhead", "passenger_i
 VALID_STATUSES = ["pending", "approved", "executing", "completed", "cancelled"]
 
 
-def create_intervention(db: Session, alert_id: int | None, intervention_type: str, route_id: str | None,
-                        station_id: str | None, predicted_impact: dict | None = None) -> InterventionORM:
+def create_intervention(
+    db: Session,
+    alert_id: int | None,
+    intervention_type: str,
+    route_id: str | None,
+    station_id: str | None,
+    predicted_impact: dict | None = None,
+) -> InterventionORM:
     if intervention_type not in INTERVENTION_TYPES:
         raise ValueError(f"Invalid intervention type: {intervention_type}")
     intervention = InterventionORM(
@@ -39,8 +46,14 @@ def get_intervention(db: Session, intervention_id: int) -> InterventionORM | Non
     return db.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
 
 
-def update_intervention_status(db: Session, intervention_id: int, status: str, approved_by: str | None = None,
-                                operator_note: str | None = None, actual_impact: dict | None = None) -> InterventionORM | None:
+def update_intervention_status(
+    db: Session,
+    intervention_id: int,
+    status: str,
+    approved_by: str | None = None,
+    operator_note: str | None = None,
+    actual_impact: dict | None = None,
+) -> InterventionORM | None:
     if status not in VALID_STATUSES:
         raise ValueError(f"Invalid status: {status}")
     intervention = db.query(InterventionORM).filter(InterventionORM.id == intervention_id).first()
@@ -58,8 +71,7 @@ def update_intervention_status(db: Session, intervention_id: int, status: str, a
     return intervention
 
 
-def simulate_intervention_impact(intervention_type: str, route_id: str | None,
-                                  station_id: str | None) -> dict:
+def simulate_intervention_impact(intervention_type: str, route_id: str | None, station_id: str | None) -> dict:
     """Simulate the predicted impact of an intervention (what-if analysis)."""
     base_impacts = {
         "dispatch": {"ridership_change": 15, "wait_time_change": -20, "cost": "1 reserve bus for 2-4 hours"},

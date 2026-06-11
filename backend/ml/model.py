@@ -10,6 +10,7 @@ Canonical implementation matching the paper specification:
 Hyperparameter defaults align with Table 8 of the paper:
   d_model=192, horizon=4, K=3, lora_r=16, n_heads=6, dropout=0.1
 """
+
 import math
 from collections.abc import Iterable
 
@@ -31,8 +32,7 @@ class LoRALinear(nn.Module):
     Setting r=0 falls back to a plain linear layer.
     """
 
-    def __init__(self, in_features: int, out_features: int, r: int = 16,
-                 alpha: float = 16.0, bias: bool = True):
+    def __init__(self, in_features: int, out_features: int, r: int = 16, alpha: float = 16.0, bias: bool = True):
         super().__init__()
         self.r = r
         self.scale = alpha / max(1, r)
@@ -66,8 +66,7 @@ class GatedSSMBlock(nn.Module):
     where a_t = σ(gate_a(u_t)), b_t = tanh(gate_b(u_t)).
     """
 
-    def __init__(self, d_in: int, d_model: int, dropout: float = 0.1,
-                 lora_r: int = 16):
+    def __init__(self, d_in: int, d_model: int, dropout: float = 0.1, lora_r: int = 16):
         super().__init__()
         self.d_model = d_model
         self.in_proj = LoRALinear(d_in, d_model, r=lora_r, alpha=16.0)
@@ -101,20 +100,23 @@ class GraphPropagation(nn.Module):
     with residual connection and LayerNorm.
     """
 
-    def __init__(self, N: int, d: int, A_phys: np.ndarray, K: int = 3,
-                 alpha_phys: float = 0.6, d_emb: int = 16,
-                 learnable_alpha: bool = True):
+    def __init__(
+        self,
+        N: int,
+        d: int,
+        A_phys: np.ndarray,
+        K: int = 3,
+        alpha_phys: float = 0.6,
+        d_emb: int = 16,
+        learnable_alpha: bool = True,
+    ):
         super().__init__()
         self.K = K
         self.learnable_alpha = learnable_alpha
         if learnable_alpha:
-            self.log_alpha = nn.Parameter(
-                torch.tensor(math.log(alpha_phys), dtype=torch.float32)
-            )
+            self.log_alpha = nn.Parameter(torch.tensor(math.log(alpha_phys), dtype=torch.float32))
         else:
-            self.register_buffer(
-                "log_alpha", torch.tensor(math.log(alpha_phys), dtype=torch.float32)
-            )
+            self.register_buffer("log_alpha", torch.tensor(math.log(alpha_phys), dtype=torch.float32))
         self.register_buffer("A_phys", torch.from_numpy(A_phys).float())
         self.E1 = nn.Parameter(torch.randn(N, d_emb) * 0.05)
         self.E2 = nn.Parameter(torch.randn(N, d_emb) * 0.05)
@@ -147,8 +149,7 @@ class TemporalAttention(nn.Module):
 
     def __init__(self, d_model: int, n_heads: int = 6, dropout: float = 0.1):
         super().__init__()
-        self.attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout,
-                                          batch_first=True)
+        self.attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout, batch_first=True)
         self.norm = nn.LayerNorm(d_model)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -164,20 +165,30 @@ class DTSGSSF(nn.Module):
       d_model=192, horizon=4, K=3, lora_r=16, n_heads=6, dropout=0.1
     """
 
-    def __init__(self, N: int, F_in: int, n_series: int, n_agg: int,
-                 A_phys: np.ndarray,
-                 d_model: int = 192, horizon: int = 4, K: int = 3,
-                 lora_r: int = 16, dropout: float = 0.1,
-                 n_heads: int = 6, alpha_phys: float = 0.6):
+    def __init__(
+        self,
+        N: int,
+        F_in: int,
+        n_series: int,
+        n_agg: int,
+        A_phys: np.ndarray,
+        d_model: int = 192,
+        horizon: int = 4,
+        K: int = 3,
+        lora_r: int = 16,
+        dropout: float = 0.1,
+        n_heads: int = 6,
+        alpha_phys: float = 0.6,
+    ):
         super().__init__()
         self.horizon = horizon
         self.d_model = d_model
 
         # Encoder: Gated SSM + Graph propagation + Temporal attention
         self.ssm = GatedSSMBlock(F_in, d_model, dropout=dropout, lora_r=lora_r)
-        self.graph = GraphPropagation(N, d_model, A_phys=A_phys, K=K,
-                                      alpha_phys=alpha_phys, d_emb=16,
-                                      learnable_alpha=True)
+        self.graph = GraphPropagation(
+            N, d_model, A_phys=A_phys, K=K, alpha_phys=alpha_phys, d_emb=16, learnable_alpha=True
+        )
         self.attn = TemporalAttention(d_model, n_heads=n_heads, dropout=dropout)
 
         # Fusion: concatenation [h_graph; h_temp] -> projection -> d_model
@@ -198,12 +209,10 @@ class DTSGSSF(nn.Module):
             nn.Linear(d_model, d_model),
             nn.GELU(),
         )
-        self.head_agg = LoRALinear(d_model, horizon * n_agg, r=lora_r,
-                                    alpha=16.0, bias=True)
+        self.head_agg = LoRALinear(d_model, horizon * n_agg, r=lora_r, alpha=16.0, bias=True)
 
         # Negative Binomial dispersion (global)
-        self.log_kappa = nn.Parameter(torch.tensor(math.log(8.0),
-                                                    dtype=torch.float32))
+        self.log_kappa = nn.Parameter(torch.tensor(math.log(8.0), dtype=torch.float32))
         self.N = N
         self.n_series = n_series
         self.n_agg = n_agg
@@ -211,23 +220,23 @@ class DTSGSSF(nn.Module):
     def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         B, L, N, _ = x.shape
         # SSM: process each station's temporal sequence
-        h_ssm = self.ssm(x)                                     # (B, N, d_model)
+        h_ssm = self.ssm(x)  # (B, N, d_model)
         # Graph propagation: spatial diffusion
-        h_graph = self.graph(h_ssm)                              # (B, N, d_model)
+        h_graph = self.graph(h_ssm)  # (B, N, d_model)
         # Temporal attention over per-timestep SSM projections
-        u = self.ssm.drop(F.gelu(self.ssm.in_proj(x)))          # (B, L, N, d_model)
+        u = self.ssm.drop(F.gelu(self.ssm.in_proj(x)))  # (B, L, N, d_model)
         u = u.permute(0, 2, 1, 3).reshape(B * N, L, self.d_model)
-        h_temp = self.attn(u)                                    # (B*N, L, d_model)
+        h_temp = self.attn(u)  # (B*N, L, d_model)
         h_temp = h_temp.reshape(B, N, L, self.d_model).mean(dim=2)  # (B, N, d_model)
         # Concatenation fusion
         h = self.fusion_proj(torch.cat([h_graph, h_temp], dim=-1))  # (B, N, d_model)
         # Prediction heads
-        eta_bottom = self.head_bottom(h)                        # (B, N, horizon)
-        mu_bottom = torch.exp(eta_bottom).permute(0, 2, 1)      # (B, horizon, N)
-        pooled = self.pool(h).mean(dim=1)                       # (B, d_model)
+        eta_bottom = self.head_bottom(h)  # (B, N, horizon)
+        mu_bottom = torch.exp(eta_bottom).permute(0, 2, 1)  # (B, horizon, N)
+        pooled = self.pool(h).mean(dim=1)  # (B, d_model)
         eta_agg = self.head_agg(pooled).view(B, self.horizon, self.n_agg)
-        mu_agg = torch.exp(eta_agg)                              # (B, horizon, n_agg)
-        mu_all = torch.cat([mu_bottom, mu_agg], dim=-1)          # (B, horizon, n_series)
+        mu_agg = torch.exp(eta_agg)  # (B, horizon, n_agg)
+        mu_all = torch.cat([mu_bottom, mu_agg], dim=-1)  # (B, horizon, n_series)
         kappa = softplus(self.log_kappa) + 1e-4
         return mu_all, kappa
 
@@ -240,6 +249,7 @@ class DTSGSSF(nn.Module):
             if isinstance(m, LoRALinear):
                 for p in m.lora_parameters():
                     p.requires_grad = True
+
         self.apply(unfreeze_lora)
         self.log_kappa.requires_grad = True
 
@@ -248,8 +258,7 @@ class DTSGSSF(nn.Module):
             p.requires_grad = True
 
 
-def nb_nll(y: torch.Tensor, mu: torch.Tensor, kappa: torch.Tensor,
-           eps: float = 1e-8) -> torch.Tensor:
+def nb_nll(y: torch.Tensor, mu: torch.Tensor, kappa: torch.Tensor, eps: float = 1e-8) -> torch.Tensor:
     """Negative log-likelihood of the Negative Binomial distribution.
 
     Parameters
@@ -267,7 +276,11 @@ def nb_nll(y: torch.Tensor, mu: torch.Tensor, kappa: torch.Tensor,
     mu = torch.clamp(mu, min=eps)
     k = torch.clamp(kappa, min=eps)
     k_plus_mu = torch.clamp(k + mu, min=eps)
-    loglik = (torch.lgamma(y + k) - torch.lgamma(k) - torch.lgamma(y + 1.0)
-              + k * (torch.log(k) - torch.log(k_plus_mu))
-              + y * (torch.log(mu) - torch.log(k_plus_mu)))
+    loglik = (
+        torch.lgamma(y + k)
+        - torch.lgamma(k)
+        - torch.lgamma(y + 1.0)
+        + k * (torch.log(k) - torch.log(k_plus_mu))
+        + y * (torch.log(mu) - torch.log(k_plus_mu))
+    )
     return -loglik

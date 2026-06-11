@@ -1,0 +1,42 @@
+\begin{thebibliography}{1}
+
+\bibitem{begisbayev2024investigation}
+Diar Begisbayev, Aivar Sakhipov, Ramazan Seiitbek, Aiganym Mansurova, and
+  Aigerim Mansurova.
+\newblock Investigation of hybrid models and architectures for real-time
+  adaptive passenger flow prediction.
+\newblock In {\em Proceedings of the 7th International Conference on Data
+  Science and Information Technology (DSIT)}, pages 1--5, 2024.
+
+\bibitem{mektepbayeva2025adaptive}
+Aruzhan Mektepbayeva, Diar Begisbayev, Ramazan Seiitbek, Nursultan Khaimuldin,
+  Aivar Sakhipov, and Daniyar Rakhimzhanov.
+\newblock Adaptive machine learning algorithms for data processing in
+  transportation systems.
+\newblock In {\em Proceedings of the IEEE 5th International Conference on Smart
+  Information Systems and Technologies (SIST)}, pages 1--8, 2025.
+
+\bibitem{sakhipov2025federated}
+Aivar Sakhipov, Diar Begisbayev, and Didar Yedilkhan.
+\newblock Federated drift-aware graph neural forecasting for real-time
+  passenger flow.
+\newblock {\em Procedia Computer Science}, 272:108--112, 2025.
+\newblock 16th Int. Conf. Emerging Ubiquitous Systems and Pervasive Networks.
+
+\bibitem{yedilkhan2025intelligent}
+Didar Yedilkhan, Aivar Sakhipov, Ramazan Seiitbek, Aruzhan Mektepbayeva, and
+  Diar Begisbayev.
+\newblock Intelligent assistant for data preparation automation in urban
+  transportation management systems.
+\newblock {\em Vestnik KazATC (Bulletin of the Kazakh Academy of Transport and
+  Communications)}, 137(2):310--324, 2025.
+
+\bibitem{sakhipov2026deep}
+Aivar Sakhipov, Zhanbai Uzdenbayev, Diar Begisbayev, Aruzhan Mektepbayeva,
+  Ramazan Seiitbek, and Didar Yedilkhan.
+\newblock Deep heterogeneity learning for cross-city transit forecasting: A
+  differentially private federated framework with mixture-of-experts and
+  seasonal decomposition.
+\newblock {\em Frontiers in Future Transportation}, 7:1644979, 2026.
+
+\end{thebibliography}

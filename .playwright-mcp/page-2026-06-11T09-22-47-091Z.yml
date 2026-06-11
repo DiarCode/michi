@@ -1,0 +1,151 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - generic [ref=e9]:
+        - generic [ref=e11]: M
+        - generic [ref=e12]:
+          - generic [ref=e13]: Michi
+          - generic [ref=e14]: Transit
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link "Command Center" [ref=e20] [cursor=pointer]:
+            - /url: /
+            - img [ref=e21]
+            - generic [ref=e26]: Command Center
+        - listitem [ref=e27]:
+          - link "Live Map" [ref=e28] [cursor=pointer]:
+            - /url: /map
+            - img [ref=e29]
+            - generic [ref=e33]: Live Map
+        - listitem [ref=e34]:
+          - link "Alerts" [ref=e35] [cursor=pointer]:
+            - /url: /alerts
+            - img [ref=e36]
+            - generic [ref=e39]: Alerts
+        - listitem [ref=e40]:
+          - link "Simulation" [ref=e41] [cursor=pointer]:
+            - /url: /simulation
+            - img [ref=e42]
+            - generic [ref=e44]: Simulation
+        - listitem [ref=e45]:
+          - link "Forecast" [ref=e46] [cursor=pointer]:
+            - /url: /forecast
+            - img [ref=e47]
+            - generic [ref=e51]: Forecast
+        - listitem [ref=e52]:
+          - link "Crowding" [ref=e53] [cursor=pointer]:
+            - /url: /crowding
+            - img [ref=e54]
+            - generic [ref=e61]: Crowding
+        - listitem [ref=e62]:
+          - link "Executive" [ref=e63] [cursor=pointer]:
+            - /url: /executive
+            - img [ref=e64]
+            - generic [ref=e66]: Executive
+        - listitem [ref=e67]:
+          - link "Settings" [ref=e68] [cursor=pointer]:
+            - /url: /settings
+            - img [ref=e69]
+            - generic [ref=e72]: Settings
+      - 'generic "Last tick #1586 · 14:22:38" [ref=e157]':
+        - generic [ref=e76]: Live
+    - main [ref=e77]:
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - button "Toggle Sidebar" [ref=e80] [cursor=pointer]:
+            - img
+            - generic [ref=e81]: Toggle Sidebar
+          - button "Search Michi ⌘ K" [ref=e82] [cursor=pointer]:
+            - img [ref=e83]
+            - generic [ref=e88]: Search Michi
+            - generic: ⌘
+            - generic: K
+        - generic [ref=e89]:
+          - generic "Light drizzle" [ref=e158]: 🌦️ 11°C · Thu, Jun 11
+          - generic [ref=e90]: Astana · Live
+      - main [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - paragraph [ref=e96]: Predict
+              - heading "Forecast" [level=1] [ref=e97]
+              - paragraph [ref=e98]: Generate a passenger-flow forecast from the DTS-GSSF model. Compare against baselines.
+            - button "Refresh" [ref=e159] [cursor=pointer]:
+              - img
+              - text: Refresh
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - generic [ref=e103]: Configuration
+                - generic [ref=e104]: Choose inputs and the model to run.
+              - generic [ref=e106]:
+                - group [ref=e107]:
+                  - generic [ref=e108]: Forecast horizon
+                  - group [ref=e109]:
+                    - radio "15m" [ref=e110] [cursor=pointer]
+                    - radio "60m" [checked] [ref=e111] [cursor=pointer]
+                    - radio "4h" [ref=e112] [cursor=pointer]
+                    - radio "24h" [ref=e113] [cursor=pointer]
+                - group [ref=e114]:
+                  - generic [ref=e115]: Model
+                  - group [ref=e116]:
+                    - radio "DTS-GSSF" [checked] [ref=e117] [cursor=pointer]
+                    - radio "STGCN" [ref=e118] [cursor=pointer]
+                    - radio "DCRNN" [ref=e119] [cursor=pointer]
+                  - paragraph [ref=e120]: Default is the paper's primary model.
+                - group [ref=e121]:
+                  - generic [ref=e122]: Station
+                  - combobox "Station" [ref=e123] [cursor=pointer]:
+                    - generic: All stations
+                    - img
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - generic [ref=e126]:
+                  - tablist [ref=e128]:
+                    - tab "Ridership" [selected] [ref=e129] [cursor=pointer]
+                    - tab "Headway" [ref=e130] [cursor=pointer]
+                    - tab "Anomaly" [ref=e131] [cursor=pointer]
+                  - generic [ref=e161]: dts-gssf · 250 predictions
+                - generic [ref=e164]:
+                  - list [ref=e166]:
+                    - listitem [ref=e167]:
+                      - img "Confidence % legend icon" [ref=e168]
+                      - text: Confidence %
+                    - listitem [ref=e170]:
+                      - img "Predicted ridership legend icon" [ref=e171]
+                      - text: Predicted ridership
+                  - application [ref=e173]:
+                    - generic [ref=e193]:
+                      - generic [ref=e194]:
+                        - generic [ref=e196]: 60m
+                        - generic [ref=e198]: 120m
+                      - generic [ref=e199]:
+                        - generic [ref=e201]: "0"
+                        - generic [ref=e203]: "25"
+                        - generic [ref=e205]: "50"
+                        - generic [ref=e207]: "75"
+                        - generic [ref=e209]: "100"
+              - generic [ref=e134]:
+                - generic [ref=e135]:
+                  - generic [ref=e136]: Summary
+                  - generic [ref=e137]: Across all selected routes for the next 60m.
+                - generic [ref=e139]:
+                  - tablist [ref=e140]:
+                    - tab "Ridership" [selected] [ref=e141] [cursor=pointer]
+                    - tab "vs Baseline" [ref=e142] [cursor=pointer]
+                  - tabpanel "Ridership" [ref=e143]:
+                    - list [ref=e144]:
+                      - listitem [ref=e145]:
+                        - paragraph [ref=e146]: Expected riders
+                        - paragraph [ref=e147]: 3,435
+                      - listitem [ref=e148]:
+                        - paragraph [ref=e149]: Peak load
+                        - paragraph [ref=e150]: "42"
+                      - listitem [ref=e151]:
+                        - paragraph [ref=e152]: Avg confidence
+                        - paragraph [ref=e153]: 92%
+    - generic [ref=e154]:
+      - heading "Command Palette" [level=2] [ref=e155]
+      - paragraph [ref=e156]: Search for a command to run...
+    - region "Notifications alt+T"
+  - generic [ref=e210]: "0"

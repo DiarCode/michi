@@ -3,6 +3,7 @@
 Tests FeatureNormalizer, PageHinkley, ResidualKalman, reconciliation,
 loss functions, network generation, and hierarchy construction.
 """
+
 import numpy as np
 import pytest
 import torch
@@ -10,6 +11,7 @@ import torch
 # ---------------------------------------------------------------------------
 # FeatureNormalizer (backend/ml/normalizer.py)
 # ---------------------------------------------------------------------------
+
 
 class TestFeatureNormalizer:
     """Tests for z-score feature normalization."""
@@ -122,6 +124,7 @@ class TestFeatureNormalizer:
 # PageHinkley drift detector
 # ---------------------------------------------------------------------------
 
+
 class TestPageHinkley:
     """Tests for Page-Hinkley change point detection."""
 
@@ -178,6 +181,7 @@ class TestPageHinkley:
 # ResidualKalman filter
 # ---------------------------------------------------------------------------
 
+
 class TestResidualKalman:
     """Tests for online residual Kalman correction."""
 
@@ -218,6 +222,7 @@ class TestResidualKalman:
 # Hierarchical reconciliation
 # ---------------------------------------------------------------------------
 
+
 class TestReconciliation:
     """Tests for MinT reconciliation."""
 
@@ -230,15 +235,19 @@ class TestReconciliation:
         lines = {"L1": [0, 1, 2]}
         # Assign all stations to the same real district
         station_district = [ASTANA_DISTRICTS[0]] * 3
-        net = type("NetworkSpec", (), {
-            "station_names": station_names,
-            "station_district": station_district,
-            "lines": lines,
-            "A_phys": np.eye(3, dtype=np.float32),
-            "edges": [(0, 1), (1, 2)],
-            "latlon": [(51.0, 71.0)] * 3,
-        })()
-        S, series_names, line_groups, district_groups = build_hierarchy(net)
+        net = type(
+            "NetworkSpec",
+            (),
+            {
+                "station_names": station_names,
+                "station_district": station_district,
+                "lines": lines,
+                "A_phys": np.eye(3, dtype=np.float32),
+                "edges": [(0, 1), (1, 2)],
+                "latlon": [(51.0, 71.0)] * 3,
+            },
+        )()
+        S, _series_names, _line_groups, _district_groups = build_hierarchy(net)
 
         # 3 stations + 1 line + 4 districts + 1 total = 9 series
         n_series = S.shape[0]
@@ -263,6 +272,7 @@ class TestReconciliation:
 # ---------------------------------------------------------------------------
 # Loss function
 # ---------------------------------------------------------------------------
+
 
 class TestNBLoss:
     """Tests for Negative Binomial negative log-likelihood."""
@@ -314,6 +324,7 @@ class TestNBLoss:
 # ---------------------------------------------------------------------------
 # Network generation
 # ---------------------------------------------------------------------------
+
 
 class TestNetworkGeneration:
     """Tests for Astana bus network generation."""

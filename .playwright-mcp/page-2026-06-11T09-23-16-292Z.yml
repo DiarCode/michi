@@ -1,0 +1,2524 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - generic [ref=e9]:
+        - generic [ref=e11]: M
+        - generic [ref=e12]:
+          - generic [ref=e13]: Michi
+          - generic [ref=e14]: Transit
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link "Command Center" [ref=e20] [cursor=pointer]:
+            - /url: /
+            - img [ref=e21]
+            - generic [ref=e26]: Command Center
+        - listitem [ref=e27]:
+          - link "Live Map" [ref=e28] [cursor=pointer]:
+            - /url: /map
+            - img [ref=e29]
+            - generic [ref=e33]: Live Map
+        - listitem [ref=e34]:
+          - link "Alerts" [ref=e35] [cursor=pointer]:
+            - /url: /alerts
+            - img [ref=e36]
+            - generic [ref=e39]: Alerts
+        - listitem [ref=e40]:
+          - link "Simulation" [ref=e41] [cursor=pointer]:
+            - /url: /simulation
+            - img [ref=e42]
+            - generic [ref=e44]: Simulation
+        - listitem [ref=e45]:
+          - link "Forecast" [ref=e46] [cursor=pointer]:
+            - /url: /forecast
+            - img [ref=e47]
+            - generic [ref=e51]: Forecast
+        - listitem [ref=e52]:
+          - link "Crowding" [ref=e53] [cursor=pointer]:
+            - /url: /crowding
+            - img [ref=e54]
+            - generic [ref=e61]: Crowding
+        - listitem [ref=e62]:
+          - link "Executive" [ref=e63] [cursor=pointer]:
+            - /url: /executive
+            - img [ref=e64]
+            - generic [ref=e66]: Executive
+        - listitem [ref=e67]:
+          - link "Settings" [ref=e68] [cursor=pointer]:
+            - /url: /settings
+            - img [ref=e69]
+            - generic [ref=e72]: Settings
+      - 'generic "Last tick #1613 · 14:23:08" [ref=e121]':
+        - generic [ref=e76]: Live
+    - main [ref=e77]:
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - button "Toggle Sidebar" [ref=e80] [cursor=pointer]:
+            - img
+            - generic [ref=e81]: Toggle Sidebar
+          - button "Search Michi ⌘ K" [ref=e82] [cursor=pointer]:
+            - img [ref=e83]
+            - generic [ref=e88]: Search Michi
+            - generic: ⌘
+            - generic: K
+        - generic [ref=e89]:
+          - generic "Light drizzle" [ref=e122]: 🌦️ 11°C · Thu, Jun 11
+          - generic [ref=e90]: Astana · Live
+      - main [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - paragraph [ref=e96]: Passenger
+              - heading "Crowding" [level=1] [ref=e97]
+              - paragraph [ref=e98]: Real-time station crowding levels with predictive forecasts.
+            - button "Refresh" [ref=e124] [cursor=pointer]:
+              - img
+              - text: Refresh
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - img [ref=e128]
+              - generic [ref=e135]:
+                - paragraph [ref=e136]: Total Stations
+                - paragraph [ref=e137]: "100"
+            - generic [ref=e138]:
+              - img [ref=e140]
+              - generic [ref=e142]:
+                - paragraph [ref=e143]: High Crowding
+                - paragraph [ref=e144]: "0"
+            - generic [ref=e145]:
+              - img [ref=e147]
+              - generic [ref=e149]:
+                - paragraph [ref=e150]: Normal Stations
+                - paragraph [ref=e151]: "100"
+            - generic [ref=e152]:
+              - img [ref=e154]
+              - generic [ref=e157]:
+                - paragraph [ref=e158]: Last Updated
+                - paragraph [ref=e159]: 14:23
+          - generic [ref=e160]:
+            - generic [ref=e161]:
+              - img [ref=e162]
+              - textbox "Search stations…" [ref=e165]
+            - combobox [ref=e166] [cursor=pointer]:
+              - img
+              - generic: All Districts
+              - img
+            - combobox [ref=e167] [cursor=pointer]:
+              - generic: All Levels
+              - img
+          - generic [ref=e168]:
+            - generic [ref=e169]:
+              - generic [ref=e170]:
+                - generic [ref=e171]: Distribution
+                - generic [ref=e172]: Stations by crowding level
+              - application [ref=e177]:
+                - generic [ref=e190]:
+                  - generic [ref=e192]: Low
+                  - generic [ref=e194]: Medium
+                  - generic [ref=e196]: High
+                  - generic [ref=e198]: Very High
+            - generic [ref=e199]:
+              - generic [ref=e200] [cursor=pointer]:
+                - generic [ref=e202]:
+                  - generic [ref=e203]:
+                    - generic [ref=e204]: ТД Меридиан
+                    - paragraph [ref=e205]: Saryarka
+                  - generic [ref=e206]: Low
+                - generic [ref=e207]:
+                  - generic [ref=e208]:
+                    - generic [ref=e209]: Forecast
+                    - generic [ref=e210]: "Conf: 91%"
+                  - generic [ref=e211]:
+                    - generic [ref=e212]:
+                      - generic: 9 · 90%
+                    - generic [ref=e214]:
+                      - generic: 9 · 89%
+                    - generic [ref=e216]:
+                      - generic: 9 · 93%
+                    - generic [ref=e218]:
+                      - generic: 9 · 93%
+                  - generic [ref=e220]:
+                    - generic [ref=e221]: 15m
+                    - generic [ref=e222]: 30m
+                    - generic [ref=e223]: 60m
+                    - generic [ref=e224]: 120m
+              - generic [ref=e225] [cursor=pointer]:
+                - generic [ref=e227]:
+                  - generic [ref=e228]:
+                    - generic [ref=e229]: ТД Мередиан
+                    - paragraph [ref=e230]: Saryarka
+                  - generic [ref=e231]: Low
+                - generic [ref=e232]:
+                  - generic [ref=e233]:
+                    - generic [ref=e234]: Forecast
+                    - generic [ref=e235]: "Conf: 94%"
+                  - generic [ref=e236]:
+                    - generic [ref=e237]:
+                      - generic: 13 · 94%
+                    - generic [ref=e239]:
+                      - generic: 12 · 95%
+                    - generic [ref=e241]:
+                      - generic: 12 · 93%
+                    - generic [ref=e243]:
+                      - generic: 12 · 93%
+                  - generic [ref=e245]:
+                    - generic [ref=e246]: 15m
+                    - generic [ref=e247]: 30m
+                    - generic [ref=e248]: 60m
+                    - generic [ref=e249]: 120m
+              - generic [ref=e250] [cursor=pointer]:
+                - generic [ref=e252]:
+                  - generic [ref=e253]:
+                    - generic [ref=e254]: Евразия
+                    - paragraph [ref=e255]: Saryarka
+                  - generic [ref=e256]: Low
+                - generic [ref=e257]:
+                  - generic [ref=e258]:
+                    - generic [ref=e259]: Forecast
+                    - generic [ref=e260]: "Conf: 92%"
+                  - generic [ref=e261]:
+                    - generic [ref=e262]:
+                      - generic: 20 · 95%
+                    - generic [ref=e264]:
+                      - generic: 20 · 90%
+                    - generic [ref=e266]:
+                      - generic: 21 · 91%
+                    - generic [ref=e268]:
+                      - generic: 20 · 91%
+                  - generic [ref=e270]:
+                    - generic [ref=e271]: 15m
+                    - generic [ref=e272]: 30m
+                    - generic [ref=e273]: 60m
+                    - generic [ref=e274]: 120m
+              - generic [ref=e275] [cursor=pointer]:
+                - generic [ref=e277]:
+                  - generic [ref=e278]:
+                    - generic [ref=e279]: магазин Сымбат
+                    - paragraph [ref=e280]: Esil
+                  - generic [ref=e281]: Low
+                - generic [ref=e282]:
+                  - generic [ref=e283]:
+                    - generic [ref=e284]: Forecast
+                    - generic [ref=e285]: "Conf: 93%"
+                  - generic [ref=e286]:
+                    - generic [ref=e287]:
+                      - generic: 17 · 92%
+                    - generic [ref=e289]:
+                      - generic: 18 · 95%
+                    - generic [ref=e291]:
+                      - generic: 16 · 93%
+                    - generic [ref=e293]:
+                      - generic: 18 · 91%
+                  - generic [ref=e295]:
+                    - generic [ref=e296]: 15m
+                    - generic [ref=e297]: 30m
+                    - generic [ref=e298]: 60m
+                    - generic [ref=e299]: 120m
+              - generic [ref=e300] [cursor=pointer]:
+                - generic [ref=e302]:
+                  - generic [ref=e303]:
+                    - generic [ref=e304]: Железнодорожный колледж
+                    - paragraph [ref=e305]: Esil
+                  - generic [ref=e306]: Low
+                - generic [ref=e307]:
+                  - generic [ref=e308]:
+                    - generic [ref=e309]: Forecast
+                    - generic [ref=e310]: "Conf: 94%"
+                  - generic [ref=e311]:
+                    - generic [ref=e312]:
+                      - generic: 13 · 95%
+                    - generic [ref=e314]:
+                      - generic: 14 · 93%
+                    - generic [ref=e316]:
+                      - generic: 13 · 93%
+                    - generic [ref=e318]:
+                      - generic: 13 · 93%
+                  - generic [ref=e320]:
+                    - generic [ref=e321]: 15m
+                    - generic [ref=e322]: 30m
+                    - generic [ref=e323]: 60m
+                    - generic [ref=e324]: 120m
+              - generic [ref=e325] [cursor=pointer]:
+                - generic [ref=e327]:
+                  - generic [ref=e328]:
+                    - generic [ref=e329]: Парк Ж. Жабаева
+                    - paragraph [ref=e330]: Saryarka
+                  - generic [ref=e331]: Low
+                - generic [ref=e332]:
+                  - generic [ref=e333]:
+                    - generic [ref=e334]: Forecast
+                    - generic [ref=e335]: "Conf: 91%"
+                  - generic [ref=e336]:
+                    - generic [ref=e337]:
+                      - generic: 15 · 94%
+                    - generic [ref=e339]:
+                      - generic: 15 · 91%
+                    - generic [ref=e341]:
+                      - generic: 14 · 91%
+                    - generic [ref=e343]:
+                      - generic: 14 · 88%
+                  - generic [ref=e345]:
+                    - generic [ref=e346]: 15m
+                    - generic [ref=e347]: 30m
+                    - generic [ref=e348]: 60m
+                    - generic [ref=e349]: 120m
+              - generic [ref=e350] [cursor=pointer]:
+                - generic [ref=e352]:
+                  - generic [ref=e353]:
+                    - generic [ref=e354]: Микрорайон Жастар
+                    - paragraph [ref=e355]: Saryarka
+                  - generic [ref=e356]: Low
+                - generic [ref=e357]:
+                  - generic [ref=e358]:
+                    - generic [ref=e359]: Forecast
+                    - generic [ref=e360]: "Conf: 92%"
+                  - generic [ref=e361]:
+                    - generic [ref=e362]:
+                      - generic: 18 · 94%
+                    - generic [ref=e364]:
+                      - generic: 16 · 92%
+                    - generic [ref=e366]:
+                      - generic: 17 · 90%
+                    - generic [ref=e368]:
+                      - generic: 17 · 91%
+                  - generic [ref=e370]:
+                    - generic [ref=e371]: 15m
+                    - generic [ref=e372]: 30m
+                    - generic [ref=e373]: 60m
+                    - generic [ref=e374]: 120m
+              - generic [ref=e375] [cursor=pointer]:
+                - generic [ref=e377]:
+                  - generic [ref=e378]:
+                    - generic [ref=e379]: Встреча
+                    - paragraph [ref=e380]: Saryarka
+                  - generic [ref=e381]: Low
+                - generic [ref=e382]:
+                  - generic [ref=e383]:
+                    - generic [ref=e384]: Forecast
+                    - generic [ref=e385]: "Conf: 92%"
+                  - generic [ref=e386]:
+                    - generic [ref=e387]:
+                      - generic: 6 · 95%
+                    - generic [ref=e389]:
+                      - generic: 5 · 93%
+                    - generic [ref=e391]:
+                      - generic: 5 · 92%
+                    - generic [ref=e393]:
+                      - generic: 6 · 90%
+                  - generic [ref=e395]:
+                    - generic [ref=e396]: 15m
+                    - generic [ref=e397]: 30m
+                    - generic [ref=e398]: 60m
+                    - generic [ref=e399]: 120m
+              - generic [ref=e400] [cursor=pointer]:
+                - generic [ref=e402]:
+                  - generic [ref=e403]:
+                    - generic [ref=e404]: Встреча
+                    - paragraph [ref=e405]: Saryarka
+                  - generic [ref=e406]: Low
+                - generic [ref=e407]:
+                  - generic [ref=e408]:
+                    - generic [ref=e409]: Forecast
+                    - generic [ref=e410]: "Conf: 92%"
+                  - generic [ref=e411]:
+                    - generic [ref=e412]:
+                      - generic: 23 · 95%
+                    - generic [ref=e414]:
+                      - generic: 24 · 93%
+                    - generic [ref=e416]:
+                      - generic: 23 · 91%
+                    - generic [ref=e418]:
+                      - generic: 24 · 90%
+                  - generic [ref=e420]:
+                    - generic [ref=e421]: 15m
+                    - generic [ref=e422]: 30m
+                    - generic [ref=e423]: 60m
+                    - generic [ref=e424]: 120m
+              - generic [ref=e425] [cursor=pointer]:
+                - generic [ref=e427]:
+                  - generic [ref=e428]:
+                    - generic [ref=e429]: Бараева
+                    - paragraph [ref=e430]: Esil
+                  - generic [ref=e431]: Low
+                - generic [ref=e432]:
+                  - generic [ref=e433]:
+                    - generic [ref=e434]: Forecast
+                    - generic [ref=e435]: "Conf: 94%"
+                  - generic [ref=e436]:
+                    - generic [ref=e437]:
+                      - generic: 8 · 97%
+                    - generic [ref=e439]:
+                      - generic: 8 · 93%
+                    - generic [ref=e441]:
+                      - generic: 9 · 93%
+                    - generic [ref=e443]:
+                      - generic: 8 · 95%
+                  - generic [ref=e445]:
+                    - generic [ref=e446]: 15m
+                    - generic [ref=e447]: 30m
+                    - generic [ref=e448]: 60m
+                    - generic [ref=e449]: 120m
+              - generic [ref=e450] [cursor=pointer]:
+                - generic [ref=e452]:
+                  - generic [ref=e453]:
+                    - generic [ref=e454]: Бараева
+                    - paragraph [ref=e455]: Esil
+                  - generic [ref=e456]: Low
+                - generic [ref=e457]:
+                  - generic [ref=e458]:
+                    - generic [ref=e459]: Forecast
+                    - generic [ref=e460]: "Conf: 94%"
+                  - generic [ref=e461]:
+                    - generic [ref=e462]:
+                      - generic: 10 · 97%
+                    - generic [ref=e464]:
+                      - generic: 9 · 95%
+                    - generic [ref=e466]:
+                      - generic: 8 · 93%
+                    - generic [ref=e468]:
+                      - generic: 9 · 91%
+                  - generic [ref=e470]:
+                    - generic [ref=e471]: 15m
+                    - generic [ref=e472]: 30m
+                    - generic [ref=e473]: 60m
+                    - generic [ref=e474]: 120m
+              - generic [ref=e475] [cursor=pointer]:
+                - generic [ref=e477]:
+                  - generic [ref=e478]:
+                    - generic [ref=e479]: №15 мектеп-лицей
+                    - paragraph [ref=e480]: Esil
+                  - generic [ref=e481]: Low
+                - generic [ref=e482]:
+                  - generic [ref=e483]:
+                    - generic [ref=e484]: Forecast
+                    - generic [ref=e485]: "Conf: 94%"
+                  - generic [ref=e486]:
+                    - generic [ref=e487]:
+                      - generic: 16 · 98%
+                    - generic [ref=e489]:
+                      - generic: 16 · 94%
+                    - generic [ref=e491]:
+                      - generic: 16 · 94%
+                    - generic [ref=e493]:
+                      - generic: 16 · 91%
+                  - generic [ref=e495]:
+                    - generic [ref=e496]: 15m
+                    - generic [ref=e497]: 30m
+                    - generic [ref=e498]: 60m
+                    - generic [ref=e499]: 120m
+              - generic [ref=e500] [cursor=pointer]:
+                - generic [ref=e502]:
+                  - generic [ref=e503]:
+                    - generic [ref=e504]: Дулатова
+                    - paragraph [ref=e505]: Esil
+                  - generic [ref=e506]: Low
+                - generic [ref=e507]:
+                  - generic [ref=e508]:
+                    - generic [ref=e509]: Forecast
+                    - generic [ref=e510]: "Conf: 93%"
+                  - generic [ref=e511]:
+                    - generic [ref=e512]:
+                      - generic: 10 · 94%
+                    - generic [ref=e514]:
+                      - generic: 10 · 95%
+                    - generic [ref=e516]:
+                      - generic: 10 · 93%
+                    - generic [ref=e518]:
+                      - generic: 10 · 90%
+                  - generic [ref=e520]:
+                    - generic [ref=e521]: 15m
+                    - generic [ref=e522]: 30m
+                    - generic [ref=e523]: 60m
+                    - generic [ref=e524]: 120m
+              - generic [ref=e525] [cursor=pointer]:
+                - generic [ref=e527]:
+                  - generic [ref=e528]:
+                    - generic [ref=e529]: Герцена
+                    - paragraph [ref=e530]: Esil
+                  - generic [ref=e531]: Low
+                - generic [ref=e532]:
+                  - generic [ref=e533]:
+                    - generic [ref=e534]: Forecast
+                    - generic [ref=e535]: "Conf: 95%"
+                  - generic [ref=e536]:
+                    - generic [ref=e537]:
+                      - generic: 11 · 96%
+                    - generic [ref=e539]:
+                      - generic: 11 · 94%
+                    - generic [ref=e541]:
+                      - generic: 10 · 98%
+                    - generic [ref=e543]:
+                      - generic: 11 · 92%
+                  - generic [ref=e545]:
+                    - generic [ref=e546]: 15m
+                    - generic [ref=e547]: 30m
+                    - generic [ref=e548]: 60m
+                    - generic [ref=e549]: 120m
+              - generic [ref=e550] [cursor=pointer]:
+                - generic [ref=e552]:
+                  - generic [ref=e553]:
+                    - generic [ref=e554]: Назарбаев Университет
+                    - paragraph [ref=e555]: Esil
+                  - generic [ref=e556]: Low
+                - generic [ref=e557]:
+                  - generic [ref=e558]:
+                    - generic [ref=e559]: Forecast
+                    - generic [ref=e560]: "Conf: 94%"
+                  - generic [ref=e561]:
+                    - generic [ref=e562]:
+                      - generic: 15 · 94%
+                    - generic [ref=e564]:
+                      - generic: 16 · 95%
+                    - generic [ref=e566]:
+                      - generic: 15 · 97%
+                    - generic [ref=e568]:
+                      - generic: 16 · 90%
+                  - generic [ref=e570]:
+                    - generic [ref=e571]: 15m
+                    - generic [ref=e572]: 30m
+                    - generic [ref=e573]: 60m
+                    - generic [ref=e574]: 120m
+              - generic [ref=e575] [cursor=pointer]:
+                - generic [ref=e577]:
+                  - generic [ref=e578]:
+                    - generic [ref=e579]: Назарбаев Университет
+                    - paragraph [ref=e580]: Esil
+                  - generic [ref=e581]: Low
+                - generic [ref=e582]:
+                  - generic [ref=e583]:
+                    - generic [ref=e584]: Forecast
+                    - generic [ref=e585]: "Conf: 94%"
+                  - generic [ref=e586]:
+                    - generic [ref=e587]:
+                      - generic: 17 · 93%
+                    - generic [ref=e589]:
+                      - generic: 16 · 94%
+                    - generic [ref=e591]:
+                      - generic: 17 · 96%
+                    - generic [ref=e593]:
+                      - generic: 18 · 93%
+                  - generic [ref=e595]:
+                    - generic [ref=e596]: 15m
+                    - generic [ref=e597]: 30m
+                    - generic [ref=e598]: 60m
+                    - generic [ref=e599]: 120m
+              - generic [ref=e600] [cursor=pointer]:
+                - generic [ref=e602]:
+                  - generic [ref=e603]:
+                    - generic [ref=e604]: Канал "Нура-Есиль"
+                    - paragraph [ref=e605]: Esil
+                  - generic [ref=e606]: Low
+                - generic [ref=e607]:
+                  - generic [ref=e608]:
+                    - generic [ref=e609]: Forecast
+                    - generic [ref=e610]: "Conf: 94%"
+                  - generic [ref=e611]:
+                    - generic [ref=e612]:
+                      - generic: 13 · 95%
+                    - generic [ref=e614]:
+                      - generic: 13 · 92%
+                    - generic [ref=e616]:
+                      - generic: 14 · 95%
+                    - generic [ref=e618]:
+                      - generic: 13 · 93%
+                  - generic [ref=e620]:
+                    - generic [ref=e621]: 15m
+                    - generic [ref=e622]: 30m
+                    - generic [ref=e623]: 60m
+                    - generic [ref=e624]: 120m
+              - generic [ref=e625] [cursor=pointer]:
+                - generic [ref=e627]:
+                  - generic [ref=e628]:
+                    - generic [ref=e629]: Цирк
+                    - paragraph [ref=e630]: Esil
+                  - generic [ref=e631]: Low
+                - generic [ref=e632]:
+                  - generic [ref=e633]:
+                    - generic [ref=e634]: Forecast
+                    - generic [ref=e635]: "Conf: 95%"
+                  - generic [ref=e636]:
+                    - generic [ref=e637]:
+                      - generic: 11 · 94%
+                    - generic [ref=e639]:
+                      - generic: 11 · 97%
+                    - generic [ref=e641]:
+                      - generic: 12 · 93%
+                    - generic [ref=e643]:
+                      - generic: 12 · 94%
+                  - generic [ref=e645]:
+                    - generic [ref=e646]: 15m
+                    - generic [ref=e647]: 30m
+                    - generic [ref=e648]: 60m
+                    - generic [ref=e649]: 120m
+              - generic [ref=e650] [cursor=pointer]:
+                - generic [ref=e652]:
+                  - generic [ref=e653]:
+                    - generic [ref=e654]: Парк Ж.Жабаева
+                    - paragraph [ref=e655]: Saryarka
+                  - generic [ref=e656]: Low
+                - generic [ref=e657]:
+                  - generic [ref=e658]:
+                    - generic [ref=e659]: Forecast
+                    - generic [ref=e660]: "Conf: 93%"
+                  - generic [ref=e661]:
+                    - generic [ref=e662]:
+                      - generic: 26 · 96%
+                    - generic [ref=e664]:
+                      - generic: 23 · 93%
+                    - generic [ref=e666]:
+                      - generic: 26 · 90%
+                    - generic [ref=e668]:
+                      - generic: 25 · 94%
+                  - generic [ref=e670]:
+                    - generic [ref=e671]: 15m
+                    - generic [ref=e672]: 30m
+                    - generic [ref=e673]: 60m
+                    - generic [ref=e674]: 120m
+              - generic [ref=e675] [cursor=pointer]:
+                - generic [ref=e677]:
+                  - generic [ref=e678]:
+                    - generic [ref=e679]: ЖК Номад
+                    - paragraph [ref=e680]: Esil
+                  - generic [ref=e681]: Low
+                - generic [ref=e682]:
+                  - generic [ref=e683]:
+                    - generic [ref=e684]: Forecast
+                    - generic [ref=e685]: "Conf: 93%"
+                  - generic [ref=e686]:
+                    - generic [ref=e687]:
+                      - generic: 11 · 97%
+                    - generic [ref=e689]:
+                      - generic: 11 · 91%
+                    - generic [ref=e691]:
+                      - generic: 10 · 93%
+                    - generic [ref=e693]:
+                      - generic: 11 · 92%
+                  - generic [ref=e695]:
+                    - generic [ref=e696]: 15m
+                    - generic [ref=e697]: 30m
+                    - generic [ref=e698]: 60m
+                    - generic [ref=e699]: 120m
+              - generic [ref=e700] [cursor=pointer]:
+                - generic [ref=e702]:
+                  - generic [ref=e703]:
+                    - generic [ref=e704]: Думан
+                    - paragraph [ref=e705]: Esil
+                  - generic [ref=e706]: Low
+                - generic [ref=e707]:
+                  - generic [ref=e708]:
+                    - generic [ref=e709]: Forecast
+                    - generic [ref=e710]: "Conf: 93%"
+                  - generic [ref=e711]:
+                    - generic [ref=e712]:
+                      - generic: 7 · 94%
+                    - generic [ref=e714]:
+                      - generic: 7 · 91%
+                    - generic [ref=e716]:
+                      - generic: 7 · 94%
+                    - generic [ref=e718]:
+                      - generic: 7 · 92%
+                  - generic [ref=e720]:
+                    - generic [ref=e721]: 15m
+                    - generic [ref=e722]: 30m
+                    - generic [ref=e723]: 60m
+                    - generic [ref=e724]: 120m
+              - generic [ref=e725] [cursor=pointer]:
+                - generic [ref=e727]:
+                  - generic [ref=e728]:
+                    - generic [ref=e729]: Проспект Республики
+                    - paragraph [ref=e730]: Esil
+                  - generic [ref=e731]: Low
+                - generic [ref=e732]:
+                  - generic [ref=e733]:
+                    - generic [ref=e734]: Forecast
+                    - generic [ref=e735]: "Conf: 94%"
+                  - generic [ref=e736]:
+                    - generic [ref=e737]:
+                      - generic: 19 · 91%
+                    - generic [ref=e739]:
+                      - generic: 18 · 96%
+                    - generic [ref=e741]:
+                      - generic: 18 · 96%
+                    - generic [ref=e743]:
+                      - generic: 18 · 95%
+                  - generic [ref=e745]:
+                    - generic [ref=e746]: 15m
+                    - generic [ref=e747]: 30m
+                    - generic [ref=e748]: 60m
+                    - generic [ref=e749]: 120m
+              - generic [ref=e750] [cursor=pointer]:
+                - generic [ref=e752]:
+                  - generic [ref=e753]:
+                    - generic [ref=e754]: АО "Народный Банк"
+                    - paragraph [ref=e755]: Esil
+                  - generic [ref=e756]: Low
+                - generic [ref=e757]:
+                  - generic [ref=e758]:
+                    - generic [ref=e759]: Forecast
+                    - generic [ref=e760]: "Conf: 95%"
+                  - generic [ref=e761]:
+                    - generic [ref=e762]:
+                      - generic: 15 · 96%
+                    - generic [ref=e764]:
+                      - generic: 15 · 97%
+                    - generic [ref=e766]:
+                      - generic: 15 · 94%
+                    - generic [ref=e768]:
+                      - generic: 14 · 91%
+                  - generic [ref=e770]:
+                    - generic [ref=e771]: 15m
+                    - generic [ref=e772]: 30m
+                    - generic [ref=e773]: 60m
+                    - generic [ref=e774]: 120m
+              - generic [ref=e775] [cursor=pointer]:
+                - generic [ref=e777]:
+                  - generic [ref=e778]:
+                    - generic [ref=e779]: Шокана Уалиханова
+                    - paragraph [ref=e780]: Esil
+                  - generic [ref=e781]: Low
+                - generic [ref=e782]:
+                  - generic [ref=e783]:
+                    - generic [ref=e784]: Forecast
+                    - generic [ref=e785]: "Conf: 92%"
+                  - generic [ref=e786]:
+                    - generic [ref=e787]:
+                      - generic: 17 · 94%
+                    - generic [ref=e789]:
+                      - generic: 15 · 94%
+                    - generic [ref=e791]:
+                      - generic: 18 · 90%
+                    - generic [ref=e793]:
+                      - generic: 18 · 89%
+                  - generic [ref=e795]:
+                    - generic [ref=e796]: 15m
+                    - generic [ref=e797]: 30m
+                    - generic [ref=e798]: 60m
+                    - generic [ref=e799]: 120m
+              - generic [ref=e800] [cursor=pointer]:
+                - generic [ref=e802]:
+                  - generic [ref=e803]:
+                    - generic [ref=e804]: Жаннур
+                    - paragraph [ref=e805]: Esil
+                  - generic [ref=e806]: Low
+                - generic [ref=e807]:
+                  - generic [ref=e808]:
+                    - generic [ref=e809]: Forecast
+                    - generic [ref=e810]: "Conf: 94%"
+                  - generic [ref=e811]:
+                    - generic [ref=e812]:
+                      - generic: 21 · 96%
+                    - generic [ref=e814]:
+                      - generic: 21 · 94%
+                    - generic [ref=e816]:
+                      - generic: 21 · 94%
+                    - generic [ref=e818]:
+                      - generic: 21 · 91%
+                  - generic [ref=e820]:
+                    - generic [ref=e821]: 15m
+                    - generic [ref=e822]: 30m
+                    - generic [ref=e823]: 60m
+                    - generic [ref=e824]: 120m
+              - generic [ref=e825] [cursor=pointer]:
+                - generic [ref=e827]:
+                  - generic [ref=e828]:
+                    - generic [ref=e829]: Дворец Жастар
+                    - paragraph [ref=e830]: Esil
+                  - generic [ref=e831]: Low
+                - generic [ref=e832]:
+                  - generic [ref=e833]:
+                    - generic [ref=e834]: Forecast
+                    - generic [ref=e835]: "Conf: 94%"
+                  - generic [ref=e836]:
+                    - generic [ref=e837]:
+                      - generic: 12 · 97%
+                    - generic [ref=e839]:
+                      - generic: 12 · 93%
+                    - generic [ref=e841]:
+                      - generic: 11 · 95%
+                    - generic [ref=e843]:
+                      - generic: 11 · 92%
+                  - generic [ref=e845]:
+                    - generic [ref=e846]: 15m
+                    - generic [ref=e847]: 30m
+                    - generic [ref=e848]: 60m
+                    - generic [ref=e849]: 120m
+              - generic [ref=e850] [cursor=pointer]:
+                - generic [ref=e852]:
+                  - generic [ref=e853]:
+                    - generic [ref=e854]: ЦОН района «Сарыарка»
+                    - paragraph [ref=e855]: Esil
+                  - generic [ref=e856]: Low
+                - generic [ref=e857]:
+                  - generic [ref=e858]:
+                    - generic [ref=e859]: Forecast
+                    - generic [ref=e860]: "Conf: 93%"
+                  - generic [ref=e861]:
+                    - generic [ref=e862]:
+                      - generic: 12 · 96%
+                    - generic [ref=e864]:
+                      - generic: 13 · 92%
+                    - generic [ref=e866]:
+                      - generic: 11 · 94%
+                    - generic [ref=e868]:
+                      - generic: 13 · 90%
+                  - generic [ref=e870]:
+                    - generic [ref=e871]: 15m
+                    - generic [ref=e872]: 30m
+                    - generic [ref=e873]: 60m
+                    - generic [ref=e874]: 120m
+              - generic [ref=e875] [cursor=pointer]:
+                - generic [ref=e877]:
+                  - generic [ref=e878]:
+                    - generic [ref=e879]: Дом Министерств
+                    - paragraph [ref=e880]: Esil
+                  - generic [ref=e881]: Low
+                - generic [ref=e882]:
+                  - generic [ref=e883]:
+                    - generic [ref=e884]: Forecast
+                    - generic [ref=e885]: "Conf: 93%"
+                  - generic [ref=e886]:
+                    - generic [ref=e887]:
+                      - generic: 14 · 92%
+                    - generic [ref=e889]:
+                      - generic: 15 · 94%
+                    - generic [ref=e891]:
+                      - generic: 15 · 94%
+                    - generic [ref=e893]:
+                      - generic: 14 · 93%
+                  - generic [ref=e895]:
+                    - generic [ref=e896]: 15m
+                    - generic [ref=e897]: 30m
+                    - generic [ref=e898]: 60m
+                    - generic [ref=e899]: 120m
+              - generic [ref=e900] [cursor=pointer]:
+                - generic [ref=e902]:
+                  - generic [ref=e903]:
+                    - generic [ref=e904]: "Байтерек: 10"
+                    - paragraph [ref=e905]: Esil
+                  - generic [ref=e906]: Low
+                - generic [ref=e907]:
+                  - generic [ref=e908]:
+                    - generic [ref=e909]: Forecast
+                    - generic [ref=e910]: "Conf: 93%"
+                  - generic [ref=e911]:
+                    - generic [ref=e912]:
+                      - generic: 15 · 92%
+                    - generic [ref=e914]:
+                      - generic: 16 · 97%
+                    - generic [ref=e916]:
+                      - generic: 14 · 93%
+                    - generic [ref=e918]:
+                      - generic: 16 · 90%
+                  - generic [ref=e920]:
+                    - generic [ref=e921]: 15m
+                    - generic [ref=e922]: 30m
+                    - generic [ref=e923]: 60m
+                    - generic [ref=e924]: 120m
+              - generic [ref=e925] [cursor=pointer]:
+                - generic [ref=e927]:
+                  - generic [ref=e928]:
+                    - generic [ref=e929]: Ильяса Есенберлина
+                    - paragraph [ref=e930]: Esil
+                  - generic [ref=e931]: Low
+                - generic [ref=e932]:
+                  - generic [ref=e933]:
+                    - generic [ref=e934]: Forecast
+                    - generic [ref=e935]: "Conf: 94%"
+                  - generic [ref=e936]:
+                    - generic [ref=e937]:
+                      - generic: 8 · 93%
+                    - generic [ref=e939]:
+                      - generic: 8 · 96%
+                    - generic [ref=e941]:
+                      - generic: 8 · 95%
+                    - generic [ref=e943]:
+                      - generic: 8 · 91%
+                  - generic [ref=e945]:
+                    - generic [ref=e946]: 15m
+                    - generic [ref=e947]: 30m
+                    - generic [ref=e948]: 60m
+                    - generic [ref=e949]: 120m
+              - generic [ref=e950] [cursor=pointer]:
+                - generic [ref=e952]:
+                  - generic [ref=e953]:
+                    - generic [ref=e954]: Канал "Нура-Есиль"
+                    - paragraph [ref=e955]: Esil
+                  - generic [ref=e956]: Low
+                - generic [ref=e957]:
+                  - generic [ref=e958]:
+                    - generic [ref=e959]: Forecast
+                    - generic [ref=e960]: "Conf: 93%"
+                  - generic [ref=e961]:
+                    - generic [ref=e962]:
+                      - generic: 12 · 90%
+                    - generic [ref=e964]:
+                      - generic: 12 · 96%
+                    - generic [ref=e966]:
+                      - generic: 12 · 95%
+                    - generic [ref=e968]:
+                      - generic: 12 · 91%
+                  - generic [ref=e970]:
+                    - generic [ref=e971]: 15m
+                    - generic [ref=e972]: 30m
+                    - generic [ref=e973]: 60m
+                    - generic [ref=e974]: 120m
+              - generic [ref=e975] [cursor=pointer]:
+                - generic [ref=e977]:
+                  - generic [ref=e978]:
+                    - generic [ref=e979]: Е 319
+                    - paragraph [ref=e980]: Esil
+                  - generic [ref=e981]: Low
+                - generic [ref=e982]:
+                  - generic [ref=e983]:
+                    - generic [ref=e984]: Forecast
+                    - generic [ref=e985]: "Conf: 94%"
+                  - generic [ref=e986]:
+                    - generic [ref=e987]:
+                      - generic: 14 · 97%
+                    - generic [ref=e989]:
+                      - generic: 13 · 95%
+                    - generic [ref=e991]:
+                      - generic: 15 · 94%
+                    - generic [ref=e993]:
+                      - generic: 14 · 90%
+                  - generic [ref=e995]:
+                    - generic [ref=e996]: 15m
+                    - generic [ref=e997]: 30m
+                    - generic [ref=e998]: 60m
+                    - generic [ref=e999]: 120m
+              - generic [ref=e1000] [cursor=pointer]:
+                - generic [ref=e1002]:
+                  - generic [ref=e1003]:
+                    - generic [ref=e1004]: Детский сад Карлыгаш-2
+                    - paragraph [ref=e1005]: Esil
+                  - generic [ref=e1006]: Low
+                - generic [ref=e1007]:
+                  - generic [ref=e1008]:
+                    - generic [ref=e1009]: Forecast
+                    - generic [ref=e1010]: "Conf: 94%"
+                  - generic [ref=e1011]:
+                    - generic [ref=e1012]:
+                      - generic: 29 · 93%
+                    - generic [ref=e1014]:
+                      - generic: 26 · 98%
+                    - generic [ref=e1016]:
+                      - generic: 27 · 90%
+                    - generic [ref=e1018]:
+                      - generic: 25 · 93%
+                  - generic [ref=e1020]:
+                    - generic [ref=e1021]: 15m
+                    - generic [ref=e1022]: 30m
+                    - generic [ref=e1023]: 60m
+                    - generic [ref=e1024]: 120m
+              - generic [ref=e1025] [cursor=pointer]:
+                - generic [ref=e1027]:
+                  - generic [ref=e1028]:
+                    - generic [ref=e1029]: Детский сад Карлыгаш-2
+                    - paragraph [ref=e1030]: Esil
+                  - generic [ref=e1031]: Low
+                - generic [ref=e1032]:
+                  - generic [ref=e1033]:
+                    - generic [ref=e1034]: Forecast
+                    - generic [ref=e1035]: "Conf: 95%"
+                  - generic [ref=e1036]:
+                    - generic [ref=e1037]:
+                      - generic: 17 · 98%
+                    - generic [ref=e1039]:
+                      - generic: 17 · 96%
+                    - generic [ref=e1041]:
+                      - generic: 18 · 96%
+                    - generic [ref=e1043]:
+                      - generic: 19 · 92%
+                  - generic [ref=e1045]:
+                    - generic [ref=e1046]: 15m
+                    - generic [ref=e1047]: 30m
+                    - generic [ref=e1048]: 60m
+                    - generic [ref=e1049]: 120m
+              - generic [ref=e1050] [cursor=pointer]:
+                - generic [ref=e1052]:
+                  - generic [ref=e1053]:
+                    - generic [ref=e1054]: БЦ Асыл-тау
+                    - paragraph [ref=e1055]: Esil
+                  - generic [ref=e1056]: Low
+                - generic [ref=e1057]:
+                  - generic [ref=e1058]:
+                    - generic [ref=e1059]: Forecast
+                    - generic [ref=e1060]: "Conf: 94%"
+                  - generic [ref=e1061]:
+                    - generic [ref=e1062]:
+                      - generic: 9 · 96%
+                    - generic [ref=e1064]:
+                      - generic: 8 · 94%
+                    - generic [ref=e1066]:
+                      - generic: 8 · 97%
+                    - generic [ref=e1068]:
+                      - generic: 8 · 89%
+                  - generic [ref=e1070]:
+                    - generic [ref=e1071]: 15m
+                    - generic [ref=e1072]: 30m
+                    - generic [ref=e1073]: 60m
+                    - generic [ref=e1074]: 120m
+              - generic [ref=e1075] [cursor=pointer]:
+                - generic [ref=e1077]:
+                  - generic [ref=e1078]:
+                    - generic [ref=e1079]: Бизнес-центр Асыл-Тау
+                    - paragraph [ref=e1080]: Esil
+                  - generic [ref=e1081]: Low
+                - generic [ref=e1082]:
+                  - generic [ref=e1083]:
+                    - generic [ref=e1084]: Forecast
+                    - generic [ref=e1085]: "Conf: 92%"
+                  - generic [ref=e1086]:
+                    - generic [ref=e1087]:
+                      - generic: 18 · 92%
+                    - generic [ref=e1089]:
+                      - generic: 19 · 97%
+                    - generic [ref=e1091]:
+                      - generic: 18 · 91%
+                    - generic [ref=e1093]:
+                      - generic: 16 · 89%
+                  - generic [ref=e1095]:
+                    - generic [ref=e1096]: 15m
+                    - generic [ref=e1097]: 30m
+                    - generic [ref=e1098]: 60m
+                    - generic [ref=e1099]: 120m
+              - generic [ref=e1100] [cursor=pointer]:
+                - generic [ref=e1102]:
+                  - generic [ref=e1103]:
+                    - generic [ref=e1104]: Астана Арена
+                    - paragraph [ref=e1105]: Esil
+                  - generic [ref=e1106]: Low
+                - generic [ref=e1107]:
+                  - generic [ref=e1108]:
+                    - generic [ref=e1109]: Forecast
+                    - generic [ref=e1110]: "Conf: 95%"
+                  - generic [ref=e1111]:
+                    - generic [ref=e1112]:
+                      - generic: 21 · 98%
+                    - generic [ref=e1114]:
+                      - generic: 21 · 95%
+                    - generic [ref=e1116]:
+                      - generic: 23 · 93%
+                    - generic [ref=e1118]:
+                      - generic: 22 · 95%
+                  - generic [ref=e1120]:
+                    - generic [ref=e1121]: 15m
+                    - generic [ref=e1122]: 30m
+                    - generic [ref=e1123]: 60m
+                    - generic [ref=e1124]: 120m
+              - generic [ref=e1125] [cursor=pointer]:
+                - generic [ref=e1127]:
+                  - generic [ref=e1128]:
+                    - generic [ref=e1129]: Астана Арена
+                    - paragraph [ref=e1130]: Esil
+                  - generic [ref=e1131]: Low
+                - generic [ref=e1132]:
+                  - generic [ref=e1133]:
+                    - generic [ref=e1134]: Forecast
+                    - generic [ref=e1135]: "Conf: 92%"
+                  - generic [ref=e1136]:
+                    - generic [ref=e1137]:
+                      - generic: 44 · 92%
+                    - generic [ref=e1139]:
+                      - generic: 43 · 94%
+                    - generic [ref=e1141]:
+                      - generic: 42 · 93%
+                    - generic [ref=e1143]:
+                      - generic: 45 · 91%
+                  - generic [ref=e1145]:
+                    - generic [ref=e1146]: 15m
+                    - generic [ref=e1147]: 30m
+                    - generic [ref=e1148]: 60m
+                    - generic [ref=e1149]: 120m
+              - generic [ref=e1150] [cursor=pointer]:
+                - generic [ref=e1152]:
+                  - generic [ref=e1153]:
+                    - generic [ref=e1154]: Ледовый дворец Алау
+                    - paragraph [ref=e1155]: Esil
+                  - generic [ref=e1156]: Low
+                - generic [ref=e1157]:
+                  - generic [ref=e1158]:
+                    - generic [ref=e1159]: Forecast
+                    - generic [ref=e1160]: "Conf: 94%"
+                  - generic [ref=e1161]:
+                    - generic [ref=e1162]:
+                      - generic: 19 · 96%
+                    - generic [ref=e1164]:
+                      - generic: 19 · 97%
+                    - generic [ref=e1166]:
+                      - generic: 18 · 90%
+                    - generic [ref=e1168]:
+                      - generic: 19 · 95%
+                  - generic [ref=e1170]:
+                    - generic [ref=e1171]: 15m
+                    - generic [ref=e1172]: 30m
+                    - generic [ref=e1173]: 60m
+                    - generic [ref=e1174]: 120m
+              - generic [ref=e1175] [cursor=pointer]:
+                - generic [ref=e1177]:
+                  - generic [ref=e1178]:
+                    - generic [ref=e1179]: Ледовый дворец Алау
+                    - paragraph [ref=e1180]: Esil
+                  - generic [ref=e1181]: Low
+                - generic [ref=e1182]:
+                  - generic [ref=e1183]:
+                    - generic [ref=e1184]: Forecast
+                    - generic [ref=e1185]: "Conf: 92%"
+                  - generic [ref=e1186]:
+                    - generic [ref=e1187]:
+                      - generic: 14 · 92%
+                    - generic [ref=e1189]:
+                      - generic: 14 · 91%
+                    - generic [ref=e1191]:
+                      - generic: 14 · 89%
+                    - generic [ref=e1193]:
+                      - generic: 13 · 96%
+                  - generic [ref=e1195]:
+                    - generic [ref=e1196]: 15m
+                    - generic [ref=e1197]: 30m
+                    - generic [ref=e1198]: 60m
+                    - generic [ref=e1199]: 120m
+              - generic [ref=e1200] [cursor=pointer]:
+                - generic [ref=e1202]:
+                  - generic [ref=e1203]:
+                    - generic [ref=e1204]: 7-ой километр
+                    - paragraph [ref=e1205]: Esil
+                  - generic [ref=e1206]: Low
+                - generic [ref=e1207]:
+                  - generic [ref=e1208]:
+                    - generic [ref=e1209]: Forecast
+                    - generic [ref=e1210]: "Conf: 93%"
+                  - generic [ref=e1211]:
+                    - generic [ref=e1212]:
+                      - generic: 8 · 95%
+                    - generic [ref=e1214]:
+                      - generic: 9 · 92%
+                    - generic [ref=e1216]:
+                      - generic: 9 · 92%
+                    - generic [ref=e1218]:
+                      - generic: 8 · 91%
+                  - generic [ref=e1220]:
+                    - generic [ref=e1221]: 15m
+                    - generic [ref=e1222]: 30m
+                    - generic [ref=e1223]: 60m
+                    - generic [ref=e1224]: 120m
+              - generic [ref=e1225] [cursor=pointer]:
+                - generic [ref=e1227]:
+                  - generic [ref=e1228]:
+                    - generic [ref=e1229]: 7-ой километр
+                    - paragraph [ref=e1230]: Esil
+                  - generic [ref=e1231]: Low
+                - generic [ref=e1232]:
+                  - generic [ref=e1233]:
+                    - generic [ref=e1234]: Forecast
+                    - generic [ref=e1235]: "Conf: 94%"
+                  - generic [ref=e1236]:
+                    - generic [ref=e1237]:
+                      - generic: 12 · 98%
+                    - generic [ref=e1239]:
+                      - generic: 11 · 95%
+                    - generic [ref=e1241]:
+                      - generic: 12 · 91%
+                    - generic [ref=e1243]:
+                      - generic: 11 · 93%
+                  - generic [ref=e1245]:
+                    - generic [ref=e1246]: 15m
+                    - generic [ref=e1247]: 30m
+                    - generic [ref=e1248]: 60m
+                    - generic [ref=e1249]: 120m
+              - generic [ref=e1250] [cursor=pointer]:
+                - generic [ref=e1252]:
+                  - generic [ref=e1253]:
+                    - generic [ref=e1254]: Акбулак
+                    - paragraph [ref=e1255]: Esil
+                  - generic [ref=e1256]: Low
+                - generic [ref=e1257]:
+                  - generic [ref=e1258]:
+                    - generic [ref=e1259]: Forecast
+                    - generic [ref=e1260]: "Conf: 92%"
+                  - generic [ref=e1261]:
+                    - generic [ref=e1262]:
+                      - generic: 10 · 94%
+                    - generic [ref=e1264]:
+                      - generic: 9 · 92%
+                    - generic [ref=e1266]:
+                      - generic: 10 · 93%
+                    - generic [ref=e1268]:
+                      - generic: 9 · 90%
+                  - generic [ref=e1270]:
+                    - generic [ref=e1271]: 15m
+                    - generic [ref=e1272]: 30m
+                    - generic [ref=e1273]: 60m
+                    - generic [ref=e1274]: 120m
+              - generic [ref=e1275] [cursor=pointer]:
+                - generic [ref=e1277]:
+                  - generic [ref=e1278]:
+                    - generic [ref=e1279]: Акбулак
+                    - paragraph [ref=e1280]: Esil
+                  - generic [ref=e1281]: Low
+                - generic [ref=e1282]:
+                  - generic [ref=e1283]:
+                    - generic [ref=e1284]: Forecast
+                    - generic [ref=e1285]: "Conf: 93%"
+                  - generic [ref=e1286]:
+                    - generic [ref=e1287]:
+                      - generic: 8 · 94%
+                    - generic [ref=e1289]:
+                      - generic: 8 · 95%
+                    - generic [ref=e1291]:
+                      - generic: 7 · 93%
+                    - generic [ref=e1293]:
+                      - generic: 7 · 91%
+                  - generic [ref=e1295]:
+                    - generic [ref=e1296]: 15m
+                    - generic [ref=e1297]: 30m
+                    - generic [ref=e1298]: 60m
+                    - generic [ref=e1299]: 120m
+              - generic [ref=e1300] [cursor=pointer]:
+                - generic [ref=e1302]:
+                  - generic [ref=e1303]:
+                    - generic [ref=e1304]: трасса Каркаралы
+                    - paragraph [ref=e1305]: Esil
+                  - generic [ref=e1306]: Low
+                - generic [ref=e1307]:
+                  - generic [ref=e1308]:
+                    - generic [ref=e1309]: Forecast
+                    - generic [ref=e1310]: "Conf: 93%"
+                  - generic [ref=e1311]:
+                    - generic [ref=e1312]:
+                      - generic: 4 · 94%
+                    - generic [ref=e1314]:
+                      - generic: 5 · 95%
+                    - generic [ref=e1316]:
+                      - generic: 5 · 92%
+                    - generic [ref=e1318]:
+                      - generic: 4 · 92%
+                  - generic [ref=e1320]:
+                    - generic [ref=e1321]: 15m
+                    - generic [ref=e1322]: 30m
+                    - generic [ref=e1323]: 60m
+                    - generic [ref=e1324]: 120m
+              - generic [ref=e1325] [cursor=pointer]:
+                - generic [ref=e1327]:
+                  - generic [ref=e1328]:
+                    - generic [ref=e1329]: трасса Каркаралы
+                    - paragraph [ref=e1330]: Esil
+                  - generic [ref=e1331]: Low
+                - generic [ref=e1332]:
+                  - generic [ref=e1333]:
+                    - generic [ref=e1334]: Forecast
+                    - generic [ref=e1335]: "Conf: 93%"
+                  - generic [ref=e1336]:
+                    - generic [ref=e1337]:
+                      - generic: 6 · 91%
+                    - generic [ref=e1339]:
+                      - generic: 6 · 96%
+                    - generic [ref=e1341]:
+                      - generic: 6 · 94%
+                    - generic [ref=e1343]:
+                      - generic: 6 · 91%
+                  - generic [ref=e1345]:
+                    - generic [ref=e1346]: 15m
+                    - generic [ref=e1347]: 30m
+                    - generic [ref=e1348]: 60m
+                    - generic [ref=e1349]: 120m
+              - generic [ref=e1350] [cursor=pointer]:
+                - generic [ref=e1352]:
+                  - generic [ref=e1353]:
+                    - generic [ref=e1354]: дачный масив "Авиатор"
+                    - paragraph [ref=e1355]: Esil
+                  - generic [ref=e1356]: Low
+                - generic [ref=e1357]:
+                  - generic [ref=e1358]:
+                    - generic [ref=e1359]: Forecast
+                    - generic [ref=e1360]: "Conf: 93%"
+                  - generic [ref=e1361]:
+                    - generic [ref=e1362]:
+                      - generic: 14 · 94%
+                    - generic [ref=e1364]:
+                      - generic: 12 · 93%
+                    - generic [ref=e1366]:
+                      - generic: 13 · 96%
+                    - generic [ref=e1368]:
+                      - generic: 11 · 91%
+                  - generic [ref=e1370]:
+                    - generic [ref=e1371]: 15m
+                    - generic [ref=e1372]: 30m
+                    - generic [ref=e1373]: 60m
+                    - generic [ref=e1374]: 120m
+              - generic [ref=e1375] [cursor=pointer]:
+                - generic [ref=e1377]:
+                  - generic [ref=e1378]:
+                    - generic [ref=e1379]: дачный масив "Авиатор"
+                    - paragraph [ref=e1380]: Esil
+                  - generic [ref=e1381]: Low
+                - generic [ref=e1382]:
+                  - generic [ref=e1383]:
+                    - generic [ref=e1384]: Forecast
+                    - generic [ref=e1385]: "Conf: 92%"
+                  - generic [ref=e1386]:
+                    - generic [ref=e1387]:
+                      - generic: 11 · 94%
+                    - generic [ref=e1389]:
+                      - generic: 11 · 92%
+                    - generic [ref=e1391]:
+                      - generic: 11 · 91%
+                    - generic [ref=e1393]:
+                      - generic: 11 · 91%
+                  - generic [ref=e1395]:
+                    - generic [ref=e1396]: 15m
+                    - generic [ref=e1397]: 30m
+                    - generic [ref=e1398]: 60m
+                    - generic [ref=e1399]: 120m
+              - generic [ref=e1400] [cursor=pointer]:
+                - generic [ref=e1402]:
+                  - generic [ref=e1403]:
+                    - generic [ref=e1404]: улица Сарытогай
+                    - paragraph [ref=e1405]: Esil
+                  - generic [ref=e1406]: Low
+                - generic [ref=e1407]:
+                  - generic [ref=e1408]:
+                    - generic [ref=e1409]: Forecast
+                    - generic [ref=e1410]: "Conf: 93%"
+                  - generic [ref=e1411]:
+                    - generic [ref=e1412]:
+                      - generic: 10 · 95%
+                    - generic [ref=e1414]:
+                      - generic: 10 · 96%
+                    - generic [ref=e1416]:
+                      - generic: 9 · 92%
+                    - generic [ref=e1418]:
+                      - generic: 9 · 91%
+                  - generic [ref=e1420]:
+                    - generic [ref=e1421]: 15m
+                    - generic [ref=e1422]: 30m
+                    - generic [ref=e1423]: 60m
+                    - generic [ref=e1424]: 120m
+              - generic [ref=e1425] [cursor=pointer]:
+                - generic [ref=e1427]:
+                  - generic [ref=e1428]:
+                    - generic [ref=e1429]: улица Сарытогай
+                    - paragraph [ref=e1430]: Esil
+                  - generic [ref=e1431]: Low
+                - generic [ref=e1432]:
+                  - generic [ref=e1433]:
+                    - generic [ref=e1434]: Forecast
+                    - generic [ref=e1435]: "Conf: 93%"
+                  - generic [ref=e1436]:
+                    - generic [ref=e1437]:
+                      - generic: 21 · 95%
+                    - generic [ref=e1439]:
+                      - generic: 22 · 97%
+                    - generic [ref=e1441]:
+                      - generic: 20 · 90%
+                    - generic [ref=e1443]:
+                      - generic: 22 · 91%
+                  - generic [ref=e1445]:
+                    - generic [ref=e1446]: 15m
+                    - generic [ref=e1447]: 30m
+                    - generic [ref=e1448]: 60m
+                    - generic [ref=e1449]: 120m
+              - generic [ref=e1450] [cursor=pointer]:
+                - generic [ref=e1452]:
+                  - generic [ref=e1453]:
+                    - generic [ref=e1454]: Жилой массив "Пригородный"
+                    - paragraph [ref=e1455]: Esil
+                  - generic [ref=e1456]: Low
+                - generic [ref=e1457]:
+                  - generic [ref=e1458]:
+                    - generic [ref=e1459]: Forecast
+                    - generic [ref=e1460]: "Conf: 93%"
+                  - generic [ref=e1461]:
+                    - generic [ref=e1462]:
+                      - generic: 15 · 96%
+                    - generic [ref=e1464]:
+                      - generic: 15 · 94%
+                    - generic [ref=e1466]:
+                      - generic: 15 · 91%
+                    - generic [ref=e1468]:
+                      - generic: 15 · 93%
+                  - generic [ref=e1470]:
+                    - generic [ref=e1471]: 15m
+                    - generic [ref=e1472]: 30m
+                    - generic [ref=e1473]: 60m
+                    - generic [ref=e1474]: 120m
+              - generic [ref=e1475] [cursor=pointer]:
+                - generic [ref=e1477]:
+                  - generic [ref=e1478]:
+                    - generic [ref=e1479]: Центр нейрохирургии
+                    - paragraph [ref=e1480]: Esil
+                  - generic [ref=e1481]: Low
+                - generic [ref=e1482]:
+                  - generic [ref=e1483]:
+                    - generic [ref=e1484]: Forecast
+                    - generic [ref=e1485]: "Conf: 94%"
+                  - generic [ref=e1486]:
+                    - generic [ref=e1487]:
+                      - generic: 7 · 95%
+                    - generic [ref=e1489]:
+                      - generic: 7 · 95%
+                    - generic [ref=e1491]:
+                      - generic: 7 · 93%
+                    - generic [ref=e1493]:
+                      - generic: 8 · 94%
+                  - generic [ref=e1495]:
+                    - generic [ref=e1496]: 15m
+                    - generic [ref=e1497]: 30m
+                    - generic [ref=e1498]: 60m
+                    - generic [ref=e1499]: 120m
+              - generic [ref=e1500] [cursor=pointer]:
+                - generic [ref=e1502]:
+                  - generic [ref=e1503]:
+                    - generic [ref=e1504]: Центр нейрохирургии
+                    - paragraph [ref=e1505]: Esil
+                  - generic [ref=e1506]: Low
+                - generic [ref=e1507]:
+                  - generic [ref=e1508]:
+                    - generic [ref=e1509]: Forecast
+                    - generic [ref=e1510]: "Conf: 94%"
+                  - generic [ref=e1511]:
+                    - generic [ref=e1512]:
+                      - generic: 34 · 95%
+                    - generic [ref=e1514]:
+                      - generic: 34 · 95%
+                    - generic [ref=e1516]:
+                      - generic: 34 · 96%
+                    - generic [ref=e1518]:
+                      - generic: 34 · 89%
+                  - generic [ref=e1520]:
+                    - generic [ref=e1521]: 15m
+                    - generic [ref=e1522]: 30m
+                    - generic [ref=e1523]: 60m
+                    - generic [ref=e1524]: 120m
+              - generic [ref=e1525] [cursor=pointer]:
+                - generic [ref=e1527]:
+                  - generic [ref=e1528]:
+                    - generic [ref=e1529]: Национальный кардиологический центр
+                    - paragraph [ref=e1530]: Esil
+                  - generic [ref=e1531]: Low
+                - generic [ref=e1532]:
+                  - generic [ref=e1533]:
+                    - generic [ref=e1534]: Forecast
+                    - generic [ref=e1535]: "Conf: 93%"
+                  - generic [ref=e1536]:
+                    - generic [ref=e1537]:
+                      - generic: 17 · 93%
+                    - generic [ref=e1539]:
+                      - generic: 18 · 96%
+                    - generic [ref=e1541]:
+                      - generic: 17 · 95%
+                    - generic [ref=e1543]:
+                      - generic: 18 · 88%
+                  - generic [ref=e1545]:
+                    - generic [ref=e1546]: 15m
+                    - generic [ref=e1547]: 30m
+                    - generic [ref=e1548]: 60m
+                    - generic [ref=e1549]: 120m
+              - generic [ref=e1550] [cursor=pointer]:
+                - generic [ref=e1552]:
+                  - generic [ref=e1553]:
+                    - generic [ref=e1554]: Национальный кардиологический центр
+                    - paragraph [ref=e1555]: Esil
+                  - generic [ref=e1556]: Low
+                - generic [ref=e1557]:
+                  - generic [ref=e1558]:
+                    - generic [ref=e1559]: Forecast
+                    - generic [ref=e1560]: "Conf: 95%"
+                  - generic [ref=e1561]:
+                    - generic [ref=e1562]:
+                      - generic: 16 · 94%
+                    - generic [ref=e1564]:
+                      - generic: 14 · 97%
+                    - generic [ref=e1566]:
+                      - generic: 16 · 98%
+                    - generic [ref=e1568]:
+                      - generic: 15 · 92%
+                  - generic [ref=e1570]:
+                    - generic [ref=e1571]: 15m
+                    - generic [ref=e1572]: 30m
+                    - generic [ref=e1573]: 60m
+                    - generic [ref=e1574]: 120m
+              - generic [ref=e1575] [cursor=pointer]:
+                - generic [ref=e1577]:
+                  - generic [ref=e1578]:
+                    - generic [ref=e1579]: улица Конаева
+                    - paragraph [ref=e1580]: Esil
+                  - generic [ref=e1581]: Low
+                - generic [ref=e1582]:
+                  - generic [ref=e1583]:
+                    - generic [ref=e1584]: Forecast
+                    - generic [ref=e1585]: "Conf: 93%"
+                  - generic [ref=e1586]:
+                    - generic [ref=e1587]:
+                      - generic: 6 · 96%
+                    - generic [ref=e1589]:
+                      - generic: 7 · 92%
+                    - generic [ref=e1591]:
+                      - generic: 7 · 93%
+                    - generic [ref=e1593]:
+                      - generic: 8 · 91%
+                  - generic [ref=e1595]:
+                    - generic [ref=e1596]: 15m
+                    - generic [ref=e1597]: 30m
+                    - generic [ref=e1598]: 60m
+                    - generic [ref=e1599]: 120m
+              - generic [ref=e1600] [cursor=pointer]:
+                - generic [ref=e1602]:
+                  - generic [ref=e1603]:
+                    - generic [ref=e1604]: улица Конаева
+                    - paragraph [ref=e1605]: Esil
+                  - generic [ref=e1606]: Low
+                - generic [ref=e1607]:
+                  - generic [ref=e1608]:
+                    - generic [ref=e1609]: Forecast
+                    - generic [ref=e1610]: "Conf: 93%"
+                  - generic [ref=e1611]:
+                    - generic [ref=e1612]:
+                      - generic: 21 · 96%
+                    - generic [ref=e1614]:
+                      - generic: 21 · 91%
+                    - generic [ref=e1616]:
+                      - generic: 21 · 96%
+                    - generic [ref=e1618]:
+                      - generic: 21 · 92%
+                  - generic [ref=e1620]:
+                    - generic [ref=e1621]: 15m
+                    - generic [ref=e1622]: 30m
+                    - generic [ref=e1623]: 60m
+                    - generic [ref=e1624]: 120m
+              - generic [ref=e1625] [cursor=pointer]:
+                - generic [ref=e1627]:
+                  - generic [ref=e1628]:
+                    - generic [ref=e1629]: НК "КТЖ"
+                    - paragraph [ref=e1630]: Esil
+                  - generic [ref=e1631]: Low
+                - generic [ref=e1632]:
+                  - generic [ref=e1633]:
+                    - generic [ref=e1634]: Forecast
+                    - generic [ref=e1635]: "Conf: 94%"
+                  - generic [ref=e1636]:
+                    - generic [ref=e1637]:
+                      - generic: 6 · 97%
+                    - generic [ref=e1639]:
+                      - generic: 6 · 94%
+                    - generic [ref=e1641]:
+                      - generic: 7 · 92%
+                    - generic [ref=e1643]:
+                      - generic: 6 · 92%
+                  - generic [ref=e1645]:
+                    - generic [ref=e1646]: 15m
+                    - generic [ref=e1647]: 30m
+                    - generic [ref=e1648]: 60m
+                    - generic [ref=e1649]: 120m
+              - generic [ref=e1650] [cursor=pointer]:
+                - generic [ref=e1652]:
+                  - generic [ref=e1653]:
+                    - generic [ref=e1654]: НК "КТЖ"
+                    - paragraph [ref=e1655]: Esil
+                  - generic [ref=e1656]: Low
+                - generic [ref=e1657]:
+                  - generic [ref=e1658]:
+                    - generic [ref=e1659]: Forecast
+                    - generic [ref=e1660]: "Conf: 93%"
+                  - generic [ref=e1661]:
+                    - generic [ref=e1662]:
+                      - generic: 10 · 93%
+                    - generic [ref=e1664]:
+                      - generic: 10 · 94%
+                    - generic [ref=e1666]:
+                      - generic: 10 · 92%
+                    - generic [ref=e1668]:
+                      - generic: 10 · 92%
+                  - generic [ref=e1670]:
+                    - generic [ref=e1671]: 15m
+                    - generic [ref=e1672]: 30m
+                    - generic [ref=e1673]: 60m
+                    - generic [ref=e1674]: 120m
+              - generic [ref=e1675] [cursor=pointer]:
+                - generic [ref=e1677]:
+                  - generic [ref=e1678]:
+                    - generic [ref=e1679]: Дом Министерств
+                    - paragraph [ref=e1680]: Saryarka
+                  - generic [ref=e1681]: Low
+                - generic [ref=e1682]:
+                  - generic [ref=e1683]:
+                    - generic [ref=e1684]: Forecast
+                    - generic [ref=e1685]: "Conf: 93%"
+                  - generic [ref=e1686]:
+                    - generic [ref=e1687]:
+                      - generic: 14 · 94%
+                    - generic [ref=e1689]:
+                      - generic: 12 · 94%
+                    - generic [ref=e1691]:
+                      - generic: 14 · 93%
+                    - generic [ref=e1693]:
+                      - generic: 13 · 90%
+                  - generic [ref=e1695]:
+                    - generic [ref=e1696]: 15m
+                    - generic [ref=e1697]: 30m
+                    - generic [ref=e1698]: 60m
+                    - generic [ref=e1699]: 120m
+              - generic [ref=e1700] [cursor=pointer]:
+                - generic [ref=e1702]:
+                  - generic [ref=e1703]:
+                    - generic [ref=e1704]: «Атарүрік» саябағы
+                    - paragraph [ref=e1705]: Esil
+                  - generic [ref=e1706]: Low
+                - generic [ref=e1707]:
+                  - generic [ref=e1708]:
+                    - generic [ref=e1709]: Forecast
+                    - generic [ref=e1710]: "Conf: 96%"
+                  - generic [ref=e1711]:
+                    - generic [ref=e1712]:
+                      - generic: 17 · 98%
+                    - generic [ref=e1714]:
+                      - generic: 17 · 98%
+                    - generic [ref=e1716]:
+                      - generic: 18 · 94%
+                    - generic [ref=e1718]:
+                      - generic: 18 · 95%
+                  - generic [ref=e1720]:
+                    - generic [ref=e1721]: 15m
+                    - generic [ref=e1722]: 30m
+                    - generic [ref=e1723]: 60m
+                    - generic [ref=e1724]: 120m
+              - generic [ref=e1725] [cursor=pointer]:
+                - generic [ref=e1727]:
+                  - generic [ref=e1728]:
+                    - generic [ref=e1729]: микрорайон Самал
+                    - paragraph [ref=e1730]: Esil
+                  - generic [ref=e1731]: Low
+                - generic [ref=e1732]:
+                  - generic [ref=e1733]:
+                    - generic [ref=e1734]: Forecast
+                    - generic [ref=e1735]: "Conf: 92%"
+                  - generic [ref=e1736]:
+                    - generic [ref=e1737]:
+                      - generic: 12 · 92%
+                    - generic [ref=e1739]:
+                      - generic: 12 · 94%
+                    - generic [ref=e1741]:
+                      - generic: 12 · 93%
+                    - generic [ref=e1743]:
+                      - generic: 11 · 90%
+                  - generic [ref=e1745]:
+                    - generic [ref=e1746]: 15m
+                    - generic [ref=e1747]: 30m
+                    - generic [ref=e1748]: 60m
+                    - generic [ref=e1749]: 120m
+              - generic [ref=e1750] [cursor=pointer]:
+                - generic [ref=e1752]:
+                  - generic [ref=e1753]:
+                    - generic [ref=e1754]: микрорайон Самал
+                    - paragraph [ref=e1755]: Esil
+                  - generic [ref=e1756]: Low
+                - generic [ref=e1757]:
+                  - generic [ref=e1758]:
+                    - generic [ref=e1759]: Forecast
+                    - generic [ref=e1760]: "Conf: 94%"
+                  - generic [ref=e1761]:
+                    - generic [ref=e1762]:
+                      - generic: 14 · 94%
+                    - generic [ref=e1764]:
+                      - generic: 14 · 97%
+                    - generic [ref=e1766]:
+                      - generic: 13 · 95%
+                    - generic [ref=e1768]:
+                      - generic: 16 · 89%
+                  - generic [ref=e1770]:
+                    - generic [ref=e1771]: 15m
+                    - generic [ref=e1772]: 30m
+                    - generic [ref=e1773]: 60m
+                    - generic [ref=e1774]: 120m
+              - generic [ref=e1775] [cursor=pointer]:
+                - generic [ref=e1777]:
+                  - generic [ref=e1778]:
+                    - generic [ref=e1779]: Улица Ж. Тархана
+                    - paragraph [ref=e1780]: Esil
+                  - generic [ref=e1781]: Low
+                - generic [ref=e1782]:
+                  - generic [ref=e1783]:
+                    - generic [ref=e1784]: Forecast
+                    - generic [ref=e1785]: "Conf: 94%"
+                  - generic [ref=e1786]:
+                    - generic [ref=e1787]:
+                      - generic: 8 · 94%
+                    - generic [ref=e1789]:
+                      - generic: 7 · 95%
+                    - generic [ref=e1791]:
+                      - generic: 8 · 95%
+                    - generic [ref=e1793]:
+                      - generic: 8 · 91%
+                  - generic [ref=e1795]:
+                    - generic [ref=e1796]: 15m
+                    - generic [ref=e1797]: 30m
+                    - generic [ref=e1798]: 60m
+                    - generic [ref=e1799]: 120m
+              - generic [ref=e1800] [cursor=pointer]:
+                - generic [ref=e1802]:
+                  - generic [ref=e1803]:
+                    - generic [ref=e1804]: улица А. Иманова
+                    - paragraph [ref=e1805]: Esil
+                  - generic [ref=e1806]: Low
+                - generic [ref=e1807]:
+                  - generic [ref=e1808]:
+                    - generic [ref=e1809]: Forecast
+                    - generic [ref=e1810]: "Conf: 93%"
+                  - generic [ref=e1811]:
+                    - generic [ref=e1812]:
+                      - generic: 20 · 91%
+                    - generic [ref=e1814]:
+                      - generic: 21 · 97%
+                    - generic [ref=e1816]:
+                      - generic: 19 · 94%
+                    - generic [ref=e1818]:
+                      - generic: 20 · 89%
+                  - generic [ref=e1820]:
+                    - generic [ref=e1821]: 15m
+                    - generic [ref=e1822]: 30m
+                    - generic [ref=e1823]: 60m
+                    - generic [ref=e1824]: 120m
+              - generic [ref=e1825] [cursor=pointer]:
+                - generic [ref=e1827]:
+                  - generic [ref=e1828]:
+                    - generic [ref=e1829]: улица А. Иманова
+                    - paragraph [ref=e1830]: Esil
+                  - generic [ref=e1831]: Low
+                - generic [ref=e1832]:
+                  - generic [ref=e1833]:
+                    - generic [ref=e1834]: Forecast
+                    - generic [ref=e1835]: "Conf: 93%"
+                  - generic [ref=e1836]:
+                    - generic [ref=e1837]:
+                      - generic: 19 · 95%
+                    - generic [ref=e1839]:
+                      - generic: 18 · 91%
+                    - generic [ref=e1841]:
+                      - generic: 19 · 92%
+                    - generic [ref=e1843]:
+                      - generic: 18 · 93%
+                  - generic [ref=e1845]:
+                    - generic [ref=e1846]: 15m
+                    - generic [ref=e1847]: 30m
+                    - generic [ref=e1848]: 60m
+                    - generic [ref=e1849]: 120m
+              - generic [ref=e1850] [cursor=pointer]:
+                - generic [ref=e1852]:
+                  - generic [ref=e1853]:
+                    - generic [ref=e1854]: АО "Народный Банк"
+                    - paragraph [ref=e1855]: Esil
+                  - generic [ref=e1856]: Low
+                - generic [ref=e1857]:
+                  - generic [ref=e1858]:
+                    - generic [ref=e1859]: Forecast
+                    - generic [ref=e1860]: "Conf: 95%"
+                  - generic [ref=e1861]:
+                    - generic [ref=e1862]:
+                      - generic: 16 · 96%
+                    - generic [ref=e1864]:
+                      - generic: 16 · 98%
+                    - generic [ref=e1866]:
+                      - generic: 14 · 93%
+                    - generic [ref=e1868]:
+                      - generic: 17 · 91%
+                  - generic [ref=e1870]:
+                    - generic [ref=e1871]: 15m
+                    - generic [ref=e1872]: 30m
+                    - generic [ref=e1873]: 60m
+                    - generic [ref=e1874]: 120m
+              - generic [ref=e1875] [cursor=pointer]:
+                - generic [ref=e1877]:
+                  - generic [ref=e1878]:
+                    - generic [ref=e1879]: Банк КазКом
+                    - paragraph [ref=e1880]: Esil
+                  - generic [ref=e1881]: Low
+                - generic [ref=e1882]:
+                  - generic [ref=e1883]:
+                    - generic [ref=e1884]: Forecast
+                    - generic [ref=e1885]: "Conf: 94%"
+                  - generic [ref=e1886]:
+                    - generic [ref=e1887]:
+                      - generic: 18 · 97%
+                    - generic [ref=e1889]:
+                      - generic: 20 · 92%
+                    - generic [ref=e1891]:
+                      - generic: 20 · 94%
+                    - generic [ref=e1893]:
+                      - generic: 19 · 91%
+                  - generic [ref=e1895]:
+                    - generic [ref=e1896]: 15m
+                    - generic [ref=e1897]: 30m
+                    - generic [ref=e1898]: 60m
+                    - generic [ref=e1899]: 120m
+              - generic [ref=e1900] [cursor=pointer]:
+                - generic [ref=e1902]:
+                  - generic [ref=e1903]:
+                    - generic [ref=e1904]: Банк КазКом
+                    - paragraph [ref=e1905]: Esil
+                  - generic [ref=e1906]: Low
+                - generic [ref=e1907]:
+                  - generic [ref=e1908]:
+                    - generic [ref=e1909]: Forecast
+                    - generic [ref=e1910]: "Conf: 94%"
+                  - generic [ref=e1911]:
+                    - generic [ref=e1912]:
+                      - generic: 10 · 93%
+                    - generic [ref=e1914]:
+                      - generic: 10 · 97%
+                    - generic [ref=e1916]:
+                      - generic: 9 · 93%
+                    - generic [ref=e1918]:
+                      - generic: 10 · 91%
+                  - generic [ref=e1920]:
+                    - generic [ref=e1921]: 15m
+                    - generic [ref=e1922]: 30m
+                    - generic [ref=e1923]: 60m
+                    - generic [ref=e1924]: 120m
+              - generic [ref=e1925] [cursor=pointer]:
+                - generic [ref=e1927]:
+                  - generic [ref=e1928]:
+                    - generic [ref=e1929]: улица А. Жангельдина
+                    - paragraph [ref=e1930]: Esil
+                  - generic [ref=e1931]: Low
+                - generic [ref=e1932]:
+                  - generic [ref=e1933]:
+                    - generic [ref=e1934]: Forecast
+                    - generic [ref=e1935]: "Conf: 94%"
+                  - generic [ref=e1936]:
+                    - generic [ref=e1937]:
+                      - generic: 18 · 95%
+                    - generic [ref=e1939]:
+                      - generic: 18 · 96%
+                    - generic [ref=e1941]:
+                      - generic: 17 · 90%
+                    - generic [ref=e1943]:
+                      - generic: 16 · 94%
+                  - generic [ref=e1945]:
+                    - generic [ref=e1946]: 15m
+                    - generic [ref=e1947]: 30m
+                    - generic [ref=e1948]: 60m
+                    - generic [ref=e1949]: 120m
+              - generic [ref=e1950] [cursor=pointer]:
+                - generic [ref=e1952]:
+                  - generic [ref=e1953]:
+                    - generic [ref=e1954]: улица Бейбитшилик
+                    - paragraph [ref=e1955]: Esil
+                  - generic [ref=e1956]: Low
+                - generic [ref=e1957]:
+                  - generic [ref=e1958]:
+                    - generic [ref=e1959]: Forecast
+                    - generic [ref=e1960]: "Conf: 93%"
+                  - generic [ref=e1961]:
+                    - generic [ref=e1962]:
+                      - generic: 8 · 95%
+                    - generic [ref=e1964]:
+                      - generic: 9 · 94%
+                    - generic [ref=e1966]:
+                      - generic: 9 · 94%
+                    - generic [ref=e1968]:
+                      - generic: 8 · 89%
+                  - generic [ref=e1970]:
+                    - generic [ref=e1971]: 15m
+                    - generic [ref=e1972]: 30m
+                    - generic [ref=e1973]: 60m
+                    - generic [ref=e1974]: 120m
+              - generic [ref=e1975] [cursor=pointer]:
+                - generic [ref=e1977]:
+                  - generic [ref=e1978]:
+                    - generic [ref=e1979]: Политехнический колледж
+                    - paragraph [ref=e1980]: Esil
+                  - generic [ref=e1981]: Low
+                - generic [ref=e1982]:
+                  - generic [ref=e1983]:
+                    - generic [ref=e1984]: Forecast
+                    - generic [ref=e1985]: "Conf: 94%"
+                  - generic [ref=e1986]:
+                    - generic [ref=e1987]:
+                      - generic: 10 · 95%
+                    - generic [ref=e1989]:
+                      - generic: 9 · 96%
+                    - generic [ref=e1991]:
+                      - generic: 9 · 94%
+                    - generic [ref=e1993]:
+                      - generic: 9 · 90%
+                  - generic [ref=e1995]:
+                    - generic [ref=e1996]: 15m
+                    - generic [ref=e1997]: 30m
+                    - generic [ref=e1998]: 60m
+                    - generic [ref=e1999]: 120m
+              - generic [ref=e2000] [cursor=pointer]:
+                - generic [ref=e2002]:
+                  - generic [ref=e2003]:
+                    - generic [ref=e2004]: Национальный научно-медицинский центр
+                    - paragraph [ref=e2005]: Saryarka
+                  - generic [ref=e2006]: Low
+                - generic [ref=e2007]:
+                  - generic [ref=e2008]:
+                    - generic [ref=e2009]: Forecast
+                    - generic [ref=e2010]: "Conf: 95%"
+                  - generic [ref=e2011]:
+                    - generic [ref=e2012]:
+                      - generic: 9 · 97%
+                    - generic [ref=e2014]:
+                      - generic: 10 · 92%
+                    - generic [ref=e2016]:
+                      - generic: 9 · 94%
+                    - generic [ref=e2018]:
+                      - generic: 10 · 94%
+                  - generic [ref=e2020]:
+                    - generic [ref=e2021]: 15m
+                    - generic [ref=e2022]: 30m
+                    - generic [ref=e2023]: 60m
+                    - generic [ref=e2024]: 120m
+              - generic [ref=e2025] [cursor=pointer]:
+                - generic [ref=e2027]:
+                  - generic [ref=e2028]:
+                    - generic [ref=e2029]: Средняя школа №38
+                    - paragraph [ref=e2030]: Saryarka
+                  - generic [ref=e2031]: Low
+                - generic [ref=e2032]:
+                  - generic [ref=e2033]:
+                    - generic [ref=e2034]: Forecast
+                    - generic [ref=e2035]: "Conf: 93%"
+                  - generic [ref=e2036]:
+                    - generic [ref=e2037]:
+                      - generic: 6 · 95%
+                    - generic [ref=e2039]:
+                      - generic: 5 · 90%
+                    - generic [ref=e2041]:
+                      - generic: 5 · 92%
+                    - generic [ref=e2043]:
+                      - generic: 6 · 93%
+                  - generic [ref=e2045]:
+                    - generic [ref=e2046]: 15m
+                    - generic [ref=e2047]: 30m
+                    - generic [ref=e2048]: 60m
+                    - generic [ref=e2049]: 120m
+              - generic [ref=e2050] [cursor=pointer]:
+                - generic [ref=e2052]:
+                  - generic [ref=e2053]:
+                    - generic [ref=e2054]: Торговый дом "Айтолкын"
+                    - paragraph [ref=e2055]: Saryarka
+                  - generic [ref=e2056]: Low
+                - generic [ref=e2057]:
+                  - generic [ref=e2058]:
+                    - generic [ref=e2059]: Forecast
+                    - generic [ref=e2060]: "Conf: 92%"
+                  - generic [ref=e2061]:
+                    - generic [ref=e2062]:
+                      - generic: 20 · 94%
+                    - generic [ref=e2064]:
+                      - generic: 21 · 93%
+                    - generic [ref=e2066]:
+                      - generic: 21 · 91%
+                    - generic [ref=e2068]:
+                      - generic: 21 · 90%
+                  - generic [ref=e2070]:
+                    - generic [ref=e2071]: 15m
+                    - generic [ref=e2072]: 30m
+                    - generic [ref=e2073]: 60m
+                    - generic [ref=e2074]: 120m
+              - generic [ref=e2075] [cursor=pointer]:
+                - generic [ref=e2077]:
+                  - generic [ref=e2078]:
+                    - generic [ref=e2079]: Средняя школа №38
+                    - paragraph [ref=e2080]: Saryarka
+                  - generic [ref=e2081]: Low
+                - generic [ref=e2082]:
+                  - generic [ref=e2083]:
+                    - generic [ref=e2084]: Forecast
+                    - generic [ref=e2085]: "Conf: 93%"
+                  - generic [ref=e2086]:
+                    - generic [ref=e2087]:
+                      - generic: 16 · 94%
+                    - generic [ref=e2089]:
+                      - generic: 15 · 93%
+                    - generic [ref=e2091]:
+                      - generic: 16 · 94%
+                    - generic [ref=e2093]:
+                      - generic: 16 · 92%
+                  - generic [ref=e2095]:
+                    - generic [ref=e2096]: 15m
+                    - generic [ref=e2097]: 30m
+                    - generic [ref=e2098]: 60m
+                    - generic [ref=e2099]: 120m
+              - generic [ref=e2100] [cursor=pointer]:
+                - generic [ref=e2102]:
+                  - generic [ref=e2103]:
+                    - generic [ref=e2104]: Школа "Мирас"
+                    - paragraph [ref=e2105]: Saryarka
+                  - generic [ref=e2106]: Low
+                - generic [ref=e2107]:
+                  - generic [ref=e2108]:
+                    - generic [ref=e2109]: Forecast
+                    - generic [ref=e2110]: "Conf: 95%"
+                  - generic [ref=e2111]:
+                    - generic [ref=e2112]:
+                      - generic: 10 · 96%
+                    - generic [ref=e2114]:
+                      - generic: 12 · 93%
+                    - generic [ref=e2116]:
+                      - generic: 11 · 97%
+                    - generic [ref=e2118]:
+                      - generic: 11 · 93%
+                  - generic [ref=e2120]:
+                    - generic [ref=e2121]: 15m
+                    - generic [ref=e2122]: 30m
+                    - generic [ref=e2123]: 60m
+                    - generic [ref=e2124]: 120m
+              - generic [ref=e2125] [cursor=pointer]:
+                - generic [ref=e2127]:
+                  - generic [ref=e2128]:
+                    - generic [ref=e2129]: Манаса
+                    - paragraph [ref=e2130]: Saryarka
+                  - generic [ref=e2131]: Low
+                - generic [ref=e2132]:
+                  - generic [ref=e2133]:
+                    - generic [ref=e2134]: Forecast
+                    - generic [ref=e2135]: "Conf: 92%"
+                  - generic [ref=e2136]:
+                    - generic [ref=e2137]:
+                      - generic: 17 · 95%
+                    - generic [ref=e2139]:
+                      - generic: 18 · 94%
+                    - generic [ref=e2141]:
+                      - generic: 18 · 88%
+                    - generic [ref=e2143]:
+                      - generic: 18 · 93%
+                  - generic [ref=e2145]:
+                    - generic [ref=e2146]: 15m
+                    - generic [ref=e2147]: 30m
+                    - generic [ref=e2148]: 60m
+                    - generic [ref=e2149]: 120m
+              - generic [ref=e2150] [cursor=pointer]:
+                - generic [ref=e2152]:
+                  - generic [ref=e2153]:
+                    - generic [ref=e2154]: Микрорайон Аль-Фараби
+                    - paragraph [ref=e2155]: Saryarka
+                  - generic [ref=e2156]: Low
+                - generic [ref=e2157]:
+                  - generic [ref=e2158]:
+                    - generic [ref=e2159]: Forecast
+                    - generic [ref=e2160]: "Conf: 93%"
+                  - generic [ref=e2161]:
+                    - generic [ref=e2162]:
+                      - generic: 6 · 95%
+                    - generic [ref=e2164]:
+                      - generic: 7 · 93%
+                    - generic [ref=e2166]:
+                      - generic: 7 · 92%
+                    - generic [ref=e2168]:
+                      - generic: 6 · 90%
+                  - generic [ref=e2170]:
+                    - generic [ref=e2171]: 15m
+                    - generic [ref=e2172]: 30m
+                    - generic [ref=e2173]: 60m
+                    - generic [ref=e2174]: 120m
+              - generic [ref=e2175] [cursor=pointer]:
+                - generic [ref=e2177]:
+                  - generic [ref=e2178]:
+                    - generic [ref=e2179]: 7-я поликлиника
+                    - paragraph [ref=e2180]: Saryarka
+                  - generic [ref=e2181]: Low
+                - generic [ref=e2182]:
+                  - generic [ref=e2183]:
+                    - generic [ref=e2184]: Forecast
+                    - generic [ref=e2185]: "Conf: 94%"
+                  - generic [ref=e2186]:
+                    - generic [ref=e2187]:
+                      - generic: 31 · 96%
+                    - generic [ref=e2189]:
+                      - generic: 34 · 95%
+                    - generic [ref=e2191]:
+                      - generic: 31 · 92%
+                    - generic [ref=e2193]:
+                      - generic: 34 · 93%
+                  - generic [ref=e2195]:
+                    - generic [ref=e2196]: 15m
+                    - generic [ref=e2197]: 30m
+                    - generic [ref=e2198]: 60m
+                    - generic [ref=e2199]: 120m
+              - generic [ref=e2200] [cursor=pointer]:
+                - generic [ref=e2202]:
+                  - generic [ref=e2203]:
+                    - generic [ref=e2204]: Дастан
+                    - paragraph [ref=e2205]: Saryarka
+                  - generic [ref=e2206]: Low
+                - generic [ref=e2207]:
+                  - generic [ref=e2208]:
+                    - generic [ref=e2209]: Forecast
+                    - generic [ref=e2210]: "Conf: 92%"
+                  - generic [ref=e2211]:
+                    - generic [ref=e2212]:
+                      - generic: 9 · 95%
+                    - generic [ref=e2214]:
+                      - generic: 9 · 93%
+                    - generic [ref=e2216]:
+                      - generic: 9 · 91%
+                    - generic [ref=e2218]:
+                      - generic: 10 · 89%
+                  - generic [ref=e2220]:
+                    - generic [ref=e2221]: 15m
+                    - generic [ref=e2222]: 30m
+                    - generic [ref=e2223]: 60m
+                    - generic [ref=e2224]: 120m
+              - generic [ref=e2225] [cursor=pointer]:
+                - generic [ref=e2227]:
+                  - generic [ref=e2228]:
+                    - generic [ref=e2229]: Микрорайон №9
+                    - paragraph [ref=e2230]: Saryarka
+                  - generic [ref=e2231]: Low
+                - generic [ref=e2232]:
+                  - generic [ref=e2233]:
+                    - generic [ref=e2234]: Forecast
+                    - generic [ref=e2235]: "Conf: 93%"
+                  - generic [ref=e2236]:
+                    - generic [ref=e2237]:
+                      - generic: 13 · 96%
+                    - generic [ref=e2239]:
+                      - generic: 13 · 94%
+                    - generic [ref=e2241]:
+                      - generic: 14 · 94%
+                    - generic [ref=e2243]:
+                      - generic: 13 · 90%
+                  - generic [ref=e2245]:
+                    - generic [ref=e2246]: 15m
+                    - generic [ref=e2247]: 30m
+                    - generic [ref=e2248]: 60m
+                    - generic [ref=e2249]: 120m
+              - generic [ref=e2250] [cursor=pointer]:
+                - generic [ref=e2252]:
+                  - generic [ref=e2253]:
+                    - generic [ref=e2254]: улица Силети
+                    - paragraph [ref=e2255]: Saryarka
+                  - generic [ref=e2256]: Low
+                - generic [ref=e2257]:
+                  - generic [ref=e2258]:
+                    - generic [ref=e2259]: Forecast
+                    - generic [ref=e2260]: "Conf: 93%"
+                  - generic [ref=e2261]:
+                    - generic [ref=e2262]:
+                      - generic: 14 · 93%
+                    - generic [ref=e2264]:
+                      - generic: 15 · 93%
+                    - generic [ref=e2266]:
+                      - generic: 14 · 95%
+                    - generic [ref=e2268]:
+                      - generic: 16 · 89%
+                  - generic [ref=e2270]:
+                    - generic [ref=e2271]: 15m
+                    - generic [ref=e2272]: 30m
+                    - generic [ref=e2273]: 60m
+                    - generic [ref=e2274]: 120m
+              - generic [ref=e2275] [cursor=pointer]:
+                - generic [ref=e2277]:
+                  - generic [ref=e2278]:
+                    - generic [ref=e2279]: Г. Мустафина
+                    - paragraph [ref=e2280]: Saryarka
+                  - generic [ref=e2281]: Low
+                - generic [ref=e2282]:
+                  - generic [ref=e2283]:
+                    - generic [ref=e2284]: Forecast
+                    - generic [ref=e2285]: "Conf: 93%"
+                  - generic [ref=e2286]:
+                    - generic [ref=e2287]:
+                      - generic: 23 · 93%
+                    - generic [ref=e2289]:
+                      - generic: 20 · 92%
+                    - generic [ref=e2291]:
+                      - generic: 22 · 95%
+                    - generic [ref=e2293]:
+                      - generic: 21 · 92%
+                  - generic [ref=e2295]:
+                    - generic [ref=e2296]: 15m
+                    - generic [ref=e2297]: 30m
+                    - generic [ref=e2298]: 60m
+                    - generic [ref=e2299]: 120m
+              - generic [ref=e2300] [cursor=pointer]:
+                - generic [ref=e2302]:
+                  - generic [ref=e2303]:
+                    - generic [ref=e2304]: Силети
+                    - paragraph [ref=e2305]: Saryarka
+                  - generic [ref=e2306]: Low
+                - generic [ref=e2307]:
+                  - generic [ref=e2308]:
+                    - generic [ref=e2309]: Forecast
+                    - generic [ref=e2310]: "Conf: 94%"
+                  - generic [ref=e2311]:
+                    - generic [ref=e2312]:
+                      - generic: 7 · 98%
+                    - generic [ref=e2314]:
+                      - generic: 7 · 95%
+                    - generic [ref=e2316]:
+                      - generic: 8 · 97%
+                    - generic [ref=e2318]:
+                      - generic: 8 · 87%
+                  - generic [ref=e2320]:
+                    - generic [ref=e2321]: 15m
+                    - generic [ref=e2322]: 30m
+                    - generic [ref=e2323]: 60m
+                    - generic [ref=e2324]: 120m
+              - generic [ref=e2325] [cursor=pointer]:
+                - generic [ref=e2327]:
+                  - generic [ref=e2328]:
+                    - generic [ref=e2329]: Ә. Молдағұлова көшесі
+                    - paragraph [ref=e2330]: Esil
+                  - generic [ref=e2331]: Low
+                - generic [ref=e2332]:
+                  - generic [ref=e2333]:
+                    - generic [ref=e2334]: Forecast
+                    - generic [ref=e2335]: "Conf: 93%"
+                  - generic [ref=e2336]:
+                    - generic [ref=e2337]:
+                      - generic: 13 · 96%
+                    - generic [ref=e2339]:
+                      - generic: 12 · 94%
+                    - generic [ref=e2341]:
+                      - generic: 13 · 92%
+                    - generic [ref=e2343]:
+                      - generic: 13 · 91%
+                  - generic [ref=e2345]:
+                    - generic [ref=e2346]: 15m
+                    - generic [ref=e2347]: 30m
+                    - generic [ref=e2348]: 60m
+                    - generic [ref=e2349]: 120m
+              - generic [ref=e2350] [cursor=pointer]:
+                - generic [ref=e2352]:
+                  - generic [ref=e2353]:
+                    - generic [ref=e2354]: Железнодорожный вокзал
+                    - paragraph [ref=e2355]: Esil
+                  - generic [ref=e2356]: Low
+                - generic [ref=e2357]:
+                  - generic [ref=e2358]:
+                    - generic [ref=e2359]: Forecast
+                    - generic [ref=e2360]: "Conf: 92%"
+                  - generic [ref=e2361]:
+                    - generic [ref=e2362]:
+                      - generic: 10 · 93%
+                    - generic [ref=e2364]:
+                      - generic: 10 · 96%
+                    - generic [ref=e2366]:
+                      - generic: 10 · 90%
+                    - generic [ref=e2368]:
+                      - generic: 10 · 90%
+                  - generic [ref=e2370]:
+                    - generic [ref=e2371]: 15m
+                    - generic [ref=e2372]: 30m
+                    - generic [ref=e2373]: 60m
+                    - generic [ref=e2374]: 120m
+              - generic [ref=e2375] [cursor=pointer]:
+                - generic [ref=e2377]:
+                  - generic [ref=e2378]:
+                    - generic [ref=e2379]: Проспект Абылайхана
+                    - paragraph [ref=e2380]: Saryarka
+                  - generic [ref=e2381]: Low
+                - generic [ref=e2382]:
+                  - generic [ref=e2383]:
+                    - generic [ref=e2384]: Forecast
+                    - generic [ref=e2385]: "Conf: 92%"
+                  - generic [ref=e2386]:
+                    - generic [ref=e2387]:
+                      - generic: 10 · 94%
+                    - generic [ref=e2389]:
+                      - generic: 10 · 89%
+                    - generic [ref=e2391]:
+                      - generic: 10 · 95%
+                    - generic [ref=e2393]:
+                      - generic: 10 · 90%
+                  - generic [ref=e2395]:
+                    - generic [ref=e2396]: 15m
+                    - generic [ref=e2397]: 30m
+                    - generic [ref=e2398]: 60m
+                    - generic [ref=e2399]: 120m
+              - generic [ref=e2400] [cursor=pointer]:
+                - generic [ref=e2402]:
+                  - generic [ref=e2403]:
+                    - generic [ref=e2404]: МЦ "Астана-Эколайф"
+                    - paragraph [ref=e2405]: Saryarka
+                  - generic [ref=e2406]: Low
+                - generic [ref=e2407]:
+                  - generic [ref=e2408]:
+                    - generic [ref=e2409]: Forecast
+                    - generic [ref=e2410]: "Conf: 94%"
+                  - generic [ref=e2411]:
+                    - generic [ref=e2412]:
+                      - generic: 12 · 95%
+                    - generic [ref=e2414]:
+                      - generic: 13 · 96%
+                    - generic [ref=e2416]:
+                      - generic: 11 · 95%
+                    - generic [ref=e2418]:
+                      - generic: 12 · 91%
+                  - generic [ref=e2420]:
+                    - generic [ref=e2421]: 15m
+                    - generic [ref=e2422]: 30m
+                    - generic [ref=e2423]: 60m
+                    - generic [ref=e2424]: 120m
+              - generic [ref=e2425] [cursor=pointer]:
+                - generic [ref=e2427]:
+                  - generic [ref=e2428]:
+                    - generic [ref=e2429]: Агротехнический университет
+                    - paragraph [ref=e2430]: Esil
+                  - generic [ref=e2431]: Low
+                - generic [ref=e2432]:
+                  - generic [ref=e2433]:
+                    - generic [ref=e2434]: Forecast
+                    - generic [ref=e2435]: "Conf: 93%"
+                  - generic [ref=e2436]:
+                    - generic [ref=e2437]:
+                      - generic: 16 · 97%
+                    - generic [ref=e2439]:
+                      - generic: 15 · 92%
+                    - generic [ref=e2441]:
+                      - generic: 16 · 93%
+                    - generic [ref=e2443]:
+                      - generic: 15 · 92%
+                  - generic [ref=e2445]:
+                    - generic [ref=e2446]: 15m
+                    - generic [ref=e2447]: 30m
+                    - generic [ref=e2448]: 60m
+                    - generic [ref=e2449]: 120m
+              - generic [ref=e2450] [cursor=pointer]:
+                - generic [ref=e2452]:
+                  - generic [ref=e2453]:
+                    - generic [ref=e2454]: Шапагат
+                    - paragraph [ref=e2455]: Esil
+                  - generic [ref=e2456]: Low
+                - generic [ref=e2457]:
+                  - generic [ref=e2458]:
+                    - generic [ref=e2459]: Forecast
+                    - generic [ref=e2460]: "Conf: 93%"
+                  - generic [ref=e2461]:
+                    - generic [ref=e2462]:
+                      - generic: 17 · 94%
+                    - generic [ref=e2464]:
+                      - generic: 16 · 95%
+                    - generic [ref=e2466]:
+                      - generic: 15 · 92%
+                    - generic [ref=e2468]:
+                      - generic: 17 · 91%
+                  - generic [ref=e2470]:
+                    - generic [ref=e2471]: 15m
+                    - generic [ref=e2472]: 30m
+                    - generic [ref=e2473]: 60m
+                    - generic [ref=e2474]: 120m
+              - generic [ref=e2475] [cursor=pointer]:
+                - generic [ref=e2477]:
+                  - generic [ref=e2478]:
+                    - generic [ref=e2479]: Театр Жастар
+                    - paragraph [ref=e2480]: Esil
+                  - generic [ref=e2481]: Low
+                - generic [ref=e2482]:
+                  - generic [ref=e2483]:
+                    - generic [ref=e2484]: Forecast
+                    - generic [ref=e2485]: "Conf: 93%"
+                  - generic [ref=e2486]:
+                    - generic [ref=e2487]:
+                      - generic: 10 · 94%
+                    - generic [ref=e2489]:
+                      - generic: 10 · 94%
+                    - generic [ref=e2491]:
+                      - generic: 9 · 95%
+                    - generic [ref=e2493]:
+                      - generic: 8 · 90%
+                  - generic [ref=e2495]:
+                    - generic [ref=e2496]: 15m
+                    - generic [ref=e2497]: 30m
+                    - generic [ref=e2498]: 60m
+                    - generic [ref=e2499]: 120m
+              - generic [ref=e2500] [cursor=pointer]:
+                - generic [ref=e2502]:
+                  - generic [ref=e2503]:
+                    - generic [ref=e2504]: Театр Жастар
+                    - paragraph [ref=e2505]: Esil
+                  - generic [ref=e2506]: Low
+                - generic [ref=e2507]:
+                  - generic [ref=e2508]:
+                    - generic [ref=e2509]: Forecast
+                    - generic [ref=e2510]: "Conf: 93%"
+                  - generic [ref=e2511]:
+                    - generic [ref=e2512]:
+                      - generic: 13 · 96%
+                    - generic [ref=e2514]:
+                      - generic: 12 · 92%
+                    - generic [ref=e2516]:
+                      - generic: 13 · 93%
+                    - generic [ref=e2518]:
+                      - generic: 14 · 90%
+                  - generic [ref=e2520]:
+                    - generic [ref=e2521]: 15m
+                    - generic [ref=e2522]: 30m
+                    - generic [ref=e2523]: 60m
+                    - generic [ref=e2524]: 120m
+              - generic [ref=e2525] [cursor=pointer]:
+                - generic [ref=e2527]:
+                  - generic [ref=e2528]:
+                    - generic [ref=e2529]: Дәулет сауда үйі
+                    - paragraph [ref=e2530]: Esil
+                  - generic [ref=e2531]: Low
+                - generic [ref=e2532]:
+                  - generic [ref=e2533]:
+                    - generic [ref=e2534]: Forecast
+                    - generic [ref=e2535]: "Conf: 93%"
+                  - generic [ref=e2536]:
+                    - generic [ref=e2537]:
+                      - generic: 19 · 96%
+                    - generic [ref=e2539]:
+                      - generic: 19 · 93%
+                    - generic [ref=e2541]:
+                      - generic: 19 · 92%
+                    - generic [ref=e2543]:
+                      - generic: 18 · 90%
+                  - generic [ref=e2545]:
+                    - generic [ref=e2546]: 15m
+                    - generic [ref=e2547]: 30m
+                    - generic [ref=e2548]: 60m
+                    - generic [ref=e2549]: 120m
+              - generic [ref=e2550] [cursor=pointer]:
+                - generic [ref=e2552]:
+                  - generic [ref=e2553]:
+                    - generic [ref=e2554]: Музыкальная академия
+                    - paragraph [ref=e2555]: Esil
+                  - generic [ref=e2556]: Low
+                - generic [ref=e2557]:
+                  - generic [ref=e2558]:
+                    - generic [ref=e2559]: Forecast
+                    - generic [ref=e2560]: "Conf: 92%"
+                  - generic [ref=e2561]:
+                    - generic [ref=e2562]:
+                      - generic: 14 · 94%
+                    - generic [ref=e2564]:
+                      - generic: 12 · 91%
+                    - generic [ref=e2566]:
+                      - generic: 13 · 93%
+                    - generic [ref=e2568]:
+                      - generic: 12 · 92%
+                  - generic [ref=e2570]:
+                    - generic [ref=e2571]: 15m
+                    - generic [ref=e2572]: 30m
+                    - generic [ref=e2573]: 60m
+                    - generic [ref=e2574]: 120m
+              - generic [ref=e2575] [cursor=pointer]:
+                - generic [ref=e2577]:
+                  - generic [ref=e2578]:
+                    - generic [ref=e2579]: Улица А. Молдагуловой
+                    - paragraph [ref=e2580]: Esil
+                  - generic [ref=e2581]: Low
+                - generic [ref=e2582]:
+                  - generic [ref=e2583]:
+                    - generic [ref=e2584]: Forecast
+                    - generic [ref=e2585]: "Conf: 95%"
+                  - generic [ref=e2586]:
+                    - generic [ref=e2587]:
+                      - generic: 20 · 97%
+                    - generic [ref=e2589]:
+                      - generic: 19 · 96%
+                    - generic [ref=e2591]:
+                      - generic: 20 · 94%
+                    - generic [ref=e2593]:
+                      - generic: 18 · 94%
+                  - generic [ref=e2595]:
+                    - generic [ref=e2596]: 15m
+                    - generic [ref=e2597]: 30m
+                    - generic [ref=e2598]: 60m
+                    - generic [ref=e2599]: 120m
+              - generic [ref=e2600] [cursor=pointer]:
+                - generic [ref=e2602]:
+                  - generic [ref=e2603]:
+                    - generic [ref=e2604]: Карбышева
+                    - paragraph [ref=e2605]: Esil
+                  - generic [ref=e2606]: Low
+                - generic [ref=e2607]:
+                  - generic [ref=e2608]:
+                    - generic [ref=e2609]: Forecast
+                    - generic [ref=e2610]: "Conf: 94%"
+                  - generic [ref=e2611]:
+                    - generic [ref=e2612]:
+                      - generic: 9 · 94%
+                    - generic [ref=e2614]:
+                      - generic: 9 · 93%
+                    - generic [ref=e2616]:
+                      - generic: 8 · 97%
+                    - generic [ref=e2618]:
+                      - generic: 8 · 91%
+                  - generic [ref=e2620]:
+                    - generic [ref=e2621]: 15m
+                    - generic [ref=e2622]: 30m
+                    - generic [ref=e2623]: 60m
+                    - generic [ref=e2624]: 120m
+              - generic [ref=e2625] [cursor=pointer]:
+                - generic [ref=e2627]:
+                  - generic [ref=e2628]:
+                    - generic [ref=e2629]: Карбышева
+                    - paragraph [ref=e2630]: Esil
+                  - generic [ref=e2631]: Low
+                - generic [ref=e2632]:
+                  - generic [ref=e2633]:
+                    - generic [ref=e2634]: Forecast
+                    - generic [ref=e2635]: "Conf: 93%"
+                  - generic [ref=e2636]:
+                    - generic [ref=e2637]:
+                      - generic: 15 · 93%
+                    - generic [ref=e2639]:
+                      - generic: 14 · 94%
+                    - generic [ref=e2641]:
+                      - generic: 16 · 94%
+                    - generic [ref=e2643]:
+                      - generic: 16 · 90%
+                  - generic [ref=e2645]:
+                    - generic [ref=e2646]: 15m
+                    - generic [ref=e2647]: 30m
+                    - generic [ref=e2648]: 60m
+                    - generic [ref=e2649]: 120m
+              - generic [ref=e2650] [cursor=pointer]:
+                - generic [ref=e2652]:
+                  - generic [ref=e2653]:
+                    - generic [ref=e2654]: Средняя школа №20
+                    - paragraph [ref=e2655]: Esil
+                  - generic [ref=e2656]: Low
+                - generic [ref=e2657]:
+                  - generic [ref=e2658]:
+                    - generic [ref=e2659]: Forecast
+                    - generic [ref=e2660]: "Conf: 94%"
+                  - generic [ref=e2661]:
+                    - generic [ref=e2662]:
+                      - generic: 16 · 95%
+                    - generic [ref=e2664]:
+                      - generic: 18 · 93%
+                    - generic [ref=e2666]:
+                      - generic: 16 · 96%
+                    - generic [ref=e2668]:
+                      - generic: 16 · 93%
+                  - generic [ref=e2670]:
+                    - generic [ref=e2671]: 15m
+                    - generic [ref=e2672]: 30m
+                    - generic [ref=e2673]: 60m
+                    - generic [ref=e2674]: 120m
+              - generic [ref=e2675] [cursor=pointer]:
+                - generic [ref=e2677]:
+                  - generic [ref=e2678]:
+                    - generic [ref=e2679]: Коктерек
+                    - paragraph [ref=e2680]: Esil
+                  - generic [ref=e2681]: Low
+                - generic [ref=e2682]:
+                  - generic [ref=e2683]:
+                    - generic [ref=e2684]: Forecast
+                    - generic [ref=e2685]: "Conf: 94%"
+                  - generic [ref=e2686]:
+                    - generic [ref=e2687]:
+                      - generic: 15 · 93%
+                    - generic [ref=e2689]:
+                      - generic: 17 · 95%
+                    - generic [ref=e2691]:
+                      - generic: 15 · 96%
+                    - generic [ref=e2693]:
+                      - generic: 15 · 92%
+                  - generic [ref=e2695]:
+                    - generic [ref=e2696]: 15m
+                    - generic [ref=e2697]: 30m
+                    - generic [ref=e2698]: 60m
+                    - generic [ref=e2699]: 120m
+    - generic [ref=e118]:
+      - heading "Command Palette" [level=2] [ref=e119]
+      - paragraph [ref=e120]: Search for a command to run...
+    - region "Notifications alt+T"
+  - generic [ref=e2700]: Low

@@ -23,20 +23,16 @@ class SimulationEngine:
     def _load_stations(self):
         """Load all stations from DB."""
         from backend.models_orm import StationORM
+
         stations = self.db.query(StationORM).all()
-        return [
-            {"stop_id": s.stop_id, "name": s.name, "ridership_24h": s.ridership_24h or 1000}
-            for s in stations
-        ]
+        return [{"stop_id": s.stop_id, "name": s.name, "ridership_24h": s.ridership_24h or 1000} for s in stations]
 
     def _load_routes(self):
         """Load all routes from DB."""
         from backend.models_orm import RouteORM
+
         routes = self.db.query(RouteORM).all()
-        return [
-            {"route_id": r.route_id, "name": r.name, "avg_ridership": r.avg_ridership or 500}
-            for r in routes
-        ]
+        return [{"route_id": r.route_id, "name": r.name, "avg_ridership": r.avg_ridership or 500} for r in routes]
 
     def _generate_ridership(self, station: dict, hour: int) -> int:
         """Generate realistic ridership for a station at a given hour using sinusoidal patterns."""
@@ -65,10 +61,50 @@ class SimulationEngine:
         return max(1, ridership)
 
     def _generate_forecast(self, station: dict, hour: int) -> dict:
-        """Generate forecast for a station (simulates model prediction with slight bias)."""
+        """Generate forecast for a station using the real model when available, otherwise synthetic."""
         actual = self._generate_ridership(station, hour)
-        # Add slight forecast bias (simulates model imprecision)
-        bias = 1.0 + np.random.normal(0, 0.05)  # +-5% bias
+        # Try real model prediction
+        try:
+            from backend.ml.predictor import get_cached_model
+            from backend.database import SessionLocal
+
+            db = SessionLocal()
+            try:
+                model, normalizer = get_cached_model(db)
+                if model is not None:
+                    from backend.ml.data_loader import build_adjacency, build_feature_tensor
+
+                    A_phys, stop_ids, station_idx = build_adjacency(db)
+                    if station["stop_id"] in station_idx:
+                        x, _ = build_feature_tensor(db, station_idx, stop_ids, self.current_time)
+                        if normalizer is not None and normalizer.is_fitted and normalizer.compatible_with(x.shape[-1]):
+                            x = normalizer.transform(x)
+                        import torch
+
+                        x_tensor = torch.as_tensor(x, dtype=torch.float32)
+                        with torch.no_grad():
+                            mu, _kappa = model(x_tensor)
+                        n_idx = station_idx[station["stop_id"]]
+                        if n_idx < mu.shape[-1]:
+                            pred_val = float(max(0, mu[0, 0, n_idx].item()))
+                            predicted = max(1, int(pred_val))
+                            confidence = 0.92
+                            return {
+                                "predicted": predicted,
+                                "actual": actual,
+                                "confidence": confidence,
+                                "confidence_upper": int(predicted * (1 + (1 - confidence))),
+                                "confidence_lower": int(predicted * confidence),
+                            }
+            except Exception:
+                pass  # Fall back to synthetic
+            finally:
+                db.close()
+        except Exception:
+            pass
+
+        # Fallback: synthetic with 5% bias
+        bias = 1.0 + np.random.normal(0, 0.05)
         predicted = max(1, int(actual * bias))
         confidence = max(0.6, min(0.99, 0.95 - abs(bias - 1.0) * 2))
         return {

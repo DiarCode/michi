@@ -29,8 +29,8 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": "npm run build 2>&1 | tail -5",
-    "testCommand": "pytest",
+    "buildCommand": "npx --package=typescript tsc --noEmit 2>&1 | head -40",
+    "testCommand": ".venv/bin/python -m pytest backend/tests/test_api.py::TestStationEndpoints::test_list_stations -v --tb=long 2>&1 | tail -25",
     "lintCommand": "ruff check",
     "devCommand": null,
     "scripts": {}

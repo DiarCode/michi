@@ -1,4 +1,5 @@
 """Online residual correction via Kalman filter for DTS-GSSF predictions."""
+
 from dataclasses import dataclass
 
 import numpy as np
@@ -25,6 +26,7 @@ class ResidualKalman:
     Maintains a low-dimensional state that tracks prediction residuals,
     allowing quick corrections to model outputs based on recent observations.
     """
+
     def __init__(self, n_series: int, cfg: KalmanConfig = None, seed: int = 0):
         self.cfg = cfg or KalmanConfig()
         rng = np.random.default_rng(seed + 999)

@@ -2,27 +2,28 @@
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\addvspace {10pt}
 \par \nobreak \textbf {{\scshape Table} \hfill Page}\par \nobreak 
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {table}{\numberline {2.1}{\ignorespaces Peer-reviewed publications during Master's studies and their relationship to this thesis.}}{8}{table.caption.12}%
 \addvspace {10pt}
-\contentsline {table}{\numberline {3.1}{\ignorespaces Comparison of representative spatiotemporal forecasting models.}}{13}{table.caption.13}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Comparison of representative spatiotemporal forecasting models.}}{11}{table.caption.7}%
 \addvspace {10pt}
-\contentsline {table}{\numberline {4.1}{\ignorespaces Dataset properties and descriptive statistics.}}{17}{table.caption.14}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Complete training and model hyperparameters.}}{27}{table.caption.21}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Summary of notation used throughout this chapter.}}{13}{table.caption.8}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Dataset properties and descriptive statistics.}}{15}{table.caption.9}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Complete training and model hyperparameters.}}{23}{table.caption.11}%
 \addvspace {10pt}
-\contentsline {table}{\numberline {5.1}{\ignorespaces Test-set performance comparison. Best results in \textbf {bold}; second-best underlined.}}{31}{table.caption.22}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Ablation study on architectural components.}}{32}{table.caption.23}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Computational cost comparison.}}{33}{table.caption.25}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces Calibration comparison across distributional output heads (shared DTS-GSSF backbone).}}{35}{table.caption.27}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces Per-district test-set performance.}}{37}{table.caption.30}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Cross-dataset evaluation on METR-LA (traffic speed, $N = 207$). Results from original papers and our re-implementation.}}{40}{table.caption.31}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Test-set performance on the synthetic Astana dataset. \textit {Classical baselines} evaluated on all 42 series; \textit {neural and GNN baselines} on bottom 28 stations. DTS-GSSF is reported on both evaluation sets for transparency. Best in \textbf {bold}; second-best \underline {underlined}.}}{27}{table.caption.12}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Real-world open dataset performance comparison on the LACMTA benchmark. DTS-GSSF maintains the best accuracy and lowest error among all evaluated methods.}}{28}{table.caption.13}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Ablation study on architectural components (single-seed).}}{30}{table.caption.17}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Computational cost comparison. DTS-GSSF values measured; baseline values from literature.}}{32}{table.caption.20}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Calibration comparison across distributional output heads (shared DTS-GSSF backbone).}}{34}{table.caption.22}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Per-district test-set performance.}}{36}{table.caption.25}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Robustness analysis under input perturbations (single-seed).}}{38}{table.caption.27}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Stratification of the top-decile test-set absolute errors. The model under-predicts large event-driven spikes (e.g., concert nights with 30{,}000+ attendance) by an average of 18\% of true ridership, which is a known failure mode of NB-distributed outputs when the realized count lies far in the tail.}}{39}{table.caption.28}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {table}{\numberline {A.1}{\ignorespaces Public holidays and special events in the synthetic dataset (2025).}}{49}{table.caption.32}%
-\contentsline {table}{\numberline {A.2}{\ignorespaces Synthetic bus route definitions.}}{50}{table.caption.33}%
-\contentsline {table}{\numberline {A.3}{\ignorespaces Complete input feature specifications.}}{51}{table.caption.34}%
-\contentsline {table}{\numberline {A.4}{\ignorespaces Hyperparameter search space and final values.}}{52}{table.caption.35}%
+\contentsline {table}{\numberline {A.1}{\ignorespaces Public holidays and special events in the synthetic dataset (2025). Public holiday impact denotes estimated additional daily transit riders across the network; special event attendance denotes venue-level estimated attendance.}}{48}{table.caption.29}%
+\contentsline {table}{\numberline {A.2}{\ignorespaces Synthetic bus route definitions.}}{49}{table.caption.30}%
+\contentsline {table}{\numberline {A.3}{\ignorespaces Complete input feature specifications.}}{50}{table.caption.31}%
+\contentsline {table}{\numberline {A.4}{\ignorespaces Hyperparameter search space and final values.}}{51}{table.caption.32}%

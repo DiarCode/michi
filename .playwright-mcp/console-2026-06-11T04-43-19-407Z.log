@@ -1,0 +1,12 @@
+[      61ms] [ERROR] De: AJAXError: Failed to fetch (0): https://basemaps.cartocdn.com/gl/positron-gl-style/style.json
+    at http://localhost:3100/assets/index-DWfVESqH.js:68:32984
+    at Generator.throw (<anonymous>)
+    at s (http://localhost:3100/assets/index-DWfVESqH.js:68:23254) @ http://localhost:3100/assets/index-DWfVESqH.js:67
+[    5039ms] [ERROR] Client Error: Download Button fetch error - Failed to fetch @ http://localhost:8600/static/js/index.dkY5s53S.js:183
+[    5039ms] [ERROR] Client Error: Download Button fetch error - Failed to fetch @ http://localhost:8600/static/js/index.dkY5s53S.js:183
+[    5039ms] [ERROR] Client Error: Download Button fetch error - Failed to fetch @ http://localhost:8600/static/js/index.dkY5s53S.js:183
+[    5347ms] [ERROR] Error @ http://localhost:3100/assets/index-DWfVESqH.js:67
+[    5347ms] [ERROR] Error @ http://localhost:3100/assets/index-DWfVESqH.js:67
+[    6186ms] [ERROR] Error @ http://localhost:3100/assets/index-DWfVESqH.js:67
+[    6325ms] [ERROR] Error @ http://localhost:3100/assets/index-DWfVESqH.js:67
+[    6327ms] [ERROR] Error @ http://localhost:3100/assets/index-DWfVESqH.js:67

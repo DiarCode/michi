@@ -42,8 +42,8 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": "npm run build 2>&1 | tail -5",
-    "testCommand": null,
+    "buildCommand": "npx tsc --noEmit 2>&1 | tail -20",
+    "testCommand": "cd /Users/diarcode/development/michi && .venv/bin/python -m pytest backend/tests/ -v --tb=short 2>&1 | tail -30",
     "lintCommand": "npm run lint",
     "devCommand": "npm run dev",
     "scripts": {
@@ -174,99 +174,237 @@
   },
   "hotPaths": [
     {
-      "path": "src/components/ui/map.tsx",
-      "accessCount": 12,
-      "lastAccessed": 1781107465909,
-      "type": "file"
-    },
-    {
-      "path": "src/components/dashboard/SimulationMetrics.tsx",
-      "accessCount": 8,
-      "lastAccessed": 1781107483123,
-      "type": "file"
-    },
-    {
-      "path": "src/routes/live-map.tsx",
-      "accessCount": 5,
-      "lastAccessed": 1781111130431,
-      "type": "file"
-    },
-    {
       "path": "src/lib/api.ts",
-      "accessCount": 3,
-      "lastAccessed": 1781107808230,
-      "type": "file"
-    },
-    {
-      "path": "Dockerfile",
-      "accessCount": 3,
-      "lastAccessed": 1781108014660,
-      "type": "file"
-    },
-    {
-      "path": "src/main.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1781113326567,
+      "accessCount": 16,
+      "lastAccessed": 1781169462491,
       "type": "file"
     },
     {
       "path": "src/components/app-shell.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1781113337824,
+      "accessCount": 15,
+      "lastAccessed": 1781154269187,
       "type": "file"
     },
     {
-      "path": "src/components/dashboard/AlertTicker.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107406943,
+      "path": "src/components/ui/map.tsx",
+      "accessCount": 14,
+      "lastAccessed": 1781168501842,
       "type": "file"
     },
     {
-      "path": "src/components/dashboard/CongestionHeatmap.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107407122,
+      "path": "src/routes/crowding.tsx",
+      "accessCount": 12,
+      "lastAccessed": 1781154233180,
       "type": "file"
     },
     {
-      "path": "src/components/dashboard/ForecastChart.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107416079,
+      "path": "src/components/dashboard/SimulationMetrics.tsx",
+      "accessCount": 11,
+      "lastAccessed": 1781154141676,
       "type": "file"
     },
     {
-      "path": "src/components/dashboard/KPIGrid.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107416261,
+      "path": "src/routes/live-map.tsx",
+      "accessCount": 10,
+      "lastAccessed": 1781168669592,
+      "type": "file"
+    },
+    {
+      "path": "src/types/index.ts",
+      "accessCount": 10,
+      "lastAccessed": 1781169481444,
+      "type": "file"
+    },
+    {
+      "path": "src/stores/simulation-store.ts",
+      "accessCount": 9,
+      "lastAccessed": 1781169337875,
+      "type": "file"
+    },
+    {
+      "path": "src/App.tsx",
+      "accessCount": 8,
+      "lastAccessed": 1781154132450,
       "type": "file"
     },
     {
       "path": "src/components/map/MapContainer.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107466101,
+      "accessCount": 8,
+      "lastAccessed": 1781168760956,
       "type": "file"
     },
     {
-      "path": "src/hooks/useWebSocket.ts",
-      "accessCount": 2,
-      "lastAccessed": 1781107475758,
+      "path": "src/stores/role-store.ts",
+      "accessCount": 7,
+      "lastAccessed": 1781154148630,
       "type": "file"
     },
     {
       "path": "src/routes/simulation.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107506312,
+      "accessCount": 7,
+      "lastAccessed": 1781154451024,
       "type": "file"
     },
     {
-      "path": "src/components/connection-indicator.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1781107506521,
+      "path": "src/routes/executive.tsx",
+      "accessCount": 7,
+      "lastAccessed": 1781154542105,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/websocket.ts",
+      "accessCount": 7,
+      "lastAccessed": 1781167532934,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/useWebSocket.ts",
+      "accessCount": 7,
+      "lastAccessed": 1781169330931,
+      "type": "file"
+    },
+    {
+      "path": "nginx.conf",
+      "accessCount": 7,
+      "lastAccessed": 1781170068826,
+      "type": "file"
+    },
+    {
+      "path": "src/components/role-switcher.tsx",
+      "accessCount": 6,
+      "lastAccessed": 1781154137001,
+      "type": "file"
+    },
+    {
+      "path": "src/routes/forecast.tsx",
+      "accessCount": 6,
+      "lastAccessed": 1781167443317,
+      "type": "file"
+    },
+    {
+      "path": "src/main.tsx",
+      "accessCount": 6,
+      "lastAccessed": 1781169553341,
       "type": "file"
     },
     {
       "path": "vite.config.ts",
-      "accessCount": 2,
-      "lastAccessed": 1781107601409,
+      "accessCount": 6,
+      "lastAccessed": 1781169907068,
+      "type": "file"
+    },
+    {
+      "path": "src/components/dashboard/ForecastChart.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1781154141433,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/useAlerts.ts",
+      "accessCount": 5,
+      "lastAccessed": 1781154240507,
+      "type": "file"
+    },
+    {
+      "path": "src/routes/alerts.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1781154380393,
+      "type": "file"
+    },
+    {
+      "path": "Dockerfile",
+      "accessCount": 4,
+      "lastAccessed": 1781151961775,
+      "type": "file"
+    },
+    {
+      "path": "src/components/connection-indicator.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781154137382,
+      "type": "file"
+    },
+    {
+      "path": "src/components/theme-provider.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781154137694,
+      "type": "file"
+    },
+    {
+      "path": "src/components/dashboard/KPIGrid.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781154141364,
+      "type": "file"
+    },
+    {
+      "path": "src/components/dashboard/CongestionHeatmap.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781154141591,
+      "type": "file"
+    },
+    {
+      "path": "src/components/dashboard/AlertTicker.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781154141820,
+      "type": "file"
+    },
+    {
+      "path": "src/stores/busStore.ts",
+      "accessCount": 4,
+      "lastAccessed": 1781154148425,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/useForecasts.ts",
+      "accessCount": 4,
+      "lastAccessed": 1781154240747,
+      "type": "file"
+    },
+    {
+      "path": "src/components/command-palette.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781154286510,
+      "type": "file"
+    },
+    {
+      "path": "src/routes/command-center.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781154505342,
+      "type": "file"
+    },
+    {
+      "path": "src/components/map/TimelineBar.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781167494937,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/useTimeline.ts",
+      "accessCount": 4,
+      "lastAccessed": 1781167500407,
+      "type": "file"
+    },
+    {
+      "path": "src/stores/timelineStore.ts",
+      "accessCount": 4,
+      "lastAccessed": 1781167524630,
+      "type": "file"
+    },
+    {
+      "path": "src/stores/connection-store.ts",
+      "accessCount": 4,
+      "lastAccessed": 1781169532280,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/toast.ts",
+      "accessCount": 3,
+      "lastAccessed": 1781154150006,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/useStations.ts",
+      "accessCount": 3,
+      "lastAccessed": 1781154154055,
       "type": "file"
     },
     {
@@ -276,21 +414,33 @@
       "type": "file"
     },
     {
-      "path": "src/lib/websocket.ts",
-      "accessCount": 2,
-      "lastAccessed": 1781107695804,
-      "type": "file"
-    },
-    {
       "path": "src/index.css",
       "accessCount": 2,
       "lastAccessed": 1781111111911,
       "type": "file"
     },
     {
-      "path": "src/components/theme-provider.tsx",
+      "path": "src/components/ui/badge.tsx",
       "accessCount": 2,
-      "lastAccessed": 1781113326341,
+      "lastAccessed": 1781116061091,
+      "type": "file"
+    },
+    {
+      "path": "src/components/section-header.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781154137143,
+      "type": "file"
+    },
+    {
+      "path": "src/components/theme-toggle.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781154137877,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/constants.ts",
+      "accessCount": 2,
+      "lastAccessed": 1781154149804,
       "type": "file"
     },
     {
@@ -300,39 +450,27 @@
       "type": "file"
     },
     {
-      "path": "src/components/ui/badge.tsx",
+      "path": "src/components/ui/skeleton.tsx",
       "accessCount": 1,
-      "lastAccessed": 1781107385805,
+      "lastAccessed": 1781116060702,
       "type": "file"
     },
     {
-      "path": "src/lib/toast.ts",
+      "path": "src/components/ui/chart.tsx",
       "accessCount": 1,
-      "lastAccessed": 1781107543099,
+      "lastAccessed": 1781116094773,
       "type": "file"
     },
     {
-      "path": "src/stores/busStore.ts",
+      "path": "src/components/ui/card.tsx",
       "accessCount": 1,
-      "lastAccessed": 1781107573712,
+      "lastAccessed": 1781116095312,
       "type": "file"
     },
     {
-      "path": "nginx.conf",
+      "path": "src/components/ui/select.tsx",
       "accessCount": 1,
-      "lastAccessed": 1781108865586,
-      "type": "file"
-    },
-    {
-      "path": "src/components/map/TimelineBar.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1781111076111,
-      "type": "file"
-    },
-    {
-      "path": "src/components/theme-toggle.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1781113299670,
+      "lastAccessed": 1781116098719,
       "type": "file"
     }
   ],

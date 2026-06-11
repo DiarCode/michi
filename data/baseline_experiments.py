@@ -110,8 +110,8 @@ def precompute_tensors(session, station_idx, stop_ids, data_start, data_end):
                 x_data[t, n_idx, 1] = row.passengers_alighting if row else h_mean * 0.55
                 x_data[t, n_idx, 2] = row.load if row else h_mean * 0.5
                 if w:
-                    x_data[t, n_idx, 3] = w.temperature or 0.0
-                    x_data[t, n_idx, 4] = w.precipitation or 0.0
+                    x_data[t, n_idx, 3] = w.temperature_c or 0.0
+                    x_data[t, n_idx, 4] = w.precipitation_mm or 0.0
                 x_data[t, n_idx, 5] = 1.0 if is_hol else 0.0
                 x_data[t, n_idx, 6] = np.sin(2 * np.pi * ts.hour / 24)
                 x_data[t, n_idx, 7] = np.cos(2 * np.pi * ts.hour / 24)

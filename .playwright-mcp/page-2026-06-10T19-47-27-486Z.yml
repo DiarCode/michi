@@ -1,0 +1,199 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e11]: 道
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Transit
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Command Center" [ref=e20] [cursor=pointer]:
+          - /url: /
+          - img [ref=e21]
+          - generic [ref=e26]: Command Center
+      - listitem [ref=e27]:
+        - link "Live Map" [ref=e28] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e29]
+          - generic [ref=e33]: Live Map
+      - listitem [ref=e34]:
+        - link "Alerts" [ref=e35] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e36]
+          - generic [ref=e39]: Alerts
+      - listitem [ref=e40]:
+        - link "Simulation" [ref=e41] [cursor=pointer]:
+          - /url: /simulation
+          - img [ref=e42]
+          - generic [ref=e44]: Simulation
+      - listitem [ref=e45]:
+        - link "Forecast" [ref=e46] [cursor=pointer]:
+          - /url: /forecast
+          - img [ref=e47]
+          - generic [ref=e51]: Forecast
+      - listitem [ref=e52]:
+        - link "Crowding" [ref=e53] [cursor=pointer]:
+          - /url: /crowding
+          - img [ref=e54]
+          - generic [ref=e61]: Crowding
+      - listitem [ref=e62]:
+        - link "Executive" [ref=e63] [cursor=pointer]:
+          - /url: /executive
+          - img [ref=e64]
+          - generic [ref=e66]: Executive
+      - listitem [ref=e67]:
+        - link "Settings" [ref=e68] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e69]
+          - generic [ref=e72]: Settings
+    - generic [ref=e73]:
+      - 'generic "Last tick #0 · 00:47:27" [ref=e74]':
+        - generic [ref=e76]: Offline
+      - combobox [ref=e78] [cursor=pointer]:
+        - img
+        - generic:
+          - img
+          - text: Dispatch
+        - img
+  - main [ref=e79]:
+    - generic [ref=e80]:
+      - generic [ref=e81]:
+        - button "Toggle Sidebar" [ref=e82] [cursor=pointer]:
+          - img
+          - generic [ref=e83]: Toggle Sidebar
+        - button "Search Michi ⌘ K" [ref=e84] [cursor=pointer]:
+          - img [ref=e85]
+          - generic [ref=e90]: Search Michi
+          - generic: ⌘
+          - generic: K
+      - generic [ref=e92]: Astana · Live
+    - main [ref=e93]:
+      - generic [ref=e94]:
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - paragraph [ref=e98]: Operations
+            - heading "Command Center" [level=1] [ref=e99]
+            - paragraph [ref=e100]: Live view of the Astana bus network. Track KPIs, respond to alerts, and review recent operator activity.
+          - generic [ref=e101]:
+            - button "Run playbook" [ref=e102] [cursor=pointer]:
+              - img
+              - text: Run playbook
+            - button "Forecast" [ref=e103] [cursor=pointer]:
+              - img
+              - text: Forecast
+        - generic [ref=e104]:
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - img [ref=e109]
+              - generic [ref=e112]: Active buses
+            - generic [ref=e113]:
+              - generic [ref=e114]: "184"
+              - generic [ref=e115]: +3.2%
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - img [ref=e120]
+              - generic [ref=e123]: On-time
+            - generic [ref=e124]:
+              - generic [ref=e125]: 92.4%
+              - generic [ref=e126]: +0.6%
+          - generic [ref=e129]:
+            - generic [ref=e130]:
+              - img [ref=e131]
+              - generic [ref=e134]: Open alerts
+            - generic [ref=e135]:
+              - generic [ref=e136]: "07"
+              - generic [ref=e137]: "-12%"
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - img [ref=e142]
+              - generic [ref=e149]: Riders · today
+            - generic [ref=e150]:
+              - generic [ref=e151]: 48.2k
+              - generic [ref=e152]: +5.1%
+        - generic [ref=e153]:
+          - generic [ref=e154]:
+            - generic [ref=e155]:
+              - generic [ref=e156]: Network health
+              - generic [ref=e157]: Last 24 hours · synthetic streaming data
+              - tablist [ref=e160]:
+                - tab "Now" [selected] [ref=e161] [cursor=pointer]
+                - tab "6h" [ref=e162] [cursor=pointer]
+                - tab "24h" [ref=e163] [cursor=pointer]
+            - generic [ref=e164]:
+              - generic [ref=e165]:
+                - generic [ref=e166]:
+                  - paragraph [ref=e167]: Punctuality
+                  - paragraph [ref=e168]: 92.4%
+                  - progressbar [ref=e169]
+                - generic [ref=e171]:
+                  - paragraph [ref=e172]: Headway adherence
+                  - paragraph [ref=e173]: 88.1%
+                  - progressbar [ref=e174]
+                - generic [ref=e176]:
+                  - paragraph [ref=e177]: Crowding index
+                  - paragraph [ref=e178]: "0.34"
+                  - progressbar [ref=e179]
+              - generic [ref=e181]:
+                - img [ref=e182]
+                - text: Inline sparkline will render here once a backend stream is connected.
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]: Active alerts
+              - generic [ref=e188]: 4 open · last updated 12s ago
+              - button "View all" [ref=e190] [cursor=pointer]:
+                - text: View all
+                - img
+            - generic [ref=e191]:
+              - generic [ref=e192]:
+                - generic [ref=e193]: HIGH
+                - generic [ref=e194]:
+                  - paragraph [ref=e195]: Route 12
+                  - paragraph [ref=e196]: Heavy congestion near Bayterek — delay +6 min
+                - generic [ref=e197]: A-201
+              - generic [ref=e198]:
+                - generic [ref=e199]: MED
+                - generic [ref=e200]:
+                  - paragraph [ref=e201]: Route 47
+                  - paragraph [ref=e202]: Vehicle substitution required at Stop 3
+                - generic [ref=e203]: A-202
+              - generic [ref=e204]:
+                - generic [ref=e205]: LOW
+                - generic [ref=e206]:
+                  - paragraph [ref=e207]: Route 08
+                  - paragraph [ref=e208]: Stop request outside schedule window
+                - generic [ref=e209]: A-203
+              - generic [ref=e210]:
+                - generic [ref=e211]: MED
+                - generic [ref=e212]:
+                  - paragraph [ref=e213]: Route 22
+                  - paragraph [ref=e214]: Door sensor intermittently offline
+                - generic [ref=e215]: A-204
+        - generic [ref=e216]:
+          - generic [ref=e217]:
+            - generic [ref=e218]: On shift
+            - generic [ref=e219]: 4 operators and dispatchers active right now
+          - generic [ref=e221]:
+            - generic [ref=e222]:
+              - generic [ref=e224]: AK
+              - generic [ref=e225]:
+                - paragraph [ref=e226]: Aigerim K.
+                - paragraph [ref=e227]: Operator · L1
+            - generic [ref=e228]:
+              - generic [ref=e230]: DM
+              - generic [ref=e231]:
+                - paragraph [ref=e232]: Daniyar M.
+                - paragraph [ref=e233]: Operator · L2
+            - generic [ref=e234]:
+              - generic [ref=e236]: SB
+              - generic [ref=e237]:
+                - paragraph [ref=e238]: Saltanat B.
+                - paragraph [ref=e239]: Dispatcher
+            - generic [ref=e240]:
+              - generic [ref=e242]: YK
+              - generic [ref=e243]:
+                - paragraph [ref=e244]: Yerlan K.
+                - paragraph [ref=e245]: Maintenance
+  - generic [ref=e246]:
+    - heading "Command Palette" [level=2] [ref=e247]
+    - paragraph [ref=e248]: Search for a command to run...
+  - region "Notifications alt+T"

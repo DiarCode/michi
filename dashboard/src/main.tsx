@@ -28,11 +28,15 @@ useBusStore.getState().subscribe()
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="michi-theme" disableDarkMode>
+      <ThemeProvider
+        defaultTheme="light"
+        storageKey="michi-theme"
+        disableDarkMode
+      >
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </ThemeProvider>
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 )

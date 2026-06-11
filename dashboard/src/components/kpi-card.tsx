@@ -20,7 +20,7 @@ export function KpiCard({
     <div className={cn("flex flex-col gap-1.5", className)}>
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
         {icon}
-        <span className="uppercase tracking-widest">{label}</span>
+        <span className="tracking-widest uppercase">{label}</span>
       </div>
       <div className="flex items-baseline gap-2">
         <span className="font-heading text-2xl font-medium">{value}</span>
@@ -28,7 +28,9 @@ export function KpiCard({
           <span
             className={cn(
               "text-xs",
-              delta.positive ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400",
+              delta.positive
+                ? "text-emerald-600 dark:text-emerald-400"
+                : "text-rose-600 dark:text-rose-400"
             )}
           >
             {delta.value}

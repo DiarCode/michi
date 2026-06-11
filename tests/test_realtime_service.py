@@ -1,4 +1,5 @@
 """Unit tests for realtime service."""
+
 from backend.services.realtime_service import get_current_positions
 
 

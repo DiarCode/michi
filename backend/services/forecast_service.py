@@ -1,4 +1,5 @@
 """Forecast service — generates ridership forecasts using DTS-GSSF model with mock fallback."""
+
 import logging
 from datetime import UTC, datetime
 
@@ -17,6 +18,7 @@ def generate_24h_forecast(station_id: str, db: Session, base_ridership: int = 10
         if station_preds:
             return station_preds
     from backend.models_orm import StationORM
+
     station = db.query(StationORM).filter(StationORM.stop_id == station_id).first()
     stations = [{"stop_id": station_id, "ridership_24h": base_ridership}]
     if station:
@@ -30,6 +32,7 @@ def generate_all_forecasts(db: Session) -> list[dict]:
     if predictions:
         return predictions
     from backend.models_orm import StationORM
+
     stations = db.query(StationORM).all()
     if not stations:
         return []
@@ -79,9 +82,9 @@ def get_kpi_metrics(db: Session | None = None) -> dict:
 
         # Compute on-time performance from prediction accuracy data if available
         on_time_performance = 0.0
-        avg_mape_result = db.query(func.avg(PredictionAccuracyORM.mape)).filter(
-            PredictionAccuracyORM.mape.isnot(None)
-        ).scalar()
+        avg_mape_result = (
+            db.query(func.avg(PredictionAccuracyORM.mape)).filter(PredictionAccuracyORM.mape.isnot(None)).scalar()
+        )
         if avg_mape_result is not None and avg_mape_result > 0:
             # Convert MAPE to on-time performance: 100 - MAPE (capped at 0)
             on_time_performance = round(max(0.0, 100.0 - float(avg_mape_result)), 1)

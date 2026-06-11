@@ -1,0 +1,8 @@
+[      73ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/weather/current:0
+[      73ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-DhXR9CHY.js:59
+[      73ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-DhXR9CHY.js:59
+[      74ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-DhXR9CHY.js:59
+[      74ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-DhXR9CHY.js:59
+[    1079ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:3100/api/v1/weather/current:0
+[    3772ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws/realtime' failed: Error during WebSocket handshake: Unexpected response code: 502 @ http://localhost:3100/assets/index-DhXR9CHY.js:59
+[    3772ms] [WARNING] WebSocket error: error @ http://localhost:3100/assets/index-DhXR9CHY.js:59

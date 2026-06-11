@@ -1,0 +1,310 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e11]: M
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Transit
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Command Center" [ref=e20] [cursor=pointer]:
+          - /url: /
+          - img [ref=e21]
+          - generic [ref=e26]: Command Center
+      - listitem [ref=e27]:
+        - link "Live Map" [ref=e28] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e29]
+          - generic [ref=e33]: Live Map
+      - listitem [ref=e34]:
+        - link "Alerts" [ref=e35] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e36]
+          - generic [ref=e39]: Alerts
+      - listitem [ref=e40]:
+        - link "Simulation" [ref=e41] [cursor=pointer]:
+          - /url: /simulation
+          - img [ref=e42]
+          - generic [ref=e44]: Simulation
+      - listitem [ref=e45]:
+        - link "Forecast" [ref=e46] [cursor=pointer]:
+          - /url: /forecast
+          - img [ref=e47]
+          - generic [ref=e51]: Forecast
+      - listitem [ref=e52]:
+        - link "Crowding" [ref=e53] [cursor=pointer]:
+          - /url: /crowding
+          - img [ref=e54]
+          - generic [ref=e61]: Crowding
+      - listitem [ref=e62]:
+        - link "Executive" [ref=e63] [cursor=pointer]:
+          - /url: /executive
+          - img [ref=e64]
+          - generic [ref=e66]: Executive
+      - listitem [ref=e67]:
+        - link "Settings" [ref=e68] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e69]
+          - generic [ref=e72]: Settings
+    - 'generic "Last tick #1689 · 14:24:28" [ref=e96]':
+      - generic [ref=e76]: Live
+  - main [ref=e77]:
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - button "Toggle Sidebar" [ref=e80] [cursor=pointer]:
+          - img
+          - generic [ref=e81]: Toggle Sidebar
+        - button "Search Michi ⌘ K" [ref=e82] [cursor=pointer]:
+          - img [ref=e83]
+          - generic [ref=e88]: Search Michi
+          - generic: ⌘
+          - generic: K
+      - generic [ref=e90]: Astana · Live
+    - main [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - generic:
+                - region "Map" [ref=e100]
+                - button "Map marker" [ref=e101] [cursor=pointer]:
+                  - generic [ref=e103]:
+                    - img "Bus BUS-001" [ref=e104]
+                    - generic [ref=e105]: BUS-001
+                - button "Map marker" [ref=e106] [cursor=pointer]:
+                  - generic [ref=e108]:
+                    - img "Bus BUS-002" [ref=e109]
+                    - generic [ref=e110]: BUS-002
+                - button "Map marker" [ref=e111] [cursor=pointer]:
+                  - generic [ref=e113]:
+                    - img "Bus BUS-003" [ref=e114]
+                    - generic [ref=e115]: BUS-003
+                - button "Map marker" [ref=e116] [cursor=pointer]:
+                  - generic [ref=e118]:
+                    - img "Bus BUS-004" [ref=e119]
+                    - generic [ref=e120]: BUS-004
+                - button "Map marker" [ref=e121] [cursor=pointer]:
+                  - generic [ref=e123]:
+                    - img "Bus BUS-005" [ref=e124]
+                    - generic [ref=e125]: BUS-005
+                - button "Map marker" [ref=e126] [cursor=pointer]:
+                  - generic [ref=e128]:
+                    - img "Bus BUS-006" [ref=e129]
+                    - generic [ref=e130]: BUS-006
+                - button "Map marker" [ref=e131] [cursor=pointer]:
+                  - generic [ref=e133]:
+                    - img "Bus BUS-007" [ref=e134]
+                    - generic [ref=e135]: BUS-007
+                - button "Map marker" [ref=e136] [cursor=pointer]:
+                  - generic [ref=e138]:
+                    - img "Bus BUS-008" [ref=e139]
+                    - generic [ref=e140]: BUS-008
+                - button "Map marker" [ref=e141] [cursor=pointer]:
+                  - generic [ref=e143]:
+                    - img "Bus BUS-009" [ref=e144]
+                    - generic [ref=e145]: BUS-009
+                - button "Map marker" [ref=e146] [cursor=pointer]:
+                  - generic [ref=e148]:
+                    - img "Bus BUS-010" [ref=e149]
+                    - generic [ref=e150]: BUS-010
+                - button "Map marker" [ref=e151] [cursor=pointer]:
+                  - generic [ref=e153]:
+                    - img "Bus BUS-011" [ref=e154]
+                    - generic [ref=e155]: BUS-011
+                - button "Map marker" [ref=e156] [cursor=pointer]:
+                  - generic [ref=e158]:
+                    - img "Bus BUS-012" [ref=e159]
+                    - generic [ref=e160]: BUS-012
+                - button "Map marker" [ref=e161] [cursor=pointer]:
+                  - generic [ref=e163]:
+                    - img "Bus BUS-013" [ref=e164]
+                    - generic [ref=e165]: BUS-013
+                - button "Map marker" [ref=e166] [cursor=pointer]:
+                  - generic [ref=e168]:
+                    - img "Bus BUS-014" [ref=e169]
+                    - generic [ref=e170]: BUS-014
+                - button "Map marker" [ref=e171] [cursor=pointer]:
+                  - generic [ref=e173]:
+                    - img "Bus BUS-015" [ref=e174]
+                    - generic [ref=e175]: BUS-015
+                - button "Map marker" [ref=e176] [cursor=pointer]:
+                  - generic [ref=e178]:
+                    - img "Bus BUS-016" [ref=e179]
+                    - generic [ref=e180]: BUS-016
+                - button "Map marker" [ref=e181] [cursor=pointer]:
+                  - generic [ref=e183]:
+                    - img "Bus BUS-017" [ref=e184]
+                    - generic [ref=e185]: BUS-017
+                - button "Map marker" [ref=e186] [cursor=pointer]:
+                  - generic [ref=e188]:
+                    - img "Bus BUS-018" [ref=e189]
+                    - generic [ref=e190]: BUS-018
+                - button "Map marker" [ref=e191] [cursor=pointer]:
+                  - generic [ref=e193]:
+                    - img "Bus BUS-019" [ref=e194]
+                    - generic [ref=e195]: BUS-019
+                - button "Map marker" [ref=e196] [cursor=pointer]:
+                  - generic [ref=e198]:
+                    - img "Bus BUS-020" [ref=e199]
+                    - generic [ref=e200]: BUS-020
+                - button "Map marker" [ref=e201] [cursor=pointer]:
+                  - generic [ref=e203]:
+                    - img "Bus BUS-021" [ref=e204]
+                    - generic [ref=e205]: BUS-021
+                - button "Map marker" [ref=e206] [cursor=pointer]:
+                  - generic [ref=e208]:
+                    - img "Bus BUS-022" [ref=e209]
+                    - generic [ref=e210]: BUS-022
+                - button "Map marker" [ref=e211] [cursor=pointer]:
+                  - generic [ref=e213]:
+                    - img "Bus BUS-023" [ref=e214]
+                    - generic [ref=e215]: BUS-023
+                - button "Map marker" [ref=e216] [cursor=pointer]:
+                  - generic [ref=e218]:
+                    - img "Bus BUS-024" [ref=e219]
+                    - generic [ref=e220]: BUS-024
+                - button "Map marker" [ref=e221] [cursor=pointer]:
+                  - generic [ref=e223]:
+                    - img "Bus BUS-025" [ref=e224]
+                    - generic [ref=e225]: BUS-025
+                - button "Map marker" [ref=e226] [cursor=pointer]:
+                  - generic [ref=e228]:
+                    - img "Bus BUS-026" [ref=e229]
+                    - generic [ref=e230]: BUS-026
+                - button "Map marker" [ref=e231] [cursor=pointer]:
+                  - generic [ref=e233]:
+                    - img "Bus BUS-027" [ref=e234]
+                    - generic [ref=e235]: BUS-027
+                - button "Map marker" [ref=e236] [cursor=pointer]:
+                  - generic [ref=e238]:
+                    - img "Bus BUS-028" [ref=e239]
+                    - generic [ref=e240]: BUS-028
+                - button "Map marker" [ref=e241] [cursor=pointer]:
+                  - generic [ref=e243]:
+                    - img "Bus BUS-029" [ref=e244]
+                    - generic [ref=e245]: BUS-029
+                - button "Map marker" [ref=e246] [cursor=pointer]:
+                  - generic [ref=e248]:
+                    - img "Bus BUS-030" [ref=e249]
+                    - generic [ref=e250]: BUS-030
+                - button "Map marker" [ref=e251] [cursor=pointer]:
+                  - generic [ref=e253]:
+                    - img "Bus BUS-031" [ref=e254]
+                    - generic [ref=e255]: BUS-031
+                - button "Map marker" [ref=e256] [cursor=pointer]:
+                  - generic [ref=e258]:
+                    - img "Bus BUS-032" [ref=e259]
+                    - generic [ref=e260]: BUS-032
+                - button "Map marker" [ref=e261] [cursor=pointer]:
+                  - generic [ref=e263]:
+                    - img "Bus BUS-033" [ref=e264]
+                    - generic [ref=e265]: BUS-033
+                - button "Map marker" [ref=e266] [cursor=pointer]:
+                  - generic [ref=e268]:
+                    - img "Bus BUS-034" [ref=e269]
+                    - generic [ref=e270]: BUS-034
+                - button "Map marker" [ref=e271] [cursor=pointer]:
+                  - generic [ref=e273]:
+                    - img "Bus BUS-035" [ref=e274]
+                    - generic [ref=e275]: BUS-035
+                - button "Map marker" [ref=e276] [cursor=pointer]:
+                  - generic [ref=e278]:
+                    - img "Bus BUS-036" [ref=e279]
+                    - generic [ref=e280]: BUS-036
+                - button "Map marker" [ref=e281] [cursor=pointer]:
+                  - generic [ref=e283]:
+                    - img "Bus BUS-037" [ref=e284]
+                    - generic [ref=e285]: BUS-037
+                - button "Map marker" [ref=e286] [cursor=pointer]:
+                  - generic [ref=e288]:
+                    - img "Bus BUS-038" [ref=e289]
+                    - generic [ref=e290]: BUS-038
+                - button "Map marker" [ref=e291] [cursor=pointer]:
+                  - generic [ref=e293]:
+                    - img "Bus BUS-039" [ref=e294]
+                    - generic [ref=e295]: BUS-039
+                - button "Map marker" [ref=e296] [cursor=pointer]:
+                  - generic [ref=e298]:
+                    - img "Bus BUS-040" [ref=e299]
+                    - generic [ref=e300]: BUS-040
+              - group [ref=e301]:
+                - generic "Toggle attribution" [ref=e302] [cursor=pointer]
+                - generic [ref=e303]:
+                  - text: ©
+                  - link "CARTO" [ref=e304] [cursor=pointer]:
+                    - /url: https://carto.com/about-carto/
+                  - text: ", ©"
+                  - link "OpenStreetMap" [ref=e305] [cursor=pointer]:
+                    - /url: http://www.openstreetmap.org/about/
+                  - text: contributors
+              - generic [ref=e306]:
+                - generic [ref=e307]:
+                  - button "Zoom in" [ref=e308] [cursor=pointer]:
+                    - img [ref=e309]
+                  - button "Zoom out" [ref=e311] [cursor=pointer]:
+                    - img [ref=e312]
+                - button "Reset bearing to north" [ref=e314] [cursor=pointer]:
+                  - img [ref=e315]
+            - generic [ref=e320]:
+              - generic [ref=e321]: Load Level
+              - generic [ref=e322]: <50%
+              - generic [ref=e324]: 50–80%
+              - generic [ref=e326]: ">80%"
+            - generic [ref=e328]:
+              - heading "Live Tracking" [level=3] [ref=e329]
+              - paragraph [ref=e330]: 40 buses active · 14:00
+          - generic [ref=e331]:
+            - generic [ref=e332]:
+              - generic [ref=e333]:
+                - img [ref=e334]
+                - generic [ref=e337] [cursor=pointer]: Buses
+              - switch "Buses" [checked] [ref=e338] [cursor=pointer]
+            - generic [ref=e339]:
+              - generic [ref=e340]:
+                - img [ref=e341]
+                - generic [ref=e345] [cursor=pointer]: Stations
+              - switch "Stations" [checked] [ref=e346] [cursor=pointer]
+            - generic [ref=e347]:
+              - generic [ref=e348] [cursor=pointer]: Confidence
+              - switch [ref=e349] [cursor=pointer]
+        - generic [ref=e350]:
+          - generic [ref=e351]:
+            - generic [ref=e352]: LIVE
+            - button "Play" [ref=e353] [cursor=pointer]:
+              - img [ref=e354]
+            - generic [ref=e356]:
+              - button "1x" [ref=e357] [cursor=pointer]
+              - button "2x" [ref=e358] [cursor=pointer]
+              - button "5x" [ref=e359] [cursor=pointer]
+            - generic [ref=e360]:
+              - generic [ref=e361]: 11 Jun
+              - generic [ref=e362]: 14:24
+          - generic [ref=e363] [cursor=pointer]:
+            - generic [ref=e369]: 15:00
+            - generic [ref=e372]: 16:00
+            - generic [ref=e375]: 17:00
+            - generic [ref=e378]: 18:00
+            - generic [ref=e381]: 19:00
+            - generic [ref=e384]: 20:00
+            - generic [ref=e387]: 21:00
+            - generic [ref=e390]: 22:00
+            - generic [ref=e393]: 23:00
+            - generic [ref=e396]: 00:00
+            - generic [ref=e399]: 01:00
+            - generic [ref=e402]: 02:00
+            - generic [ref=e405]: 03:00
+            - generic [ref=e408]: 04:00
+            - generic [ref=e411]: 05:00
+            - generic [ref=e414]: 06:00
+            - generic [ref=e417]: 07:00
+            - generic [ref=e420]: 08:00
+            - generic [ref=e423]: 09:00
+            - generic [ref=e426]: 10:00
+            - generic [ref=e429]: 11:00
+            - generic [ref=e432]: 12:00
+            - generic [ref=e435]: 13:00
+            - generic [ref=e438]: 14:00
+  - generic [ref=e93]:
+    - heading "Command Palette" [level=2] [ref=e94]
+    - paragraph [ref=e95]: Search for a command to run...
+  - region "Notifications alt+T"

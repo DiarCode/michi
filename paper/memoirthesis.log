@@ -1,54 +1,65 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.28)  28 MAY 2026 19:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2026.2.19)  11 JUN 2026 17:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./memoirthesis.tex
-(memoirthesis.tex
-LaTeX2e <2025-11-01>
-L3 programming layer <2025-12-24>
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/nag\nag.sty
+**memoirthesis.tex
+(./memoirthesis.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/nag/nag.sty
 Package: nag 2011/11/25 0.7 warning about old commands (ulmi)
-\c@nag@c=\count275
-\c@nag@sins=\count276
+\c@nag@c=\count196
+\c@nag@sins=\count197
 Package nag Info: Loaded nag-l2tabu.cfg  on input line 552.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/nag\nag-l2tabu.cfg
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/nag/nag-l2t
+abu.cfg
 File: nag-l2tabu.cfg 2010/05/17 v2.11 l2tabu rules for nag.sty (ulmi)
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/memoir\memoir.cls
-Document Class: memoir 2025/11/04 v3.8.4b configurable book, report, article do
-cument class
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/xpatch\xpatch.sty
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
-Package: expl3 2025-12-24 L3 programming layer (loader) 
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/memoir/memo
+ir.cls
+Document Class: memoir 2025/03/06 v3.8.3 configurable book, report, article doc
+ument class
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
-tex.def
-File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count277
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/xpatch/xpat
+ch.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/l3kernel/ex
+pl3.sty
+Package: expl3 2025-01-18 L3 programming layer (loader) 
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/l3backend/l
+3backend-pdftex.def
+File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count198
+\l__pdf_internal_box=\box52
 ))
 Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xpars
-e.sty
-Package: xparse 2025-10-09 L3 Experimental document command parser
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/l3packages/
+xparse/xparse.sty
+Package: xparse 2024-08-16 L3 Experimental document command parser
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count278
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/etoolbox/et
+oolbox.sty
+Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count199
 ))
 \onelineskip=\skip49
 \lxvchars=\skip50
 \xlvchars=\skip51
-\@memcnta=\count279
-\c@@memmarkcntra=\count280
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+\@memcnta=\count266
+\c@@memmarkcntra=\count267
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/iftex/ift
+ex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 )
 \trimtop=\skip52
 \trimedge=\skip53
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/memoir\mem12.clo
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/memoir/mem1
+2.clo
 File: mem12.clo 2022/07/29 v0.5 memoir class 12pt size option
 )
 \binding=\skip54
@@ -61,20 +72,20 @@ File: mem12.clo 2022/07/29 v0.5 memoir class 12pt size option
 \mem@maxheadheight=\skip61
 \mem@maxfootheight=\skip62
 \headwidth=\skip63
-\c@storedpagenumber=\count281
-\memPD=\dimen148
+\c@storedpagenumber=\count268
+\memPD=\dimen141
 \m@mabparskip=\skip64
 \thanksmarkwidth=\skip65
 \thanksmarksep=\skip66
 \droptitle=\skip67
-\c@book=\count282
-\c@part=\count283
-\c@chapter=\count284
-\c@section=\count285
-\c@subsection=\count286
-\c@subsubsection=\count287
-\c@paragraph=\count288
-\c@subparagraph=\count289
+\c@book=\count269
+\c@part=\count270
+\c@chapter=\count271
+\c@section=\count272
+\c@subsection=\count273
+\c@subsubsection=\count274
+\c@paragraph=\count275
+\c@subparagraph=\count276
 \beforechapskip=\skip68
 \midchapskip=\skip69
 \afterchapskip=\skip70
@@ -96,10 +107,10 @@ File: mem12.clo 2022/07/29 v0.5 memoir class 12pt size option
 \beforesubparaskip=\skip86
 \aftersubparaskip=\skip87
 \pfbreakskip=\skip88
-\c@@ppsavesec=\count290
-\c@@ppsaveapp=\count291
-\ragrparindent=\dimen149
-\everylistparindent=\dimen150
+\c@@ppsavesec=\count277
+\c@@ppsaveapp=\count278
+\ragrparindent=\dimen142
+\everylistparindent=\dimen143
 \parsepi=\skip89
 \topsepi=\skip90
 \itemsepi=\skip91
@@ -115,85 +126,90 @@ File: mem12.clo 2022/07/29 v0.5 memoir class 12pt size option
 \@enLab=\toks17
 \abstitleskip=\skip101
 \absleftindent=\skip102
-\abs@leftindent=\dimen151
+\abs@leftindent=\dimen144
 \absrightindent=\skip103
 \absparindent=\skip104
 \absparsep=\skip105
-\c@vslineno=\count292
-\c@poemline=\count293
-\c@modulo@vs=\count294
-\c@memfvsline=\count295
+\c@vslineno=\count279
+\c@poemline=\count280
+\c@modulo@vs=\count281
+\c@memfvsline=\count282
 \vleftskip=\skip106
 \vrightskip=\skip107
 \stanzaskip=\skip108
 \versewidth=\skip109
 \vgap=\skip110
 \vindent=\skip111
-\vleftmargin=\dimen152
-\c@verse=\count296
-\c@chrsinstr=\count297
+\vleftmargin=\dimen145
+\c@verse=\count283
+\c@chrsinstr=\count284
 \beforepoemtitleskip=\skip112
 \afterpoemtitleskip=\skip113
-\c@poem=\count298
+\c@poem=\count285
 \beforePoemTitleskip=\skip114
 \midPoemTitleskip=\skip115
 \afterPoemTitleskip=\skip116
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
-Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
-\col@sep=\dimen153
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/tools/array
+.sty
+Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
+\col@sep=\dimen146
 \ar@mcellbox=\box53
-\extrarowheight=\dimen154
+\extrarowheight=\dimen147
 \NC@list=\toks18
 \extratabsurround=\skip117
 \backup@length=\skip118
 \ar@cellbox=\box54
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/tools\dcolumn.sty
-Package: dcolumn 2025/10/21 v1.06 decimal alignment package (DPC)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/tools/dcolu
+mn.sty
+Package: dcolumn 2023/07/08 v1.06 decimal alignment package (DPC)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/tools\delarray.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/tools/delar
+ray.sty
 Package: delarray 2014/10/28 v1.01 array delimiter package (DPC)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/tools\tabularx.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/tools/tabul
+arx.sty
 Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
-\TX@col@width=\dimen155
-\TX@old@table=\dimen156
-\TX@old@col=\dimen157
-\TX@target=\dimen158
-\TX@delta=\dimen159
-\TX@cols=\count299
+\TX@col@width=\dimen148
+\TX@old@table=\dimen149
+\TX@old@col=\dimen150
+\TX@target=\dimen151
+\TX@delta=\dimen152
+\TX@cols=\count286
 \TX@ftn=\toks19
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/booktabs/bo
+oktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen160
-\lightrulewidth=\dimen161
-\cmidrulewidth=\dimen162
-\belowrulesep=\dimen163
-\belowbottomsep=\dimen164
-\aboverulesep=\dimen165
-\abovetopsep=\dimen166
-\cmidrulesep=\dimen167
-\cmidrulekern=\dimen168
-\defaultaddspace=\dimen169
-\@cmidla=\count300
-\@cmidlb=\count301
-\@aboverulesep=\dimen170
-\@belowrulesep=\dimen171
-\@thisruleclass=\count302
-\@lastruleclass=\count303
-\@thisrulewidth=\dimen172
+\heavyrulewidth=\dimen153
+\lightrulewidth=\dimen154
+\cmidrulewidth=\dimen155
+\belowrulesep=\dimen156
+\belowbottomsep=\dimen157
+\aboverulesep=\dimen158
+\abovetopsep=\dimen159
+\cmidrulesep=\dimen160
+\cmidrulekern=\dimen161
+\defaultaddspace=\dimen162
+\@cmidla=\count287
+\@cmidlb=\count288
+\@aboverulesep=\dimen163
+\@belowrulesep=\dimen164
+\@thisruleclass=\count289
+\@lastruleclass=\count290
+\@thisrulewidth=\dimen165
 )
 \ctableftskip=\skip119
 \ctabrightskip=\skip120
-\abovecolumnspenalty=\count304
-\@linestogo=\count305
-\@cellstogo=\count306
-\@cellsincolumn=\count307
+\abovecolumnspenalty=\count291
+\@linestogo=\count292
+\@cellstogo=\count293
+\@cellsincolumn=\count294
 \crtok=\toks20
-\@mincolumnwidth=\dimen173
-\c@newflo@tctr=\count308
+\@mincolumnwidth=\dimen166
+\c@newflo@tctr=\count295
 \mem@margin@floatbox=\box55
 \@contcwidth=\skip121
 \@contindw=\skip122
@@ -204,56 +220,65 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \subfloatcaptopadj=\skip127
 \subfloatbottomskip=\skip128
 \subfloatlabelskip=\skip129
-\subfloatcapmargin=\dimen174
-\c@@contsubnum=\count309
+\subfloatcapmargin=\dimen167
+\c@@contsubnum=\count296
 \m@mscap@capbox=\box56
 \m@mscap@fbox=\box57
-\sidecapsep=\dimen175
-\sidecapwidth=\dimen176
-\m@m@tempdima=\dimen177
-\m@mscapraise=\dimen178
-\sidecapraise=\dimen179
-\m@mscapmainwidth=\dimen180
-\m@mscaplkern=\dimen181
+\sidecapsep=\dimen168
+\sidecapwidth=\dimen169
+\m@m@tempdima=\dimen170
+\m@mscapraise=\dimen171
+\sidecapraise=\dimen172
+\m@mscapmainwidth=\dimen173
+\m@mscaplkern=\dimen174
 \beforeepigraphskip=\skip130
 \afterepigraphskip=\skip131
 \epigraphwidth=\skip132
 \epigraphrule=\skip133
+LaTeX Info: Redefining \em on input line 7017.
+LaTeX Info: Redefining \emph on input line 7025.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
-Package: nameref 2025-06-21 v2.57 Cross-referencing by name of section
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/hyperref/na
+meref.sty
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/refcount/re
+fcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/ltxcmds/l
+txcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
-ty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/infwarerr
+/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
-lestring.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/gettitles
+tring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/kvoptions/k
+voptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics/ke
+yval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks21
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/kvsetkeys/k
+vsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 )))
-\c@section@level=\count310
+\c@section@level=\count297
 )
 \tocentryskip=\skip134
 \tocbaseline=\skip135
 \cftparskip=\skip136
 \cftbeforebookskip=\skip137
-\cftbookindent=\dimen182
-\cftbooknumwidth=\dimen183
+\cftbookindent=\dimen175
+\cftbooknumwidth=\dimen176
 \cftbeforepartskip=\skip138
 \cftpartindent=\skip139
 \cftpartnumwidth=\skip140
@@ -275,18 +300,18 @@ Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 \cftbeforesubparagraphskip=\skip156
 \cftsubparagraphindent=\skip157
 \cftsubparagraphnumwidth=\skip158
-\prechapterprecisshift=\dimen184
-\c@maxsecnumdepth=\count311
-\bibindent=\dimen185
+\prechapterprecisshift=\dimen177
+\c@maxsecnumdepth=\count298
+\bibindent=\dimen178
 \bibitemsep=\skip159
 \indexcolsep=\skip160
 \indexrule=\skip161
 \indexmarkstyle=\toks22
 \@indexbox=\insert252
-LaTeX Info: Redefining \raggedbottom on input line 8095.
-LaTeX Info: Redefining \flushbottom on input line 8099.
-\glossarycolsep=\dimen186
-\glossaryrule=\dimen187
+LaTeX Info: Redefining \raggedbottom on input line 8107.
+LaTeX Info: Redefining \flushbottom on input line 8111.
+\glossarycolsep=\dimen179
+\glossaryrule=\dimen180
 \sideparvshift=\skip162
 \sideins=\insert251
 \sidebartopsep=\skip163
@@ -299,8 +324,8 @@ LaTeX Info: Redefining \flushbottom on input line 8099.
 \footinsdim=\skip170
 \footinsv@r=\insert250
 \@mpfootinsv@r=\insert249
-\m@m@k=\count312
-\m@m@h=\dimen188
+\m@m@k=\count299
+\m@m@h=\dimen181
 \m@mipn@skip=\skip171
 \sidefootins=\insert248
 \sidefootadjust=\skip172
@@ -309,14 +334,16 @@ LaTeX Info: Redefining \flushbottom on input line 8099.
 \sidefootvsep=\skip175
 \sidefootwidth=\skip176
 \m@mdownsf=\skip177
-\c@sidefootnote=\count313
+\c@sidefootnote=\count300
 \sidefootmarkwidth=\skip178
 \sidefootmarksep=\skip179
 \sidefootparindent=\skip180
-\c@pagenote=\count314
-\c@pagenoteshadow=\count315
+\c@pagenote=\count301
+\c@pagenoteshadow=\count302
 \mem@pn@lastkern=\skip181
- (C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/tools\verbatim.sty
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/tools/verba
+tim.sty
 Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks23
 \verbatim@line=\toks24
@@ -324,40 +351,48 @@ Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
 )
 \verbatimindent=\skip182
 \verbatim@out=\write3
- (C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/base\shortvrb.sty
-Package: shortvrb 2024/12/25 v3.0q Standard LaTeX documentation package V3 (FMi
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/shortv
+rb.sty
+Package: shortvrb 2024/10/23 v3.0q Standard LaTeX documentation package V3 (FMi
 )
 )
 \bvboxsep=\skip183
-\c@memfbvline=\count316
-\c@bvlinectr=\count317
+\c@memfbvline=\count303
+\c@bvlinectr=\count304
 \bvnumlength=\skip184
-\fb@frw=\dimen189
-\fb@frh=\dimen190
-\FrameRule=\dimen191
-\FrameSep=\dimen192
-\c@cp@cntr=\count318
-\c@ism@mctr=\count319
-\c@xsm@mctr=\count320
-\c@csm@mctr=\count321
-\c@ksm@mctr=\count322
-\c@xksm@mctr=\count323
-\c@cksm@mctr=\count324
-\c@msm@mctr=\count325
-\c@xmsm@mctr=\count326
-\c@cmsm@mctr=\count327
-\c@bsm@mctr=\count328
-\c@workm@mctr=\count329
-\c@sheetsequence=\count330
-\c@lastsheet=\count331
-\c@lastpage=\count332
-\c@figure=\count333
-\c@lofdepth=\count334
+\fb@frw=\dimen182
+\fb@frh=\dimen183
+\FrameRule=\dimen184
+\FrameSep=\dimen185
+\c@cp@cntr=\count305
+\c@ism@mctr=\count306
+\c@xsm@mctr=\count307
+\c@csm@mctr=\count308
+\c@ksm@mctr=\count309
+\c@xksm@mctr=\count310
+\c@cksm@mctr=\count311
+\c@msm@mctr=\count312
+\c@xmsm@mctr=\count313
+\c@cmsm@mctr=\count314
+\c@bsm@mctr=\count315
+\c@workm@mctr=\count316
+\c@sheetsequence=\count317
+\c@lastsheet=\count318
+\c@lastpage=\count319
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/textcase/te
+xtcase.sty
+Package: textcase 2025/02/16 v1.05 Text only upper/lower case changing (DPC)
+Package textcase Info: Defining Legacy names on input line 20.
+)
+\c@figure=\count320
+\c@lofdepth=\count321
 \cftbeforefigureskip=\skip185
 \cftfigureindent=\skip186
 \cftfigurenumwidth=\skip187
-\c@table=\count335
-\c@lotdepth=\count336
+\c@table=\count322
+\c@lotdepth=\count323
 \cftbeforetableskip=\skip188
 \cfttableindent=\skip189
 \cfttablenumwidth=\skip190
@@ -389,75 +424,85 @@ Package tocloft [2008/07/23] emulated by memoir.
 Package tocvsec2 [2008/07/23] emulated by memoir.
 Package verse [2008/07/23] emulated by memoir.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/datetime\datetime.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/datetime/da
+tetime.sty
 Package: datetime 2015/03/20 v2.60 Date Time Package
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/fmtcount\fmtcount.sty
-Package: fmtcount 2025/12/02 v3.12 Displaying the values of LaTeX counters (NT,
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/fmtcount/fm
+tcount.sty
+Package: fmtcount 2025/02/09 v3.10 Displaying the values of LaTeX counters (NT,
 VB,NE)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/ifthen
+.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/xkeyval/xke
+yval.sty
 Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/xkeyval/x
+keyval.tex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/xkeyval/x
+kvutils.tex
 \XKV@toks=\toks25
 \XKV@tempa@toks=\toks26
 )
-\XKV@depth=\count337
+\XKV@depth=\count324
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/fmtcount\fcprefix.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/fmtcount/fc
+prefix.sty
 Package: fcprefix 2012/09/28
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/fmtcount\fcnumparser.st
-y
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/fmtcount/fc
+numparser.sty
 Package: fcnumparser 2017/06/15
-\fc@digit@counter=\count338
-)) (C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+\fc@digit@counter=\count325
+))
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsmath/ams
+gen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks27
-\ex@=\dimen193
+\ex@=\dimen186
 )
-\c@padzeroesN=\count339
-\fc@tmpcatcode=\count340
-\@DT@modctr=\count341
-\@ordinalctr=\count342
-\@orgargctr=\count343
-\@strctr=\count344
-\@tmpstrctr=\count345
-\@DT@loopN=\count346
-\@DT@X=\count347
+\c@padzeroesN=\count326
+\fc@tmpcatcode=\count327
+\@DT@modctr=\count328
+\@ordinalctr=\count329
+\@orgargctr=\count330
+\@strctr=\count331
+\@tmpstrctr=\count332
+\@DT@loopN=\count333
+\@DT@X=\count334
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/datetime\datetime-defau
-lts.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/datetime/da
+tetime-defaults.sty
 Package: datetime-defaults 2013/09/10
 )
-\@day=\count348
-\@month=\count349
-\@year=\count350
-\c@HOUR=\count351
-\c@HOURXII=\count352
-\c@MINUTE=\count353
-\c@TOHOUR=\count354
-\c@TOMINUTE=\count355
-\c@SECOND=\count356
-\currenthour=\count357
-\currentminute=\count358
-\currentsecond=\count359
+\@day=\count335
+\@month=\count336
+\@year=\count337
+\c@HOUR=\count338
+\c@HOURXII=\count339
+\c@MINUTE=\count340
+\c@TOHOUR=\count341
+\c@TOMINUTE=\count342
+\c@SECOND=\count343
+\currenthour=\count344
+\currentminute=\count345
+\currentsecond=\count346
 Package datetime Info: No datetime.cfg file found, using default settings on in
 put line 308.
-\@dtctr=\count360
-\dayofyear=\count361
-\dayofweek=\count362
+\@dtctr=\count347
+\dayofyear=\count348
+\dayofweek=\count349
 LaTeX Info: Redefining \today on input line 736.
 \dt@a=\toks28
 \dt@b=\toks29
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifpdf.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/iftex/ifp
+df.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
 )
 
@@ -467,8 +512,8 @@ Top and edge trims: 0pt and 0pt
 Page height and width: 845.04684pt by 597.50787pt
 Text height and width: 635.5pt by 448pt
 Spine and edge margins: 59.73816pt and 89.63971pt
-Upper and lower margins: 113.81102pt and 95.73582pt
-Headheight and headsep: 14.5pt and 29pt
+Upper and lower margins: 56.9055pt and 152.64134pt
+Headheight and headsep: 21.75pt and 18.85004pt
 Footskip: 29pt
 Columnsep and columnseprule: 10pt and 0pt
 Marginparsep and marginparwidth: 17pt and 51pt
@@ -484,10 +529,13 @@ Sidefootvsep and sidefootheight: 14.5pt and 590.14995pt
 \openout4 = `memoirthesis.idx'.
 
 Writing index file memoirthesis.idx 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/import\import.sty
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/import/impo
+rt.sty
 Package: import 2020/04/01  v 6.2
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsfonts/am
+sfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
@@ -495,29 +543,34 @@ LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
-Package: amsmath 2025/07/09 v2.17z AMS math features
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsmath/ams
+math.sty
+Package: amsmath 2024/11/05 v2.17t AMS math features
 \@mathmargin=\skip191
 
 For additional information on amsmath, use the `?' option.
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
-Package: amstext 2024/11/17 v2.01 AMS text
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsmath/ams
+text.sty
+Package: amstext 2021/08/26 v2.01 AMS text
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsmath/ams
+bsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen194
+\pmbraise@=\dimen187
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsmath/ams
+opn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count363
+\inf@bad=\count350
 LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count364
-\leftroot@=\count365
+\uproot@=\count351
+\leftroot@=\count352
 LaTeX Info: Redefining \overline on input line 398.
 LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count366
-\DOTSCASE@=\count367
+\classnum@=\count353
+\DOTSCASE@=\count354
 LaTeX Info: Redefining \ldots on input line 495.
 LaTeX Info: Redefining \dots on input line 498.
 LaTeX Info: Redefining \cdots on input line 619.
@@ -527,48 +580,51 @@ LaTeX Info: Redefining \big on input line 721.
 LaTeX Info: Redefining \Big on input line 722.
 LaTeX Info: Redefining \bigg on input line 723.
 LaTeX Info: Redefining \Bigg on input line 724.
-\big@size=\dimen195
+\big@size=\dimen188
 LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count368
+\macc@depth=\count355
 LaTeX Info: Redefining \bmod on input line 904.
 LaTeX Info: Redefining \pmod on input line 909.
 LaTeX Info: Redefining \smash on input line 939.
 LaTeX Info: Redefining \relbar on input line 969.
 LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count369
+\c@MaxMatrixCols=\count356
 \dotsspace@=\muskip17
-\c@parentequation=\count370
-\dspbrk@lvl=\count371
+\c@parentequation=\count357
+\dspbrk@lvl=\count358
 \tag@help=\toks30
-\row@=\count372
-\column@=\count373
-\maxfields@=\count374
+\row@=\count359
+\column@=\count360
+\maxfields@=\count361
 \andhelp@=\toks31
-\eqnshift@=\dimen196
-\alignsep@=\dimen197
-\tagshift@=\dimen198
-\tagwidth@=\dimen199
-\totwidth@=\dimen256
-\lineht@=\dimen257
+\eqnshift@=\dimen189
+\alignsep@=\dimen190
+\tagshift@=\dimen191
+\tagwidth@=\dimen192
+\totwidth@=\dimen193
+\lineht@=\dimen194
 \@envbody=\toks32
 \multlinegap=\skip192
 \multlinetaggap=\skip193
 \mathdisplay@stack=\toks33
-LaTeX Info: Redefining \[ on input line 2950.
-LaTeX Info: Redefining \] on input line 2951.
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/stmaryrd\stmaryrd.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/stmaryrd/st
+maryrd.sty
 Package: stmaryrd 1994/03/03 St Mary's Road symbol package
 \symstmry=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
 (Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsfonts/am
+ssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 LaTeX Font Info:    Redeclaring math symbol \boxdot on input line 44.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amscls\amsthm.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amscls/amst
+hm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks34
 \thm@bodyfont=\toks35
@@ -580,17 +636,20 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@headsep=\skip196
 \dth@everypar=\toks39
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/base\newlfont.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/newlfo
+nt.sty
 Package: newlfont 1998/08/17 v2.2m Standard LaTeX package
 LaTeX Info: Redefining \em on input line 57.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/base\latexsym.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/latexs
+ym.sty
 Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
 \symlasy=\mathgroup7
 LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
 (Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/layouts\layouts.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/layouts/lay
+outs.sty
 Package: layouts 2009/09/02 v2.6d graphical depiction of document elements
 \l@ylen=\skip197
 \layoutsbox=\box60
@@ -613,292 +672,304 @@ Package: layouts 2009/09/02 v2.6d graphical depiction of document elements
 \l@ypsep=\skip270
 \l@yitmsep=\skip271
 \l@ytok=\toks40
-\l@youtpw=\count375
-\l@youtph=\count376
-\l@youthpi=\count377
-\l@youthpii=\count378
-\l@youthpiii=\count379
-\l@youthpiv=\count380
-\l@youthpv=\count381
-\l@youthpvi=\count382
-\l@youthpvii=\count383
-\l@youtparskip=\count384
-\l@youtvpi=\count385
-\l@youtvpii=\count386
-\l@youtvpiii=\count387
-\l@youtvpiv=\count388
-\l@youtvpv=\count389
-\l@youtvpvi=\count390
-\l@youtvpvii=\count391
-\l@youthdo=\count392
-\l@youthdi=\count393
-\l@youthdii=\count394
-\l@youthdiii=\count395
-\l@youthdiv=\count396
-\l@youthdv=\count397
-\l@youthdvi=\count398
-\l@youthdvii=\count399
-\l@youtvdo=\count400
-\l@youtvdi=\count401
-\l@youtvdii=\count402
-\l@youtvdiii=\count403
-\l@youtvdiv=\count404
-\l@youtvdv=\count405
-\l@youtvdvi=\count406
-\l@youtvdvii=\count407
-\l@youtvdviii=\count408
-\l@youtxci=\count409
-\l@youtxcii=\count410
-\l@youtxciii=\count411
-\l@youtxciv=\count412
-\l@youtxcv=\count413
-\l@youtxcvi=\count414
-\l@youtyci=\count415
-\l@youtycii=\count416
-\l@youtyciii=\count417
-\l@youtyciv=\count418
-\l@youtycv=\count419
-\l@youtycvi=\count420
-\l@youtycvii=\count421
-\l@youtycviii=\count422
-\l@youtxco=\count423
-\l@youtyco=\count424
+\l@youtpw=\count362
+\l@youtph=\count363
+\l@youthpi=\count364
+\l@youthpii=\count365
+\l@youthpiii=\count366
+\l@youthpiv=\count367
+\l@youthpv=\count368
+\l@youthpvi=\count369
+\l@youthpvii=\count370
+\l@youtparskip=\count371
+\l@youtvpi=\count372
+\l@youtvpii=\count373
+\l@youtvpiii=\count374
+\l@youtvpiv=\count375
+\l@youtvpv=\count376
+\l@youtvpvi=\count377
+\l@youtvpvii=\count378
+\l@youthdo=\count379
+\l@youthdi=\count380
+\l@youthdii=\count381
+\l@youthdiii=\count382
+\l@youthdiv=\count383
+\l@youthdv=\count384
+\l@youthdvi=\count385
+\l@youthdvii=\count386
+\l@youtvdo=\count387
+\l@youtvdi=\count388
+\l@youtvdii=\count389
+\l@youtvdiii=\count390
+\l@youtvdiv=\count391
+\l@youtvdv=\count392
+\l@youtvdvi=\count393
+\l@youtvdvii=\count394
+\l@youtvdviii=\count395
+\l@youtxci=\count396
+\l@youtxcii=\count397
+\l@youtxciii=\count398
+\l@youtxciv=\count399
+\l@youtxcv=\count400
+\l@youtxcvi=\count401
+\l@youtyci=\count402
+\l@youtycii=\count403
+\l@youtyciii=\count404
+\l@youtyciv=\count405
+\l@youtycv=\count406
+\l@youtycvi=\count407
+\l@youtycvii=\count408
+\l@youtycviii=\count409
+\l@youtxco=\count410
+\l@youtyco=\count411
 \l@ytempdima=\skip272
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
-Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics/gr
+aphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics/gr
+aphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics/tr
+ig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
-fg
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics-cf
+g/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics-de
+f/pdftex.def
+File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen258
-\Gin@req@width=\dimen259
-) (C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+\Gin@req@height=\dimen195
+\Gin@req@width=\dimen196
+)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/inpute
+nc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks41
 \inpenc@posthook=\toks42
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/float/float
+.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count425
+\c@float@type=\count412
 \float@exts=\toks43
 \float@box=\box61
 \@float@everytoks=\toks44
 \@floatcapt=\box62
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/natbib\natbib.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/natbib/natb
+ib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip273
 \bibsep=\skip274
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count426
+\c@NAT@ctr=\count413
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
-Package: babel 2025/12/11 v25.17 The multilingual framework for LuaLaTeX, pdfLa
-TeX and XeLaTeX
-\babel@savecnt=\count427
-LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input li
-ne 2068.
-LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input li
-ne 2070.
-LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input lin
-e 2072.
-LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input lin
-e 2073.
-LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) 
-on input line 2074.
-LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) 
-on input line 2076.
-LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) 
-on input line 2101.
-\U@D=\dimen260
-\l@unhyphenated=\language79
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/babel/bab
+el.sty
+Package: babel 2025/02/14 v25.4 The multilingual framework for pdfLaTeX, LuaLaT
+eX and XeLaTeX
+\babel@savecnt=\count414
+\U@D=\dimen197
+\l@unhyphenated=\language90
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/babel/txt
+babel.def)
 \bbl@readstream=\read3
-\bbl@dirlevel=\count428
-Package babel Info: Configuration files are deprecated, as
-(babel)             they can break document portability.
-(babel)             Reported on input line 4196.
+\bbl@dirlevel=\count415
 
-*************************************
-* Local config file bblopts.cfg used
-*
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg
-File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
- babel
-)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/es\babel
--spanish.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/en\babel
--english.tex)
-Package babel Info: Importing font and identification data for spanish
-(babel)             from babel-es.ini. Reported on input line 4320.
-
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/babel-spanish\spanish.l
-df
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/babel-spa
+nish/spanish.ldf
 Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
 \es@quottoks=\toks45
-\es@quotdepth=\count429
+\es@quotdepth=\count416
 Package babel Info: Making " an active character on input line 570.
 Package babel Info: Making . an active character on input line 675.
 Package babel Info: Making < an active character on input line 722.
 Package babel Info: Making > an active character on input line 722.
 )
-Package babel Info: Importing font and identification data for english
-(babel)             from babel-en.ini. Reported on input line 4320.
-
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\english.l
-df
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/babel-eng
+lish/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
 Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
-(babel)             (\language73). Reported on input line 105.
+(babel)             (\language22). Reported on input line 105.
 Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
-(babel)             (\language73). Reported on input line 108.
+(babel)             (\language22). Reported on input line 108.
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
-Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/babel/loc
+ale/en/babel-english.tex
+Package babel Info: Importing font and identification data for english
+(babel)             from babel-en.ini. Reported on input line 11.
+)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/babel/loc
+ale/es/babel-spanish.tex
+Package babel Info: Importing font and identification data for spanish
+(babel)             from babel-es.ini. Reported on input line 11.
+)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/hyperref/hy
+perref.sty
+Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
-keys.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/kvdefinek
+eys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
-ty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pdfescape
+/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
-.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pdftexcmd
+s/pdftexcmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/hycolor/hyc
+olor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
-ty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/stringenc
+/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
-\@linkdim=\dimen261
-\Hy@linkcounter=\count430
-\Hy@pagecounter=\count431
- (C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
-File: pd1enc.def 2025-07-12 v7.01o Hyperref: PDFDocEncoding definition (HO)
+\@linkdim=\dimen198
+\Hy@linkcounter=\count417
+\Hy@pagecounter=\count418
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/hyperref/pd
+1enc.def
+File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/intcalc/i
+ntcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count432
- (C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
-File: puenc.def 2025-07-12 v7.01o Hyperref: PDF Unicode definition (HO)
+\Hy@SavedSpaceFactor=\count419
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/hyperref/pu
+enc.def
+File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 4066.
-Package hyperref Info: Hyper figures OFF on input line 4195.
-Package hyperref Info: Link nesting OFF on input line 4200.
-Package hyperref Info: Hyper index ON on input line 4203.
-Package hyperref Info: Plain pages OFF on input line 4210.
-Package hyperref Info: Backreferencing OFF on input line 4215.
+Package hyperref Info: Option `colorlinks' set `true' on input line 4040.
+Package hyperref Info: Hyper figures OFF on input line 4157.
+Package hyperref Info: Link nesting OFF on input line 4162.
+Package hyperref Info: Hyper index ON on input line 4165.
+Package hyperref Info: Plain pages OFF on input line 4172.
+Package hyperref Info: Backreferencing OFF on input line 4177.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4462.
-\c@Hy@tempcnt=\count433
-LaTeX Info: Redefining \url on input line 4801.
-\XeTeXLinkMargin=\dimen262
+Package hyperref Info: Bookmarks ON on input line 4424.
+\c@Hy@tempcnt=\count420
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen199
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/bitset/bi
+tset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
-.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/bigintcal
+c/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count434
-\Field@Width=\dimen263
-\Fld@charsize=\dimen264
-Package hyperref Info: Hyper figures OFF on input line 6078.
-Package hyperref Info: Link nesting OFF on input line 6083.
-Package hyperref Info: Hyper index ON on input line 6086.
-Package hyperref Info: backreferencing OFF on input line 6093.
-Package hyperref Info: Link coloring ON on input line 6096.
-Package hyperref Info: Link coloring with OCG OFF on input line 6103.
-Package hyperref Info: PDF/A mode OFF on input line 6108.
-\Hy@abspage=\count435
-\c@Item=\count436
-\c@Hfootnote=\count437
+\Fld@menulength=\count421
+\Field@Width=\dimen256
+\Fld@charsize=\dimen257
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring ON on input line 6060.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/atbegs
+hi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count422
+\c@Item=\count423
+\c@Hfootnote=\count424
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
-File: hpdftex.def 2025-07-12 v7.01o Hyperref driver for pdfTeX
-\Fld@listcount=\count438
-\c@bookmark@seq@number=\count439
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/hyperref/hp
+dftex.def
+File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
-echeck.sty
-Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/atvery
+end-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+\Fld@listcount=\count425
+\c@bookmark@seq@number=\count426
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
-ounter.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/rerunfilech
+eck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/uniquecou
+nter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-84.
+85.
 )
 \Hy@SectionHShift=\skip275
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/memoir\memhfixc.sty
-Package: memhfixc 2025/09/16 v1.24 hyperref package fixes for memoir class
-\c@memhycontfloat=\count440
-\c@mem@Hpagenote=\count441
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/memoir/memh
+fixc.sty
+Package: memhfixc 2025/03/06 v1.23 hyperref package fixes for memoir class
+\c@memhycontfloat=\count427
+\c@mem@Hpagenote=\count428
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/mdwtools\footnote.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/mdwtools/fo
+otnote.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 \fn@notes=\box63
-\fn@width=\dimen265
+\fn@width=\dimen258
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.sty
-Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/microtype/m
+icrotype.sty
+Package: microtype 2025/02/11 v3.2a Micro-typographical refinements (RS)
 \MT@toks=\toks46
 \MT@tempbox=\box64
-\MT@count=\count442
-LaTeX Info: Redefining \noprotrusionifhmode on input line 1084.
-LaTeX Info: Redefining \leftprotrusion on input line 1085.
+\MT@count=\count429
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
+LaTeX Info: Redefining \leftprotrusion on input line 1088.
 \MT@prot@toks=\toks47
-LaTeX Info: Redefining \rightprotrusion on input line 1104.
+LaTeX Info: Redefining \rightprotrusion on input line 1107.
 LaTeX Info: Redefining \textls on input line 1449.
-\MT@outer@kern=\dimen266
+\MT@outer@kern=\dimen259
 LaTeX Info: Redefining \microtypecontext on input line 2053.
 LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
-\MT@listname@count=\count443
+\MT@listname@count=\count430
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-pdf
-tex.def
-File: microtype-pdftex.def 2026/03/01 v3.2d Definitions specific to pdftex (RS)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/microtype/m
+icrotype-pdftex.def
+File: microtype-pdftex.def 2025/02/11 v3.2a Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 944.
 LaTeX Info: Redefining \lslig on input line 944.
@@ -906,101 +977,108 @@ LaTeX Info: Redefining \lslig on input line 944.
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.cfg
-File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/microtype/m
+icrotype.cfg
+File: microtype.cfg 2025/02/11 v3.2a microtype main configuration file (RS)
 )
 LaTeX Info: Redefining \microtypesetup on input line 3065.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.st
-y
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
--common.tex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/pgf/basicla
+yer/pgf.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/pgf/utiliti
+es/pgfrcs.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfutil-common.tex
 \pgfutil@everybye=\toks48
-\pgfutil@tempdima=\dimen267
-\pgfutil@tempdimb=\dimen268
+\pgfutil@tempdima=\dimen260
+\pgfutil@tempdimb=\dimen261
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
--latex.def
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfutil-latex.def
 \pgfutil@abb=\box65
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.
-code.tex
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
-Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfrcs.code.tex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/pgf.r
+evision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
 ))
-Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.
-sty
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.
-sty
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
-s.code.tex
-Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/pgf/basicla
+yer/pgfcore.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/pgf/systeml
+ayer/pgfsys.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsys.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
-.code.tex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfkeys.code.tex
 \pgfkeys@pathtoks=\toks49
 \pgfkeys@temptoks=\toks50
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
-libraryfiltered.code.tex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfkeyslibraryfiltered.code.tex
 \pgfkeys@tmptoks=\toks51
 ))
-\pgf@x=\dimen269
-\pgf@y=\dimen270
-\pgf@xa=\dimen271
-\pgf@ya=\dimen272
-\pgf@xb=\dimen273
-\pgf@yb=\dimen274
-\pgf@xc=\dimen275
-\pgf@yc=\dimen276
-\pgf@xd=\dimen277
-\pgf@yd=\dimen278
+\pgf@x=\dimen262
+\pgf@y=\dimen263
+\pgf@xa=\dimen264
+\pgf@ya=\dimen265
+\pgf@xb=\dimen266
+\pgf@yb=\dimen267
+\pgf@xc=\dimen268
+\pgf@yc=\dimen269
+\pgf@xd=\dimen270
+\pgf@yd=\dimen271
 \w@pgf@writea=\write5
 \r@pgf@reada=\read4
-\c@pgf@counta=\count444
-\c@pgf@countb=\count445
-\c@pgf@countc=\count446
-\c@pgf@countd=\count447
+\c@pgf@counta=\count431
+\c@pgf@countb=\count432
+\c@pgf@countc=\count433
+\c@pgf@countd=\count434
 \t@pgf@toka=\toks52
 \t@pgf@tokb=\toks53
 \t@pgf@tokc=\toks54
-\pgf@sys@id@count=\count448
+\pgf@sys@id@count=\count435
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
-fg
-File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgf.cfg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
 )
 Driver file for pgf: pgfsys-pdftex.def
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
-s-pdftex.def
-File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
-s-common-pdf.def
-File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
 )))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
-ssoftpath.code.tex
-File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfsyssoftpath@smallbuffer@items=\count449
-\pgfsyssoftpath@bigbuffer@items=\count450
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count436
+\pgfsyssoftpath@bigbuffer@items=\count437
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
-sprotocol.code.tex
-File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/xcolor/xcol
+or.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics-cf
+g/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 274.
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/graphics/ma
+thcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
 Package xcolor Info: Model `RGB' extended on input line 1365.
@@ -1011,564 +1089,743 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-e.code.tex
-Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcore.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
-.tex
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.
-code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparse
-r.code.tex
-\pgfmath@dimen=\dimen279
-\pgfmath@count=\count451
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmath.code.tex
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathutil.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathparser.code.tex
+\pgfmath@dimen=\dimen272
+\pgfmath@count=\count438
 \pgfmath@box=\box66
 \pgfmath@toks=\toks55
 \pgfmath@stack@operand=\toks56
 \pgfmath@stack@operation=\toks57
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.basic.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.trigonometric.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.random.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.comparison.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.base.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.round.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.misc.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
-ions.integerarithmetics.code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.
-code.tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat
-.code.tex
-\c@pgfmathroundto@lastzeros=\count452
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.basic.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.trigonometric.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.random.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.comparison.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.base.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.round.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.misc.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.integerarithmetics.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathcalc.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count439
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
-tex)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-epoints.code.tex
-File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@picminx=\dimen280
-\pgf@picmaxx=\dimen281
-\pgf@picminy=\dimen282
-\pgf@picmaxy=\dimen283
-\pgf@pathminx=\dimen284
-\pgf@pathmaxx=\dimen285
-\pgf@pathminy=\dimen286
-\pgf@pathmaxy=\dimen287
-\pgf@xx=\dimen288
-\pgf@xy=\dimen289
-\pgf@yx=\dimen290
-\pgf@yy=\dimen291
-\pgf@zx=\dimen292
-\pgf@zy=\dimen293
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/math/
+pgfint.code.tex)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen273
+\pgf@picmaxx=\dimen274
+\pgf@picminy=\dimen275
+\pgf@picmaxy=\dimen276
+\pgf@pathminx=\dimen277
+\pgf@pathmaxx=\dimen278
+\pgf@pathminy=\dimen279
+\pgf@pathmaxy=\dimen280
+\pgf@xx=\dimen281
+\pgf@xy=\dimen282
+\pgf@yx=\dimen283
+\pgf@yy=\dimen284
+\pgf@zx=\dimen285
+\pgf@zy=\dimen286
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-epathconstruct.code.tex
-File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@path@lastx=\dimen294
-\pgf@path@lasty=\dimen295
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen287
+\pgf@path@lasty=\dimen288
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-epathusage.code.tex
-File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@shorten@end@additional=\dimen296
-\pgf@shorten@start@additional=\dimen297
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen289
+\pgf@shorten@start@additional=\dimen290
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-escopes.code.tex
-File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgfpic=\box67
 \pgf@hbox=\box68
 \pgf@layerbox@main=\box69
-\pgf@picture@serial@count=\count453
+\pgf@picture@serial@count=\count440
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-egraphicstate.code.tex
-File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgflinewidth=\dimen298
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen291
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-etransformations.code.tex
-File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@pt@x=\dimen299
-\pgf@pt@y=\dimen300
-\pgf@pt@temp=\dimen301
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen292
+\pgf@pt@y=\dimen293
+\pgf@pt@temp=\dimen294
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-equick.code.tex
-File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-eobjects.code.tex
-File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-epathprocessing.code.tex
-File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-earrows.code.tex
-File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfarrowsep=\dimen302
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen295
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-eshade.code.tex
-File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@max=\dimen303
-\pgf@sys@shading@range@num=\count454
-\pgf@shadingcount=\count455
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen296
+\pgf@sys@shading@range@num=\count441
+\pgf@shadingcount=\count442
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-eimage.code.tex
-File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-eexternal.code.tex
-File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgfexternal@startupbox=\box70
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-elayers.code.tex
-File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-etransparency.code.tex
-File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-epatterns.code.tex
-File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
-erdf.code.tex
-File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
-shapes.code.tex
-File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/modul
+es/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgfnodeparttextbox=\box71
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
-plot.code.tex
-File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/generic/pgf/modul
+es/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
-mp-version-1-18.sty
-Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/pgf/compati
+bility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
 ))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/lipsum\lipsum.sty
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/l3keys2e\l3k
-eys2e.sty
-Package: l3keys2e 2025-10-09 LaTeX2e option processing using LaTeX3 keys
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/lipsum/lips
+um.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/l3packages/
+l3keys2e/l3keys2e.sty
+Package: l3keys2e 2024-08-16 LaTeX2e option processing using LaTeX3 keys
 )
 Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
-\g__lipsum_par_int=\count456
-\l__lipsum_a_int=\count457
-\l__lipsum_b_int=\count458
+\g__lipsum_par_int=\count443
+\l__lipsum_a_int=\count444
+\l__lipsum_b_int=\count445
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/lipsum\lipsum.ltd.tex))
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/lipsum/lips
+um.ltd.tex))
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/caption/sub
+caption.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/caption/cap
+tion.sty
 Package: caption 2023/08/05 v3.6o Customizing captions (AR)
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/caption/cap
+tion3.sty
 Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
-\caption@tempdima=\dimen304
-\captionmargin=\dimen305
-\caption@leftmargin=\dimen306
-\caption@rightmargin=\dimen307
-\caption@width=\dimen308
-\caption@indent=\dimen309
-\caption@parindent=\dimen310
-\caption@hangindent=\dimen311
+\caption@tempdima=\dimen297
+\captionmargin=\dimen298
+\caption@leftmargin=\dimen299
+\caption@rightmargin=\dimen300
+\caption@width=\dimen301
+\caption@indent=\dimen302
+\caption@parindent=\dimen303
+\caption@hangindent=\dimen304
 Package caption Info: memoir document class detected.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption-memoir.
-sto
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/caption/cap
+tion-memoir.sto
 File: caption-memoir.sto 2023/09/08 v2.2c Adaption of the caption package to th
 e memoir document class (AR)
 ))
-\c@caption@flags=\count459
-\c@continuedfloat=\count460
+\c@caption@flags=\count446
+\c@continuedfloat=\count447
 Package caption Info: changepage package is loaded.
-\caption@adjustwidth@hsize=\dimen312
-\caption@adjustwidth@linewidth=\dimen313
+\caption@adjustwidth@hsize=\dimen305
+\caption@adjustwidth@linewidth=\dimen306
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 )
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count461
+\c@subfigure=\count448
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count462
+\c@subtable=\count449
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithm.st
-y
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/algorithms/
+algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 \@float@every@algorithm=\toks58
-\c@algorithm=\count463
+\c@algorithm=\count450
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algpseudoc
-ode.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/algorithmic
+x/algpseudocode.sty
 Package: algpseudocode 
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algorithmi
-cx.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/algorithmic
+x/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count464
-\c@ALG@rem=\count465
-\c@ALG@nested=\count466
+\c@ALG@line=\count451
+\c@ALG@rem=\count452
+\c@ALG@nested=\count453
 \ALG@tlm=\skip277
 \ALG@thistlm=\skip278
-\c@ALG@Lnr=\count467
-\c@ALG@blocknr=\count468
-\c@ALG@storecount=\count469
-\c@ALG@tmpcounter=\count470
+\c@ALG@Lnr=\count454
+\c@ALG@blocknr=\count455
+\c@ALG@storecount=\count456
+\c@ALG@tmpcounter=\count457
 \ALG@tmplength=\skip279
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
 )
-\c@theo=\count471
-\c@prop=\count472
-\c@dfn=\count473
-\c@lema=\count474
-\c@cor=\count475
-\c@resu=\count476
- (memoirthesis.aux)
+\c@theo=\count458
+\c@prop=\count459
+\c@dfn=\count460
+\c@lema=\count461
+\c@cor=\count462
+\c@resu=\count463
+ (./memoirthesis.aux)
 \openout1 = `memoirthesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-Package nag Info: pgf.sty is broken: disabling dollar check on input line 151.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+Package nag Info: pgf.sty is broken: disabling dollar check on input line 159.
 
 
 Class memoir Warning: \addtodef is marked deprecated and will be
 (memoir)              removed in 2026, use instead \patchcmd,
 (memoir)              \pretocmd or \apptocmd from the etoolbox package
-(memoir)              (which is autoloaded by the class) on input line 151.
+(memoir)              (which is autoloaded by the class) on input line 159.
 
 
-Package layouts Warning: Layout scale set to 0.5 on input line 151.
+Package layouts Warning: Layout scale set to 0.5 on input line 159.
 
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
-ii
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/context/base/mkii
+/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count477
-\scratchdimen=\dimen314
+\scratchcounter=\count464
+\scratchdimen=\dimen307
 \scratchbox=\box72
-\nofMPsegments=\count478
-\nofMParguments=\count479
+\nofMPsegments=\count465
+\nofMParguments=\count466
 \everyMPshowfont=\toks59
-\MPscratchCnt=\count480
-\MPscratchDim=\dimen315
-\MPnumerator=\count481
-\makeMPintoPDFobject=\count482
+\MPscratchCnt=\count467
+\MPscratchDim=\dimen308
+\MPnumerator=\count468
+\makeMPintoPDFobject=\count469
 \everyMPtoPDFconversion=\toks60
 )
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
-ase.sty
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/epstopdf-pk
+g/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
-fg
-File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/latexconfig
+/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
-Package hyperref Info: Link coloring ON on input line 151.
- (memoirthesis.out) (memoirthesis.out)
+Package hyperref Info: Link coloring ON on input line 159.
+ (./memoirthesis.out) (./memoirthesis.out)
 \@outlinefile=\write6
 \openout6 = `memoirthesis.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 151.
-Package microtype Info: Applying patch `item' on input line 151.
-Package microtype Info: Applying patch `toc' on input line 151.
-Package microtype Info: Applying patch `eqnum' on input line 151.
-Package microtype Info: Applying patch `footnote' on input line 151.
-Package microtype Info: Applying patch `verbatim' on input line 151.
-LaTeX Info: Redefining \microtypesetup on input line 151.
+LaTeX Info: Redefining \microtypecontext on input line 159.
+Package microtype Info: Applying patch `item' on input line 159.
+Package microtype Info: Applying patch `toc' on input line 159.
+Package microtype Info: Applying patch `eqnum' on input line 159.
+Package microtype Info: Applying patch `footnote' on input line 159.
+Package microtype Info: Applying patch `verbatim' on input line 159.
+LaTeX Info: Redefining \microtypesetup on input line 159.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-Package microtype Info: Patching command `\showhyphens'.
+LaTeX Info: Redefining \showhyphens on input line 159.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/microtype/m
+t-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 Package nag Info: Command \captionabove not defined, skipping amendment on inpu
-t line 151.
+t line 159.
 Package nag Info: Command \captionbelow not defined, skipping amendment on inpu
-t line 151.
+t line 159.
 Package nag Info: Command \hc@caption not defined, skipping amendment on input 
-line 151.
+line 159.
 Package nag Info: Command \topcaption not defined, skipping amendment on input 
-line 151.
-
-(frontmatter/cover.tex
-
-LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
-(Font)              using `OT1/cmr/bx/n' instead on input line 17.
-
-LaTeX Font Info:    Trying to load font information for U+msa on input line 49.
-
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
-
-
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-)
-LaTeX Font Info:    Trying to load font information for U+stmry on input line 4
-9.
-
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/stmaryrd\ustmry.fd)
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 49
-.
-
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
-File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-) [1
-
-
-{C:/Users/begis/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}])
-(frontmatter/title.tex
-<logos/AITU.png, id=274, 137.01187pt x 78.2925pt>
+line 159.
+ (./frontmatter/title.tex
+<logos/AITU.png, id=276, 137.01187pt x 78.2925pt>
 File: logos/AITU.png Graphic file (type png)
 <use logos/AITU.png>
 Package pdftex.def Info: logos/AITU.png  used on input line 37.
-(pdftex.def)             Requested size: 164.41342pt x 93.95052pt.
+(pdftex.def)             Requested size: 170.71652pt x 97.55954pt.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 38.
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsfonts/um
+sa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/microtype/m
+t-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
+
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/amsfonts/um
+sb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/microtype/m
+t-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+stmry on input line 3
+8.
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/stmaryrd/Us
+tmry.fd)
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 38
+.
+
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/ulasy.
+fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+
+[1
+
+
+{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/pdftex/updm
+ap/pdftex.map} <./logos/AITU.png>]) (./frontmatter/abstract.tex)
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.43 {\large\textsc{Kazakhstan}
-                               }\\ [1
+l.170 \clearemptydoublepage
+                            [1
 
 
- <./logos/AITU.png>] [2])
-(frontmatter/abstract.tex) [1
+] (./frontmatter/dedication.tex
+
+[2
 
 
-] (frontmatter/dedication.tex [2
+]) (./frontmatter/declaration.tex
+
+[3
 
 
-])
-(frontmatter/declaration.tex [3
+]) (./memoirthesis.lot
 
+LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
+(Font)              using `OT1/cmr/bx/n' instead on input line 5.
 
-] [4
+)
 
-]) (memoirthesis.lot) [5
+[4
 
-] (memoirthesis.lof) [6] (memoirthesis.toc [7] [8]) [9] (chapters/introduction/
-introduction.tex
-Chapter 1.
+] (./memoirthesis.lof
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.14 
-      [1
+[5])
+
+[6] (./memoirthesis.toc
+
+[7]
+
+[8])
+
+[9] (./chapters/introduction/introduction.tex
+
+[1
 
 
 ]
-pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.30 
-      [2] [3]) (frontmatter/publications.tex [4] [5]
-Chapter 2.
-[6
 
-] [7]) (chapters/literature_review/literature_review.tex [8]
-Chapter 3.
-[9
+[2{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-
+super/cm-super-ts1.enc}]
 
-] [10] [11] [12]) (chapters/methodology/methodology.tex [13] [14]
-Chapter 4.
-[15
+[3]) (./frontmatter/publications.tex
 
-] [16] [17]
-<chapters/methodology/fig/architecture.pdf, id=663, 562.9833pt x 308.95424pt>
+[4]
+
+[5
+
+]) (./chapters/literature_review/literature_review.tex
+
+[6]
+
+[7
+
+]
+
+[8]
+
+[9]
+
+[10]) (./chapters/methodology/methodology.tex
+
+[11]
+
+[12
+
+]
+
+[13]
+
+[14]
+
+[15]
+<chapters/methodology/fig/architecture.pdf, id=683, 562.9833pt x 308.95424pt>
 File: chapters/methodology/fig/architecture.pdf Graphic file (type pdf)
 <use chapters/methodology/fig/architecture.pdf>
 Package pdftex.def Info: chapters/methodology/fig/architecture.pdf  used on inp
-ut line 114.
+ut line 159.
 (pdftex.def)             Requested size: 425.59863pt x 233.5631pt.
- [18] [19 <./chapters/methodology/fig/architecture.pdf>] [20]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 176.
 
+
+[16]
+
+[17 <./chapters/methodology/fig/architecture.pdf>]
+
+[18]
+Overfull \hbox (21.95427pt too wide) in paragraph at lines 213--215
+\OT1/cmr/m/n/12 (-20) where $\OT1/cmr/bx/sc/12 (-20) Q[] \OT1/cmr/m/n/12 (-20) 
+= \OT1/cmr/bx/sc/12 (-20) U[]W[]$\OT1/cmr/m/n/12 (-20) , $\OT1/cmr/bx/sc/12 (-2
+0) K[] \OT1/cmr/m/n/12 (-20) = \OT1/cmr/bx/sc/12 (-20) U[]W[]$\OT1/cmr/m/n/12 (
+-20) , $\OT1/cmr/bx/sc/12 (-20) V[] \OT1/cmr/m/n/12 (-20) = \OT1/cmr/bx/sc/12 (
+-20) U[]W[]$\OT1/cmr/m/n/12 (-20) , and the pro-jec-tion ma-tri-ces $\OT1/cmr/b
+x/sc/12 (-20) W[]\OML/cmm/m/it/12 ; \OT1/cmr/bx/sc/12 (-20) W[]\OML/cmm/m/it/12
+ ; \OT1/cmr/bx/sc/12 (-20) W[] \OMS/cmsy/m/n/12 2
+ []
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 221.
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
-(Font)              using `U/stmry/m/n' instead on input line 180.
+(Font)              using `U/stmry/m/n' instead on input line 225.
 
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 180.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 225.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 180.
-[21] [22] [23]
-<chapters/methodology/fig/ui-command-center.png, id=809, 1435.61343pt x 709.149
-37pt>
-File: chapters/methodology/fig/ui-command-center.png Graphic file (type png)
-<use chapters/methodology/fig/ui-command-center.png>
-Package pdftex.def Info: chapters/methodology/fig/ui-command-center.png  used o
-n input line 251.
-(pdftex.def)             Requested size: 425.59863pt x 210.22522pt.
- [24]
-<chapters/methodology/fig/ui-live-map.png, id=814, 1248.91594pt x 700.11563pt>
-File: chapters/methodology/fig/ui-live-map.png Graphic file (type png)
-<use chapters/methodology/fig/ui-live-map.png>
-Package pdftex.def Info: chapters/methodology/fig/ui-live-map.png  used on inpu
-t line 258.
-(pdftex.def)             Requested size: 425.59863pt x 238.581pt.
-<chapters/methodology/fig/ui-depot-operations.png, id=815, 1243.64626pt x 529.9
-8pt>
-File: chapters/methodology/fig/ui-depot-operations.png Graphic file (type png)
-<use chapters/methodology/fig/ui-depot-operations.png>
-Package pdftex.def Info: chapters/methodology/fig/ui-depot-operations.png  used
- on input line 265.
-(pdftex.def)             Requested size: 425.59863pt x 181.37148pt.
- [25 <./chapters/methodology/fig/ui-command-center.png> <./chapters/methodology
-/fig/ui-live-map.png>]
-<chapters/methodology/fig/streamlit-operational-forecast-of-station-in-time.png
-, id=823, 1389.69188pt x 505.89pt>
-File: chapters/methodology/fig/streamlit-operational-forecast-of-station-in-tim
-e.png Graphic file (type png)
-<use chapters/methodology/fig/streamlit-operational-forecast-of-station-in-time
-.png>
-Package pdftex.def Info: chapters/methodology/fig/streamlit-operational-forecas
-t-of-station-in-time.png  used on input line 272.
-(pdftex.def)             Requested size: 425.59863pt x 154.92534pt.
-<chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-and-valida
-tion.png, id=824, 1345.27594pt x 420.06938pt>
-File: chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-and-v
-alidation.png Graphic file (type png)
-<use chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-and-va
-lidation.png>
-Package pdftex.def Info: chapters/methodology/fig/streamlit-live-simulation-of-
-realtime-data-and-validation.png  used on input line 279.
-(pdftex.def)             Requested size: 425.59863pt x 132.89302pt.
- [26 <./chapters/methodology/fig/ui-depot-operations.png> <./chapters/methodolo
-gy/fig/streamlit-operational-forecast-of-station-in-time.png> <./chapters/metho
-dology/fig/streamlit-live-simulation-of-realtime-data-and-validation.png>]) (ch
-apters/results/results.tex [27]
-[28]
-Chapter 5.
-[29
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 225.
 
-] [30]
-Overfull \hbox (10.1881pt too wide) in paragraph at lines 89--102
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+[23]
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+Overfull \hbox (65.12233pt too wide) in paragraph at lines 332--333
+[]\OT1/cmr/bx/sc/12 (-20) Sinusoidal input--generator over-lap. \OT1/cmr/m/n/12
+ (-20) The model re-ceives $[]\OML/cmm/m/it/12 ; []; []; []$
+ []
+
+) (./chapters/results/results.tex
+
+[24]
+
+[25
+
+]
+Overfull \hbox (8.6778pt too wide) in paragraph at lines 54--77
  [][] 
  []
 
-[31]
-<chapters/results/fig/horizon_accuracy.pdf, id=865, 648.2017pt x 287.56749pt>
+
+
+[26]
+
+[27]
+
+[28]
+<chapters/results/fig/real_dataset_overview.png, id=868, 578.16pt x 325.215pt>
+File: chapters/results/fig/real_dataset_overview.png Graphic file (type png)
+<use chapters/results/fig/real_dataset_overview.png>
+Package pdftex.def Info: chapters/results/fig/real_dataset_overview.png  used o
+n input line 114.
+(pdftex.def)             Requested size: 380.80273pt x 214.20091pt.
+<chapters/results/fig/real_dataset_performance.png, id=869, 578.16pt x 325.215p
+t>
+File: chapters/results/fig/real_dataset_performance.png Graphic file (type png)
+
+<use chapters/results/fig/real_dataset_performance.png>
+Package pdftex.def Info: chapters/results/fig/real_dataset_performance.png  use
+d on input line 121.
+(pdftex.def)             Requested size: 380.80273pt x 214.20091pt.
+<chapters/results/fig/real_dataset_district_flow.png, id=870, 505.89pt x 289.08
+pt>
+File: chapters/results/fig/real_dataset_district_flow.png Graphic file (type pn
+g)
+<use chapters/results/fig/real_dataset_district_flow.png>
+Package pdftex.def Info: chapters/results/fig/real_dataset_district_flow.png  u
+sed on input line 128.
+(pdftex.def)             Requested size: 380.80273pt x 217.60344pt.
+
+
+[29 <./chapters/results/fig/real_dataset_overview.png> <./chapters/results/fig/
+real_dataset_performance.png>]
+
+[30 <./chapters/results/fig/real_dataset_district_flow.png>]
+<chapters/results/fig/ablation.pdf, id=884, 488.34444pt x 270.40497pt>
+File: chapters/results/fig/ablation.pdf Graphic file (type pdf)
+<use chapters/results/fig/ablation.pdf>
+Package pdftex.def Info: chapters/results/fig/ablation.pdf  used on input line 
+159.
+(pdftex.def)             Requested size: 380.80273pt x 210.86963pt.
+<chapters/results/fig/horizon_accuracy.pdf, id=886, 712.62611pt x 423.76065pt>
 File: chapters/results/fig/horizon_accuracy.pdf Graphic file (type pdf)
 <use chapters/results/fig/horizon_accuracy.pdf>
 Package pdftex.def Info: chapters/results/fig/horizon_accuracy.pdf  used on inp
-ut line 115.
-(pdftex.def)             Requested size: 380.80273pt x 168.93933pt.
- [32] [33 <./chapters/results/fig/horizon_accuracy.pdf>]
-<chapters/results/fig/training_curves.pdf, id=953, 486.99754pt x 269.94662pt>
+ut line 171.
+(pdftex.def)             Requested size: 380.80273pt x 226.44783pt.
+
+
+[31 <./chapters/results/fig/ablation.pdf>]
+
+[32 <./chapters/results/fig/horizon_accuracy.pdf>]
+<chapters/results/fig/training_curves.pdf, id=1007, 713.64432pt x 423.76065pt>
 File: chapters/results/fig/training_curves.pdf Graphic file (type pdf)
 <use chapters/results/fig/training_curves.pdf>
 Package pdftex.def Info: chapters/results/fig/training_curves.pdf  used on inpu
-t line 158.
-(pdftex.def)             Requested size: 380.80273pt x 211.093pt.
- [34 <./chapters/results/fig/training_curves.pdf>] [35]
-<chapters/results/fig/calibration.pdf, id=1011, 631.50743pt x 255.37909pt>
+t line 213.
+(pdftex.def)             Requested size: 380.80273pt x 226.12453pt.
+
+
+[33 <./chapters/results/fig/training_curves.pdf>]
+<chapters/results/fig/calibration.pdf, id=1079, 631.50743pt x 255.37909pt>
 File: chapters/results/fig/calibration.pdf Graphic file (type pdf)
 <use chapters/results/fig/calibration.pdf>
 Package pdftex.def Info: chapters/results/fig/calibration.pdf  used on input li
-ne 200.
+ne 255.
 (pdftex.def)             Requested size: 380.80273pt x 153.99629pt.
-<chapters/results/fig/feature_importance.pdf, id=1013, 523.10434pt x 306.08163p
-t>
+
+
+[34]
+<chapters/results/fig/feature_importance.pdf, id=1087, 712.7767pt x 424.44936pt
+>
 File: chapters/results/fig/feature_importance.pdf Graphic file (type pdf)
 <use chapters/results/fig/feature_importance.pdf>
 Package pdftex.def Info: chapters/results/fig/feature_importance.pdf  used on i
-nput line 212.
-(pdftex.def)             Requested size: 380.80273pt x 222.82123pt.
- [36 <./chapters/results/fig/calibration.pdf>] [37 <./chapters/results/fig/feat
-ure_importance.pdf>] [38] [39])
-(chapters/discussion/discussion.tex [40]
-Chapter 6.
-[41
+nput line 267.
+(pdftex.def)             Requested size: 380.80273pt x 226.77051pt.
 
-] [42] [43]) (chapters/conclusion/conclusion.tex [44]
-Chapter 7.
-[45
 
-] [46] [47]) (chapters/appendices/appendices.tex [48]
-Appendix A.
-[49
+[35 <./chapters/results/fig/calibration.pdf>]
+<chapters/results/fig/district_analysis.pdf, id=1168, 486.78236pt x 269.60199pt
+>
+File: chapters/results/fig/district_analysis.pdf Graphic file (type pdf)
+<use chapters/results/fig/district_analysis.pdf>
+Package pdftex.def Info: chapters/results/fig/district_analysis.pdf  used on in
+put line 297.
+(pdftex.def)             Requested size: 380.80273pt x 210.9181pt.
 
-] [50]
+
+[36 <./chapters/results/fig/feature_importance.pdf>]
+
+[37 <./chapters/results/fig/district_analysis.pdf>]
+
+[38]
+Overfull \hbox (57.34688pt too wide) in paragraph at lines 347--358
+ [][] 
+ []
+
+) (./chapters/discussion/discussion.tex
+
+[39]
+
+[40
+
+]
+
+[41]
+
+[42]) (./chapters/conclusion/conclusion.tex
+
+[43]
+
+[44
+
+]
+
+[45]
+
+[46]) (./chapters/appendices/appendices.tex
+
+[47]
+
+[48
+
+]
+
+[49]
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 1
 11.
 
-(C:\Users\begis\AppData\Local\Programs\MiKTeX\tex/latex/base\omscmr.fd
+(/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/tex/latex/base/omscmr
+.fd
 File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 111.
 
-[51]) [52] (memoirthesis.bbl [53
+
+[50]
+
+[51]
+<chapters/methodology/fig/ui-command-center.png, id=1413, 1435.61343pt x 709.14
+937pt>
+File: chapters/methodology/fig/ui-command-center.png Graphic file (type png)
+<use chapters/methodology/fig/ui-command-center.png>
+Package pdftex.def Info: chapters/methodology/fig/ui-command-center.png  used o
+n input line 150.
+(pdftex.def)             Requested size: 425.59863pt x 210.22522pt.
+<chapters/methodology/fig/ui-live-map.png, id=1414, 1248.91594pt x 700.11563pt>
+
+File: chapters/methodology/fig/ui-live-map.png Graphic file (type png)
+<use chapters/methodology/fig/ui-live-map.png>
+Package pdftex.def Info: chapters/methodology/fig/ui-live-map.png  used on inpu
+t line 157.
+(pdftex.def)             Requested size: 425.59863pt x 238.581pt.
 
 
-] [54] [55] [56] [57]) [58]
+[52 <./chapters/methodology/fig/ui-command-center.png>]
+<chapters/methodology/fig/ui-depot-operations.png, id=1420, 1243.64626pt x 529.
+98pt>
+File: chapters/methodology/fig/ui-depot-operations.png Graphic file (type png)
+<use chapters/methodology/fig/ui-depot-operations.png>
+Package pdftex.def Info: chapters/methodology/fig/ui-depot-operations.png  used
+ on input line 164.
+(pdftex.def)             Requested size: 425.59863pt x 181.37148pt.
+<chapters/methodology/fig/streamlit-operational-forecast-of-station-in-time.png
+, id=1421, 1389.69188pt x 505.89pt>
+File: chapters/methodology/fig/streamlit-operational-forecast-of-station-in-tim
+e.png Graphic file (type png)
+<use chapters/methodology/fig/streamlit-operational-forecast-of-station-in-time
+.png>
+Package pdftex.def Info: chapters/methodology/fig/streamlit-operational-forecas
+t-of-station-in-time.png  used on input line 171.
+(pdftex.def)             Requested size: 425.59863pt x 154.92534pt.
+
+
+[53 <./chapters/methodology/fig/ui-live-map.png> <./chapters/methodology/fig/ui
+-depot-operations.png>]
+<chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-and-valida
+tion.png, id=1428, 1345.27594pt x 420.06938pt>
+File: chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-and-v
+alidation.png Graphic file (type png)
+<use chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-and-va
+lidation.png>
+Package pdftex.def Info: chapters/methodology/fig/streamlit-live-simulation-of-
+realtime-data-and-validation.png  used on input line 178.
+(pdftex.def)             Requested size: 425.59863pt x 132.89302pt.
+)
+
+[54 <./chapters/methodology/fig/streamlit-operational-forecast-of-station-in-ti
+me.png> <./chapters/methodology/fig/streamlit-live-simulation-of-realtime-data-
+and-validation.png>] (./memoirthesis.bbl
+
+[55
+
+
+]
+
+[56]
+
+[57]
+
+[58]
+
+[59])
+
+[60]
 No complaints by nag.
 \tf@lot=\write7
 \openout7 = `memoirthesis.lot'.
@@ -1579,9 +1836,9 @@ No complaints by nag.
 \tf@toc=\write9
 \openout9 = `memoirthesis.toc'.
 
-(memoirthesis.aux)
+(./memoirthesis.aux)
  ***********
-LaTeX2e <2025-11-01>
+LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
  ***********
 
@@ -1589,40 +1846,47 @@ L3 programming layer <2020/03/25>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `memoirthesis.out' has not changed.
-(rerunfilecheck)             Checksum: 85CCC8205079D5195BB39BBA0CD220C3;10828.
+(rerunfilecheck)             Checksum: 96868A7D174F3B34E35558BAA11BE326;11580.
  ) 
 Here is how much of TeX's memory you used:
- 30438 strings out of 467871
- 536136 string characters out of 5418376
- 1116448 words of memory out of 5000000
- 58270 multiletter control sequences out of 15000+600000
- 647821 words of font info for 201 fonts, out of 8000000 for 9000
+ 30472 strings out of 473190
+ 541405 string characters out of 5704335
+ 1105887 words of memory out of 5000000
+ 52670 multiletter control sequences out of 15000+600000
+ 580855 words of font info for 206 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 85i,13n,131p,1738b,891s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\begis\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
-1200.pk><C:/Users/begis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmbx10.pfb><C:/Users/begis/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb><C:/Users/begis/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/begis/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/begis/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/begis/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/begis/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Use
-rs/begis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb
-><C:/Users/begis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
-mr12.pfb><C:/Users/begis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmr17.pfb><C:/Users/begis/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmr6.pfb><C:/Users/begis/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmr8.pfb><C:/Users/begis/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/begis/AppData/Local/Programs/
-MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/begis/AppData/Local/P
-rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/begis/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Users/beg
-is/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb
->
-Output written on memoirthesis.pdf (70 pages, 1368397 bytes).
+ 85i,14n,131p,2163b,855s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmbx12.pfb></opt/homebrew/Cellar/texlive/20250
+308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></opt/homebre
+w/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cme
+x10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive
+/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></opt/hom
+ebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi8.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmib10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texl
+ive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/
+homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr17.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr6.pfb></opt/homebrew/Cellar/texlive/20250308_2/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texli
+ve/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/
+homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmti10.pfb></opt/homebrew/Cellar/texlive/20250308_2/sha
+re/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></opt/homebrew/Cellar/t
+exlive/20250308_2/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></
+opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/amsf
+onts/symbols/msbm10.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-di
+st/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on memoirthesis.pdf (70 pages, 1657898 bytes).
 PDF statistics:
- 1395 PDF objects out of 1440 (max. 8388607)
- 248 named destinations out of 1000 (max. 500000)
- 50252 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 1609 PDF objects out of 1728 (max. 8388607)
+ 1068 compressed objects within 11 object streams
+ 253 named destinations out of 1000 (max. 500000)
+ 49269 words of extra memory for PDF output out of 51595 (max. 10000000)
 

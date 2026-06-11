@@ -1,4 +1,5 @@
 """Timeline API — continuous actual vs predicted ridership time series."""
+
 from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, Depends, Query
@@ -58,10 +59,20 @@ def get_timeline(
     historical = hist_query.all()
 
     # Index historical records by (timestamp_truncated_to_hour, station_id)
+    # Normalize to naive datetimes for consistent dict key matching
+    # (SQLite stores naive, bucket timestamps may be timezone-aware)
+    def _to_naive(dt):
+        """Strip timezone info for consistent dict key comparison."""
+        if dt is None:
+            return None
+        if dt.tzinfo is not None:
+            return dt.replace(tzinfo=None)
+        return dt
+
     hist_by_bucket: dict = {}
     for h in historical:
         # Snap to nearest hour for matching
-        h_key = (h.timestamp.replace(minute=0, second=0, microsecond=0), h.station_id)
+        h_key = (_to_naive(h.timestamp.replace(minute=0, second=0, microsecond=0)), h.station_id)
         hist_by_bucket.setdefault(h_key, []).append(h)
 
     # Fetch forecasts for future buckets
@@ -76,10 +87,10 @@ def get_timeline(
     # Index forecast records by (timestamp, station_id)
     fc_by_bucket: dict = {}
     for f in forecasts:
-        f_key = (f.timestamp, f.station_id)
+        f_key = (_to_naive(f.timestamp), f.station_id)
         fc_by_bucket[f_key] = f
         # Also index by hour-snapped key for wider matching
-        f_hour_key = (f.timestamp.replace(minute=0, second=0, microsecond=0), f.station_id)
+        f_hour_key = (_to_naive(f.timestamp.replace(minute=0, second=0, microsecond=0)), f.station_id)
         if f_hour_key not in fc_by_bucket:
             fc_by_bucket[f_hour_key] = f
 
@@ -91,20 +102,21 @@ def get_timeline(
         # If no data at all, use all known stations
         if not station_ids:
             from backend.models_orm import StationORM
+
             station_ids = [s.stop_id for s in db.query(StationORM).all()]
 
     # Build the timeline series
     series = []
     for bucket_ts in buckets:
         is_past = bucket_ts <= now
-        bucket_hour = bucket_ts.replace(minute=0, second=0, microsecond=0)
+        bucket_hour_naive = _to_naive(bucket_ts.replace(minute=0, second=0, microsecond=0))
 
         for sid in station_ids:
             entry = {"timestamp": bucket_ts.isoformat(), "station_id": sid}
 
             # Actual value from historical data (past only)
             if is_past:
-                h_key = (bucket_hour, sid)
+                h_key = (bucket_hour_naive, sid)
                 h_records = hist_by_bucket.get(h_key, [])
                 if h_records:
                     # Average passengers_boarding across records in this bucket
@@ -116,7 +128,7 @@ def get_timeline(
 
             # Predicted value from forecasts
             # Try exact timestamp match first, then hour-snapped match
-            fc = fc_by_bucket.get((bucket_ts, sid)) or fc_by_bucket.get((bucket_hour, sid))
+            fc = fc_by_bucket.get((_to_naive(bucket_ts), sid)) or fc_by_bucket.get((bucket_hour_naive, sid))
             if fc:
                 entry["predicted"] = fc.predicted
                 confidence = fc.confidence or 0.8

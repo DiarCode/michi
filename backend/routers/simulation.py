@@ -1,6 +1,7 @@
 """Simulation API — start/stop simulation, query state and metrics."""
+
 import json
-import os
+import logging
 from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, Depends
@@ -8,10 +9,10 @@ from sqlalchemy.orm import Session
 
 from backend.database import get_db_session
 from backend.models_orm import PredictionAccuracyORM
+from backend.redis_client import get_redis
 
 router = APIRouter()
-
-REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+logger = logging.getLogger(__name__)
 
 # Redis keys used by the simulation engine (backend/tasks.py)
 TASK_ID_KEY = "michi:sim:task_id"
@@ -20,49 +21,35 @@ METRICS_HISTORY_KEY = "michi:simulation:metrics_history"
 STATION_DATA_KEY = "michi:simulation:latest_station_data"
 
 
-def _redis():
-    """Return a synchronous Redis client."""
-    import redis as _redis
-    return _redis.from_url(REDIS_URL, socket_connect_timeout=2)
-
-
-def _get_task_id() -> str | None:
-    """Read the currently tracked simulation task ID from Redis."""
-    try:
-        return _redis().get(TASK_ID_KEY)
-    except Exception:
-        return None
-
-
-def _set_task_id(task_id: str | None):
-    """Store or clear the simulation task ID in Redis."""
-    try:
-        r = _redis()
-        if task_id:
-            r.set(TASK_ID_KEY, task_id)
-        else:
-            r.delete(TASK_ID_KEY)
-    except Exception:
-        pass
-
-
 @router.post("/start", status_code=202)
 def start_simulation():
-    """Trigger the simulation Celery task. Returns 202 with task_id."""
+    """Trigger the simulation Celery task. Returns 202 with task_id.
+
+    Uses a Redis SETNX lock to prevent race conditions on concurrent starts.
+    """
     from backend.tasks import celery_app
 
-    existing_id = _get_task_id()
-    if existing_id:
-        # Check if the task is still running
-        result = celery_app.AsyncResult(existing_id)
-        if result.state in ("PENDING", "STARTED", "RETRY"):
-            return {"status": "already_running", "task_id": existing_id}
+    r = get_redis()
+    # Prevent concurrent starts with a 30-second lock
+    lock_key = "michi:sim:start_lock"
+    acquired = r.set(lock_key, "1", nx=True, ex=30)
+    if not acquired:
+        existing_id = r.get(TASK_ID_KEY)
+        return {"status": "already_running", "task_id": existing_id}
 
-    result = celery_app.send_task("run_simulation")
-    task_id = result.id
-    _set_task_id(task_id)
+    try:
+        existing_id = r.get(TASK_ID_KEY)
+        if existing_id:
+            result = celery_app.AsyncResult(existing_id)
+            if result.state in ("PENDING", "STARTED", "RETRY"):
+                return {"status": "already_running", "task_id": existing_id}
 
-    return {"status": "started", "task_id": task_id}
+        result = celery_app.send_task("run_simulation")
+        task_id = result.id
+        r.set(TASK_ID_KEY, task_id)
+        return {"status": "started", "task_id": task_id}
+    finally:
+        r.delete(lock_key)
 
 
 @router.post("/stop")
@@ -70,24 +57,22 @@ def stop_simulation():
     """Revoke the running simulation Celery task."""
     from backend.tasks import celery_app
 
-    task_id = _get_task_id()
+    r = get_redis()
+    task_id = r.get(TASK_ID_KEY)
     if task_id:
         celery_app.control.revoke(task_id, terminate=True, signal="SIGTERM")
-    _set_task_id(None)
+        r.delete(TASK_ID_KEY)
 
     return {"status": "stopped", "task_id": task_id}
 
 
 @router.get("/state")
 def get_simulation_state():
-    """Return current simulation state: running, tick, metrics, drift status.
-
-    Reads the checkpoint written by the simulation engine every 60 ticks
-    and merges it with the Celery task running status.
-    """
+    """Return current simulation state: running, tick, metrics, drift status."""
     from backend.tasks import celery_app
 
-    task_id = _get_task_id()
+    r = get_redis()
+    task_id = r.get(TASK_ID_KEY)
     running = False
     if task_id:
         result = celery_app.AsyncResult(task_id)
@@ -96,32 +81,32 @@ def get_simulation_state():
     # Read checkpoint from simulation engine
     checkpoint = {}
     try:
-        raw = _redis().get(CHECKPOINT_KEY)
+        raw = r.get(CHECKPOINT_KEY)
         if raw:
             checkpoint = json.loads(raw)
     except Exception:
-        pass
+        logger.warning("Failed to read simulation checkpoint from Redis")
 
-    # Read latest metrics from the in-Redis history
+    # Read latest metrics
     latest_metrics = None
     try:
-        raw = _redis().get(METRICS_HISTORY_KEY)
+        raw = r.get(METRICS_HISTORY_KEY)
         if raw:
             history = json.loads(raw)
             if history:
                 latest_metrics = history[-1]
     except Exception:
-        pass
+        logger.warning("Failed to read simulation metrics from Redis")
 
-    # Derive station_count from checkpoint or station data in Redis
+    # Derive station_count from checkpoint or station data
     station_count = checkpoint.get("station_count")
     if station_count is None:
         try:
-            raw_sd = _redis().get(STATION_DATA_KEY)
+            raw_sd = r.get(STATION_DATA_KEY)
             if raw_sd:
                 station_count = len(json.loads(raw_sd))
         except Exception:
-            pass
+            logger.warning("Failed to read station data from Redis")
 
     return {
         "running": running,
@@ -133,26 +118,24 @@ def get_simulation_state():
             "mae": latest_metrics.get("mae") if latest_metrics else None,
             "mape": latest_metrics.get("mape") if latest_metrics else None,
             "accuracy": latest_metrics.get("accuracy") if latest_metrics else None,
-        } if latest_metrics else {"mae": None, "mape": None, "accuracy": None},
+        }
+        if latest_metrics
+        else {"mae": None, "mape": None, "accuracy": None},
         "station_count": station_count,
     }
 
 
 @router.get("/metrics")
 def get_simulation_metrics(hours_back: int = 24, db: Session = Depends(get_db_session)):
-    """Return historical MAE/MAPE time series.
-
-    Combines real-time metrics from Redis (from the simulation engine)
-    with persisted prediction accuracy records from the database.
-    """
-    # Real-time metrics from simulation engine (stored in Redis)
+    """Return historical MAE/MAPE time series."""
+    r = get_redis()
     realtime_metrics = []
     try:
-        raw = _redis().get(METRICS_HISTORY_KEY)
+        raw = r.get(METRICS_HISTORY_KEY)
         if raw:
             realtime_metrics = json.loads(raw)
     except Exception:
-        pass
+        logger.warning("Failed to read realtime metrics from Redis")
 
     # DB-stored prediction accuracy records
     now = datetime.now(UTC)
@@ -164,29 +147,30 @@ def get_simulation_metrics(hours_back: int = 24, db: Session = Depends(get_db_se
         .all()
     )
 
-    # Python-side hourly aggregation (portable across SQLite/PostgreSQL)
     hourly: dict = {}
-    for r in records:
-        key = r.evaluated_at.strftime("%Y-%m-%dT%H:00") if r.evaluated_at else "unknown"
+    for rec in records:
+        key = rec.evaluated_at.strftime("%Y-%m-%dT%H:00") if rec.evaluated_at else "unknown"
         hourly.setdefault(key, {"abs_errors": [], "mape_vals": []})
-        if r.absolute_error is not None:
-            hourly[key]["abs_errors"].append(float(r.absolute_error))
-        if r.mape is not None:
-            hourly[key]["mape_vals"].append(float(r.mape))
+        if rec.absolute_error is not None:
+            hourly[key]["abs_errors"].append(float(rec.absolute_error))
+        if rec.mape is not None:
+            hourly[key]["mape_vals"].append(float(rec.mape))
 
     db_metrics = []
     for ts in sorted(hourly.keys()):
         ae = hourly[ts]["abs_errors"]
         mp = hourly[ts]["mape_vals"]
-        db_metrics.append({
-            "timestamp": ts,
-            "mae": round(sum(ae) / len(ae), 2) if ae else None,
-            "mape": round(sum(mp) / len(mp) * 100, 2) if mp else None,
-            "count": len(ae) + len(mp),
-        })
+        db_metrics.append(
+            {
+                "timestamp": ts,
+                "mae": round(sum(ae) / len(ae), 2) if ae else None,
+                "mape": round(sum(mp) / len(mp) * 100, 2) if mp else None,
+                "count": len(ae) + len(mp),
+            }
+        )
 
     return {
-        "realtime": realtime_metrics[-100:],  # last 100 ticks
+        "realtime": realtime_metrics[-100:],
         "database": db_metrics,
         "hours_back": hours_back,
     }
@@ -194,11 +178,12 @@ def get_simulation_metrics(hours_back: int = 24, db: Session = Depends(get_db_se
 
 @router.get("/station-data")
 def get_station_data():
-    """Return latest per-station simulation data (actual, predicted, confidence)."""
+    """Return latest per-station simulation data."""
+    r = get_redis()
     try:
-        raw = _redis().get(STATION_DATA_KEY)
+        raw = r.get(STATION_DATA_KEY)
         if raw:
             return {"stations": json.loads(raw), "updated_at": datetime.now(UTC).isoformat()}
     except Exception:
-        pass
+        logger.warning("Failed to read station data from Redis")
     return {"stations": {}, "updated_at": None}

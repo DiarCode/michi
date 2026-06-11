@@ -1,4 +1,5 @@
 """Real-time service - manages bus positions and streaming."""
+
 import json
 import random
 from pathlib import Path
@@ -37,9 +38,12 @@ _ROUTE_IDS = _ROUTE_IDS if _ROUTE_IDS else _FALLBACK_ROUTE_IDS
 
 # Generate a realistic bus fleet: 3-5 buses per route
 BUS_POOL = [
-    {"bus_id": f"BUS-{i:03d}", "route_id": _ROUTE_IDS[i % len(_ROUTE_IDS)],
-     "lat": float(_STOPS[i % len(_STOPS)]["lat"]) + random.uniform(-0.003, 0.003),
-     "lon": float(_STOPS[i % len(_STOPS)]["lon"]) + random.uniform(-0.003, 0.003)}
+    {
+        "bus_id": f"BUS-{i:03d}",
+        "route_id": _ROUTE_IDS[i % len(_ROUTE_IDS)],
+        "lat": float(_STOPS[i % len(_STOPS)]["lat"]) + random.uniform(-0.003, 0.003),
+        "lon": float(_STOPS[i % len(_STOPS)]["lon"]) + random.uniform(-0.003, 0.003),
+    }
     for i in range(1, 1 + len(_ROUTE_IDS) * 4)  # ~4 buses per route
 ]
 

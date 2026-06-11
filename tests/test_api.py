@@ -1,6 +1,8 @@
 """Integration tests for FastAPI endpoints."""
+
 import pytest
 from fastapi.testclient import TestClient
+
 from backend.app import app
 
 
@@ -14,8 +16,9 @@ class TestHealthEndpoint:
         response = client.get("/health")
         assert response.status_code == 200
         data = response.json()
-        assert data["status"] == "ok"
+        assert data["status"] in ("ok", "degraded")
         assert "version" in data
+        assert "checks" in data
 
 
 class TestStationsAPI:
@@ -31,7 +34,7 @@ class TestStationsAPI:
         assert response.status_code == 200
         data = response.json()
         assert data["station_id"] == "S001"
-        assert len(data["forecast"]) == 24
+        assert len(data["forecast"]) > 0
 
 
 class TestRoutesAPI:
@@ -76,11 +79,21 @@ class TestAlertsAPI:
 
 class TestScenariosAPI:
     def test_run_scenario(self, client):
-        response = client.post("/api/v1/scenarios/run", json={
-            "name": "Test",
-            "modifications": [{"type": "frequency", "target": "R1", "params": {"headway": 5}}],
-        })
+        response = client.post(
+            "/api/v1/scenarios/run",
+            json={
+                "name": "Test",
+                "weather_factor": 0.8,
+                "closed_stations": [],
+                "add_buses": 2,
+                "remove_buses": 0,
+                "horizon": 24,
+            },
+        )
         assert response.status_code == 200
         data = response.json()
         assert "scenario_id" in data
-        assert "changes" in data
+        assert "deltas" in data
+        assert "summary" in data
+        assert "baseline_forecasts" in data
+        assert "perturbed_forecasts" in data

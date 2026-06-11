@@ -2444,9 +2444,8 @@ def ui_app() -> None:
                             y_pred_arr = np.asarray(y_pred_series, dtype=np.float32)
                             mae = float(np.mean(np.abs(y_true_arr - y_pred_arr)))
                             rmse = float(np.sqrt(np.mean((y_true_arr - y_pred_arr) ** 2)))
-                            denom = float(np.mean(y_true_arr) + np.std(y_true_arr) + 1e-6)
-                            acc = 100.0 / (1.0 + (mae / denom))
-                            acc = float(np.clip(acc, 0.0, 100.0))
+                            mape = float(np.mean(np.abs((y_true_arr - y_pred_arr) / (y_true_arr + 1e-3)))) * 100
+                            acc = float(np.clip(100.0 - mape, 0.0, 100.0))
 
                             fig = go.Figure()
                             fig.add_trace(go.Scatter(x=np.arange(step_count), y=y_true_series,
@@ -2491,9 +2490,8 @@ def ui_app() -> None:
 
                 mae = float(np.mean(np.abs(y_true - y_pred)))
                 rmse = float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
-                denom = float(np.mean(y_true) + np.std(y_true) + 1e-6)
-                acc = 100.0 / (1.0 + (mae / denom))
-                acc = float(np.clip(acc, 0.0, 100.0))
+                mape = float(np.mean(np.abs((y_true - y_pred) / (y_true + 1e-3)))) * 100
+                acc = float(np.clip(100.0 - mape, 0.0, 100.0))
                 drift_hits = int(np.sum(res.drift_trigger))
                 with metrics_slot.container():
                     m1, m2, m3 = st.columns(3)

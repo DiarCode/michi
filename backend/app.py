@@ -1,7 +1,7 @@
 """FastAPI application entry point."""
+
 import asyncio
 import logging
-import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy import text
 
+from backend.config import ALLOWED_ORIGINS
 from backend.database import init_db
 from backend.exceptions import AppException
 from backend.routers import (
@@ -18,29 +19,26 @@ from backend.routers import (
     depot,
     executive,
     interventions,
+    ml,
     passenger_info,
+    reports,
     scenarios,
     simulation,
     stations,
     timeline,
+    weather,
 )
 from backend.routers import routes as routes_router
 from backend.websocket import combined_stream, websocket_router
 
 logger = logging.getLogger("michi")
 
-# Configure allowed CORS origins from environment variable.
-# Comma-separated list of origins. Defaults to localhost dev servers.
-# Set ALLOWED_ORIGINS=* to revert to permissive mode (not recommended for production).
-_DEFAULT_ORIGINS = "http://localhost:3100,http://localhost:5173,http://localhost:8600,http://localhost:8000,http://localhost:8100"
-
 
 def _parse_allowed_origins() -> list[str]:
-    """Parse ALLOWED_ORIGINS env var into a list of allowed origins."""
-    raw = os.getenv("ALLOWED_ORIGINS", _DEFAULT_ORIGINS).strip()
-    if raw == "*":
+    """Parse ALLOWED_ORIGINS config string into a list of allowed origins."""
+    if ALLOWED_ORIGINS.strip() == "*":
         return ["*"]
-    return [origin.strip() for origin in raw.split(",") if origin.strip()]
+    return [origin.strip() for origin in ALLOWED_ORIGINS.split(",") if origin.strip()]
 
 
 @asynccontextmanager
@@ -81,8 +79,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
     allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PATCH", "DELETE"],
+    allow_headers=["Content-Type", "Authorization", "X-API-Key"],
 )
 
 
@@ -113,10 +111,13 @@ app.include_router(scenarios.router, prefix="/api/v1/scenarios", tags=["scenario
 app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["analytics"])
 app.include_router(interventions.router, prefix="/api/v1/interventions", tags=["interventions"])
 app.include_router(executive.router, prefix="/api/v1/executive", tags=["executive"])
+app.include_router(reports.router, prefix="/api/v1/reports", tags=["reports"])
 app.include_router(depot.router, prefix="/api/v1/depot", tags=["depot"])
+app.include_router(ml.router, prefix="/api/v1/ml", tags=["ml"])
 app.include_router(passenger_info.router, prefix="/api/v1/passenger", tags=["passenger"])
 app.include_router(simulation.router, prefix="/api/v1/simulation", tags=["simulation"])
 app.include_router(timeline.router, prefix="/api/v1/timeline", tags=["timeline"])
+app.include_router(weather.router, prefix="/api/v1/weather", tags=["weather"])
 app.include_router(websocket_router, prefix="/ws")
 
 
@@ -128,6 +129,7 @@ def health_check():
     # Database connectivity
     try:
         from backend.database import SessionLocal
+
         db = SessionLocal()
         db.execute(text("SELECT 1"))
         db.close()
@@ -138,6 +140,7 @@ def health_check():
     # Model cache status
     try:
         from backend.ml.predictor import get_cached_model
+
         model, normalizer = get_cached_model()
         checks["model"] = "loaded" if model else "not_loaded"
         checks["normalizer"] = "loaded" if normalizer else "not_loaded"
@@ -146,10 +149,9 @@ def health_check():
 
     # Redis connectivity (optional — may not be configured)
     try:
-        import redis as _redis
-        r = _redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379/0"))
-        r.ping()
-        checks["redis"] = "ok"
+        from backend.redis_client import check_redis
+
+        checks["redis"] = "ok" if check_redis() else "unavailable"
     except Exception:
         checks["redis"] = "unavailable"
 

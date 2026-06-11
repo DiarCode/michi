@@ -61,6 +61,8 @@ ignore = [
     "E501",   # line too long (handled by formatter)
     "B008",   # function call in default argument (common in FastAPI Depends)
     "SIM108", # ternary operator (readability preference)
+    "RUF002", # ambiguous unicode in docstrings (intentional math notation: σ, α, ×, ∈, etc.)
+    "E402",   # module import not at top (seed.py needs logger before imports)
 ]
 
 [tool.ruff.lint.isort]

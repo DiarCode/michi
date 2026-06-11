@@ -1,4 +1,5 @@
 """Prediction accuracy tracking — compares forecasts with actuals and stores metrics."""
+
 from datetime import UTC, datetime, timedelta
 
 import numpy as np
@@ -12,36 +13,43 @@ def evaluate_accuracy(db: Session, model_version: str | None = None, hours_back:
     now = datetime.now(UTC)
     cutoff = now - timedelta(hours=hours_back)
 
-    forecasts = (db.query(ForecastORM)
-                 .filter(ForecastORM.timestamp >= cutoff)
-                 .filter(ForecastORM.timestamp <= now)
-                 .order_by(ForecastORM.timestamp).all())
+    forecasts = (
+        db.query(ForecastORM)
+        .filter(ForecastORM.timestamp >= cutoff)
+        .filter(ForecastORM.timestamp <= now)
+        .order_by(ForecastORM.timestamp)
+        .all()
+    )
 
     if not forecasts:
         return {"status": "no_data", "mae": None, "rmse": None, "mape": None, "count": 0}
 
     errors = []
     for fc in forecasts:
-        actual = (db.query(HistoricalRidershipORM)
-                 .filter(HistoricalRidershipORM.station_id == fc.station_id)
-                 .filter(HistoricalRidershipORM.timestamp >= fc.timestamp.replace(tzinfo=UTC) - timedelta(minutes=30))
-                 .filter(HistoricalRidershipORM.timestamp <= fc.timestamp.replace(tzinfo=UTC) + timedelta(minutes=30))
-                 .first())
+        actual = (
+            db.query(HistoricalRidershipORM)
+            .filter(HistoricalRidershipORM.station_id == fc.station_id)
+            .filter(HistoricalRidershipORM.timestamp >= fc.timestamp.replace(tzinfo=UTC) - timedelta(minutes=30))
+            .filter(HistoricalRidershipORM.timestamp <= fc.timestamp.replace(tzinfo=UTC) + timedelta(minutes=30))
+            .first()
+        )
         if actual:
             pred = fc.predicted
             act = actual.passengers_boarding
             abs_err = abs(pred - act)
             pct_err = abs_err / max(act, 1)
-            errors.append({
-                "station_id": fc.station_id,
-                "route_id": fc.route_id or "",
-                "forecast_timestamp": fc.timestamp.isoformat() if fc.timestamp else "",
-                "horizon_minutes": fc.horizon_minutes or 60,
-                "predicted": pred,
-                "actual": act,
-                "absolute_error": abs_err,
-                "mape": pct_err,
-            })
+            errors.append(
+                {
+                    "station_id": fc.station_id,
+                    "route_id": fc.route_id or "",
+                    "forecast_timestamp": fc.timestamp.isoformat() if fc.timestamp else "",
+                    "horizon_minutes": fc.horizon_minutes or 60,
+                    "predicted": pred,
+                    "actual": act,
+                    "absolute_error": abs_err,
+                    "mape": pct_err,
+                }
+            )
             # Store individual accuracy record
             acc = PredictionAccuracyORM(
                 model_version=fc.model_version or model_version or "unknown",
@@ -96,9 +104,12 @@ def _group_by_horizon(errors: list[dict]) -> dict:
 def get_accuracy_trend(db: Session, days: int = 30) -> list[dict]:
     """Get daily accuracy trend for the dashboard."""
     cutoff = datetime.now(UTC) - timedelta(days=days)
-    records = (db.query(PredictionAccuracyORM)
-               .filter(PredictionAccuracyORM.evaluated_at >= cutoff)
-               .order_by(PredictionAccuracyORM.evaluated_at).all())
+    records = (
+        db.query(PredictionAccuracyORM)
+        .filter(PredictionAccuracyORM.evaluated_at >= cutoff)
+        .order_by(PredictionAccuracyORM.evaluated_at)
+        .all()
+    )
 
     daily = {}
     for r in records:

@@ -9,15 +9,14 @@ set, all connections are allowed (dev mode).
 import asyncio
 import json
 import logging
-import os
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
+from backend.config import WS_AUTH_SECRET
+from backend.redis_client import REDIS_URL
 from backend.services.realtime_service import get_current_positions
 
 logger = logging.getLogger(__name__)
-
-WS_AUTH_SECRET = os.getenv("WS_AUTH_SECRET", "")
 
 websocket_router = APIRouter()
 
@@ -56,8 +55,9 @@ class ConnectionManager:
             # Send if: no subscription filter (None) OR event_type in subscriptions
             if subs is None or event_type in subs:
                 try:
-                    await ws.send_json({"type": event_type, **data})
+                    await ws.send_json({"type": event_type, "data": data})
                 except Exception:
+                    logger.warning("Failed to send WS event '%s' to client, removing connection", event_type)
                     disconnected.append(ws)
         for ws in disconnected:
             self.active_connections.pop(ws, None)
@@ -72,14 +72,14 @@ async def bus_stream():
         await asyncio.sleep(5)
         positions = get_current_positions()
         for bus in positions:
-            await manager.broadcast("bus_position", {"data": bus})
+            await manager.broadcast("bus_position", bus)
 
 
 async def simulation_relay():
     """Subscribe to Redis michi:simulation channel and broadcast events to WS clients."""
     import redis.asyncio as aioredis
 
-    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    redis_url = REDIS_URL
     r = aioredis.from_url(redis_url, decode_responses=True)
     pubsub = r.pubsub()
     try:
@@ -91,7 +91,7 @@ async def simulation_relay():
                     event_type = data.get("type", "simulation_tick")
                     await manager.broadcast(event_type, data)
                 except (json.JSONDecodeError, KeyError):
-                    pass
+                    logger.warning("Invalid simulation relay message received")
     except asyncio.CancelledError:
         return
     finally:
@@ -99,16 +99,46 @@ async def simulation_relay():
         await r.close()
 
 
+async def ml_relay():
+    """Subscribe to Redis michi:ml channel and broadcast ML events to WS clients.
+
+    Handles drift_alert, retrain_started, retrain_progress, retrain_completed,
+    model_promoted, and other ML lifecycle events.
+    """
+    import redis.asyncio as aioredis
+
+    redis_url = REDIS_URL
+    r = aioredis.from_url(redis_url, decode_responses=True)
+    pubsub = r.pubsub()
+    try:
+        await pubsub.subscribe("michi:ml")
+        async for message in pubsub.listen():
+            if message["type"] == "message":
+                try:
+                    data = json.loads(message["data"])
+                    event_type = data.get("type", "ml_event")
+                    await manager.broadcast(event_type, data)
+                except (json.JSONDecodeError, KeyError):
+                    logger.warning("Invalid ML relay message received")
+    except asyncio.CancelledError:
+        return
+    finally:
+        await pubsub.unsubscribe("michi:ml")
+        await r.close()
+
+
 async def combined_stream():
-    """Run bus position stream and simulation relay concurrently."""
+    """Run bus position stream, simulation relay, and ML relay concurrently."""
     bus_task = asyncio.create_task(bus_stream())
     sim_task = asyncio.create_task(simulation_relay())
+    ml_task = asyncio.create_task(ml_relay())
     try:
-        await asyncio.gather(bus_task, sim_task)
+        await asyncio.gather(bus_task, sim_task, ml_task)
     except asyncio.CancelledError:
         bus_task.cancel()
         sim_task.cancel()
-        await asyncio.gather(bus_task, sim_task, return_exceptions=True)
+        ml_task.cancel()
+        await asyncio.gather(bus_task, sim_task, ml_task, return_exceptions=True)
 
 
 @websocket_router.websocket("/realtime")
@@ -122,7 +152,10 @@ async def realtime_ws(websocket: WebSocket):
     token = websocket.query_params.get("token")
     if not _validate_token(token):
         await websocket.close(code=4001, reason="Unauthorized: invalid or missing token")
-        logger.warning("WebSocket connection rejected: invalid token from %s", websocket.client.host if websocket.client else "unknown")
+        logger.warning(
+            "WebSocket connection rejected: invalid token from %s",
+            websocket.client.host if websocket.client else "unknown",
+        )
         return
 
     await manager.connect(websocket)

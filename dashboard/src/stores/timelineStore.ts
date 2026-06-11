@@ -1,26 +1,26 @@
-import { create } from "zustand";
-import type { TimelineMode, TimelinePoint } from "@/types";
+import { create } from "zustand"
+import type { TimelineMode, TimelinePoint } from "@/types"
 
 interface TimelineState {
-  currentTime: number;
-  isPlaying: boolean;
-  playSpeed: number;
-  range: { start: number; end: number };
-  data: TimelinePoint[];
-  mode: TimelineMode;
+  currentTime: number
+  isPlaying: boolean
+  playSpeed: number
+  range: { start: number; end: number }
+  data: TimelinePoint[]
+  mode: TimelineMode
 
-  scrubTo: (timestamp: number) => void;
-  play: () => void;
-  pause: () => void;
-  togglePlay: () => void;
-  setSpeed: (speed: number) => void;
-  enterLiveMode: () => void;
-  enterHistoricalMode: (start: number, end: number) => void;
-  setData: (data: TimelinePoint[]) => void;
-  tick: () => void;
+  scrubTo: (timestamp: number) => void
+  play: () => void
+  pause: () => void
+  togglePlay: () => void
+  setSpeed: (speed: number) => void
+  enterLiveMode: () => void
+  enterHistoricalMode: (start: number, end: number) => void
+  setData: (data: TimelinePoint[]) => void
+  tick: () => void
 }
 
-const ADVANCE_PER_TICK_MS = 15 * 60 * 1000; // 15 minutes per tick at 1x speed
+const ADVANCE_PER_TICK_MS = 15 * 60 * 1000 // 15 minutes per tick at 1x speed
 
 export const useTimelineStore = create<TimelineState>((set, get) => ({
   currentTime: Date.now(),
@@ -59,16 +59,16 @@ export const useTimelineStore = create<TimelineState>((set, get) => ({
   setData: (data: TimelinePoint[]) => set({ data }),
 
   tick: () => {
-    const { isPlaying, playSpeed, currentTime, mode } = get();
-    if (!isPlaying) return;
-    const advanceMs = playSpeed * ADVANCE_PER_TICK_MS;
-    const next = currentTime + advanceMs;
-    const now = Date.now();
+    const { isPlaying, playSpeed, currentTime, mode } = get()
+    if (!isPlaying) return
+    const advanceMs = playSpeed * ADVANCE_PER_TICK_MS
+    const next = currentTime + advanceMs
+    const now = Date.now()
     // Clamp to not go beyond now in live mode
     if (mode === "live" && next > now) {
-      set({ currentTime: now, isPlaying: false });
+      set({ currentTime: now, isPlaying: false })
     } else {
-      set({ currentTime: next });
+      set({ currentTime: next })
     }
   },
-}));
+}))

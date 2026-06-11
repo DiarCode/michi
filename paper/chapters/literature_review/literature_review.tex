@@ -6,7 +6,7 @@
 \label{chap:litreview}
 \setlength{\parskip}{1em}
 
-This chapter reviews the academic landscape relevant to passenger flow prediction on urban transit networks. We examine four interconnected research threads: spatiotemporal forecasting, graph neural networks, state-space models, and attention mechanisms with probabilistic forecasting. We conclude with a positioning of our contribution relative to existing work.
+This chapter reviews the academic landscape relevant to passenger flow prediction on urban transit networks. Four interconnected research threads are examined: spatiotemporal forecasting, graph neural networks, state-space models, and attention mechanisms with probabilistic forecasting. The chapter closes with a positioning of the contributions of the thesis relative to existing work.
 
 \section{Spatiotemporal Forecasting}
 \label{sec:spatiotemporal}
@@ -47,7 +47,7 @@ Recent advances have reinvigorated SSMs for deep learning. Gu et al. \cite{gu202
 
 Mamba \cite{gu2023mamba} removed the need for the HiPPO constraint by introducing input-dependent state transitions through selective SSM layers. Mamba hardware-aware parallel scan enables training on sequences of length $10^6$ with sub-quadratic complexity, making it attractive for time-series forecasting with long context windows. However, Mamba and its variants have been primarily evaluated on language and audio tasks; their application to spatiotemporal graph forecasting remains under-explored.
 
-In our work, we adopt a gated recurrent encoder that trades the full expressivity of Mamba for training stability and simplicity, while still achieving linear-time per-step processing.
+A gated recurrent encoder is adopted that trades the full expressivity of Mamba for training stability and simplicity, while still achieving linear-time per-step processing.
 
 \section{Attention Mechanisms and Probabilistic Forecasting}
 \label{sec:attention}
@@ -70,10 +70,10 @@ DeepAR \cite{salinas2020deepar} combines autoregressive RNNs with parametric lik
 
 In public transit, passenger boarding counts are discrete, non-negative, and often overdispersed (variance exceeds mean). The Poisson distribution assumes equidispersion and tends to underestimate uncertainty. The Negative Binomial distribution introduces a dispersion parameter $\kappa$ that captures excess variance, making it a natural choice for ridership modelling.
 
-\section{Positioning of Our Work}
+\section{Distinctive Features of DTS-GSSF Relative to Existing Work}
 \label{sec:positioning}
 
-Table~\ref{Tab.comparison} summarises the architectural characteristics of representative models in the literature. None of the existing approaches combine all four properties that we identify as critical for real-time bus passenger flow prediction:
+Four properties emerge as critical for real-time bus passenger flow prediction. None of the existing approaches reviewed in the preceding sections combine all four simultaneously:
 
 \begin{enumerate}
     \item \textbf{Linear-time temporal encoding} for stable gradient propagation across long context windows (72 hours).
@@ -86,7 +86,7 @@ Table~\ref{Tab.comparison} summarises the architectural characteristics of repre
 \centering
 \caption{Comparison of representative spatiotemporal forecasting models.}
 \label{Tab.comparison}
-\resizebox{\textwidth}{!}{%
+\small
 \begin{tabular}{@{}lllll@{}}
 \toprule
 Model & Temporal & Spatial & Uncertainty & Complexity \\
@@ -101,10 +101,9 @@ ASTGCN \cite{guo2019astgcn} & Attention & Attention GCN & None & $O(T^2 \cdot N^
 Informer \cite{zhou2021informer} & Attention & None & None & $O(T \log T)$ \\
 DeepAR \cite{salinas2020deepar} & RNN & None & Gaussian/NB & $O(T)$ \\
 \midrule
-DTS-GSSF (ours) & GRE + Attn. & Dual GCN & Negative Binomial & $O(T \cdot N + T^2 \cdot N + N^2)$ \\
+DTS-GSSF & GRE + Attn. & Dual GCN & Neg.\ Bin. & $O(TN + T^2N + N^2)$ \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
-DTS-GSSF is, to our knowledge, the first model to integrate a gated recurrent temporal encoder with dual adjacency graph propagation, multi-head temporal attention, and Negative Binomial likelihood within a single compact architecture suitable for real-time edge deployment.
+DTS-GSSF integrates a gated recurrent temporal encoder with dual adjacency graph propagation, multi-head temporal attention, and a Negative Binomial likelihood within a single compact architecture suitable for real-time edge deployment.

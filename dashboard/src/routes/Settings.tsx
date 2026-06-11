@@ -7,7 +7,12 @@ import {
 } from "@/components/ui/card"
 import { SectionHeader } from "@/components/section-header"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Mail01Icon, NotificationIcon, Settings01Icon, UserIcon } from "@hugeicons/core-free-icons"
+import {
+  Mail01Icon,
+  NotificationIcon,
+  Settings01Icon,
+  UserIcon,
+} from "@hugeicons/core-free-icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -30,19 +35,29 @@ export function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>
-                <HugeiconsIcon icon={UserIcon} strokeWidth={1.5} className="mr-1 inline size-4" />
+                <HugeiconsIcon
+                  icon={UserIcon}
+                  strokeWidth={1.5}
+                  className="mr-1 inline size-4"
+                />
                 Profile
               </CardTitle>
-              <CardDescription>How others see you in the operator console.</CardDescription>
+              <CardDescription>
+                How others see you in the operator console.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-4">
                 <Avatar className="size-12">
-                  <AvatarFallback className="bg-primary text-primary-foreground">DB</AvatarFallback>
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    DB
+                  </AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="font-medium">Diar B.</p>
-                  <p className="text-xs text-muted-foreground">Operator · Astana</p>
+                  <p className="text-xs text-muted-foreground">
+                    Operator · Astana
+                  </p>
                 </div>
                 <Button variant="outline" size="sm" className="ml-auto">
                   Change photo
@@ -60,10 +75,18 @@ export function SettingsPage() {
                 </Field>
                 <Field className="md:col-span-2">
                   <FieldLabel htmlFor="email">
-                    <HugeiconsIcon icon={Mail01Icon} strokeWidth={1.5} className="mr-1 inline size-3.5" />
+                    <HugeiconsIcon
+                      icon={Mail01Icon}
+                      strokeWidth={1.5}
+                      className="mr-1 inline size-3.5"
+                    />
                     Email
                   </FieldLabel>
-                  <Input id="email" type="email" defaultValue="diar@michi.local" />
+                  <Input
+                    id="email"
+                    type="email"
+                    defaultValue="diar@michi.local"
+                  />
                 </Field>
               </FieldGroup>
             </CardContent>
@@ -72,17 +95,43 @@ export function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>
-                <HugeiconsIcon icon={NotificationIcon} strokeWidth={1.5} className="mr-1 inline size-4" />
+                <HugeiconsIcon
+                  icon={NotificationIcon}
+                  strokeWidth={1.5}
+                  className="mr-1 inline size-4"
+                />
                 Notifications
               </CardTitle>
-              <CardDescription>When and how you want to be notified.</CardDescription>
+              <CardDescription>
+                When and how you want to be notified.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               {[
-                { id: "high", title: "High-severity alerts", desc: "Push + email.", on: true },
-                { id: "med", title: "Medium-severity alerts", desc: "In-app only.", on: true },
-                { id: "weekly", title: "Weekly executive summary", desc: "Email, Mondays at 09:00.", on: false },
-                { id: "model", title: "Model drift warnings", desc: "Notify on PSI > 0.2.", on: true },
+                {
+                  id: "high",
+                  title: "High-severity alerts",
+                  desc: "Push + email.",
+                  on: true,
+                },
+                {
+                  id: "med",
+                  title: "Medium-severity alerts",
+                  desc: "In-app only.",
+                  on: true,
+                },
+                {
+                  id: "weekly",
+                  title: "Weekly executive summary",
+                  desc: "Email, Mondays at 09:00.",
+                  on: false,
+                },
+                {
+                  id: "model",
+                  title: "Model drift warnings",
+                  desc: "Notify on PSI > 0.2.",
+                  on: true,
+                },
               ].map((n) => (
                 <div
                   key={n.id}
@@ -102,7 +151,11 @@ export function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>
-              <HugeiconsIcon icon={Settings01Icon} strokeWidth={1.5} className="mr-1 inline size-4" />
+              <HugeiconsIcon
+                icon={Settings01Icon}
+                strokeWidth={1.5}
+                className="mr-1 inline size-4"
+              />
               Display
             </CardTitle>
             <CardDescription>Theme, density, and time format.</CardDescription>
@@ -121,7 +174,9 @@ export function SettingsPage() {
             <div className="flex items-center justify-between rounded-2xl bg-muted/40 p-3">
               <div>
                 <Label htmlFor="compact">Compact density</Label>
-                <p className="text-xs text-muted-foreground">Reduce vertical padding.</p>
+                <p className="text-xs text-muted-foreground">
+                  Reduce vertical padding.
+                </p>
               </div>
               <Switch id="compact" />
             </div>

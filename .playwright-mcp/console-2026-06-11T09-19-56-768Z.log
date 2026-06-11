@@ -1,0 +1,20 @@
+[     151ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=7e11f3dc:14337
+[    1486ms] [ERROR] Access to fetch at 'https://tiles.basemaps.cartocdn.com/fonts/Open%20Sans/0-255.pbf' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:5173/map:0
+[    1486ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://tiles.basemaps.cartocdn.com/fonts/Open%20Sans/0-255.pbf:0
+[    1502ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0030 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1503ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0031 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1504ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0032 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1504ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0033 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1505ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0034 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1505ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0035 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1506ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0036 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1506ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0037 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1506ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0038 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[    1507ms] [WARNING] Unable to load glyph range 0, 0-255. Rendering codepoint U+0039 locally instead. Error: AJAXError: Failed to fetch (0): https://tiles.basemaps.cartocdn.com/fonts/Open Sans/0-255.pbf @ http://localhost:5173/@vite/client:524
+[   25906ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:992
+[   29411ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   29411ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[   34063ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   34063ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524
+[   41546ms] [ERROR] WebSocket connection to 'ws://localhost:5173/ws/realtime' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/lib/websocket.ts:25
+[   41546ms] [WARNING] WebSocket error: error @ http://localhost:5173/@vite/client:524

@@ -1,4 +1,5 @@
 """Model artifact store — save/load/checkpoint PyTorch model versions."""
+
 import json
 from datetime import UTC, datetime
 from pathlib import Path
@@ -46,30 +47,32 @@ def save_artifact(
 
 def get_production_artifact(db: Session) -> ModelArtifactORM | None:
     """Get the current production model artifact."""
-    return (db.query(ModelArtifactORM)
-            .filter(ModelArtifactORM.is_production == True)
-            .order_by(ModelArtifactORM.created_at.desc())
-            .first())
+    return (
+        db.query(ModelArtifactORM)
+        .filter(ModelArtifactORM.is_production.is_(True))
+        .order_by(ModelArtifactORM.created_at.desc())
+        .first()
+    )
 
 
 def get_shadow_artifact(db: Session) -> ModelArtifactORM | None:
     """Get the current shadow (challenger) model artifact."""
-    return (db.query(ModelArtifactORM)
-            .filter(ModelArtifactORM.is_shadow == True)
-            .order_by(ModelArtifactORM.created_at.desc())
-            .first())
+    return (
+        db.query(ModelArtifactORM)
+        .filter(ModelArtifactORM.is_shadow.is_(True))
+        .order_by(ModelArtifactORM.created_at.desc())
+        .first()
+    )
 
 
 def promote_shadow_to_production(db: Session, shadow_version: str) -> ModelArtifactORM | None:
     """Promote a shadow model to production, demoting current production."""
     # Demote current production
-    current_prod = (db.query(ModelArtifactORM)
-                   .filter(ModelArtifactORM.is_production == True).all())
+    current_prod = db.query(ModelArtifactORM).filter(ModelArtifactORM.is_production.is_(True)).all()
     for a in current_prod:
         a.is_production = False
     # Promote shadow
-    shadow = (db.query(ModelArtifactORM)
-             .filter(ModelArtifactORM.version == shadow_version).first())
+    shadow = db.query(ModelArtifactORM).filter(ModelArtifactORM.version == shadow_version).first()
     if shadow:
         shadow.is_shadow = False
         shadow.is_production = True
@@ -79,6 +82,4 @@ def promote_shadow_to_production(db: Session, shadow_version: str) -> ModelArtif
 
 def list_artifacts(db: Session, limit: int = 20) -> list:
     """List recent model artifacts."""
-    return (db.query(ModelArtifactORM)
-            .order_by(ModelArtifactORM.created_at.desc())
-            .limit(limit).all())
+    return db.query(ModelArtifactORM).order_by(ModelArtifactORM.created_at.desc()).limit(limit).all()

@@ -1,0 +1,135 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e11]: M
+      - generic [ref=e12]:
+        - generic [ref=e13]: Michi
+        - generic [ref=e14]: Transit
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Command Center" [ref=e20] [cursor=pointer]:
+          - /url: /
+          - img [ref=e21]
+          - generic [ref=e26]: Command Center
+      - listitem [ref=e27]:
+        - link "Live Map" [ref=e28] [cursor=pointer]:
+          - /url: /map
+          - img [ref=e29]
+          - generic [ref=e33]: Live Map
+      - listitem [ref=e34]:
+        - link "Alerts" [ref=e35] [cursor=pointer]:
+          - /url: /alerts
+          - img [ref=e36]
+          - generic [ref=e39]: Alerts
+      - listitem [ref=e40]:
+        - link "Simulation" [ref=e41] [cursor=pointer]:
+          - /url: /simulation
+          - img [ref=e42]
+          - generic [ref=e44]: Simulation
+      - listitem [ref=e45]:
+        - link "Forecast" [ref=e46] [cursor=pointer]:
+          - /url: /forecast
+          - img [ref=e47]
+          - generic [ref=e51]: Forecast
+      - listitem [ref=e52]:
+        - link "Crowding" [ref=e53] [cursor=pointer]:
+          - /url: /crowding
+          - img [ref=e54]
+          - generic [ref=e61]: Crowding
+      - listitem [ref=e62]:
+        - link "Executive" [ref=e63] [cursor=pointer]:
+          - /url: /executive
+          - img [ref=e64]
+          - generic [ref=e66]: Executive
+      - listitem [ref=e67]:
+        - link "Settings" [ref=e68] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e69]
+          - generic [ref=e72]: Settings
+    - 'generic "Last tick #0 · 13:55:31" [ref=e74]':
+      - generic [ref=e76]: Offline
+  - main [ref=e77]:
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - button "Toggle Sidebar" [ref=e80] [cursor=pointer]:
+          - img
+          - generic [ref=e81]: Toggle Sidebar
+        - button "Search Michi ⌘ K" [ref=e82] [cursor=pointer]:
+          - img [ref=e83]
+          - generic [ref=e88]: Search Michi
+          - generic: ⌘
+          - generic: K
+      - generic [ref=e90]: Astana · Live
+    - main [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - paragraph [ref=e96]: What-if
+            - heading "Simulation" [level=1] [ref=e97]
+            - paragraph [ref=e98]: Run counterfactual scenarios against the DTS-GSSF model. Compare interventions before deployment.
+          - generic [ref=e99]:
+            - button "Start" [ref=e100] [cursor=pointer]:
+              - img
+              - text: Start
+            - button "Reset" [ref=e101] [cursor=pointer]:
+              - img
+              - text: Reset
+        - generic [ref=e102]:
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - generic [ref=e107]: Sim clock
+              - generic [ref=e109]: 00:00:00
+              - paragraph [ref=e110]: Paused
+            - progressbar [ref=e111]
+          - generic [ref=e115]:
+            - generic [ref=e117]: Accuracy
+            - generic [ref=e119]: —
+            - paragraph [ref=e120]: Normal
+          - generic [ref=e123]:
+            - generic [ref=e125]: Speed
+            - generic [ref=e127]: 1.0x
+            - paragraph [ref=e128]: Wall-clock multiplier
+        - generic [ref=e129]:
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - generic [ref=e132]: Validation Metrics
+              - generic [ref=e133]: Real-time model performance during simulation
+              - generic [ref=e135]: DTS-GSSF · 0 ticks
+            - generic [ref=e137]: Start the simulation to see validation metrics
+          - generic [ref=e138]:
+            - generic [ref=e139]:
+              - generic [ref=e140]:
+                - generic [ref=e141]: Configuration
+                - generic [ref=e142]: Tweak simulation parameters.
+              - generic [ref=e143]:
+                - generic [ref=e144]:
+                  - generic [ref=e145]:
+                    - generic [ref=e146]: Sim speed
+                    - generic [ref=e147]: 1.0x
+                  - slider [ref=e152]
+                - generic [ref=e153]:
+                  - generic [ref=e154]:
+                    - generic [ref=e155]: Horizon (minutes)
+                    - generic [ref=e156]: 60 min
+                  - slider [ref=e161]
+                - generic [ref=e162]:
+                  - generic [ref=e163]:
+                    - generic [ref=e164]:
+                      - generic [ref=e165]: Auto-reroute on alert
+                      - paragraph [ref=e166]: Trigger reroute playbooks automatically.
+                    - switch "Auto-reroute on alert" [checked] [ref=e167] [cursor=pointer]
+                  - generic [ref=e168]:
+                    - generic [ref=e169]:
+                      - generic [ref=e170]: Emit metrics to bus
+                      - paragraph [ref=e171]: Stream synthetic metrics over WebSocket.
+                    - switch "Emit metrics to bus" [ref=e172] [cursor=pointer]
+            - generic [ref=e173]:
+              - generic [ref=e174]:
+                - generic [ref=e175]: Run log
+                - generic [ref=e176]: Last 1 events
+              - list [ref=e178]:
+                - listitem [ref=e179]: Connecting to simulation backend…
+  - generic [ref=e181]:
+    - heading "Command Palette" [level=2] [ref=e182]
+    - paragraph [ref=e183]: Search for a command to run...
+  - region "Notifications alt+T"

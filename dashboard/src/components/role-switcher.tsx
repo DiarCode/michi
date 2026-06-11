@@ -1,5 +1,9 @@
 import { HugeiconsIcon } from "@hugeicons/react"
-import { UserIcon, Analytics01Icon, DashboardCircleIcon } from "@hugeicons/core-free-icons"
+import {
+  UserIcon,
+  Analytics01Icon,
+  DashboardCircleIcon,
+} from "@hugeicons/core-free-icons"
 
 import {
   Select,
@@ -11,9 +15,12 @@ import {
 import { useRoleStore, ROLE_LABELS, type Role } from "@/stores/role-store"
 
 const ICONS: Record<Role, typeof UserIcon> = {
-  operator: UserIcon,
-  analyst: Analytics01Icon,
+  dispatch: UserIcon,
+  research: Analytics01Icon,
+  planning: Analytics01Icon,
   executive: DashboardCircleIcon,
+  depot: UserIcon,
+  passenger: UserIcon,
 }
 
 export function RoleSwitcher() {
@@ -26,13 +33,21 @@ export function RoleSwitcher() {
         size="sm"
         className="h-7 min-w-[8rem] rounded-2xl border-border/60 bg-muted/40 text-xs"
       >
-        <HugeiconsIcon icon={ICONS[role]} strokeWidth={1.5} className="size-3.5" />
+        <HugeiconsIcon
+          icon={ICONS[role] ?? UserIcon}
+          strokeWidth={1.5}
+          className="size-3.5"
+        />
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
         {(Object.keys(ROLE_LABELS) as Role[]).map((r) => (
           <SelectItem key={r} value={r}>
-            <HugeiconsIcon icon={ICONS[r]} strokeWidth={1.5} className="size-3.5" />
+            <HugeiconsIcon
+              icon={ICONS[r] ?? UserIcon}
+              strokeWidth={1.5}
+              className="size-3.5"
+            />
             {ROLE_LABELS[r]}
           </SelectItem>
         ))}

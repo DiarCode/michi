@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from backend.database import Base
-from backend.models_orm import StationORM, RouteORM, RouteStopORM, AlertORM, RidershipORM, ForecastORM
+from backend.models_orm import StationORM, RouteORM, RouteStopORM, AlertORM, RidershipORM, ForecastORM, WeatherReadingORM
 
 config = context.config
 
